@@ -238,7 +238,7 @@ export default function AboutPage() {
               </motion.div>
 
               <blockquote className="mt-8 border-l-2 border-[#0a0a0a]/15 pl-5 italic text-[0.9375rem] leading-[1.6] text-[#0a0a0a]/75 font-light">
-                &ldquo;Little Giant Labs represents power and focus. We channel that same focus into the brands we scale.&rdquo;
+                &ldquo;Bhairava represents power and focus. We channel that same focus into the brands we scale.&rdquo;
                 <cite className="block mt-2 text-[10px] uppercase tracking-wider text-[#0a0a0a]/40 not-italic font-semibold">
                   — Rajesh Waghchaware
                 </cite>

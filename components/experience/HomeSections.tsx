@@ -1560,7 +1560,7 @@ export function ReelStack({ ready = true }: ReelStackProps) {
 
 const allTestimonials = [
   {
-    quote: "Little Giant Labs didn't just run ads — they built us a content machine. Our ROAS went from 1.2× to 4.8× in 60 days.",
+    quote: "Bhairava Media didn't just run ads — they built us a content machine. Our ROAS went from 1.2× to 4.8× in 60 days.",
     author: "Riya Sharma",
     role: "Founder, Nova Skincare",
     initials: "RS",

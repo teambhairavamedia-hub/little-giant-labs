@@ -132,7 +132,7 @@ export default function ContactPage() {
                   </span>
                 </div>
                 <blockquote className="text-xs text-black/60 leading-relaxed font-light italic">
-                  &ldquo;Working with Little Giant Labs felt like having an in-house creative and growth team. Absolutely recommend their strategy-first approach.&rdquo;
+                  &ldquo;Working with Bhairava felt like having an in-house creative and growth team. Absolutely recommend their strategy-first approach.&rdquo;
                 </blockquote>
                 <cite className="block text-[9px] uppercase tracking-wider text-black/35 not-italic font-bold">
                   — Founder, Nova Skincare
