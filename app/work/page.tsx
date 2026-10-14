@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/layout/Container";
-import { PageHeader } from "@/components/layout/PageHeader";
-import { CaseStudyGrid } from "@/components/work/CaseStudyGrid";
-import { Section } from "@/components/ui/Section";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Work",
-  description:
-    "Selected case studies, brand campaigns, and performance results. See how we turn attention into revenue.",
+  title: "Work | Temporarily Unavailable",
+  description: "The selected work section is temporarily unavailable.",
 };
 
 export default function WorkPage() {
+  notFound();
+  /* Temporarily disabled case studies page; preserve for restoration.
   return (
     <main>
       <PageHeader
@@ -20,14 +18,12 @@ export default function WorkPage() {
         theme="dark"
       />
 
-      {/* Case Study Grid */}
       <Section theme="light">
         <Container className="py-16 md:py-20">
           <CaseStudyGrid />
         </Container>
       </Section>
 
-      {/* Results Marquee Banner */}
       <Section theme="dark" className="py-5 md:py-6 overflow-hidden border-t border-white/10" style={{ background: "#800000" }}>
         <div className="flex whitespace-nowrap gap-12 animate-[marquee-stats_20s_linear_infinite]">
           {[
@@ -45,7 +41,7 @@ export default function WorkPage() {
             <span
               key={i}
               className="text-sm md:text-base uppercase tracking-widest text-white/50 font-semibold shrink-0"
-              style={{ fontFamily: "var(--font-syne), sans-serif" }}
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
               {stat}
               <span className="mx-6 text-white/15">✦</span>
@@ -61,4 +57,5 @@ export default function WorkPage() {
       </Section>
     </main>
   );
+  */
 }

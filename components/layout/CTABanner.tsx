@@ -15,7 +15,7 @@ export function CTABanner({ theme = "dark" }: CTABannerProps) {
           {/* Noomo-style: giant editorial heading */}
           <h2
             className="text-[clamp(2.2rem,6vw,4.5rem)] font-bold tracking-[-0.04em] leading-[0.96]"
-            style={{ fontFamily: "var(--font-syne), sans-serif" }}
+            style={{ fontFamily: "var(--font-manrope), sans-serif" }}
           >
             Ready to grow
             <br />

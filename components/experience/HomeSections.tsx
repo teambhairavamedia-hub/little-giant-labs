@@ -94,7 +94,7 @@ export function CinematicHero({ ready = true }: CinematicHeroProps) {
           <h1
             className="font-bold leading-[0.94] tracking-[-0.045em] text-[#0a0a0a]"
             style={{
-              fontFamily: "var(--font-syne), sans-serif",
+              fontFamily: "var(--font-manrope), sans-serif",
               fontSize: "clamp(2rem, 5vw, 4.5rem)",
             }}
           >
@@ -198,7 +198,7 @@ export function CinematicHero({ ready = true }: CinematicHeroProps) {
               <div key={stat.label} className="flex flex-col items-center gap-1">
                 <span
                   style={{
-                    fontFamily: "var(--font-syne), sans-serif",
+                    fontFamily: "var(--font-manrope), sans-serif",
                     fontSize: "clamp(1.25rem, 2.2vw, 1.6rem)",
                     fontWeight: 700,
                     letterSpacing: "-0.04em",
@@ -290,7 +290,7 @@ export function AboutSnap() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}>
             <h2
               style={{
-                fontFamily: "var(--font-syne), sans-serif",
+                fontFamily: "var(--font-manrope), sans-serif",
                 fontSize: "clamp(2rem, 5vw, 4rem)",
                 fontWeight: 700,
                 letterSpacing: "-0.04em",
@@ -354,7 +354,7 @@ export function AboutSnap() {
                 }}
               >
                 <span style={{ fontSize: "1.1rem", color: "#ffffff", display: "block", marginBottom: "0.75rem" }}>{s.icon}</span>
-                <p style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "0.9375rem", fontWeight: 700, color: "#ffffff", letterSpacing: "-0.02em", marginBottom: "0.4rem" }}>{s.title}</p>
+                <p style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "0.9375rem", fontWeight: 700, color: "#ffffff", letterSpacing: "-0.02em", marginBottom: "0.4rem" }}>{s.title}</p>
                 <p style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontSize: "0.8125rem", lineHeight: 1.6, color: "rgba(255,255,255,0.88)", fontWeight: 400 }}>{s.desc}</p>
               </div>
             ))}
@@ -391,7 +391,7 @@ export function DarkDivider({
       <div style={{ maxWidth: 1320, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "2rem", flexWrap: "wrap" }}>
         <p
           style={{
-            fontFamily: "var(--font-syne), sans-serif",
+            fontFamily: "var(--font-manrope), sans-serif",
             fontSize: "clamp(1.5rem, 4vw, 3.25rem)",
             fontWeight: 400,
             fontStyle: "italic",
@@ -565,7 +565,7 @@ export function StorySticky({ ready = true }: StoryStickyProps) {
           <p className="label-eyebrow mb-5 text-[#0a0a0a]/40">
             Our Process
           </p>
-          <h2 className="story-heading mt-6 text-[clamp(2.5rem,6vw,4.75rem)] font-bold leading-[0.96] tracking-[-0.04em] text-[#0a0a0a]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+          <h2 className="story-heading mt-6 text-[clamp(2.5rem,6vw,4.75rem)] font-bold leading-[0.96] tracking-[-0.04em] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
             Three steps to
             <br />
             <span className="text-[#0a0a0a]/25">scale.</span>
@@ -590,7 +590,7 @@ export function StorySticky({ ready = true }: StoryStickyProps) {
                   {chapter.num}
                 </span>
               </div>
-              <h3 className="mt-6 text-[clamp(1.5rem,3vw,2.25rem)] font-bold tracking-[-0.04em] leading-[1.0] text-[#0a0a0a]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+              <h3 className="mt-6 text-[clamp(1.5rem,3vw,2.25rem)] font-bold tracking-[-0.04em] leading-[1.0] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                 {chapter.title}
               </h3>
               <p className="mt-4 max-w-xl text-[0.9375rem] leading-[1.7] text-[#0a0a0a]/52 font-light">
@@ -676,7 +676,7 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
             <p className="label-eyebrow mb-4 text-[#0a0a0a]/38">Selected Work</p>
             <h2
               className="text-[clamp(2.2rem,5.5vw,4rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]"
-              style={{ fontFamily: "var(--font-syne), sans-serif" }}
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
               Stories that
               <br />
@@ -728,7 +728,7 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
 
                       <h3
                         className="truncate text-[clamp(1.25rem,2.2vw,2rem)] font-bold leading-none tracking-[-0.03em] text-[#0a0a0a] transition-all duration-300 group-hover:text-[#0a0a0a]"
-                        style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                        style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                       >
                         {project.client}
                       </h3>
@@ -858,7 +858,7 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
                 </p>
                 <p
                   className="mt-1 text-sm font-semibold tracking-[-0.02em] text-[#0a0a0a]"
-                  style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                  style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                 >
                   {activeProject.client}
                 </p>
@@ -869,7 +869,7 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
                 </p>
                 <p
                   className="mt-1 text-sm font-bold tracking-[-0.02em] text-[#0a0a0a]"
-                  style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                  style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                 >
                   {/* {activeProject.revenue} */}
                 </p>
@@ -947,14 +947,14 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
                       </span>
                       <h2
                         className="text-2xl md:text-3xl font-bold tracking-tight"
-                        style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                        style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                       >
                         {selectedProject.client}
                       </h2>
                     </div>
                     <div className="rounded-2xl bg-white/5 border border-white/10 px-4 py-2 shrink-0">
                       <span className="text-xs text-white/40 block text-center mb-0.5">Primary Outcome</span>
-                      <span className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                      <span className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                         {selectedProject.metric}
                       </span>
                     </div>
@@ -991,7 +991,7 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
                     href="/contact"
                     onClick={() => setSelectedProject(null)}
                     className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold bg-white text-black hover:bg-[#d4af37] transition-all duration-300 group"
-                    style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "0.875rem" }}
+                    style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "0.875rem" }}
                   >
                     <span>Discuss A Similar Campaign</span>
                     <span className="group-hover:translate-x-1.5 transition-transform duration-300">→</span>
@@ -1368,7 +1368,7 @@ export function ReelStack({ ready = true }: ReelStackProps) {
               {/* Bottom info */}
               <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, zIndex: 10, background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)", padding: "2.5rem 1rem 1rem", pointerEvents: "none" }}>
                 <p style={{ fontSize: "0.5625rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", fontFamily: "var(--font-dm-sans), sans-serif" }}>{reels[activeIndex]?.views}</p>
-                <p style={{ fontFamily: "var(--font-syne), sans-serif", fontWeight: 600, color: "white", fontSize: "0.9rem", letterSpacing: "-0.02em", marginTop: "0.2rem" }}>{reels[activeIndex]?.title}</p>
+                <p style={{ fontFamily: "var(--font-manrope), sans-serif", fontWeight: 600, color: "white", fontSize: "0.9rem", letterSpacing: "-0.02em", marginTop: "0.2rem" }}>{reels[activeIndex]?.title}</p>
               </div>
             </div>
 
@@ -1402,7 +1402,7 @@ export function ReelStack({ ready = true }: ReelStackProps) {
             </p>
             <h2
               className="text-[clamp(1.9rem,3.8vw,3rem)] font-bold leading-[0.96] tracking-[-0.04em] text-white"
-              style={{ fontFamily: "var(--font-syne), sans-serif" }}
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
               Reels built
               <br />
@@ -1452,7 +1452,7 @@ export function ReelStack({ ready = true }: ReelStackProps) {
                       <div style={{ minWidth: 0 }}>
                         <p
                           className="truncate font-semibold text-white"
-                          style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1rem", letterSpacing: "-0.02em" }}
+                          style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "1rem", letterSpacing: "-0.02em" }}
                         >
                           {reel.title}
                         </p>
@@ -1484,12 +1484,12 @@ export function ReelStack({ ready = true }: ReelStackProps) {
             {/* Stats */}
             <div className="mt-7 flex items-center gap-6">
               <div>
-                <p className="font-bold text-white" style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.75rem", letterSpacing: "-0.04em" }}>120M+</p>
+                <p className="font-bold text-white" style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "1.75rem", letterSpacing: "-0.04em" }}>120M+</p>
                 <p style={{ fontSize: "0.625rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.30)", fontFamily: "var(--font-dm-sans), sans-serif", marginTop: "0.2rem" }}>Total Views</p>
               </div>
               <div style={{ width: 1, height: 28, background: "rgba(255,255,255,0.10)" }} />
               <div>
-                <p className="font-bold text-white" style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "1.75rem", letterSpacing: "-0.04em" }}>{reels.length * 2}+</p>
+                <p className="font-bold text-white" style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "1.75rem", letterSpacing: "-0.04em" }}>{reels.length * 2}+</p>
                 <p style={{ fontSize: "0.625rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.30)", fontFamily: "var(--font-dm-sans), sans-serif", marginTop: "0.2rem" }}>Formats</p>
               </div>
             </div>
@@ -1502,7 +1502,7 @@ export function ReelStack({ ready = true }: ReelStackProps) {
           <p className="label-eyebrow mb-4" style={{ color: "rgba(255,255,255,0.30)" }}>Content Engine</p>
           <h2
             className="text-[clamp(1.75rem,7vw,2.5rem)] font-bold leading-[0.96] tracking-[-0.04em] text-white mb-8"
-            style={{ fontFamily: "var(--font-syne), sans-serif" }}
+            style={{ fontFamily: "var(--font-manrope), sans-serif" }}
           >
             Reels built to
             <br />
@@ -1540,7 +1540,7 @@ export function ReelStack({ ready = true }: ReelStackProps) {
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)", pointerEvents: "none" }} />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0.875rem", pointerEvents: "none" }}>
                   <p style={{ fontSize: "0.5625rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.40)", fontFamily: "var(--font-dm-sans), sans-serif" }}>{reel.views}</p>
-                  <p style={{ fontFamily: "var(--font-syne), sans-serif", fontWeight: 600, fontSize: "0.8125rem", color: "white", marginTop: "0.2rem" }}>{reel.title}</p>
+                  <p style={{ fontFamily: "var(--font-manrope), sans-serif", fontWeight: 600, fontSize: "0.8125rem", color: "white", marginTop: "0.2rem" }}>{reel.title}</p>
                 </div>
               </div>
             ))}
@@ -1560,7 +1560,7 @@ export function ReelStack({ ready = true }: ReelStackProps) {
 
 const allTestimonials = [
   {
-    quote: "Bhairava Media didn't just run ads — they built us a content machine. Our ROAS went from 1.2× to 4.8× in 60 days.",
+    quote: "Little Giant Labs didn't just run ads — they built us a content machine. Our ROAS went from 1.2× to 4.8× in 60 days.",
     author: "Riya Sharma",
     role: "Founder, Nova Skincare",
     initials: "RS",
@@ -1724,7 +1724,7 @@ function TestimonialCard({ t }: { t: (typeof allTestimonials)[number] }) {
         >
           <span
             style={{
-              fontFamily: "var(--font-syne), sans-serif",
+              fontFamily: "var(--font-manrope), sans-serif",
               fontSize: "0.625rem",
               fontWeight: 700,
               color: "rgba(255,255,255,0.9)",
@@ -1737,7 +1737,7 @@ function TestimonialCard({ t }: { t: (typeof allTestimonials)[number] }) {
         <div>
           <p
             style={{
-              fontFamily: "var(--font-syne), sans-serif",
+              fontFamily: "var(--font-manrope), sans-serif",
               fontSize: "0.8125rem",
               fontWeight: 600,
               color: "#0a0a0a",
@@ -1881,7 +1881,7 @@ export function TestimonialsAsymmetric() {
             <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem", flexWrap: "wrap" }}>
               <h2
                 style={{
-                  fontFamily: "var(--font-syne), sans-serif",
+                  fontFamily: "var(--font-manrope), sans-serif",
                   fontSize: "clamp(2rem,5vw,4rem)",
                   fontWeight: 700,
                   letterSpacing: "-0.04em",
@@ -2000,7 +2000,7 @@ export function ExperienceClosing({ ready = true }: ExperienceClosingProps) {
         </div>
 
         <div className="relative z-10 mx-auto max-w-[1400px] text-center flex flex-col items-center">
-          <h2 className="text-[clamp(2.75rem,8vw,6.5rem)] font-bold leading-[0.96] tracking-[-0.05em]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+          <h2 className="text-[clamp(2.75rem,8vw,6.5rem)] font-bold leading-[0.96] tracking-[-0.05em]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
             <span className="closing-line block overflow-hidden">
               <span className="block text-[#0a0a0a]">Ready to build</span>
             </span>

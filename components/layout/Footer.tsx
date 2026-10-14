@@ -33,7 +33,7 @@ export function Footer() {
     <Section
       theme="dark"
       className="relative overflow-hidden border-t border-white/5"
-      style={{ background: "#800000" }}
+      style={{ background: "#0B1B2B" }}
     >
       <div className="mx-auto max-w-[1400px] px-6 pt-24 pb-8 md:px-10 lg:px-14">
         
@@ -49,7 +49,7 @@ export function Footer() {
               </p>
               <h2
                 className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.04em] text-white transition-colors duration-500 group-hover:text-white/80"
-                style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
                 Let's create
                 <br />
@@ -80,7 +80,7 @@ export function Footer() {
               />
               <p
                 className="text-[0.875rem] font-bold uppercase tracking-[0.22em] text-white"
-                style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
                 {siteConfig.name}
               </p>
@@ -149,7 +149,7 @@ export function Footer() {
           {/* Col 4: Location & Local Time */}
           <div className="flex flex-col gap-2">
             <p className="label-eyebrow text-white/20 mb-2">Office</p>
-            <p className="text-[0.8125rem] font-medium text-white/80" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+            <p className="text-[0.8125rem] font-medium text-white/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               PUNE, IN
             </p>
             {localTime && (
@@ -175,7 +175,7 @@ export function Footer() {
         <div
           className="absolute left-1/2 bottom-[-15%] -translate-x-1/2 pointer-events-none select-none text-center w-full z-0 overflow-hidden"
           style={{
-            fontFamily: "var(--font-syne), sans-serif",
+            fontFamily: "var(--font-manrope), sans-serif",
             fontSize: "clamp(6rem, 16vw, 15rem)",
             fontWeight: 800,
             letterSpacing: "0.06em",

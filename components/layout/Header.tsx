@@ -99,7 +99,7 @@ export function Header() {
               />
               <span
                 style={{
-                  fontFamily: "var(--font-syne), sans-serif",
+                  fontFamily: "var(--font-manrope), sans-serif",
                   fontSize: "0.75rem",
                   fontWeight: 700,
                   letterSpacing: "0.22em",
