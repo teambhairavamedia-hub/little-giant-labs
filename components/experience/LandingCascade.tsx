@@ -189,8 +189,8 @@ export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProp
           className="mb-4 flex items-center justify-center gap-3"
         >
           <img
-            src="/favicon.svg"
-            alt="Bhairava Media Logo"
+            src="/logo.png"
+            alt="Little Giant Labs logo"
             className="w-10 h-10 object-contain shadow-md rounded-full"
           />
         </motion.div>

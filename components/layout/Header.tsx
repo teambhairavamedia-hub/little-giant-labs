@@ -90,10 +90,11 @@ export function Header() {
               className="shrink-0 flex items-center gap-3 transition-opacity hover:opacity-75 group"
             >
               <Image
-                src="/favicon.svg"
-                alt="Bhairava Media Logo"
+                src="/logo.png"
+                alt="Little Giant Labs logo"
                 width={40}
                 height={40}
+                priority
                 className="w-9 h-9 md:w-10 md:h-10 object-contain rounded-full shadow-md group-hover:scale-105 transition-transform duration-300"
               />
               <span

@@ -1,6 +1,6 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "Little Giant Labs",
+  "short_name": "Little Giant Labs",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
