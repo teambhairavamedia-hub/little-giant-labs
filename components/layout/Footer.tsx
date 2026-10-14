@@ -185,7 +185,7 @@ export function Footer() {
             whiteSpace: "nowrap",
           }}
         >
-          BHAIRAVA
+          LITTLE GIANT LABS
         </div>
 
       </div>

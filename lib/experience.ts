@@ -108,13 +108,13 @@ export const experienceConfig = {
   ],
   reels: [
     {
-      title: "About Bhairava Media",
+      title: "About Little Giant Labs",
       views: "4.8M Views",
       gradient: "from-violet-500 via-fuchsia-500 to-orange-400",
       videoId: "1w4EP_CPVp0",
     },
     {
-      title: "How Bhairava Media Drives Brand Impact",
+      title: "How Little Giant Labs Drives Brand Impact",
       views: "6.2M Views",
       gradient: "from-cyan-400 via-blue-500 to-indigo-600",
       videoId: "QbUl8Bfme9A",

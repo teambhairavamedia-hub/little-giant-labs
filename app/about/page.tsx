@@ -39,7 +39,7 @@ const milestones = [
   {
     year: "2021",
     title: "The Inception",
-    desc: "Bhairava Media was founded in Mumbai by Rajesh Waghchaware with a simple belief: video content should be cinematic and tell stories that matter. Started with just a camera and a vision.",
+    desc: "Little Giant Labs was founded in Mumbai by Rajesh Waghchaware with a simple belief: video content should be cinematic and tell stories that matter. Started with just a camera and a vision.",
   },
   {
     year: "2023",
@@ -54,7 +54,7 @@ const milestones = [
   {
     year: "2026",
     title: "Global Compound Growth",
-    desc: "Expanded into international markets. Today, Bhairava Media serves 10+ brands globally, generating over 120M+ views annually, and engineering digital scale for industry leaders.",
+    desc: "Expanded into international markets. Today, Little Giant Labs serves 10+ brands globally, generating over 120M+ views annually, and engineering digital scale for industry leaders.",
   },
 ];
 
@@ -108,9 +108,9 @@ export default function AboutPage() {
     <main>
       {/* Page Header */}
       <PageHeader
-        eyebrow="About Bhairava Media"
+        eyebrow="About Little Giant Labs"
         title="We build digital movements."
-        description="Bhairava Media sits at the intersection of high-retention cinematic storytelling and performance marketing, scaling brands that refuse to be ignored."
+        description="Little Giant Labs sits at the intersection of high-retention cinematic storytelling and performance marketing, scaling brands that refuse to be ignored."
         theme="dark"
       />
 
@@ -195,7 +195,7 @@ export default function AboutPage() {
               </h2>
 
               <p className="mt-6 text-[0.9375rem] leading-[1.75] text-[#0a0a0a]/65 font-light">
-                Rajesh Waghchaware founded Bhairava Media on a simple premise: in a digital landscape flooded with media spend and generic assets, only the most calculated, cinematic campaigns command true attention.
+                Rajesh Waghchaware founded Little Giant Labs on a simple premise: in a digital landscape flooded with media spend and generic assets, only the most calculated, cinematic campaigns command true attention.
               </p>
 
               {/* Interactive Tabs Menu */}
@@ -238,7 +238,7 @@ export default function AboutPage() {
               </motion.div>
 
               <blockquote className="mt-8 border-l-2 border-[#0a0a0a]/15 pl-5 italic text-[0.9375rem] leading-[1.6] text-[#0a0a0a]/75 font-light">
-                &ldquo;Bhairava represents power and focus. We channel that same focus into the brands we scale.&rdquo;
+                &ldquo;Little Giant Labs represents power and focus. We channel that same focus into the brands we scale.&rdquo;
                 <cite className="block mt-2 text-[10px] uppercase tracking-wider text-[#0a0a0a]/40 not-italic font-semibold">
                   — Rajesh Waghchaware
                 </cite>

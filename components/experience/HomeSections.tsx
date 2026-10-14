@@ -285,7 +285,7 @@ export function AboutSnap() {
         {/* Top row: label + heading */}
         <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", marginBottom: "clamp(3rem,7vw,5rem)" }}>
           <p style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontSize: "0.6875rem", letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>
-            About Bhairava Media
+            About Little Giant Labs
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "2rem" }}>
             <h2
@@ -314,7 +314,7 @@ export function AboutSnap() {
           {/* LEFT: philosophy */}
           <div>
             <p style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontSize: "clamp(0.95rem,1.4vw,1.125rem)", lineHeight: 1.75, color: "#ffffff", fontWeight: 400, marginBottom: "2rem" }}>
-              Bhairava Media was born from a simple belief: great creative work should also drive measurable business results. We sit at the intersection of storytelling and strategy — building the kind of content that earns attention and converts it into revenue.
+              Little Giant Labs was born from a simple belief: great creative work should also drive measurable business results. We sit at the intersection of storytelling and strategy — building the kind of content that earns attention and converts it into revenue.
             </p>
 
             {/* Philosophy pills */}
@@ -1560,7 +1560,7 @@ export function ReelStack({ ready = true }: ReelStackProps) {
 
 const allTestimonials = [
   {
-    quote: "Bhairava Media didn't just run ads — they built us a content machine. Our ROAS went from 1.2× to 4.8× in 60 days.",
+    quote: "Little Giant Labs didn't just run ads — they built us a content machine. Our ROAS went from 1.2× to 4.8× in 60 days.",
     author: "Riya Sharma",
     role: "Founder, Nova Skincare",
     initials: "RS",
