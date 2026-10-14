@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans } from "next/font/google";
+import { Manrope, DM_Sans } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { siteConfig } from "@/lib/site";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import "./globals.css";
 
-// Syne — sharp geometric editorial face (Noomo-style display)
-const syne = Syne({
-  variable: "--font-syne",
+// Manrope — geometric editorial face with a closed, double-storey lowercase g
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
@@ -28,6 +28,16 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+  },
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -45,7 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${syne.variable} ${dmSans.variable} antialiased`}>
+      <body className={`${manrope.variable} ${dmSans.variable} antialiased`}>
         <SmoothScroll>
           <Header />
           {children}

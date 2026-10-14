@@ -238,7 +238,7 @@ export function CaseStudyGrid() {
                     <div className="absolute bottom-0 inset-x-0 z-20 p-6 flex flex-col justify-end space-y-2">
                       <h3
                         className="text-xl md:text-2xl font-bold text-white tracking-tight group-hover:text-[#d4af37] transition-colors duration-300"
-                        style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                        style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                       >
                         {project.client}
                       </h3>
@@ -295,12 +295,12 @@ export function CaseStudyGrid() {
                     className="py-8 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer px-4 rounded-xl mt-1"
                   >
                     <div className="flex items-baseline gap-4">
-                      <span className="text-xs font-bold text-[#d4af37] tracking-wider" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                      <span className="text-xs font-bold text-[#d4af37] tracking-wider" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                         0{idx + 1}
                       </span>
                       <h3
                         className="text-2xl md:text-3xl font-bold text-black"
-                        style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                        style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                       >
                         {project.client}
                       </h3>
@@ -310,7 +310,7 @@ export function CaseStudyGrid() {
                       <span className="text-[10px] text-black/40 uppercase tracking-widest font-semibold" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                         {project.category}
                       </span>
-                      <span className="text-base font-bold text-black" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                      <span className="text-base font-bold text-black" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                         {project.metric}
                       </span>
                       <span className="text-xs text-black/35 group-hover:text-black transition-colors duration-200">
@@ -357,7 +357,7 @@ export function CaseStudyGrid() {
                               <Link
                                 href="/contact"
                                 className="inline-flex items-center gap-2 text-xs font-bold text-black hover:text-[#d4af37]"
-                                style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                               >
                                 Discuss similar growth campaign →
                               </Link>
@@ -459,14 +459,14 @@ export function CaseStudyGrid() {
                     </span>
                     <h2
                       className="text-2xl md:text-3xl font-bold tracking-tight"
-                      style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                      style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                     >
                       {selectedProject.client}
                     </h2>
                   </div>
                   <div className="rounded-2xl bg-white/5 border border-white/10 px-4 py-2 shrink-0">
                     <span className="text-xs text-white/40 block text-center mb-0.5">Primary Outcome</span>
-                    <span className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                    <span className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                       {selectedProject.metric}
                     </span>
                   </div>
@@ -504,7 +504,7 @@ export function CaseStudyGrid() {
                   href="/contact"
                   onClick={() => setSelectedProject(null)}
                   className="flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold bg-white text-black hover:bg-[#d4af37] transition-all duration-300 group"
-                  style={{ fontFamily: "var(--font-syne), sans-serif", fontSize: "0.875rem" }}
+                  style={{ fontFamily: "var(--font-manrope), sans-serif", fontSize: "0.875rem" }}
                 >
                   <span>Discuss A Similar Campaign</span>
                   <span className="group-hover:translate-x-1.5 transition-transform duration-300">→</span>

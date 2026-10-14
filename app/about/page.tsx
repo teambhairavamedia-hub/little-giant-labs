@@ -139,7 +139,7 @@ export default function AboutPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight drop-shadow-md" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                  <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight drop-shadow-md" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                     Rajesh Waghchaware
                   </h3>
                   <p className="text-white/70 text-xs md:text-sm font-semibold tracking-wider uppercase mt-1">
@@ -186,7 +186,7 @@ export default function AboutPage() {
             {/* Founder Philosophy & Interactive Tabs */}
             <div className="flex flex-col justify-center">
               <p className="label-eyebrow text-[#0a0a0a]/38 mb-5">Our Leadership</p>
-              <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+              <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                 Storytelling
                 <br />
                 <span className="font-light text-[#0a0a0a]/22" style={{ fontStyle: "italic" }}>
@@ -229,7 +229,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.4 }}
                 className="mt-6 min-h-[160px]"
               >
-                <h4 className="text-lg font-bold text-[#0a0a0a]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                <h4 className="text-lg font-bold text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                   {tabContents[activeTab].title}
                 </h4>
                 <p className="mt-4 text-[0.9375rem] leading-[1.7] text-[#0a0a0a]/60 font-light">
@@ -238,7 +238,7 @@ export default function AboutPage() {
               </motion.div>
 
               <blockquote className="mt-8 border-l-2 border-[#0a0a0a]/15 pl-5 italic text-[0.9375rem] leading-[1.6] text-[#0a0a0a]/75 font-light">
-                &ldquo;Bhairava represents power and focus. We channel that same focus into the brands we scale.&rdquo;
+                &ldquo;Little Giant Labs represents bold ideas and focused execution. We channel that focus into the brands we scale.&rdquo;
                 <cite className="block mt-2 text-[10px] uppercase tracking-wider text-[#0a0a0a]/40 not-italic font-semibold">
                   — Rajesh Waghchaware
                 </cite>
@@ -254,7 +254,7 @@ export default function AboutPage() {
         <Container>
           <div className="mb-20 text-center max-w-xl mx-auto">
             <p className="label-eyebrow text-[#0a0a0a]/38 mb-5">Our Journey</p>
-            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               Evolution in
               <br />
               <span className="font-light text-[#0a0a0a]/22" style={{ fontStyle: "italic" }}>
@@ -298,10 +298,10 @@ export default function AboutPage() {
                         viewport={{ once: true, margin: "-80px" }}
                         transition={{ duration: 0.7, delay: index * 0.05 }}
                       >
-                        <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-[#0a0a0a]/20 block mb-2" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                        <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-[#0a0a0a]/20 block mb-2" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                           {m.year}
                         </span>
-                        <h3 className="text-lg md:text-xl font-bold text-[#0a0a0a]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                        <h3 className="text-lg md:text-xl font-bold text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                           {m.title}
                         </h3>
                         <p className="mt-3 text-xs md:text-sm leading-relaxed text-[#0a0a0a]/50 font-light">
@@ -325,7 +325,7 @@ export default function AboutPage() {
         <Container>
           <div className="mb-16">
             <p className="label-eyebrow text-[#0a0a0a]/38 mb-5">Our Capabilities</p>
-            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               How we scale
               <br />
               <span className="font-light text-[#0a0a0a]/22" style={{ fontStyle: "italic" }}>
@@ -342,7 +342,7 @@ export default function AboutPage() {
         <Container>
           <div className="mb-16 text-center max-w-xl mx-auto">
             <p className="label-eyebrow text-[#0a0a0a]/38 mb-5">Our Principles</p>
-            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               Driven by
               <br />
               <span className="font-light text-[#0a0a0a]/22" style={{ fontStyle: "italic" }}>
@@ -358,7 +358,7 @@ export default function AboutPage() {
                   <span className="text-2xl font-bold text-[#0a0a0a]/15 tracking-tighter block mb-6">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="text-lg font-bold text-[#0a0a0a] tracking-tight" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+                  <h3 className="text-lg font-bold text-[#0a0a0a] tracking-tight" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                     {v.title}
                   </h3>
                   <p className="mt-4 text-sm leading-relaxed text-[#0a0a0a]/60 font-light">

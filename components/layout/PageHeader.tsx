@@ -56,7 +56,7 @@ export function PageHeader({
           <motion.h1
             variants={itemVariants}
             className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[var(--theme-fg)] max-w-3xl"
-            style={{ fontFamily: "var(--font-syne), sans-serif" }}
+            style={{ fontFamily: "var(--font-manrope), sans-serif" }}
           >
             {title}
           </motion.h1>

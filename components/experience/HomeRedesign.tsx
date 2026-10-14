@@ -6,17 +6,17 @@ const pillars = [
   {
     number: "01", title: "Attention Engineering", scene: "Make them look.",
     description: "Data-backed, high-production visual assets built to capture and retain modern consumer attention spans.",
-    image: experienceConfig.portfolio[0].image, alt: "Cinematic recruitment campaign for IDFC FIRST Bank", tone: "#004B3A",
+    media: "none",
   },
   {
     number: "02", title: "Performance Architecture", scene: "Make it perform.",
     description: "Algorithmic media buying stacks optimized for predictable corporate revenue multiplication.",
-    image: experienceConfig.portfolio[5].image, alt: "Short form commercial campaign creative", tone: "#17344A",
+    media: "none",
   },
   {
     number: "03", title: "Autonomous Lifecycle Loops", scene: "Make it last.",
     description: "AI-powered CRM setups and custom data tracking systems that automate consumer retention.",
-    image: "", alt: "", tone: "#283C39",
+    media: "type",
   },
 ];
 
@@ -72,19 +72,13 @@ export function HomeRedesign() {
           </div>
           <div className="pillar-list">
             {pillars.map((pillar) => (
-              <article className="pillar-scene" key={pillar.number}>
+                <article className={`pillar-scene${pillar.media === "none" ? " pillar-scene--text" : ""}`} key={pillar.number}>
                 <div className="pillar-copy">
                   <p className="home-eyebrow"><span /> {pillar.number} / {pillar.title}</p>
                   <h3>{pillar.scene}</h3>
                   <p>{pillar.description}</p>
                 </div>
-                {pillar.image ? (
-                  <figure className="pillar-image" style={{ background: pillar.tone }}>
-                    {/* Existing project artwork, reused as supporting campaign imagery. */}
-                    <img src={pillar.image} alt={pillar.alt} loading="lazy" />
-                    <figcaption>{pillar.title}</figcaption>
-                  </figure>
-                ) : (
+                {pillar.media === "type" && (
                   <div className="pillar-typography" aria-label="Recognize, return, retain">
                     <span>Recognize</span><span>Return</span><span>Retain</span>
                   </div>

@@ -93,7 +93,7 @@ export function ServiceGrid() {
               </span>
             </div>
             
-            <h2 className="mt-6 text-xl md:text-2xl font-bold tracking-tight text-[var(--theme-fg)]" style={{ fontFamily: "var(--font-syne), sans-serif" }}>
+            <h2 className="mt-6 text-xl md:text-2xl font-bold tracking-tight text-[var(--theme-fg)]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               {service.title}
             </h2>
             

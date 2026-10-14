@@ -59,7 +59,7 @@ export default function ContactPage() {
                   <a
                     href="mailto:hello@bhairavamedia.com"
                     className="text-lg md:text-xl font-bold text-black hover:text-[#d4af37] transition-colors duration-200 inline-block border-b border-black/10 pb-1"
-                    style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                   >
                     hello@bhairavamedia.com
                   </a>
@@ -70,7 +70,7 @@ export default function ContactPage() {
                   <span className="text-[11px] text-black/40 font-light block">Our Location</span>
                   <span
                     className="text-sm font-semibold text-black block"
-                    style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                   >
                     PUNE, Maharashtra, IN
                   </span>
@@ -81,7 +81,7 @@ export default function ContactPage() {
                   <span className="text-[11px] text-black/40 font-light block">Response Time</span>
                   <span
                     className="text-sm font-semibold text-[#d4af37] block"
-                    style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                   >
                     Within 24 hours
                   </span>
@@ -132,7 +132,7 @@ export default function ContactPage() {
                   </span>
                 </div>
                 <blockquote className="text-xs text-black/60 leading-relaxed font-light italic">
-                  &ldquo;Working with Bhairava felt like having an in-house creative and growth team. Absolutely recommend their strategy-first approach.&rdquo;
+                  &ldquo;Working with Little Giant Labs felt like having an in-house creative and growth team. Absolutely recommend their strategy-first approach.&rdquo;
                 </blockquote>
                 <cite className="block text-[9px] uppercase tracking-wider text-black/35 not-italic font-bold">
                   — Founder, Nova Skincare
@@ -148,7 +148,7 @@ export default function ContactPage() {
                 <div>
                   <h2
                     className="text-2xl md:text-3xl font-bold text-black tracking-tight mb-2"
-                    style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                   >
                     Start a conversation
                   </h2>
@@ -179,7 +179,7 @@ export default function ContactPage() {
                         >
                           <span
                             className="text-sm font-bold text-black group-hover:text-[#d4af37] transition-colors duration-200"
-                            style={{ fontFamily: "var(--font-syne), sans-serif" }}
+                            style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                           >
                             {faq.q}
                           </span>

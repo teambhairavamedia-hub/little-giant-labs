@@ -45,7 +45,7 @@ export default function WorkPage() {
             <span
               key={i}
               className="text-sm md:text-base uppercase tracking-widest text-white/50 font-semibold shrink-0"
-              style={{ fontFamily: "var(--font-syne), sans-serif" }}
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
               {stat}
               <span className="mx-6 text-white/15">✦</span>

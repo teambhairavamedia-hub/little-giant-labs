@@ -29,7 +29,7 @@ export function ContactForm() {
         <span className="text-4xl mb-4 block">✦</span>
         <h3
           className="text-xl font-bold text-[#0a0a0a] tracking-tight"
-          style={{ fontFamily: "var(--font-syne), sans-serif" }}
+          style={{ fontFamily: "var(--font-manrope), sans-serif" }}
         >
           Message received!
         </h3>

@@ -3,7 +3,7 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    NOOMO-INSPIRED DESIGN SYSTEM
    Palette: Pure white #ffffff / near-black #0a0a0a / mid-gray #6b6b6b
-   Type: Syne (display/editorial) + DM Sans (body)
+   Type: Manrope (display/editorial) + DM Sans (body)
 ───────────────────────────────────────────────────────────────────────────── */
 :root {
   --background: #f7f7f6;
@@ -25,9 +25,9 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  /* Font stacks — Syne for display, DM Sans for body */
+  /* Font stacks — Manrope for display, DM Sans for body */
   --font-sans: var(--font-dm-sans);
-  --font-display: var(--font-syne);
+  --font-display: var(--font-manrope);
 }
 
 html {
@@ -47,9 +47,9 @@ body {
 }
 
 /* ── Editorial heading styles (Noomo-style) ──
-   All headings use Syne: tight tracking, strong weight contrast */
+   All headings use Manrope: tight tracking, strong weight contrast */
 h1, h2, h3, h4, h5, h6, .font-display {
-  font-family: var(--font-syne), var(--font-dm-sans), sans-serif;
+  font-family: var(--font-manrope), var(--font-dm-sans), sans-serif;
   letter-spacing: -0.04em;
   line-height: 1.0;
 }
@@ -76,7 +76,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 /* Editorial large display text */
 .text-display {
-  font-family: var(--font-syne), sans-serif;
+  font-family: var(--font-manrope), sans-serif;
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 0.96;
@@ -327,6 +327,8 @@ html.lenis, html.lenis body {
 .home-section-head>p:last-child,.work-heading>p { max-width:440px; color:#9aadb9; line-height:1.7; }
 .pillar-list { border-top:1px solid rgba(226,232,240,.14); }
 .pillar-scene { display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(2rem,7vw,7rem); align-items:center; padding:clamp(2.5rem,7vw,6rem) 0; border-bottom:1px solid rgba(226,232,240,.14); }
+.pillar-scene--text { grid-template-columns:minmax(0,1fr); }
+.pillar-scene--text .pillar-copy { max-width:760px; }
 .pillar-scene:nth-child(even) .pillar-copy { order:2; }
 .pillar-copy h3 { margin:1.3rem 0 1rem; color:var(--home-paper); font-size:clamp(2.2rem,4.2vw,4.1rem); line-height:.98; letter-spacing:-.05em; }
 .pillar-copy>p:last-child { max-width:400px; color:#A9BAC5; line-height:1.75; }
