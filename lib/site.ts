@@ -12,7 +12,7 @@ export const siteConfig = {
   nav: [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Case Studies", href: "/work" },
+    { label: "Case Studies", href: "#" },
     { label: "Contact", href: "/contact" },
   ],
   cta: {

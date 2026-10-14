@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type CSSProperties, type ReactNode } from "react";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/ui/Section";
 import type { SectionTheme } from "@/lib/theme";
@@ -12,6 +12,7 @@ type PageHeaderProps = {
   description?: string;
   theme?: SectionTheme;
   children?: ReactNode;
+  style?: CSSProperties;
 };
 
 export function PageHeader({
@@ -20,6 +21,7 @@ export function PageHeader({
   description,
   theme = "dark",
   children,
+  style,
 }: PageHeaderProps) {
   const containerVariants = {
     hidden: {},
@@ -40,7 +42,7 @@ export function PageHeader({
   };
 
   return (
-    <Section theme={theme} className="border-b border-theme pt-28 md:pt-32">
+    <Section theme={theme} className="border-b border-theme pt-28 md:pt-32" style={style}>
       <Container className="py-16 md:py-20">
         <motion.div
           variants={containerVariants}

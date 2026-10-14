@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { useState, useRef, type CSSProperties } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
@@ -112,101 +112,53 @@ export default function AboutPage() {
         title="We build digital movements."
         description="Little Giant Labs sits at the intersection of high-retention cinematic storytelling and performance marketing, scaling brands that refuse to be ignored."
         theme="dark"
+        style={{
+          background: "#0B1B2B",
+          color: "#E2E8F0",
+          "--theme-bg": "#0B1B2B",
+          "--theme-fg": "#E2E8F0",
+          "--theme-fg-muted": "rgba(226,232,240,0.8)",
+          "--theme-fg-subtle": "rgba(226,232,240,0.72)",
+          "--theme-border": "rgba(226,232,240,0.18)",
+        } as CSSProperties}
       />
 
       {/* Founder Spotlight Section */}
-      <Section theme="light" className="relative overflow-hidden py-24 md:py-32">
+      <Section
+        theme="light"
+        className="relative overflow-hidden border-b border-[#22252A]/10 py-20 md:py-28"
+        style={{ background: "#F8F6F0", color: "#22252A" }}
+      >
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] items-stretch">
-
-            {/* Founder Visual & Social Card */}
-            <div className="relative rounded-[2.5rem] overflow-hidden border border-[#e4e4e7] bg-[#0a0a0a] shadow-2xl flex flex-col justify-end p-8 md:p-12 min-h-[450px] lg:min-h-[550px] group">
-              {/* Founder Image */}
-              <img
-                src="https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/founder/founder-f2ovW1aAw2yHLcv2XuCepudGIFnI91.jpg"
-                alt="Rajesh Waghchaware - Founder & Creative Director"
-                className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-103 transition-transform duration-700 ease-out z-0"
-              />
-
-              {/* Dark Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/50 to-transparent z-10" />
-
-              <div className="relative z-20 text-white flex flex-col h-full justify-between">
-                <div className="flex justify-between items-start">
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-white/80 border border-white/20 rounded-full px-4 py-1.5 backdrop-filter backdrop-blur-md bg-black/40">
-                    Founder Profile
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="text-3xl md:text-4xl font-extrabold tracking-tight drop-shadow-md" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
-                    Rajesh Waghchaware
-                  </h3>
-                  <p className="text-white/70 text-xs md:text-sm font-semibold tracking-wider uppercase mt-1">
-                    Founder &amp; Creative Director
-                  </p>
-                  <p className="mt-4 text-sm text-white/85 font-light leading-relaxed max-w-md">
-                    Directing creative strategies, growth analytics pipelines, and cinematic production for high-growth brands globally.
-                  </p>
-
-                  {/* Quick Socials */}
-                  <div className="mt-8 pt-6 border-t border-white/15 flex items-center gap-4">
-                    <a
-                      href="https://linkedin.com/in/rajesh-waghchaware"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full bg-black/40 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-105 backdrop-blur-md"
-                      aria-label="LinkedIn"
-                    >
-                      <LinkedInIcon />
-                    </a>
-                    <a
-                      href="https://twitter.com/rajesh_w"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full bg-black/40 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-105 backdrop-blur-md"
-                      aria-label="Twitter/X"
-                    >
-                      <TwitterIcon />
-                    </a>
-                    <a
-                      href="https://www.instagram.com/bhairava.media/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full bg-black/40 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-all duration-300 hover:scale-105 backdrop-blur-md"
-                      aria-label="Instagram"
-                    >
-                      <InstagramIcon />
-                    </a>
-                  </div>
-                </div>
+          <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.72fr)] lg:gap-20">
+            <div className="flex flex-col">
+              <div className="mb-8 flex items-center gap-4 border-b border-[#22252A]/15 pb-5">
+                <span className="h-px w-10 bg-[#C5A059]" aria-hidden="true" />
+                <p className="label-eyebrow text-[#22252A]/55">Our Leadership</p>
+                <span className="ml-auto text-[0.6rem] tracking-[0.18em] text-[#22252A]/45">01 / THE POINT OF VIEW</span>
               </div>
-            </div>
 
-            {/* Founder Philosophy & Interactive Tabs */}
-            <div className="flex flex-col justify-center">
-              <p className="label-eyebrow text-[#0a0a0a]/38 mb-5">Our Leadership</p>
-              <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
-                Storytelling
-                <br />
-                <span className="font-light text-[#0a0a0a]/22" style={{ fontStyle: "italic" }}>
-                  with conviction.
-                </span>
+              <h2 className="max-w-[12ch] text-[clamp(3rem,7vw,6rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-[#22252A]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+                Storytelling <span className="font-light italic text-[#004B3A]">with conviction.</span>
               </h2>
 
-              <p className="mt-6 text-[0.9375rem] leading-[1.75] text-[#0a0a0a]/65 font-light">
+              <p className="mt-8 max-w-[58ch] text-base leading-[1.8] text-[#22252A]/75 md:text-[1.05rem]">
                 Rajesh Waghchaware founded Little Giant Labs on a simple premise: in a digital landscape flooded with media spend and generic assets, only the most calculated, cinematic campaigns command true attention.
               </p>
 
-              {/* Interactive Tabs Menu */}
-              <div className="mt-10 flex border-b border-theme pb-2 gap-6 md:gap-8">
+              <blockquote className="mt-8 max-w-[54ch] border-l-2 border-[#C5A059] pl-5 text-sm italic leading-[1.7] text-[#22252A]/75 md:text-base">
+                &ldquo;Little Giant Labs represents bold ideas and focused execution. We channel that focus into the brands we scale.&rdquo;
+                <cite className="mt-3 block text-[0.6rem] not-italic uppercase tracking-[0.2em] text-[#22252A]/50">Rajesh Waghchaware</cite>
+              </blockquote>
+
+              <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-b border-[#22252A]/15">
                 {(["vision", "background", "philosophy"] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className="relative pb-3 text-xs uppercase tracking-wider font-bold transition-colors duration-300"
+                    className="relative pb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#004B3A]"
                     style={{
-                      color: activeTab === tab ? "#0a0a0a" : "rgba(10,10,10,0.35)",
+                      color: activeTab === tab ? "#22252A" : "rgba(34,37,42,0.55)",
                       cursor: "pointer",
                     }}
                   >
@@ -214,50 +166,63 @@ export default function AboutPage() {
                     {activeTab === tab && (
                       <motion.div
                         layoutId="activeTabUnderline"
-                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#800000]"
+                        className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C5A059]"
                       />
                     )}
                   </button>
                 ))}
               </div>
 
-              {/* Tabs Content */}
               <motion.div
                 key={activeTab}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="mt-6 min-h-[160px]"
+                className="mt-6 min-h-[150px] max-w-[58ch]"
               >
-                <h4 className="text-lg font-bold text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+                <h3 className="text-xl font-semibold tracking-[-0.03em] text-[#22252A]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                   {tabContents[activeTab].title}
-                </h4>
-                <p className="mt-4 text-[0.9375rem] leading-[1.7] text-[#0a0a0a]/60 font-light">
+                </h3>
+                <p className="mt-3 text-sm leading-[1.8] text-[#22252A]/65">
                   {tabContents[activeTab].body}
                 </p>
               </motion.div>
-
-              <blockquote className="mt-8 border-l-2 border-[#0a0a0a]/15 pl-5 italic text-[0.9375rem] leading-[1.6] text-[#0a0a0a]/75 font-light">
-                &ldquo;Little Giant Labs represents bold ideas and focused execution. We channel that focus into the brands we scale.&rdquo;
-                <cite className="block mt-2 text-[10px] uppercase tracking-wider text-[#0a0a0a]/40 not-italic font-semibold">
-                  — Rajesh Waghchaware
-                </cite>
-              </blockquote>
             </div>
 
+            <figure className="relative isolate mx-auto w-full max-w-[500px] lg:mt-12 lg:max-w-none">
+              <div className="absolute -left-3 -top-3 h-full w-full border border-[#C5A059]/55" aria-hidden="true" />
+              <div className="relative aspect-[4/5] overflow-hidden bg-[#0B1B2B]">
+                <img
+                  src="https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/founder/founder-f2ovW1aAw2yHLcv2XuCepudGIFnI91.jpg"
+                  alt="Rajesh Waghchaware, Founder and Creative Director"
+                  className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out motion-reduce:transition-none hover:scale-[1.02]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B2B]/90 via-[#0B1B2B]/10 to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-6 text-[#E2E8F0] md:p-8">
+                  <p className="label-eyebrow text-[#C5A059]">Founder &amp; Creative Director</p>
+                  <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] md:text-3xl" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>Rajesh Waghchaware</h3>
+                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#E2E8F0]/80">Directing creative strategies, growth analytics pipelines, and cinematic production for high-growth brands globally.</p>
+                  <div className="mt-6 flex items-center gap-3 border-t border-[#E2E8F0]/20 pt-5">
+                    <a href="https://linkedin.com/in/rajesh-waghchaware" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center border border-[#E2E8F0]/30 text-[#E2E8F0] transition-colors hover:border-[#C5A059] hover:text-[#C5A059] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A059]" aria-label="LinkedIn"><LinkedInIcon /></a>
+                    <a href="https://twitter.com/rajesh_w" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center border border-[#E2E8F0]/30 text-[#E2E8F0] transition-colors hover:border-[#C5A059] hover:text-[#C5A059] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A059]" aria-label="Twitter/X"><TwitterIcon /></a>
+                    <a href="https://www.instagram.com/bhairava.media/" target="_blank" rel="noopener noreferrer" className="flex h-10 w-10 items-center justify-center border border-[#E2E8F0]/30 text-[#E2E8F0] transition-colors hover:border-[#C5A059] hover:text-[#C5A059] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A059]" aria-label="Instagram"><InstagramIcon /></a>
+                  </div>
+                </figcaption>
+              </div>
+            </figure>
           </div>
         </Container>
       </Section>
 
       {/* Interactive Milestone Timeline */}
-      <Section theme="light" className="py-24 md:py-32 border-t border-[#0a0a0a]/5 bg-[#fbfbfb]" ref={timelineRef}>
+      <Section theme="light" className="py-24 md:py-32 border-t border-[#22252A]/5 bg-[#F8F6F0]" ref={timelineRef}>
         <Container>
           <div className="mb-20 text-center max-w-xl mx-auto">
-            <p className="label-eyebrow text-[#0a0a0a]/38 mb-5">Our Journey</p>
-            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+            <p className="label-eyebrow text-[#22252A]/38 mb-5">Our Journey</p>
+            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#22252A]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               Evolution in
               <br />
-              <span className="font-light text-[#0a0a0a]/22" style={{ fontStyle: "italic" }}>
+              <span className="font-light text-[#22252A]/22" style={{ fontStyle: "italic" }}>
                 milestones.
               </span>
             </h2>
@@ -265,13 +230,13 @@ export default function AboutPage() {
 
           <div className="relative max-w-4xl mx-auto" ref={timelineRef}>
             {/* Scroll-Progress Line (Desktop Center, Mobile Left) */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-[#e4e4e7] -translate-x-[1px]" />
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-[#E2E8F0] -translate-x-[1px]" />
             <motion.div
               style={{
                 scaleY,
                 transformOrigin: "top",
               }}
-              className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-[#0a0a0a] -translate-x-[1px] z-10"
+              className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-[#22252A] -translate-x-[1px] z-10"
             />
 
             {/* Timeline Cards */}
@@ -285,7 +250,7 @@ export default function AboutPage() {
                     className="relative flex flex-col md:flex-row items-start md:justify-between group"
                   >
                     {/* Circle Node Indicator */}
-                    <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-2 border-white bg-[#0a0a0a] -translate-x-1/2 top-1.5 z-20 transition-all duration-300 group-hover:scale-125" />
+                    <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-2 border-[#E2E8F0] bg-[#22252A] -translate-x-1/2 top-1.5 z-20 transition-all duration-300 group-hover:scale-125" />
 
                     {/* Timeline Content Block (Alternates Left / Right on Desktop) */}
                     <div
@@ -298,13 +263,13 @@ export default function AboutPage() {
                         viewport={{ once: true, margin: "-80px" }}
                         transition={{ duration: 0.7, delay: index * 0.05 }}
                       >
-                        <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-[#0a0a0a]/20 block mb-2" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+                        <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-[#22252A]/20 block mb-2" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                           {m.year}
                         </span>
-                        <h3 className="text-lg md:text-xl font-bold text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+                        <h3 className="text-lg md:text-xl font-bold text-[#22252A]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                           {m.title}
                         </h3>
-                        <p className="mt-3 text-xs md:text-sm leading-relaxed text-[#0a0a0a]/50 font-light">
+                        <p className="mt-3 text-xs md:text-sm leading-relaxed text-[#22252A]/50 font-light">
                           {m.desc}
                         </p>
                       </motion.div>
@@ -321,14 +286,14 @@ export default function AboutPage() {
       </Section>
 
       {/* Services Capabilities Section */}
-      <Section theme="light" className="border-t border-[#0a0a0a]/5 py-24 md:py-32" style={{ background: "#fafafa" }}>
+      <Section theme="light" className="border-t border-[#22252A]/5 py-24 md:py-32" style={{ background: "#F8F6F0" }}>
         <Container>
           <div className="mb-16">
-            <p className="label-eyebrow text-[#0a0a0a]/38 mb-5">Our Capabilities</p>
-            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+            <p className="label-eyebrow text-[#22252A]/38 mb-5">Our Capabilities</p>
+            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#22252A]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               How we scale
               <br />
-              <span className="font-light text-[#0a0a0a]/22" style={{ fontStyle: "italic" }}>
+              <span className="font-light text-[#22252A]/22" style={{ fontStyle: "italic" }}>
                 your brand.
               </span>
             </h2>
@@ -338,14 +303,14 @@ export default function AboutPage() {
       </Section>
 
       {/* Our Values Section */}
-      <Section theme="light" className="border-t border-[#0a0a0a]/5 py-24 md:py-32">
+      <Section theme="light" className="border-t border-[#22252A]/5 py-24 md:py-32">
         <Container>
           <div className="mb-16 text-center max-w-xl mx-auto">
-            <p className="label-eyebrow text-[#0a0a0a]/38 mb-5">Our Principles</p>
-            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#0a0a0a]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+            <p className="label-eyebrow text-[#22252A]/38 mb-5">Our Principles</p>
+            <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[#22252A]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               Driven by
               <br />
-              <span className="font-light text-[#0a0a0a]/22" style={{ fontStyle: "italic" }}>
+              <span className="font-light text-[#22252A]/22" style={{ fontStyle: "italic" }}>
                 conviction.
               </span>
             </h2>
@@ -353,15 +318,15 @@ export default function AboutPage() {
 
           <div className="grid gap-6 md:grid-cols-3">
             {values.map((v, i) => (
-              <Card key={v.title} className="flex flex-col justify-between p-8 hover:shadow-[0_15px_40px_rgba(0,0,0,0.04)] hover:border-[#0a0a0a]/20 transition-all duration-300">
+              <Card key={v.title} className="flex flex-col justify-between p-8 hover:shadow-[0_15px_40px_rgba(34,37,42,0.04)] hover:border-[#22252A]/20 transition-all duration-300">
                 <div>
-                  <span className="text-2xl font-bold text-[#0a0a0a]/15 tracking-tighter block mb-6">
+                  <span className="text-2xl font-bold text-[#22252A]/15 tracking-tighter block mb-6">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="text-lg font-bold text-[#0a0a0a] tracking-tight" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+                  <h3 className="text-lg font-bold text-[#22252A] tracking-tight" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                     {v.title}
                   </h3>
-                  <p className="mt-4 text-sm leading-relaxed text-[#0a0a0a]/60 font-light">
+                  <p className="mt-4 text-sm leading-relaxed text-[#22252A]/60 font-light">
                     {v.description}
                   </p>
                 </div>

@@ -109,7 +109,7 @@ export function HomeRedesign() {
               </article>
             ))}
           </div>
-          <Link href="/work" className="home-all-work">Explore all work <span aria-hidden="true">↗</span></Link>
+          {/* The separate work archive is temporarily unavailable. */}
         </div>
       </section>
     </div>
