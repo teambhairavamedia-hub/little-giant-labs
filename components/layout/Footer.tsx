@@ -72,8 +72,8 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 max-w-xs">
             <div className="flex items-center gap-3 mb-1">
               <Image
-                src="/favicon.svg"
-                alt="Bhairava Media Logo"
+                src="/logo.png"
+                alt="Little Giant Labs logo"
                 width={44}
                 height={44}
                 className="w-10 h-10 md:w-11 md:h-11 object-contain rounded-full shadow-md"
@@ -185,7 +185,7 @@ export function Footer() {
             whiteSpace: "nowrap",
           }}
         >
-          BHAIRAVA
+          LITTLE GIANT LABS
         </div>
 
       </div>

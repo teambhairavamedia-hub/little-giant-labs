@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "Bhairava Media",
+  name: "Little Giant Labs",
   tagline: "Turn Attention Into Revenue.",
   description:
     "A modern media and marketing company dedicated to building powerful brand presence through innovative content, digital marketing, and AI-powered solutions.",

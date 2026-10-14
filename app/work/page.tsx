@@ -5,7 +5,7 @@ import { CaseStudyGrid } from "@/components/work/CaseStudyGrid";
 import { Section } from "@/components/ui/Section";
 
 export const metadata: Metadata = {
-  title: "Work — Bhairava Media",
+  title: "Work",
   description:
     "Selected case studies, brand campaigns, and performance results. See how we turn attention into revenue.",
 };
