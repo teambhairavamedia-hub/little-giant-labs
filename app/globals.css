@@ -1,0 +1,303 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   NOOMO-INSPIRED DESIGN SYSTEM
+   Palette: Pure white #ffffff / near-black #0a0a0a / mid-gray #6b6b6b
+   Type: Syne (display/editorial) + DM Sans (body)
+───────────────────────────────────────────────────────────────────────────── */
+:root {
+  --background: #f7f7f6;
+  --foreground: #0a0a0a;
+  --muted: #6b6b6b;
+  --muted-foreground: #6b6b6b;
+  --card: #ffffff;
+  --border: #e8e8e6;
+  --accent: #0a0a0a;
+  --accent-foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  /* Font stacks — Syne for display, DM Sans for body */
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-syne);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+/* ── Base body ── */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Editorial heading styles (Noomo-style) ──
+   All headings use Syne: tight tracking, strong weight contrast */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-syne), var(--font-dm-sans), sans-serif;
+  letter-spacing: -0.04em;
+  line-height: 1.0;
+}
+
+/* Noomo eyebrow label — tiny, ultra-spaced, DM Sans */
+.label-eyebrow {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Navigation / UI labels — Noomo's signature wide-tracked uppercase */
+.label-nav {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Editorial large display text */
+.text-display {
+  font-family: var(--font-syne), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+}
+
+/* Body copy — DM Sans, relaxed */
+.text-body {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.65;
+}
+
+/* ── Section themes ── */
+.section-dark {
+  --theme-bg: #800000;
+  --theme-bg-subtle: #660000;
+  --theme-fg: #ffffff;
+  --theme-fg-muted: rgba(255, 255, 255, 0.88);
+  --theme-fg-subtle: rgba(255, 255, 255, 0.78);
+  --theme-fg-faint: rgba(255, 255, 255, 0.65);
+  --theme-border: rgba(255, 255, 255, 0.18);
+  --theme-card: rgba(255, 255, 255, 0.08);
+  --theme-accent: #ffffff;
+  --theme-btn-primary-bg: #0a0a0a;
+  --theme-btn-primary-fg: #ffffff;
+  --theme-btn-ghost-border: rgba(255, 255, 255, 0.30);
+  --theme-btn-ghost-bg: rgba(255, 255, 255, 0.10);
+  --theme-fade-from: #800000;
+  background: var(--theme-bg);
+  color: var(--theme-fg);
+}
+
+.section-light {
+  --theme-bg: #ffffff;
+  --theme-bg-subtle: #f7f7f6;
+  --theme-fg: #0a0a0a;
+  --theme-fg-muted: rgba(10, 10, 10, 0.55);
+  --theme-fg-subtle: rgba(10, 10, 10, 0.38);
+  --theme-fg-faint: rgba(10, 10, 10, 0.24);
+  --theme-border: #e8e8e6;
+  --theme-card: #ffffff;
+  --theme-accent: #800000;
+  --theme-btn-primary-bg: #800000;
+  --theme-btn-primary-fg: #ffffff;
+  --theme-btn-ghost-border: rgba(128, 0, 0, 0.10);
+  --theme-btn-ghost-bg: rgba(128, 0, 0, 0.03);
+  --theme-fade-from: #ffffff;
+  background: var(--theme-bg);
+  color: var(--theme-fg);
+}
+
+/* ── Semantic helpers ── */
+.text-theme-muted   { color: var(--theme-fg-muted); }
+.text-theme-subtle  { color: var(--theme-fg-subtle); }
+.text-theme-faint   { color: var(--theme-fg-faint); }
+.text-theme-accent  { color: var(--theme-accent); }
+.border-theme       { border-color: var(--theme-border); }
+.bg-theme-card      { background: var(--theme-card); }
+.bg-theme-subtle    { background: var(--theme-bg-subtle); }
+
+/* ── Glassmorphism ── */
+.theme-glass {
+  background: var(--theme-card);
+  border: 1px solid var(--theme-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.section-dark .theme-glass {
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.section-light .theme-glass {
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ── Film grain noise texture ── */
+.theme-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+}
+
+.section-light .theme-noise {
+  opacity: 0.018;
+}
+
+/* ── Grid overlay ── */
+.theme-grid {
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 10%, transparent 100%);
+}
+
+.section-dark .theme-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+}
+
+.section-light .theme-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.038) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.038) 1px, transparent 1px);
+}
+
+/* ── Edge fade gradients ── */
+.theme-fade-left  { background: linear-gradient(to right, var(--theme-fade-from), transparent); }
+.theme-fade-right { background: linear-gradient(to left,  var(--theme-fade-from), transparent); }
+
+/* ── Form inputs ── */
+.theme-input {
+  border: 1px solid var(--theme-border);
+  background: transparent;
+  color: var(--theme-fg);
+  font-family: var(--font-dm-sans), sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.theme-input:focus {
+  border-color: var(--theme-fg);
+  outline: none;
+}
+
+.theme-input::placeholder {
+  color: var(--theme-fg-faint);
+}
+
+/* ── Interactive elements ── */
+.magnetic-btn { will-change: transform; }
+.marquee-track { will-change: transform; }
+
+/* ── Selection colors ── */
+.section-dark ::selection {
+  background: rgba(247, 247, 246, 0.15);
+  color: white;
+}
+
+.section-light ::selection {
+  background: rgba(10, 10, 10, 0.10);
+  color: #0a0a0a;
+}
+
+/* ── Lenis smooth scrolling ── */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis-scrolling iframe:not(.youtube-reel-player) {
+  pointer-events: none;
+}
+
+/* ── Noomo-style hover underline link ── */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Noomo project-tag pill ── */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--theme-border);
+  border-radius: 100px;
+  padding: 0.25rem 0.75rem;
+  font-family: var(--font-dm-sans), sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--theme-fg-muted);
+  line-height: 1;
+}
+
+/* ── Hide scrollbar (mobile snap carousels) ── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── AboutSnap responsive grid ── */
+@media (max-width: 768px) {
+  .about-snap-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .about-services-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
