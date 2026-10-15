@@ -4,18 +4,18 @@ import { useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
 type Application = {
-  enterpriseName: string; industry: string; industryOther: string;
-  revenue: string; revenueCustom: string; acquisitionSpend: string; spendCustom: string;
-  bottleneck: string; bottleneckOther: string; partnership: string;
+  enterpriseName: string; industry: string;
+  revenue: string; acquisitionSpend: string;
+  bottleneck: string; partnership: string;
   corporateEmail: string; linkedin: string;
 };
 
-const empty: Application = { enterpriseName: "", industry: "", industryOther: "", revenue: "", revenueCustom: "", acquisitionSpend: "", spendCustom: "", bottleneck: "", bottleneckOther: "", partnership: "", corporateEmail: "", linkedin: "" };
-const industries = ["Enterprise Banking & FinTech", "Heavy Infrastructure & Real Estate", "Premium Consumer Goods (D2C)", "Venture-Backed Technology", "High-Ticket B2B Services", "Other"];
-const revenues = ["Under $1 Million", "$1M–$5 Million", "$5M–$20 Million", "$20 Million+", "Other / Enter custom amount or range"];
-const spends = ["Under $10,000 / month", "$10,000–$50,000 / month", "$50,000–$150,000 / month", "$150,000+ / month", "Other / Enter custom amount or range"];
-const bottlenecks = ["Ad platform algorithmic fatigue & dropping ROAS", "Inability to produce high-retention visual media at scale", "Lack of advanced attribution models and data tracking", "Sub-optimal customer lifetime value (LTV) and backend CRM systems", "Other"];
-const partnershipOptions = ["We are looking for a cheap, hands-off execution vendor.", "We are prepared to invest premium capital for institutional scale and long-term partnership."];
+const empty: Application = { enterpriseName: "", industry: "", revenue: "", acquisitionSpend: "", bottleneck: "", partnership: "", corporateEmail: "", linkedin: "" };
+const industries = ["Enterprise Banking & FinTech", "Heavy Infrastructure & Real Estate", "Premium Consumer Goods (D2C)", "Venture-Backed Technology", "High-Ticket B2B Services"];
+const revenues = ["Under $1 Million", "$1M – $5 Million", "$5M – $20 Million", "$20 Million+"];
+const spends = ["Under $10,000 / month", "$10,000 – $50,000 / month", "$50,000 – $150,000 / month", "$150,000+ / month"];
+const bottlenecks = ["Ad platform algorithmic fatigue & dropping ROAS", "Inability to produce high-retention visual media at scale", "Lack of advanced attribution models and data tracking", "Sub-optimal customer lifetime value (LTV) and backend CRM systems"];
+const partnershipOptions = ["We are looking for a cheap, hands-off execution vendor", "We are prepared to invest premium capital for institutional scale and long-term partnership"];
 const inputClass = "mt-3 w-full border-0 border-b border-[#8BA898] bg-transparent px-0 py-3 text-base text-[#F8F6F0] placeholder:text-[#E2E8F0] outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
 const choiceClass = "flex min-h-14 cursor-pointer items-center gap-4 border border-[#F0F4F8]/40 px-4 py-3 text-sm leading-relaxed text-[#E2E8F0] transition-colors hover:border-[#8BA898] has-[:checked]:border-[#C5A059] has-[:checked]:bg-[#004B3A] has-[:checked]:text-[#F8F6F0] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#C5A059]";
 
@@ -39,23 +39,34 @@ export function ContactForm() {
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const submittingRef = useRef(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const set = (key: keyof Application, value: string) => setValues((current) => ({ ...current, [key]: value }));
   const requiredText = (key: keyof Application) => values[key].trim().length > 0;
   const stepValid = () => {
-    if (step === 0) return requiredText("enterpriseName") && requiredText("industry") && (values.industry !== "Other" || requiredText("industryOther"));
-    if (step === 1) return requiredText("revenue") && (values.revenue !== revenues[4] || requiredText("revenueCustom")) && requiredText("acquisitionSpend") && (values.acquisitionSpend !== spends[4] || requiredText("spendCustom")) && [values.revenueCustom, values.spendCustom].every((amount) => !amount || /^[\p{Sc}\p{L}\d\s.,'’–—-]+$/u.test(amount.trim()));
-    if (step === 2) return requiredText("bottleneck") && (values.bottleneck !== "Other" || requiredText("bottleneckOther")) && requiredText("partnership");
+    if (step === 0) return requiredText("enterpriseName") && requiredText("industry");
+    if (step === 1) return requiredText("revenue") && requiredText("acquisitionSpend");
+    if (step === 2) return requiredText("bottleneck") && requiredText("partnership");
     return isEmailValid(values.corporateEmail) && validLinkedIn(values.linkedin);
   };
 
   function changeStep(next: number) { setError(""); setStep(next); requestAnimationFrame(() => headingRef.current?.focus()); }
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!stepValid() || busy) return;
+    if (!stepValid() || submittingRef.current) return;
+    submittingRef.current = true;
     setBusy(true); setError("");
     try {
-      const response = await fetch("/api/applications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values) });
+      const response = await fetch("/api/applications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
+        legal_name: values.enterpriseName,
+        industry_vertical: values.industry,
+        ttm_revenue: values.revenue,
+        monthly_ad_spend: values.acquisitionSpend,
+        growth_bottleneck: values.bottleneck,
+        partnership_readiness: values.partnership,
+        decision_maker_email: values.corporateEmail,
+        decision_maker_linkedin: values.linkedin,
+      }) });
       if (!response.ok) {
         const body = await response.json().catch(() => null);
         throw new Error(body?.error || "We couldn’t submit your application. Please try again later.");
@@ -63,7 +74,7 @@ export function ContactForm() {
       router.push("/application-received");
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : "We couldn’t submit your application. Please try again.");
-    } finally { setBusy(false); }
+    } finally { submittingRef.current = false; setBusy(false); }
   }
 
   const radioGroup = (key: keyof Application, options: string[], name: string) => (
@@ -89,15 +100,15 @@ export function ContactForm() {
       </h2>
       {step === 0 && <div className="space-y-10">
         <label className="block text-sm text-[#F8F6F0]">What is the legal registered name of your enterprise? <span className="text-[#C5A059]">*</span><input className={inputClass} required autoComplete="organization" placeholder="Enter your registered enterprise name" value={values.enterpriseName} onChange={(e) => set("enterpriseName", e.target.value)} /></label>
-        <div><p className="mb-4 text-sm text-[#F8F6F0]">Which industry vertical does your brand seek to dominate? <span className="text-[#C5A059]">*</span></p>{radioGroup("industry", industries, "Industry vertical")}{values.industry === "Other" && <label className="mt-5 block text-sm text-[#F8F6F0]">Specify your industry <span className="text-[#C5A059]">*</span><input className={inputClass} required value={values.industryOther} onChange={(e) => set("industryOther", e.target.value)} /></label>}</div>
+        <div><p className="mb-4 text-sm text-[#F8F6F0]">Which industry vertical does your brand seek to dominate? <span className="text-[#C5A059]">*</span></p>{radioGroup("industry", industries, "Industry vertical")}</div>
       </div>}
       {step === 1 && <div className="space-y-10">
-        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is your verified trailing 12-month (TTM) revenue? <span className="text-[#C5A059]">*</span></p>{radioGroup("revenue", revenues, "Trailing 12-month revenue")}{values.revenue === revenues[4] && <label className="mt-5 block text-sm text-[#F8F6F0]">Custom amount or range <span className="text-[#C5A059]">*</span><input className={inputClass} required placeholder="Amount or range, with currency (e.g. INR 2–3 crore)" value={values.revenueCustom} onChange={(e) => set("revenueCustom", e.target.value)} /><span className="mt-2 block text-xs text-[#E2E8F0]">Please identify the currency. Any currency and amount are welcome.</span></label>}</div>
-        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is your current allocated monthly capital spend for paid customer acquisition? <span className="text-[#C5A059]">*</span></p>{radioGroup("acquisitionSpend", spends, "Monthly customer acquisition spend")}{values.acquisitionSpend === spends[4] && <label className="mt-5 block text-sm text-[#F8F6F0]">Custom amount or range <span className="text-[#C5A059]">*</span><input className={inputClass} required placeholder="Amount or range, with currency (e.g. INR 5–8 lakh / month)" value={values.spendCustom} onChange={(e) => set("spendCustom", e.target.value)} /><span className="mt-2 block text-xs text-[#E2E8F0]">Please identify the currency. Any currency and amount are welcome.</span></label>}</div>
+        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is your trailing 12-month (TTM) revenue? <span className="text-[#C5A059]">*</span></p>{radioGroup("revenue", revenues, "Trailing 12-month revenue")}</div>
+        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is your current allocated monthly capital spend for paid customer acquisition? <span className="text-[#C5A059]">*</span></p>{radioGroup("acquisitionSpend", spends, "Monthly customer acquisition spend")}</div>
         <p className="border-l border-[#C5A059] pl-4 text-xs leading-relaxed text-[#E2E8F0]">Financial information supports internal review only. It does not determine eligibility to submit.</p>
       </div>}
       {step === 2 && <div className="space-y-10">
-        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is the primary architectural bottleneck stalling your current digital growth scale? <span className="text-[#C5A059]">*</span></p>{radioGroup("bottleneck", bottlenecks, "Primary growth bottleneck")}{values.bottleneck === "Other" && <label className="mt-5 block text-sm text-[#F8F6F0]">Describe your primary bottleneck <span className="text-[#C5A059]">*</span><input className={inputClass} required value={values.bottleneckOther} onChange={(e) => set("bottleneckOther", e.target.value)} /></label>}</div>
+        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is the primary architectural bottleneck stalling your current digital growth scale? <span className="text-[#C5A059]">*</span></p>{radioGroup("bottleneck", bottlenecks, "Primary growth bottleneck")}</div>
         <div><p className="mb-4 text-sm leading-relaxed text-[#F8F6F0]">We operate strictly as an institutional growth partner on high-ticket monthly retainers + performance incentives. Are you looking for a traditional execution vendor, or are you fully capitalized to invest in top-tier growth architecture? <span className="text-[#C5A059]">*</span></p>{radioGroup("partnership", partnershipOptions, "Partnership expectations")}</div>
       </div>}
       {step === 3 && <div className="space-y-10">
