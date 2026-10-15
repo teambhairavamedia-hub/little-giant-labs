@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
-import { hasIntroPlayed, INTRO_COMPLETE_EVENT } from "@/lib/intro";
 import { useHeaderTheme } from "@/hooks/useHeaderTheme";
 
 
@@ -18,14 +17,11 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  /* Intro reveal */
+  /* Fade in on mount (the homepage intro that used to gate this was removed) */
   useEffect(() => {
-    if (pathname !== "/") { requestAnimationFrame(() => setVisible(true)); return; }
-    if (hasIntroPlayed()) { requestAnimationFrame(() => setVisible(true)); return; }
-    const handler = () => setVisible(true);
-    window.addEventListener(INTRO_COMPLETE_EVENT, handler);
-    return () => window.removeEventListener(INTRO_COMPLETE_EVENT, handler);
-  }, [pathname]);
+    const frame = requestAnimationFrame(() => setVisible(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   /* Scroll detection */
   useEffect(() => {
@@ -92,10 +88,10 @@ export function Header() {
               <Image
                 src="/logo.png"
                 alt="Little Giant Labs logo"
-                width={40}
-                height={40}
+                width={48}
+                height={48}
                 priority
-                className="w-9 h-9 md:w-10 md:h-10 object-contain rounded-full shadow-md group-hover:scale-105 transition-transform duration-300"
+                className="w-11 h-11 md:w-12 md:h-12 object-contain rounded-full shadow-md group-hover:scale-105 transition-transform duration-300"
               />
               <span
                 style={{
