@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { experienceConfig } from "@/lib/experience";
+import { LoyaltyLoop } from "@/components/experience/LoyaltyLoop";
 
 const pillars = [
   {
@@ -56,7 +57,7 @@ export function HomeRedesign() {
           <p className="home-intro">A closed-loop growth laboratory combining deep data analytics, high-retention media engineering, and AI-driven lifecycle automation.</p>
           <div className="home-actions">
             <Link className="home-button home-button-primary" href="/contact">Apply for Strategy Allocation <span aria-hidden="true">↗</span></Link>
-            <a className="home-button home-button-secondary" href="#selected-work">Explore Selected Work</a>
+            <a className="home-button home-button-secondary" href="#selected-work">Explore Our Work</a>
           </div>
           <span className="home-index">01 / 03 <i /> The growth system</span>
         </div>
@@ -78,9 +79,7 @@ export function HomeRedesign() {
                   <p>{pillar.description}</p>
                 </div>
                 {pillar.media === "type" && (
-                  <div className="pillar-typography" aria-label="Recognize, return, retain">
-                    <span>Recognize</span><span>Return</span><span>Retain</span>
-                  </div>
+                  <LoyaltyLoop />
                 )}
               </article>
             ))}

@@ -130,15 +130,13 @@ export function Header() {
               {/* CTA pill button — desktop */}
               <Link
                 href={siteConfig.cta.href}
-                className="hidden xl:inline-flex items-center rounded-full transition-all duration-300"
+                className="lgl-gold-cta hidden xl:inline-flex items-center rounded-full transition-all duration-300"
                 style={{
                   fontFamily: "var(--font-dm-sans), sans-serif",
                   fontSize: "0.6875rem",
                   fontWeight: 600,
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  color: "#ffffff",
-                  background: "#800000",
                   padding: "0.55rem 1.25rem",
                 }}
                 onMouseEnter={(e) => {
@@ -233,15 +231,13 @@ export function Header() {
               <div className="mt-2 pt-3" style={{ borderTop: `1px solid ${pillBorder}` }}>
                 <Link
                   href={siteConfig.cta.href}
-                  className="block text-center rounded-full py-3 transition-all duration-200"
+                  className="lgl-gold-cta block text-center rounded-full py-3 transition-all duration-200"
                   style={{
                     fontFamily: "var(--font-dm-sans), sans-serif",
                     fontSize: "0.75rem",
                     fontWeight: 600,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: "#ffffff",
-                    background: "#800000",
                   }}
                 >
                   {siteConfig.cta.label}
