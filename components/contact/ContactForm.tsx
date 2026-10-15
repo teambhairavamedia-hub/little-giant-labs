@@ -51,8 +51,14 @@ export function ContactForm() {
   };
 
   function changeStep(next: number) { setError(""); setStep(next); requestAnimationFrame(() => headingRef.current?.focus()); }
+  function goNext() {
+    if (stepValid()) changeStep(step + 1);
+    else setError("Complete the required fields and check your answers to continue.");
+  }
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // Pressing Enter on an earlier step moves forward instead of submitting a partial application
+    if (step < 3) { goNext(); return; }
     if (!stepValid() || submittingRef.current) return;
     submittingRef.current = true;
     setBusy(true); setError("");
@@ -91,9 +97,12 @@ export function ContactForm() {
     {/* <div className="mb-10 flex items-center justify-between border-b border-lgl-line/30 pb-5">
       <span className="font-display text-sm text-lgl-gold">{String(step + 1).padStart(2, "0")} <span className="text-lgl-soft">/ 04</span></span>
     </div> */}
-    <div className="mb-10 flex gap-2" aria-label={`Step ${step + 1} of 4`}>
-      {[0, 1, 2, 3].map((item) => <span key={item} className={`h-[2px] flex-1 ${item <= step ? "bg-[#C5A059]" : "bg-lgl-track"}`} />)}
-    </div>
+    <ol className="mb-10 grid grid-cols-4 gap-2" aria-label={`Step ${step + 1} of 4`}>
+      {[0, 1, 2, 3].map((item) => <li key={item} aria-current={item === step ? "step" : undefined} className="flex flex-col gap-2">
+        <span className={`text-[10px] font-semibold tracking-[.2em] ${item <= step ? "text-lgl-gold" : "text-lgl-soft/60"}`}><span className="sr-only">Step </span>{String(item + 1).padStart(2, "0")}</span>
+        <span className={`h-[2px] ${item <= step ? "bg-[#C5A059]" : "bg-lgl-track"}`} />
+      </li>)}
+    </ol>
     <div className="min-h-[430px]">
       <h2 ref={headingRef} tabIndex={-1} className="mb-9 max-w-2xl font-display text-3xl leading-tight tracking-[-.04em] text-lgl-fg outline-none sm:text-4xl">
         { ["Corporate identity & positioning", "Financial profile", "Strategic roadblocks & expectations", "Executive access"][step] }
@@ -120,7 +129,7 @@ export function ContactForm() {
     {error && <p className="mb-5 border border-[#C5A059] bg-lgl-bg p-4 text-sm text-lgl-fg" role="alert">{error}</p>}
     <div className="flex flex-col-reverse gap-4 border-t border-lgl-line/30 pt-6 sm:flex-row sm:items-center sm:justify-between">
       <button type="button" onClick={() => changeStep(Math.max(0, step - 1))} disabled={step === 0 || busy} className="min-h-12 px-2 text-left text-xs font-semibold uppercase tracking-[.18em] text-lgl-soft transition-colors hover:text-lgl-fg disabled:cursor-not-allowed disabled:text-lgl-sage">← Back</button>
-      {step < 3 ? <button type="button" onClick={() => stepValid() ? changeStep(step + 1) : setError("Complete the required fields and check your answers to continue.")} className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-lgl-gold-hover focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059]">Continue <span aria-hidden="true">→</span></button> : <button type="submit" disabled={busy} className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-lgl-gold-hover focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059] disabled:cursor-wait disabled:bg-[#8BA898]">{busy ? "Submitting…" : "Submit Application"}</button>}
+      {step < 3 ? <button key="continue" type="button" onClick={goNext} className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-lgl-gold-hover focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059]">Continue <span aria-hidden="true">→</span></button> : <button key="submit" type="submit" disabled={busy} className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-lgl-gold-hover focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059] disabled:cursor-wait disabled:bg-[#8BA898]">{busy ? "Submitting…" : "Submit Application"}</button>}
     </div>
   </form>;
 }
