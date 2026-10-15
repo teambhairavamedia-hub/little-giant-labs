@@ -11,7 +11,7 @@ type Application = {
 };
 
 const empty: Application = { enterpriseName: "", industry: "", revenue: "", acquisitionSpend: "", bottleneck: "", partnership: "", corporateEmail: "", linkedin: "" };
-const industries = ["Enterprise Banking & FinTech", "Heavy Infrastructure & Real Estate", "Premium Consumer Goods (D2C)", "Venture-Backed Technology", "High-Ticket B2B Services"];
+const industries = ["Enterprise Banking & FinTech", "Heavy Infrastructure & Real-Estate", "Premium Consumer Goods (D2C)", "Venture-Backed Technology", "High-Ticket B2B Services"];
 const revenues = ["Under $1 Million", "$1M – $5 Million", "$5M – $20 Million", "$20 Million+"];
 const spends = ["Under $10,000 / month", "$10,000 – $50,000 / month", "$50,000 – $150,000 / month", "$150,000+ / month"];
 const bottlenecks = ["Ad platform algorithmic fatigue & dropping ROAS", "Inability to produce high-retention visual media at scale", "Lack of advanced attribution models and data tracking", "Sub-optimal customer lifetime value (LTV) and backend CRM systems"];
