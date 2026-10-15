@@ -1,6 +1,7 @@
 import "server-only";
 import { cookies } from "next/headers";
 import { firebaseAdminAuth } from "@/lib/firebase/admin";
+import { isAuthorizedAdminClaims } from "@/lib/admin-email-allowlist";
 
 export const ADMIN_SESSION_COOKIE = "__Host-bhairava-admin-session";
 export const SESSION_DURATION_MS = 5 * 24 * 60 * 60 * 1000;
@@ -10,7 +11,7 @@ export async function getAdminSession() {
   if (!token) return null;
   try {
     const claims = await firebaseAdminAuth().verifySessionCookie(token, true);
-    if (claims.email_verified !== true) return null;
+    if (!isAuthorizedAdminClaims(claims, process.env.ADMIN_EMAILS)) return null;
     return claims;
   } catch {
     return null;

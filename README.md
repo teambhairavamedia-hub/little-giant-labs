@@ -45,13 +45,13 @@ The admin dashboard is available at `/admin`, with authentication handled throug
 
 ### Authentication & Session Security
 
-- **Administrator access:** Any account in the configured Firebase project with a verified email address can access the admin dashboard. There is no public registration flow.
+- **Administrator access:** A Firebase account must have a verified email address listed in the server-side `ADMIN_EMAILS` allowlist. There is no public registration flow.
 - **Login:** The client exchanges a verified Firebase ID token through `POST /api/admin/session`. The server verifies the token before creating a session.
 - **Session cookie:** The server sets an HTTP-only Firebase session cookie with a five-day lifetime, `SameSite=Strict`, path-wide scope (`/`), and the `Secure` attribute in production.
-- **Protected routes:** Protected pages and APIs verify the session cookie with revocation checking and require a verified email address.
+- **Protected routes:** Protected pages and APIs verify the session cookie with revocation checking and require both a verified email address and current membership in `ADMIN_EMAILS`. Removing an address takes effect on the next protected request after deployment.
 - **Logout:** `POST /api/admin/logout` handles session logout.
 
-**Access control:** Because any verified account in the configured Firebase project can administer the dashboard, creating an account effectively grants administrator access. Restrict Firebase Console permissions for managing users to trusted administrators.
+**Access control:** Adding an address to `ADMIN_EMAILS` authorizes application access but does not create a Firebase account. Create each account manually in Firebase Console → Authentication → Add user. Missing or empty `ADMIN_EMAILS` fails closed and grants no admin access.
 
 ### Environment Variables
 
@@ -66,6 +66,7 @@ Configure the following variables in `.env.local` for local development and in t
 | `FIREBASE_ADMIN_PROJECT_ID` | Server-only Firebase Admin project ID. |
 | `FIREBASE_ADMIN_CLIENT_EMAIL` | Server-only service-account client email. |
 | `FIREBASE_ADMIN_PRIVATE_KEY` | Server-only service-account private key. Preserve newlines or use `\n` escapes. |
+| `ADMIN_EMAILS` | Server-only, comma-separated email allowlist for administrator access. Addresses are trimmed and compared case-insensitively. |
 
 The client SDK and Firebase Admin SDK must use the same Firebase project. The `NEXT_PUBLIC_FIREBASE_*` settings are exposed to the browser and should not contain server secrets. Keep all Firebase Admin SDK credentials, especially the private key, exclusively in server-side environment variables.
 
@@ -77,11 +78,11 @@ The client SDK and Firebase Admin SDK must use the same Firebase project. The `N
 4. Users with unverified email addresses can request a verification email from the login page. In **Authentication → Templates → Email address verification**, set the custom action URL to `https://<your-approved-app-domain>/admin/verify-email` (use your local app URL while developing). Add each app domain used for sign-in to **Authentication → Settings → Authorized domains**. The handler applies Firebase's `oobCode`, then returns the user to `/admin/login`; it never creates a session. The email's continue URL is `/admin/login` on the app origin that requested the email.
 5. Under **Project settings → Service accounts**, create and configure a service account with the Firebase Authentication permissions required by the application. Store its credentials only in server-side environment variables.
 
-Anyone with sufficient Firebase Console permissions to create accounts can effectively grant administrator access. Limit those permissions to trusted personnel.
+Limit Firebase Console permissions for creating accounts and access to the Vercel `ADMIN_EMAILS` setting to trusted personnel. A Firebase account alone does not grant dashboard access; the account's verified email must also be on the deployed allowlist.
 
 ### Local Development
 
-1. Set all seven Firebase environment variables in `.env.local`.
+1. Set the seven Firebase environment variables and `ADMIN_EMAILS` in `.env.local`. Use placeholder examples from `.env.example` only as a format guide; configure the actual authorized addresses in your local environment file.
 2. Install dependencies if you have not already:
 
    ```bash
@@ -100,9 +101,9 @@ Anyone with sufficient Firebase Console permissions to create accounts can effec
 
 ### Vercel Deployment
 
-Configure the four public Firebase web settings and the three Firebase Admin SDK settings in the appropriate Vercel environment scopes: Development, Preview, and Production, as required.
+In Vercel, open **Project → Settings → Environment Variables** and add `ADMIN_EMAILS` as a server-side variable with a comma-separated list of authorized Firebase account email addresses. Select the relevant Development, Preview, and Production scopes; use environment-appropriate admin addresses and do not prefix the name with `NEXT_PUBLIC_`. Also configure the four public Firebase web settings and the three Firebase Admin SDK settings in the appropriate scopes.
 
-After changing environment variables, redeploy the application for the changes to take effect.
+If `ADMIN_EMAILS` is missing or empty, all admin access is denied. The allowlist authorizes application access only; each address must already have a Firebase Authentication account. After adding or removing addresses or changing any environment variable in Vercel, redeploy the application for the change to take effect.
 
 Use separate Firebase projects for Preview and Production if those environments need to be isolated.
 

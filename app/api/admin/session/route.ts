@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { firebaseAdminAuth } from "@/lib/firebase/admin";
 import { ADMIN_SESSION_COOKIE, SESSION_DURATION_MS } from "@/lib/admin-session";
 import { hasSameOrigin } from "@/lib/admin-request";
+import { isAuthorizedAdminClaims } from "@/lib/admin-email-allowlist";
 
 export const runtime = "nodejs";
 
@@ -44,8 +45,8 @@ export async function POST(request: NextRequest) {
     const auth = firebaseAdminAuth();
     phase = "id_token_verification";
     const decoded = await auth.verifyIdToken(idToken, true);
-    phase = "email_verification_claim_validation";
-    if (decoded.email_verified !== true) {
+    phase = "admin_authorization";
+    if (!isAuthorizedAdminClaims(decoded, process.env.ADMIN_EMAILS)) {
       return NextResponse.json({ error: "This account is not authorized for the admin dashboard." }, { status: 403 });
     }
     phase = "session_cookie_creation";
