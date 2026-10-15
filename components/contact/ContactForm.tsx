@@ -16,8 +16,8 @@ const revenues = ["Under $1 Million", "$1M – $5 Million", "$5M – $20 Million
 const spends = ["Under $10,000 / month", "$10,000 – $50,000 / month", "$50,000 – $150,000 / month", "$150,000+ / month"];
 const bottlenecks = ["Ad platform algorithmic fatigue & dropping ROAS", "Inability to produce high-retention visual media at scale", "Lack of advanced attribution models and data tracking", "Sub-optimal customer lifetime value (LTV) and backend CRM systems"];
 const partnershipOptions = ["We are looking for a cheap, hands-off execution vendor", "We are prepared to invest premium capital for institutional scale and long-term partnership"];
-const inputClass = "mt-3 w-full border-0 border-b border-[#8BA898] bg-transparent px-0 py-3 text-base text-[#F8F6F0] placeholder:text-[#E2E8F0] outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
-const choiceClass = "flex min-h-14 cursor-pointer items-center gap-4 border border-[#F0F4F8]/40 px-4 py-3 text-sm leading-relaxed text-[#E2E8F0] transition-colors hover:border-[#8BA898] has-[:checked]:border-[#C5A059] has-[:checked]:bg-[#004B3A] has-[:checked]:text-[#F8F6F0] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#C5A059]";
+const inputClass = "mt-3 w-full border-0 border-b border-lgl-sage bg-transparent px-0 py-3 text-base text-lgl-fg placeholder:text-lgl-muted outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
+const choiceClass = "flex min-h-14 cursor-pointer items-center gap-4 border border-lgl-line/40 px-4 py-3 text-sm leading-relaxed text-lgl-soft transition-colors hover:border-lgl-sage has-[:checked]:border-[#C5A059] has-[:checked]:bg-[#004B3A] has-[:checked]:text-[#F8F6F0] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#C5A059]";
 
 function isEmailValid(email: string) {
   const match = email.trim().match(/^[^\s@]+@([^\s@]+\.[^\s@]+)$/);
@@ -87,40 +87,40 @@ export function ContactForm() {
     </fieldset>
   );
 
-  return <form onSubmit={submit} noValidate className="border border-[#F0F4F8]/30 bg-[#0B1B2B] p-6 sm:p-10 lg:p-12" aria-busy={busy}>
-    {/* <div className="mb-10 flex items-center justify-between border-b border-[#F0F4F8]/30 pb-5">
-      <span className="font-display text-sm text-[#C5A059]">{String(step + 1).padStart(2, "0")} <span className="text-[#E2E8F0]">/ 04</span></span>
+  return <form onSubmit={submit} noValidate className="border border-lgl-line/30 bg-lgl-bg p-6 sm:p-10 lg:p-12" aria-busy={busy}>
+    {/* <div className="mb-10 flex items-center justify-between border-b border-lgl-line/30 pb-5">
+      <span className="font-display text-sm text-lgl-gold">{String(step + 1).padStart(2, "0")} <span className="text-lgl-soft">/ 04</span></span>
     </div> */}
     <div className="mb-10 flex gap-2" aria-label={`Step ${step + 1} of 4`}>
-      {[0, 1, 2, 3].map((item) => <span key={item} className={`h-[2px] flex-1 ${item <= step ? "bg-[#C5A059]" : "bg-[#F0F4F8]"}`} />)}
+      {[0, 1, 2, 3].map((item) => <span key={item} className={`h-[2px] flex-1 ${item <= step ? "bg-[#C5A059]" : "bg-lgl-track"}`} />)}
     </div>
     <div className="min-h-[430px]">
-      <h2 ref={headingRef} tabIndex={-1} className="mb-9 max-w-2xl font-display text-3xl leading-tight tracking-[-.04em] text-[#F8F6F0] outline-none sm:text-4xl">
+      <h2 ref={headingRef} tabIndex={-1} className="mb-9 max-w-2xl font-display text-3xl leading-tight tracking-[-.04em] text-lgl-fg outline-none sm:text-4xl">
         { ["Corporate identity & positioning", "Financial profile", "Strategic roadblocks & expectations", "Executive access"][step] }
       </h2>
       {step === 0 && <div className="space-y-10">
-        <label className="block text-sm text-[#F8F6F0]">What is the legal registered name of your enterprise? <span className="text-[#C5A059]">*</span><input className={inputClass} required autoComplete="organization" placeholder="Enter your registered enterprise name" value={values.enterpriseName} onChange={(e) => set("enterpriseName", e.target.value)} /></label>
-        <div><p className="mb-4 text-sm text-[#F8F6F0]">Which industry vertical does your brand seek to dominate? <span className="text-[#C5A059]">*</span></p>{radioGroup("industry", industries, "Industry vertical")}</div>
+        <label className="block text-sm text-lgl-fg">What is the legal registered name of your enterprise? <span className="text-lgl-gold">*</span><input className={inputClass} required autoComplete="organization" placeholder="Enter your registered enterprise name" value={values.enterpriseName} onChange={(e) => set("enterpriseName", e.target.value)} /></label>
+        <div><p className="mb-4 text-sm text-lgl-fg">Which industry vertical does your brand seek to dominate? <span className="text-lgl-gold">*</span></p>{radioGroup("industry", industries, "Industry vertical")}</div>
       </div>}
       {step === 1 && <div className="space-y-10">
-        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is your trailing 12-month (TTM) revenue? <span className="text-[#C5A059]">*</span></p>{radioGroup("revenue", revenues, "Trailing 12-month revenue")}</div>
-        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is your current allocated monthly capital spend for paid customer acquisition? <span className="text-[#C5A059]">*</span></p>{radioGroup("acquisitionSpend", spends, "Monthly customer acquisition spend")}</div>
-        <p className="border-l border-[#C5A059] pl-4 text-xs leading-relaxed text-[#E2E8F0]">Financial information supports internal review only. It does not determine eligibility to submit.</p>
+        <div><p className="mb-4 text-sm text-lgl-fg">What is your trailing 12-month (TTM) revenue? <span className="text-lgl-gold">*</span></p>{radioGroup("revenue", revenues, "Trailing 12-month revenue")}</div>
+        <div><p className="mb-4 text-sm text-lgl-fg">What is your current allocated monthly capital spend for paid customer acquisition? <span className="text-lgl-gold">*</span></p>{radioGroup("acquisitionSpend", spends, "Monthly customer acquisition spend")}</div>
+        <p className="border-l border-[#C5A059] pl-4 text-xs leading-relaxed text-lgl-soft">Financial information supports internal review only. It does not determine eligibility to submit.</p>
       </div>}
       {step === 2 && <div className="space-y-10">
-        <div><p className="mb-4 text-sm text-[#F8F6F0]">What is the primary architectural bottleneck stalling your current digital growth scale? <span className="text-[#C5A059]">*</span></p>{radioGroup("bottleneck", bottlenecks, "Primary growth bottleneck")}</div>
-        <div><p className="mb-4 text-sm leading-relaxed text-[#F8F6F0]">We operate strictly as an institutional growth partner on high-ticket monthly retainers + performance incentives. Are you looking for a traditional execution vendor, or are you fully capitalized to invest in top-tier growth architecture? <span className="text-[#C5A059]">*</span></p>{radioGroup("partnership", partnershipOptions, "Partnership expectations")}</div>
+        <div><p className="mb-4 text-sm text-lgl-fg">What is the primary architectural bottleneck stalling your current digital growth scale? <span className="text-lgl-gold">*</span></p>{radioGroup("bottleneck", bottlenecks, "Primary growth bottleneck")}</div>
+        <div><p className="mb-4 text-sm leading-relaxed text-lgl-fg">We operate strictly as an institutional growth partner on high-ticket monthly retainers + performance incentives. Are you looking for a traditional execution vendor, or are you fully capitalized to invest in top-tier growth architecture? <span className="text-lgl-gold">*</span></p>{radioGroup("partnership", partnershipOptions, "Partnership expectations")}</div>
       </div>}
       {step === 3 && <div className="space-y-10">
-        <p className="max-w-xl text-sm leading-relaxed text-[#E2E8F0]">Provide the direct corporate email address and LinkedIn profile of the presiding decision-maker (CEO, CMO, or Managing Partner).</p>
-        <label className="block text-sm text-[#F8F6F0]">A. Corporate email address <span className="text-[#C5A059]">*</span><input className={inputClass} type="email" required autoComplete="email" placeholder="name@company.com" value={values.corporateEmail} onChange={(e) => set("corporateEmail", e.target.value)} aria-describedby="email-hint"/><span id="email-hint" className="mt-2 block text-xs text-[#E2E8F0]">Use your organization’s email. Consumer addresses such as Gmail and Yahoo are not accepted.</span>{values.corporateEmail && !isEmailValid(values.corporateEmail) && <span className="mt-2 block text-xs text-[#C5A059]" role="status">Enter a valid corporate email address. Gmail and Yahoo addresses are not accepted.</span>}</label>
-        <label className="block text-sm text-[#F8F6F0]">B. LinkedIn profile URL <span className="text-[#C5A059]">*</span><input className={inputClass} type="url" required autoComplete="url" placeholder="https://www.linkedin.com/in/your-profile" value={values.linkedin} onChange={(e) => set("linkedin", e.target.value)} />{values.linkedin && !validLinkedIn(values.linkedin) && <span className="mt-2 block text-xs text-[#C5A059]" role="status">Enter a valid LinkedIn profile URL, such as https://www.linkedin.com/in/your-profile.</span>}</label>
+        <p className="max-w-xl text-sm leading-relaxed text-lgl-soft">Provide the direct corporate email address and LinkedIn profile of the presiding decision-maker (CEO, CMO, or Managing Partner).</p>
+        <label className="block text-sm text-lgl-fg">A. Corporate email address <span className="text-lgl-gold">*</span><input className={inputClass} type="email" required autoComplete="email" placeholder="name@company.com" value={values.corporateEmail} onChange={(e) => set("corporateEmail", e.target.value)} aria-describedby="email-hint"/><span id="email-hint" className="mt-2 block text-xs text-lgl-soft">Use your organization’s email. Consumer addresses such as Gmail and Yahoo are not accepted.</span>{values.corporateEmail && !isEmailValid(values.corporateEmail) && <span className="mt-2 block text-xs text-lgl-gold" role="status">Enter a valid corporate email address. Gmail and Yahoo addresses are not accepted.</span>}</label>
+        <label className="block text-sm text-lgl-fg">B. LinkedIn profile URL <span className="text-lgl-gold">*</span><input className={inputClass} type="url" required autoComplete="url" placeholder="https://www.linkedin.com/in/your-profile" value={values.linkedin} onChange={(e) => set("linkedin", e.target.value)} />{values.linkedin && !validLinkedIn(values.linkedin) && <span className="mt-2 block text-xs text-lgl-gold" role="status">Enter a valid LinkedIn profile URL, such as https://www.linkedin.com/in/your-profile.</span>}</label>
       </div>}
     </div>
-    {error && <p className="mb-5 border border-[#C5A059] bg-[#0B1B2B] p-4 text-sm text-[#F8F6F0]" role="alert">{error}</p>}
-    <div className="flex flex-col-reverse gap-4 border-t border-[#F0F4F8]/30 pt-6 sm:flex-row sm:items-center sm:justify-between">
-      <button type="button" onClick={() => changeStep(Math.max(0, step - 1))} disabled={step === 0 || busy} className="min-h-12 px-2 text-left text-xs font-semibold uppercase tracking-[.18em] text-[#E2E8F0] transition-colors hover:text-[#F8F6F0] disabled:cursor-not-allowed disabled:text-[#8BA898]">← Back</button>
-      {step < 3 ? <button type="button" onClick={() => stepValid() ? changeStep(step + 1) : setError("Complete the required fields and check your answers to continue.")} className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-[#F8F6F0] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059]">Continue <span aria-hidden="true">→</span></button> : <button type="submit" disabled={busy} className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-[#F8F6F0] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059] disabled:cursor-wait disabled:bg-[#8BA898]">{busy ? "Submitting…" : "Submit Application"}</button>}
+    {error && <p className="mb-5 border border-[#C5A059] bg-lgl-bg p-4 text-sm text-lgl-fg" role="alert">{error}</p>}
+    <div className="flex flex-col-reverse gap-4 border-t border-lgl-line/30 pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <button type="button" onClick={() => changeStep(Math.max(0, step - 1))} disabled={step === 0 || busy} className="min-h-12 px-2 text-left text-xs font-semibold uppercase tracking-[.18em] text-lgl-soft transition-colors hover:text-lgl-fg disabled:cursor-not-allowed disabled:text-lgl-sage">← Back</button>
+      {step < 3 ? <button type="button" onClick={() => stepValid() ? changeStep(step + 1) : setError("Complete the required fields and check your answers to continue.")} className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-lgl-gold-hover focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059]">Continue <span aria-hidden="true">→</span></button> : <button type="submit" disabled={busy} className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-lgl-gold-hover focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059] disabled:cursor-wait disabled:bg-[#8BA898]">{busy ? "Submitting…" : "Submit Application"}</button>}
     </div>
   </form>;
 }

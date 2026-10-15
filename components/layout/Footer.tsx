@@ -32,8 +32,8 @@ export function Footer() {
   return (
     <Section
       theme="dark"
-      className="relative overflow-hidden border-t border-white/5"
-      style={{ background: "#0B1B2B" }}
+      className="relative overflow-hidden border-t border-lgl-fg/5"
+      style={{ background: "var(--lgl-bg)", color: "var(--lgl-fg)" }}
     >
       <div className="mx-auto max-w-[1400px] px-6 pt-24 pb-8 md:px-10 lg:px-14 [&_.label-eyebrow]:text-[0.6875rem]">
         
@@ -44,11 +44,11 @@ export function Footer() {
               href="/contact"
               className="group inline-flex flex-col items-start gap-4 text-left"
             >
-              <p className="label-eyebrow text-white/30 tracking-[0.28em]">
+              <p className="label-eyebrow text-lgl-fg/50 tracking-[0.28em]">
                 Start the Conversation
               </p>
               <h2
-                className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.04em] text-white transition-colors duration-500 group-hover:text-white/80"
+                className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.04em] text-lgl-fg transition-colors duration-500 group-hover:text-lgl-fg/80"
                 style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
                 Let's create
@@ -63,7 +63,7 @@ export function Footer() {
         )}
 
         {/* Separator line */}
-        <div className="h-[1px] w-full bg-white/5 mb-16" />
+        <div className="h-[1px] w-full bg-lgl-fg/5 mb-16" />
 
         {/* Links & Info Columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 items-start mb-28">
@@ -79,25 +79,25 @@ export function Footer() {
                 className="w-10 h-10 md:w-11 md:h-11 object-contain rounded-full shadow-md"
               />
               <p
-                className="text-[0.9375rem] font-bold uppercase tracking-[0.22em] text-white"
+                className="text-[0.9375rem] font-bold uppercase tracking-[0.22em] text-lgl-fg"
                 style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
                 {siteConfig.name}
               </p>
             </div>
-            <p className="mt-4 text-[0.875rem] leading-[1.7] text-white/80 font-normal">
+            <p className="mt-4 text-[0.875rem] leading-[1.7] text-lgl-fg/80 font-normal">
               Cinematic creative and performance growth engine for scaling brands.
             </p>
           </div>
 
           {/* Col 2: Navigation Menu */}
           <div className="flex flex-col gap-3">
-            <p className="label-eyebrow text-white/60 mb-2 font-semibold">Navigation</p>
+            <p className="label-eyebrow text-lgl-fg/60 mb-2 font-semibold">Navigation</p>
             {siteConfig.nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[0.875rem] font-medium text-white/80 transition-colors hover:text-white"
+                className="text-[0.875rem] font-medium text-lgl-fg/80 transition-colors hover:text-lgl-fg"
                 style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {item.label}
@@ -107,10 +107,10 @@ export function Footer() {
 
           {/* Col 3: Social/Connect */}
           <div className="flex flex-col gap-3">
-            <p className="label-eyebrow text-white/60 mb-2 font-semibold">Connect</p>
+            <p className="label-eyebrow text-lgl-fg/60 mb-2 font-semibold">Connect</p>
             <a
               href={`mailto:${siteConfig.email ?? "hello@bhairavamedia.com"}`}
-              className="text-[0.875rem] font-medium text-white/50 transition-colors hover:text-white"
+              className="text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               Email
@@ -119,7 +119,7 @@ export function Footer() {
               href={siteConfig.social?.instagram ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.875rem] font-medium text-white/50 transition-colors hover:text-white"
+              className="text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               Instagram
@@ -128,7 +128,7 @@ export function Footer() {
               href={siteConfig.social?.linkedin ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.875rem] font-medium text-white/50 transition-colors hover:text-white"
+              className="text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               LinkedIn
@@ -137,7 +137,7 @@ export function Footer() {
               href={siteConfig.social?.twitter ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.875rem] font-medium text-white/50 transition-colors hover:text-white"
+              className="text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               X
@@ -148,12 +148,12 @@ export function Footer() {
 
           {/* Col 4: Location & Local Time */}
           <div className="flex flex-col gap-2">
-            <p className="label-eyebrow text-white/20 mb-2">Office</p>
-            <p className="text-[0.875rem] font-medium text-white/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+            <p className="label-eyebrow text-lgl-fg/60 mb-2">Office</p>
+            <p className="text-[0.875rem] font-medium text-lgl-fg/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               PUNE, IN
             </p>
             {localTime && (
-              <p className="text-[0.8125rem] font-medium text-white/35 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <p className="text-[0.8125rem] font-medium text-lgl-fg/55 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 Local Time: {localTime}
               </p>
             )}
@@ -162,24 +162,25 @@ export function Footer() {
         </div>
 
         {/* Bottom copyright & compliance */}
-        <div className="relative pt-8 border-t border-white/5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between z-10">
-          <p className="label-eyebrow text-white/20">
+        <div className="relative pt-8 border-t border-lgl-fg/5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between z-10">
+          <p className="label-eyebrow text-lgl-fg/60">
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <p className="label-eyebrow text-white/20">
+          <p className="label-eyebrow text-lgl-fg/60">
             Engineered for motion, story, and scale.
           </p>
         </div>
 
         {/* Giant Watermark Background Logo */}
         <div
+          aria-hidden="true"
           className="absolute left-1/2 bottom-[-15%] -translate-x-1/2 pointer-events-none select-none text-center w-full z-0 overflow-hidden"
           style={{
             fontFamily: "var(--font-manrope), sans-serif",
             fontSize: "clamp(6rem, 16vw, 15rem)",
             fontWeight: 800,
             letterSpacing: "0.06em",
-            color: "rgba(255,255,255,0.012)",
+            color: "color-mix(in srgb, var(--lgl-fg) 1.5%, transparent)",
             textTransform: "uppercase",
             lineHeight: 0.8,
             whiteSpace: "nowrap",
