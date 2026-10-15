@@ -29,12 +29,28 @@ test("unverified login offers client-side resend without session exchange", asyn
   const form = await read("../components/admin/AdminLoginForm.tsx");
   assert.match(form, /await credential\.user\.reload\(\)/);
   assert.match(form, /if \(!credential\.user\.emailVerified\)/);
-  assert.match(form, /sendEmailVerification\(verificationUser\)/);
-  assert.match(form, /Resend verification email/);
-  assert.match(form, /disabled=\{sending\}/);
+  assert.match(form, /sendEmailVerification\(verificationUser,\s*actionCodeSettings\)/);
+  assert.match(form, /url: `\$\{window\.location\.origin\}\/admin\/login`/);
+  assert.match(form, /Send verification mail/);
+  assert.match(form, /Resend verification mail/);
+  assert.match(form, /setVerificationEmailSent\(true\)/);
+  assert.match(form, /disabled=\{sending \|\| !canResend\}/);
   assert.match(form, /too-many-requests/);
   assert.match(form, /await verificationUser\.reload\(\)/);
   assert.ok(form.indexOf("if (!credential.user.emailVerified)") < form.indexOf("fetch(\"/api/admin/session\""));
+});
+
+test("verification handler applies the action code before setting the one-time login notice", async () => {
+  const handler = await read("../app/admin/verify-email/page.tsx");
+  const form = await read("../components/admin/AdminLoginForm.tsx");
+  assert.match(handler, /mode !== "verifyEmail" \|\| !code/);
+  assert.match(handler, /await applyActionCode\(auth, code\)/);
+  assert.ok(handler.indexOf("await applyActionCode") < handler.indexOf("sessionStorage.setItem"));
+  assert.match(handler, /admin\/login\?verified=1/);
+  assert.match(handler, /already been used/);
+  assert.match(handler, /has expired/);
+  assert.match(form, /sessionStorage\.getItem\("admin-email-verified"\)/);
+  assert.match(form, /Your email has been verified\. Sign in now\./);
 });
 
 test("administrator authorization has no email allowlist dependency", async () => {

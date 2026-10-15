@@ -74,7 +74,7 @@ The client SDK and Firebase Admin SDK must use the same Firebase project. The `N
 1. In the Firebase Console, register a Web app and copy its configuration values into the corresponding environment variables.
 2. Under **Authentication → Sign-in method**, enable **Email/Password** authentication only.
 3. Create administrator accounts manually under **Authentication → Add user**. Do not add an application-based sign-up flow.
-4. Users with unverified email addresses can request a verification email from the login page. They must return to sign in after verifying their email.
+4. Users with unverified email addresses can request a verification email from the login page. In **Authentication → Templates → Email address verification**, set the custom action URL to `https://<your-approved-app-domain>/admin/verify-email` (use your local app URL while developing). Add each app domain used for sign-in to **Authentication → Settings → Authorized domains**. The handler applies Firebase's `oobCode`, then returns the user to `/admin/login`; it never creates a session. The email's continue URL is `/admin/login` on the app origin that requested the email.
 5. Under **Project settings → Service accounts**, create and configure a service account with the Firebase Authentication permissions required by the application. Store its credentials only in server-side environment variables.
 
 Anyone with sufficient Firebase Console permissions to create accounts can effectively grant administrator access. Limit those permissions to trusted personnel.
@@ -94,7 +94,9 @@ Anyone with sufficient Firebase Console permissions to create accounts can effec
    npm run dev
    ```
 
-4. Open [http://localhost:3000/admin/login](http://localhost:3000/admin/login) and sign in with a manually created Firebase account.
+4. Ensure `localhost` is an authorized Firebase domain and the email verification template's custom action URL points to `http://localhost:3000/admin/verify-email` for local testing.
+5. Open [http://localhost:3000/admin/login](http://localhost:3000/admin/login) and sign in with a manually created Firebase account.
+6. For an unverified account, resend the email, follow the link, and confirm the login page asks for a fresh manual sign-in.
 
 ### Vercel Deployment
 

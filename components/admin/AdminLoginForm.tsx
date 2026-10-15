@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { sendEmailVerification, signInWithEmailAndPassword, signOut, type User } from "firebase/auth";
+import { useEffect, useState, type FormEvent } from "react";
+import { sendEmailVerification, signInWithEmailAndPassword, signOut, type ActionCodeSettings, type User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { getFirebaseAuth } from "@/lib/firebase/client";
 
@@ -19,9 +19,24 @@ export function AdminLoginForm() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [verificationUser, setVerificationUser] = useState<User | null>(null);
+  const [verificationEmailSent, setVerificationEmailSent] = useState(false);
   const [sending, setSending] = useState(false);
+  const [canResend, setCanResend] = useState(true);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (window.location.search.includes("verified=1") && sessionStorage.getItem("admin-email-verified") === "1") {
+      sessionStorage.removeItem("admin-email-verified");
+      window.setTimeout(() => setMessage("Your email has been verified. Sign in now."), 0);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (canResend) return;
+    const timer = window.setTimeout(() => setCanResend(true), 30_000);
+    return () => window.clearTimeout(timer);
+  }, [canResend]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setError(""); setMessage("");
@@ -51,7 +66,7 @@ export function AdminLoginForm() {
   }
 
   async function resendVerification() {
-    if (!verificationUser) return;
+    if (!verificationUser || sending || !canResend) return;
     setSending(true); setError(""); setMessage("");
     try {
       await verificationUser.reload();
@@ -59,26 +74,35 @@ export function AdminLoginForm() {
         setMessage("Your email is verified. Return to sign in to continue.");
         return;
       }
-      await sendEmailVerification(verificationUser);
-      setMessage("Verification email sent. Check your inbox and follow the link, then return here to sign in.");
+      const actionCodeSettings: ActionCodeSettings = {
+        url: `${window.location.origin}/admin/login`,
+        handleCodeInApp: false,
+      };
+      await sendEmailVerification(verificationUser, actionCodeSettings);
+      setVerificationEmailSent(true);
+      setCanResend(false);
+      setMessage(verificationEmailSent
+        ? "Another verification email was sent. Check your inbox and follow the link, then return here to sign in."
+        : "Verification email sent. Check your inbox and follow the link, then return here to sign in.");
     } catch (cause) { setError(verificationError(cause)); }
     finally { setSending(false); }
   }
 
   async function returnToLogin() {
     try { await signOut(getFirebaseAuth()); } catch { /* Clear local verification state even if Firebase sign-out fails. */ }
-    setVerificationUser(null); setPassword(""); setError(""); setMessage("");
+    setVerificationUser(null); setVerificationEmailSent(false); setPassword(""); setError(""); setMessage("");
   }
 
   if (verificationUser) return <div className="mt-7 space-y-5">
     <p className="rounded-lg bg-amber-50 px-3 py-3 text-sm text-amber-900" role="status">Email verification is required before you can access the admin dashboard. Verify the address for {verificationUser.email}.</p>
     {error && <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">{error}</p>}
     {message && <p role="status" className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-800">{message}</p>}
-    <button type="button" disabled={sending} onClick={resendVerification} className="w-full rounded-lg bg-[#800000] px-4 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">{sending ? "Sending…" : "Resend verification email"}</button>
+    <button type="button" disabled={sending || !canResend} onClick={resendVerification} className="w-full rounded-lg bg-[#800000] px-4 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60">{sending ? "Sending…" : !canResend ? "Please wait before resending" : verificationEmailSent ? "Resend verification mail" : "Send verification mail"}</button>
     <button type="button" onClick={returnToLogin} className="w-full px-4 py-2 text-sm font-medium underline underline-offset-4">Return to login</button>
   </div>;
 
   return <form onSubmit={submit} className="mt-7 space-y-5" noValidate>
+    {message && <p role="status" className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-800">{message}</p>}
     <div><label htmlFor="admin-email" className="mb-2 block text-sm font-medium">Email address</label>
       <input id="admin-email" type="email" autoComplete="username" required value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-lg border border-[#d9d9d6] bg-white px-4 py-3 text-sm outline-none focus:border-[#800000] focus:ring-2 focus:ring-[#800000]/15" /></div>
     <div><label htmlFor="admin-password" className="mb-2 block text-sm font-medium">Password</label>
