@@ -39,6 +39,72 @@ Applications are tagged `rejected` with one or more of these `rejection_reasons`
 - `cheap_execution_vendor` — seeking a cheap, hands-off execution vendor.
 
 Applications without those answers are tagged `qualified`. Rejected applications are still saved with their submitted answers and structured reason codes. The route inserts the validated record into `public.growth_applications` using the Supabase service-role client. Validation errors return a client error; database failures return a safe server error, with submitted values redacted from diagnostic logs.
+## Admin Dashboard Authentication
+
+The admin dashboard is available at `/admin`, with authentication handled through `/admin/login`. Authentication uses Firebase Authentication, while the server uses the Firebase Admin SDK to verify identities and manage sessions.
+
+### Authentication & Session Security
+
+- **Administrator access:** Any account in the configured Firebase project with a verified email address can access the admin dashboard. There is no public registration flow.
+- **Login:** The client exchanges a verified Firebase ID token through `POST /api/admin/session`. The server verifies the token before creating a session.
+- **Session cookie:** The server sets an HTTP-only Firebase session cookie with a five-day lifetime, `SameSite=Strict`, path-wide scope (`/`), and the `Secure` attribute in production.
+- **Protected routes:** Protected pages and APIs verify the session cookie with revocation checking and require a verified email address.
+- **Logout:** `POST /api/admin/logout` handles session logout.
+
+**Access control:** Because any verified account in the configured Firebase project can administer the dashboard, creating an account effectively grants administrator access. Restrict Firebase Console permissions for managing users to trusted administrators.
+
+### Environment Variables
+
+Configure the following variables in `.env.local` for local development and in the appropriate Vercel environments. Never commit environment variable values or credentials to source control.
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_FIREBASE_API_KEY` | Firebase web app API key. |
+| `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN` | Firebase web app authentication domain. |
+| `NEXT_PUBLIC_FIREBASE_PROJECT_ID` | Firebase project ID used by the web SDK. |
+| `NEXT_PUBLIC_FIREBASE_APP_ID` | Firebase web app ID. |
+| `FIREBASE_ADMIN_PROJECT_ID` | Server-only Firebase Admin project ID. |
+| `FIREBASE_ADMIN_CLIENT_EMAIL` | Server-only service-account client email. |
+| `FIREBASE_ADMIN_PRIVATE_KEY` | Server-only service-account private key. Preserve newlines or use `\n` escapes. |
+
+The client SDK and Firebase Admin SDK must use the same Firebase project. The `NEXT_PUBLIC_FIREBASE_*` settings are exposed to the browser and should not contain server secrets. Keep all Firebase Admin SDK credentials, especially the private key, exclusively in server-side environment variables.
+
+### Firebase Setup
+
+1. In the Firebase Console, register a Web app and copy its configuration values into the corresponding environment variables.
+2. Under **Authentication → Sign-in method**, enable **Email/Password** authentication only.
+3. Create administrator accounts manually under **Authentication → Add user**. Do not add an application-based sign-up flow.
+4. Users with unverified email addresses can request a verification email from the login page. They must return to sign in after verifying their email.
+5. Under **Project settings → Service accounts**, create and configure a service account with the Firebase Authentication permissions required by the application. Store its credentials only in server-side environment variables.
+
+Anyone with sufficient Firebase Console permissions to create accounts can effectively grant administrator access. Limit those permissions to trusted personnel.
+
+### Local Development
+
+1. Set all seven Firebase environment variables in `.env.local`.
+2. Install dependencies if you have not already:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000/admin/login](http://localhost:3000/admin/login) and sign in with a manually created Firebase account.
+
+### Vercel Deployment
+
+Configure the four public Firebase web settings and the three Firebase Admin SDK settings in the appropriate Vercel environment scopes: Development, Preview, and Production, as required.
+
+After changing environment variables, redeploy the application for the changes to take effect.
+
+Use separate Firebase projects for Preview and Production if those environments need to be isolated.
+
+**Testing note:** Local automated tests do not perform live Firebase verification. Successful local tests alone do not confirm that the deployed Firebase credentials, authentication settings, or session behavior are configured correctly.
 
 ## Database Setup & Security Verification
 

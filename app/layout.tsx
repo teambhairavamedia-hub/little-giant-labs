@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Manrope, DM_Sans } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { PublicChrome } from "@/components/layout/PublicChrome";
 import { siteConfig } from "@/lib/site";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import "./globals.css";
@@ -57,9 +56,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${manrope.variable} ${dmSans.variable} antialiased`}>
         <SmoothScroll>
-          <Header />
-          {children}
-          <Footer />
+          <PublicChrome>{children}</PublicChrome>
         </SmoothScroll>
       </body>
     </html>
