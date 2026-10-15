@@ -5,13 +5,11 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
-import { useHeaderTheme } from "@/hooks/useHeaderTheme";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 
 export function Header() {
   const pathname = usePathname();
-  const headerTheme = useHeaderTheme();
-  const isDark = headerTheme === "dark";
 
   const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -33,21 +31,11 @@ export function Header() {
   /* Close mobile menu on route change */
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
-  /* Colors based on theme + scroll state */
-  const pillBg = scrolled
-    ? isDark
-      ? "rgba(10,10,10,0.80)"
-      : "rgba(255,255,255,0.80)"
-    : isDark
-    ? "rgba(255,255,255,0.04)"
-    : "rgba(255,255,255,0.60)";
-
-  const pillBorder = scrolled
-    ? isDark ? "rgba(255,255,255,0.10)" : "rgba(10,10,10,0.08)"
-    : isDark ? "rgba(255,255,255,0.08)" : "rgba(10,10,10,0.06)";
-
-  const fgColor = isDark ? "#ffffff" : "#0a0a0a";
-  const fgMuted = isDark ? "rgba(255,255,255,0.45)" : "rgba(10,10,10,0.42)";
+  /* Colors come from the site theme (see --lgl-nav-* in globals.css) + scroll state */
+  const pillBg = scrolled ? "var(--lgl-nav-pill-scrolled)" : "var(--lgl-nav-pill)";
+  const pillBorder = scrolled ? "var(--lgl-nav-border-scrolled)" : "var(--lgl-nav-border)";
+  const fgColor = "var(--lgl-nav-fg)";
+  const fgMuted = "var(--lgl-nav-muted)";
 
   return (
     <>
@@ -73,11 +61,7 @@ export function Header() {
               backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(8px)",
               WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(8px)",
               padding: scrolled ? "0.6rem 1.25rem 0.6rem 1.5rem" : "0.75rem 1.5rem 0.75rem 1.75rem",
-              boxShadow: scrolled
-                ? isDark
-                  ? "0 8px 40px rgba(0,0,0,0.5)"
-                  : "0 8px 40px rgba(0,0,0,0.09)"
-                : "none",
+              boxShadow: scrolled ? "var(--lgl-nav-shadow)" : "none",
             }}
           >
             {/* Wordmark + Icon Logo */}
@@ -124,9 +108,7 @@ export function Header() {
                       textTransform: "uppercase",
                       color: isActive ? fgColor : fgMuted,
                       padding: "0.45rem 1rem",
-                      background: isActive
-                        ? isDark ? "rgba(255,255,255,0.08)" : "rgba(128,0,0,0.055)"
-                        : "transparent",
+                      background: isActive ? "var(--lgl-nav-active)" : "transparent",
                     }}
                     onMouseEnter={(e) => {
                       if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = fgColor;
@@ -141,8 +123,10 @@ export function Header() {
               })}
             </nav>
 
-            {/* Right side: CTA + hamburger */}
+            {/* Right side: theme toggle + CTA + hamburger */}
             <div className="flex items-center gap-3 shrink-0">
+              <ThemeToggle />
+
               {/* CTA pill button — desktop */}
               <Link
                 href={siteConfig.cta.href}
@@ -171,7 +155,7 @@ export function Header() {
               <button
                 className="xl:hidden flex flex-col items-center justify-center gap-[5px] w-9 h-9 rounded-full transition-all duration-200"
                 style={{
-                  background: isDark ? "rgba(255,255,255,0.07)" : "rgba(10,10,10,0.05)",
+                  background: "var(--lgl-nav-chip)",
                   border: `1px solid ${pillBorder}`,
                 }}
                 onClick={() => setMobileOpen((o) => !o)}
@@ -219,7 +203,7 @@ export function Header() {
             <div
               className="mt-2 rounded-[24px] px-5 py-4 flex flex-col gap-1"
               style={{
-                background: isDark ? "rgba(10,10,10,0.92)" : "rgba(255,255,255,0.92)",
+                background: "var(--lgl-nav-menu)",
                 border: `1px solid ${pillBorder}`,
                 backdropFilter: "blur(24px)",
                 WebkitBackdropFilter: "blur(24px)",
@@ -239,9 +223,7 @@ export function Header() {
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
                       color: isActive ? fgColor : fgMuted,
-                      background: isActive
-                        ? isDark ? "rgba(255,255,255,0.07)" : "rgba(10,10,10,0.04)"
-                        : "transparent",
+                      background: isActive ? "var(--lgl-nav-chip)" : "transparent",
                     }}
                   >
                     {item.label}

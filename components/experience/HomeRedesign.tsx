@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { experienceConfig } from "@/lib/experience";
 
-const ink = "#0B1B2B";
 const pillars = [
   {
     number: "01", title: "Attention Engineering", scene: "Make them look.",
@@ -49,7 +48,7 @@ const projects = [
 
 export function HomeRedesign() {
   return (
-    <div className="home-redesign" style={{ background: ink, color: "#F8F6F0" }}>
+    <div className="home-redesign">
       <section className="home-hero" data-section-theme="dark" aria-labelledby="home-title">
         <div className="home-shell home-hero-inner">
           <p className="home-eyebrow">Intellect. Media. Capital.</p>
