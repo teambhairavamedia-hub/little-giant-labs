@@ -77,10 +77,9 @@ export function ContactForm() {
   );
 
   return <form onSubmit={submit} noValidate className="border border-[#F0F4F8]/30 bg-[#0B1B2B] p-6 sm:p-10 lg:p-12" aria-busy={busy}>
-    <div className="mb-10 flex items-center justify-between border-b border-[#F0F4F8]/30 pb-5">
-      <span className="text-[10px] font-semibold uppercase tracking-[.24em] text-[#8BA898]">High-Ticket Application Vetting Questions</span>
+    {/* <div className="mb-10 flex items-center justify-between border-b border-[#F0F4F8]/30 pb-5">
       <span className="font-display text-sm text-[#C5A059]">{String(step + 1).padStart(2, "0")} <span className="text-[#E2E8F0]">/ 04</span></span>
-    </div>
+    </div> */}
     <div className="mb-10 flex gap-2" aria-label={`Step ${step + 1} of 4`}>
       {[0, 1, 2, 3].map((item) => <span key={item} className={`h-[2px] flex-1 ${item <= step ? "bg-[#C5A059]" : "bg-[#F0F4F8]"}`} />)}
     </div>
