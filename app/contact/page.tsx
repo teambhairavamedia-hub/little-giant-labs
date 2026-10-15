@@ -15,7 +15,7 @@ export default function ContactPage() {
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
           <aside className="lg:sticky lg:top-12 lg:self-start">
             <p className="text-[10px] font-semibold uppercase tracking-[.24em] text-[#C5A059]">A deliberate process</p>
-            <h2 className="mt-5 max-w-sm font-display text-3xl leading-tight tracking-[-.04em] text-[#F8F6F0]">The right growth partnership starts with the right questions.</h2>
+            <h2 className="mt-5 max-w-sm font-display text-3xl leading-[1.35] tracking-[-.04em] text-[#F8F6F0] [word-spacing:0.17em]">The right growth partnership starts with the right questions.</h2>
             <p className="mt-5 max-w-sm text-sm leading-relaxed text-[#E2E8F0]">This application gives our team the context to review your objectives, operating environment, and expectations.</p>
             <div className="mt-10 border-t border-[#F0F4F8]/30 pt-5 text-[10px] font-semibold uppercase tracking-[.22em] text-[#E2E8F0]">Intellect. Media. Capital.</div>
           </aside>

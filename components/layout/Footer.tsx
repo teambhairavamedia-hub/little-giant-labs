@@ -35,7 +35,7 @@ export function Footer() {
       className="relative overflow-hidden border-t border-white/5"
       style={{ background: "#0B1B2B" }}
     >
-      <div className="mx-auto max-w-[1400px] px-6 pt-24 pb-8 md:px-10 lg:px-14">
+      <div className="mx-auto max-w-[1400px] px-6 pt-24 pb-8 md:px-10 lg:px-14 [&_.label-eyebrow]:text-[0.6875rem]">
         
         {/* Massive Hero CTA */}
         {!isContactPage && (
@@ -79,13 +79,13 @@ export function Footer() {
                 className="w-10 h-10 md:w-11 md:h-11 object-contain rounded-full shadow-md"
               />
               <p
-                className="text-[0.875rem] font-bold uppercase tracking-[0.22em] text-white"
+                className="text-[0.9375rem] font-bold uppercase tracking-[0.22em] text-white"
                 style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
                 {siteConfig.name}
               </p>
             </div>
-            <p className="mt-4 text-[0.8125rem] leading-[1.7] text-white/80 font-normal">
+            <p className="mt-4 text-[0.875rem] leading-[1.7] text-white/80 font-normal">
               Cinematic creative and performance growth engine for scaling brands.
             </p>
           </div>
@@ -97,7 +97,7 @@ export function Footer() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[0.8125rem] font-medium text-white/80 transition-colors hover:text-white"
+                className="text-[0.875rem] font-medium text-white/80 transition-colors hover:text-white"
                 style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {item.label}
@@ -110,7 +110,7 @@ export function Footer() {
             <p className="label-eyebrow text-white/60 mb-2 font-semibold">Connect</p>
             <a
               href={`mailto:${siteConfig.email ?? "hello@bhairavamedia.com"}`}
-              className="text-[0.8125rem] font-medium text-white/50 transition-colors hover:text-white"
+              className="text-[0.875rem] font-medium text-white/50 transition-colors hover:text-white"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               Email
@@ -119,7 +119,7 @@ export function Footer() {
               href={siteConfig.social?.instagram ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.8125rem] font-medium text-white/50 transition-colors hover:text-white"
+              className="text-[0.875rem] font-medium text-white/50 transition-colors hover:text-white"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               Instagram
@@ -128,7 +128,7 @@ export function Footer() {
               href={siteConfig.social?.linkedin ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.8125rem] font-medium text-white/50 transition-colors hover:text-white"
+              className="text-[0.875rem] font-medium text-white/50 transition-colors hover:text-white"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               LinkedIn
@@ -137,7 +137,7 @@ export function Footer() {
               href={siteConfig.social?.twitter ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.8125rem] font-medium text-white/50 transition-colors hover:text-white"
+              className="text-[0.875rem] font-medium text-white/50 transition-colors hover:text-white"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               X
@@ -149,11 +149,11 @@ export function Footer() {
           {/* Col 4: Location & Local Time */}
           <div className="flex flex-col gap-2">
             <p className="label-eyebrow text-white/20 mb-2">Office</p>
-            <p className="text-[0.8125rem] font-medium text-white/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+            <p className="text-[0.875rem] font-medium text-white/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               PUNE, IN
             </p>
             {localTime && (
-              <p className="text-[0.75rem] font-medium text-white/35 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <p className="text-[0.8125rem] font-medium text-white/35 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 Local Time: {localTime}
               </p>
             )}
