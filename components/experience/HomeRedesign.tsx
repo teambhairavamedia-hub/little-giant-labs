@@ -52,7 +52,7 @@ export function HomeRedesign() {
     <div className="home-redesign" style={{ background: ink, color: "#F8F6F0" }}>
       <section className="home-hero" data-section-theme="dark" aria-labelledby="home-title">
         <div className="home-shell home-hero-inner">
-          <p className="home-eyebrow"><span /> Intellect. Media. Capital.</p>
+          <p className="home-eyebrow">Intellect. Media. Capital.</p>
           <h1 id="home-title">We Engineer Digital Monopolies for Enterprise <em>Brands.</em></h1>
           <p className="home-intro">A closed-loop growth laboratory combining deep data analytics, high-retention media engineering, and AI-driven lifecycle automation.</p>
           <div className="home-actions">
