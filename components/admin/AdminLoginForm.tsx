@@ -40,25 +40,44 @@ export function AdminLoginForm() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setError(""); setMessage("");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) { setError("Enter a valid email address."); return; }
-    if (!password) { setError("Enter your password."); return; }
+    let phase = "submit_handler";
+    console.info("admin_login_flow", { phase });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) { console.info("admin_login_flow", { phase: "email_validation_failed" }); setError("Enter a valid email address."); return; }
+    if (!password) { console.info("admin_login_flow", { phase: "password_validation_failed" }); setError("Enter your password."); return; }
     setLoading(true);
     try {
+      phase = "firebase_sign_in";
+      console.info("admin_login_flow", { phase: `${phase}_started` });
       const auth = getFirebaseAuth();
       const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
+      console.info("admin_login_flow", { phase: `${phase}_resolved` });
+      phase = "reload_user";
       await credential.user.reload();
+      console.info("admin_login_flow", { phase: `${phase}_resolved` });
       if (!credential.user.emailVerified) {
+        console.info("admin_login_flow", { phase: "email_verification_required" });
         setVerificationUser(credential.user);
         setError("Email verification is required before you can access the admin dashboard.");
         return;
       }
+      phase = "id_token_retrieval";
       const idToken = await credential.user.getIdToken(true);
+      console.info("admin_login_flow", { phase: `${phase}_resolved` });
+      phase = "session_request";
+      console.info("admin_login_flow", { phase: `${phase}_started` });
       const response = await fetch("/api/admin/session", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ idToken }) });
+      console.info("admin_login_flow", { phase: `${phase}_completed`, status: response.status });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Sign-in was not authorized.");
-      await signOut(auth);
+      phase = "dashboard_navigation";
       router.replace("/admin"); router.refresh();
+      console.info("admin_login_flow", { phase: `${phase}_started` });
+      // The server session is already set. Client sign-out is best-effort and
+      // must not block navigation after successful session creation.
+      void signOut(auth).catch(() => { /* Admin authorization uses the server session cookie. */ });
     } catch (cause) {
+      const code = typeof cause === "object" && cause && "code" in cause ? String(cause.code) : undefined;
+      console.error("admin_login_flow_failed", { phase, code });
       try { await signOut(getFirebaseAuth()); } catch { /* Firebase may not have initialized. */ }
       const msg = cause instanceof Error ? cause.message : "Unable to sign in. Please try again.";
       setError(msg.includes("Firebase: Error") ? "Email or password is incorrect, or sign-in is not configured." : msg);
@@ -109,6 +128,6 @@ export function AdminLoginForm() {
       <div className="relative"><input id="admin-password" type={showPassword ? "text" : "password"} autoComplete="current-password" required value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-lg border border-[#d9d9d6] bg-white px-4 py-3 pr-20 text-sm outline-none focus:border-[#800000] focus:ring-2 focus:ring-[#800000]/15" />
         <button type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? "Hide password" : "Show password"} className="absolute inset-y-0 right-3 my-auto h-fit text-xs font-medium text-[#6b6b6b] underline underline-offset-4">{showPassword ? "Hide" : "Show"}</button></div></div>
     {error && <p role="alert" className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-800">{error}</p>}
-    <button disabled={loading || !email.trim() || !password} className="w-full rounded-lg bg-[#800000] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#660000] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000] disabled:cursor-not-allowed disabled:opacity-60">{loading ? "Signing in…" : "Sign in"}</button>
+    <button type="submit" disabled={loading || !email.trim() || !password} className="w-full rounded-lg bg-[#800000] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[#660000] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000] disabled:cursor-not-allowed disabled:opacity-60">{loading ? "Signing in…" : "Sign in"}</button>
   </form>;
 }

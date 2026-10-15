@@ -19,6 +19,21 @@ test("session endpoint verifies ID token with revocation check before issuing co
   assert.match(route, /status: 500/);
 });
 
+test("unexpected session failures log phase-specific sanitized diagnostics", async () => {
+  const route = await read("../app/api/admin/session/route.ts");
+  for (const phase of [
+    "firebase_admin_initialization", "id_token_verification",
+    "email_verification_claim_validation", "session_cookie_creation",
+  ]) assert.match(route, new RegExp(`(?:let )?phase = "${phase}"`));
+  assert.match(route, /event: "admin_session_creation_failed"/);
+  assert.match(route, /phase,\s*code: code \|\| null/);
+  assert.match(route, /message: sanitizedErrorMessage\(cause\)/);
+  assert.match(route, /timestamp: new Date\(\)\.toISOString\(\)/);
+  assert.match(route, /REDACTED TOKEN/);
+  assert.match(route, /REDACTED CREDENTIAL/);
+  assert.match(route, /Authentication service is temporarily unavailable\./);
+});
+
 test("protected session checks revocation and verified email", async () => {
   const session = await read("../lib/admin-session.ts");
   assert.match(session, /verifySessionCookie\(token,\s*true\)/);
@@ -38,6 +53,17 @@ test("unverified login offers client-side resend without session exchange", asyn
   assert.match(form, /too-many-requests/);
   assert.match(form, /await verificationUser\.reload\(\)/);
   assert.ok(form.indexOf("if (!credential.user.emailVerified)") < form.indexOf("fetch(\"/api/admin/session\""));
+});
+
+test("successful session creation navigates before best-effort Firebase client sign-out", async () => {
+  const form = await read("../components/admin/AdminLoginForm.tsx");
+  const acceptedResponse = form.indexOf("if (!response.ok) throw new Error");
+  const navigation = form.indexOf('router.replace("/admin")');
+  const clientSignOut = form.indexOf("void signOut(auth).catch");
+  assert.ok(acceptedResponse < navigation);
+  assert.ok(navigation < clientSignOut);
+  assert.match(form, /router\.refresh\(\)/);
+  assert.match(form, /void signOut\(auth\)\.catch/);
 });
 
 test("verification handler applies the action code before setting the one-time login notice", async () => {
