@@ -7,6 +7,28 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
+import { CameraIcon, ChartIcon, ChipIcon, CompassIcon, EyeIcon, FilmIcon, GlobeIcon, LayersIcon, LoopIcon } from "@/components/ui/Icons";
+
+const tabIcons = { vision: EyeIcon, background: LayersIcon, philosophy: CompassIcon };
+
+/* Header illustration: a lens whose focus resolves into a rising growth line. */
+function AboutHeaderVisual() {
+  return (
+    <svg viewBox="0 0 320 320" className="h-full w-full" aria-hidden="true" focusable="false">
+      <g fill="none" stroke="currentColor" strokeWidth="1" className="text-lgl-line/20">
+        <circle cx="160" cy="160" r="150" strokeDasharray="2 8" />
+        <circle cx="160" cy="160" r="112" />
+        <circle cx="160" cy="160" r="74" />
+        <path d="M160,10 V48 M160,272 V310 M10,160 H48 M272,160 H310" />
+      </g>
+      <circle cx="160" cy="160" r="112" fill="none" stroke="#C5A059" strokeWidth="1.5" strokeDasharray="120 584" strokeLinecap="round" opacity=".8" />
+      <path d="M104,196 L140,168 L166,182 L216,126" fill="none" stroke="#C5A059" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M196,124 H218 V146" fill="none" stroke="#C5A059" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <g className="fill-lgl-sage"><circle cx="104" cy="196" r="4" /><circle cx="140" cy="168" r="4" /><circle cx="166" cy="182" r="4" /></g>
+      <circle cx="270" cy="62" r="5" fill="#C5A059" />
+    </svg>
+  );
+}
 
 // Social media icon components
 function LinkedInIcon() {
@@ -38,21 +60,25 @@ function InstagramIcon() {
 const milestones = [
   {
     year: "2021",
+    Icon: CameraIcon,
     title: "The Inception",
     desc: "Little Giant Labs was founded in Mumbai by Rajesh Waghchaware with a simple belief: video content should be cinematic and tell stories that matter. Started with just a camera and a vision.",
   },
   {
     year: "2023",
+    Icon: ChartIcon,
     title: "Creative Meets Performance",
     desc: "We realized that beautiful creative must drive business results. Integrated digital ads operations, data analytics, and performance funnels. Scaled our first major e-commerce client to 5x ROAS.",
   },
   {
     year: "2024",
+    Icon: ChipIcon,
     title: "AI-Powered Systems",
     desc: "Pioneered AI-driven post-production workflows and CRM automation loops. We started helping clients run automated follow-ups and AI customer retention systems, making marketing fully autonomous.",
   },
   {
     year: "2026",
+    Icon: GlobeIcon,
     title: "Global Compound Growth",
     desc: "Expanded into international markets. Today, Little Giant Labs serves 10+ brands globally, generating over 120M+ views annually, and engineering digital scale for industry leaders.",
   },
@@ -61,14 +87,17 @@ const milestones = [
 const values = [
   {
     title: "Story-First",
+    Icon: FilmIcon,
     description: "Every pixel, frame, and syllable we write is built with intent. In a world of infinite scroll, only high-retention hooks and true storytelling break the noise."
   },
   {
     title: "Data-Driven Validation",
+    Icon: ChartIcon,
     description: "Creativity is beautiful, but conversions are essential. We map growth funnels, audit metrics, and run scientific performance campaigns to multiply ROAS."
   },
   {
     title: "AI & Automation Compounding",
+    Icon: LoopIcon,
     description: "We design custom workflow pipelines and CRM loops that automate the mundane, freeing up mindshare to focus entirely on high-leverage strategic creative."
   }
 ];
@@ -112,6 +141,7 @@ export default function AboutPage() {
         title="We build digital movements."
         description="Little Giant Labs sits at the intersection of high-retention cinematic storytelling and performance marketing, scaling brands that refuse to be ignored."
         theme="dark"
+        visual={<AboutHeaderVisual />}
         style={{
           background: "var(--lgl-bg)",
           color: "var(--lgl-soft)",
@@ -152,16 +182,19 @@ export default function AboutPage() {
               </blockquote>
 
               <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-b border-lgl-fg/15">
-                {(["vision", "background", "philosophy"] as const).map((tab) => (
+                {(["vision", "background", "philosophy"] as const).map((tab) => {
+                  const TabIcon = tabIcons[tab];
+                  return (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className="relative pb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold"
+                    className="relative inline-flex items-center gap-2 pb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold"
                     style={{
                       color: activeTab === tab ? "var(--lgl-fg)" : "color-mix(in srgb, var(--lgl-fg) 60%, transparent)",
                       cursor: "pointer",
                     }}
                   >
+                    <TabIcon size={14} className={activeTab === tab ? "text-[#C5A059]" : undefined} />
                     {tab}
                     {activeTab === tab && (
                       <motion.div
@@ -170,7 +203,8 @@ export default function AboutPage() {
                       />
                     )}
                   </button>
-                ))}
+                  );
+                })}
               </div>
 
               <motion.div
@@ -250,11 +284,13 @@ export default function AboutPage() {
                     className="relative flex flex-col md:flex-row items-start md:justify-between group"
                   >
                     {/* Circle Node Indicator */}
-                    <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full border-2 border-lgl-section bg-lgl-fg -translate-x-1/2 top-1.5 z-20 transition-all duration-300 group-hover:scale-125" />
+                    <div className="absolute left-4 md:left-1/2 top-0 z-20 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border-2 border-lgl-section bg-lgl-fg text-lgl-section shadow-[0_0_0_1px_rgba(197,160,89,0.55)] transition-all duration-300 group-hover:scale-110 group-hover:text-[#C5A059]">
+                      <m.Icon size={16} />
+                    </div>
 
                     {/* Timeline Content Block (Alternates Left / Right on Desktop) */}
                     <div
-                      className={`w-full md:w-[45%] pl-10 md:pl-0 ${isEven ? "md:text-right md:order-1" : "md:order-2"
+                      className={`w-full md:w-[45%] pl-12 md:pl-0 ${isEven ? "md:text-right md:order-1" : "md:order-2"
                         }`}
                     >
                       <motion.div
@@ -320,9 +356,14 @@ export default function AboutPage() {
             {values.map((v, i) => (
               <Card key={v.title} className="flex flex-col justify-between p-8 hover:shadow-[0_15px_40px_rgba(0,0,0,0.06)] hover:border-lgl-fg/20 transition-all duration-300">
                 <div>
-                  <span className="text-2xl font-bold text-lgl-fg/55 tracking-tighter block mb-6">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+                  <div className="mb-6 flex items-center justify-between">
+                    <span className="text-2xl font-bold text-lgl-fg/55 tracking-tighter block">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C5A059]/40 bg-[#C5A059]/10 text-lgl-gold">
+                      <v.Icon size={20} />
+                    </span>
+                  </div>
                   <h3 className="text-lg font-bold text-lgl-fg tracking-tight" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                     {v.title}
                   </h3>

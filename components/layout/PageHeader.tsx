@@ -12,6 +12,8 @@ type PageHeaderProps = {
   description?: string;
   theme?: SectionTheme;
   children?: ReactNode;
+  /** Decorative illustration shown beside the heading on large screens. */
+  visual?: ReactNode;
   style?: CSSProperties;
 };
 
@@ -21,6 +23,7 @@ export function PageHeader({
   description,
   theme = "dark",
   children,
+  visual,
   style,
 }: PageHeaderProps) {
   const containerVariants = {
@@ -43,7 +46,18 @@ export function PageHeader({
 
   return (
     <Section theme={theme} className="border-b border-theme pt-28 md:pt-32" style={style}>
-      <Container className="py-16 md:py-20">
+      <Container className="relative py-16 md:py-20">
+        {visual ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none absolute right-0 top-1/2 hidden h-[clamp(220px,26vw,340px)] w-[clamp(220px,26vw,340px)] -translate-y-1/2 lg:block"
+            aria-hidden="true"
+          >
+            {visual}
+          </motion.div>
+        ) : null}
         <motion.div
           variants={containerVariants}
           initial="hidden"
