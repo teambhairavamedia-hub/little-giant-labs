@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { CheckIcon, DiamondIcon, FilmIcon, LoopIcon, TrendIcon } from "@/components/ui/Icons";
 
 const servicesDetails = [
   {
-    icon: "✦",
+    icon: DiamondIcon,
     title: "Brand Strategy & Design",
     description: "Positioning, messaging, and identity systems that command trust and build presence.",
     deliverables: [
@@ -15,7 +16,7 @@ const servicesDetails = [
     ]
   },
   {
-    icon: "◈",
+    icon: FilmIcon,
     title: "Cinematic Content Production",
     description: "Premium brand videos, social showreels, and creative assets built for high retention.",
     deliverables: [
@@ -26,7 +27,7 @@ const servicesDetails = [
     ]
   },
   {
-    icon: "⬡",
+    icon: TrendIcon,
     title: "Performance & Digital Marketing",
     description: "Paid acquisition, social growth, and search visibility focused on measurable growth.",
     deliverables: [
@@ -37,7 +38,7 @@ const servicesDetails = [
     ]
   },
   {
-    icon: "◎",
+    icon: LoopIcon,
     title: "AI & Automation Solutions",
     description: "Custom workflow automations, AI analytics tools, and CRM systems engineered for scale.",
     deliverables: [
@@ -85,8 +86,8 @@ export function ServiceGrid() {
         >
           <div>
             <div className="flex items-center justify-between">
-              <span className="text-xl md:text-2xl text-theme-subtle group-hover:text-[var(--theme-fg)] transition-colors duration-300">
-                {service.icon}
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-theme bg-[color-mix(in_srgb,var(--lgl-gold)_10%,transparent)] text-lgl-gold transition-colors duration-300 group-hover:border-[color-mix(in_srgb,var(--lgl-gold)_55%,transparent)] md:h-14 md:w-14">
+                <service.icon size={24} />
               </span>
               <span className="text-[10px] uppercase tracking-widest text-theme-subtle border border-theme rounded-full px-3 py-1 opacity-70">
                 Deliverables
@@ -104,7 +105,7 @@ export function ServiceGrid() {
             <ul className="mt-8 space-y-3">
               {service.deliverables.map((item) => (
                 <li key={item} className="flex items-center gap-3 text-xs md:text-sm text-theme-muted/80">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--theme-fg)_40%,transparent)]" />
+                  <CheckIcon size={14} strokeWidth={2} className="shrink-0 text-lgl-gold" />
                   {item}
                 </li>
               ))}

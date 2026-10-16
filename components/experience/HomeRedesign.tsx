@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { experienceConfig } from "@/lib/experience";
 import { LoyaltyLoop } from "@/components/experience/LoyaltyLoop";
+import { AttentionDiagram, PerformanceDiagram } from "@/components/experience/PillarDiagrams";
+import { ClapperIcon, FilmIcon, MusicIcon, PenToolIcon, SparkIcon, TargetIcon } from "@/components/ui/Icons";
 
 const pillars = [
   {
     number: "01", title: "Attention Engineering", scene: "Make them look.",
     description: "Data-backed, high-production visual assets built to capture and retain modern consumer attention spans.",
-    media: "none",
+    media: "attention",
   },
   {
     number: "02", title: "Performance Architecture", scene: "Make it perform.",
     description: "Algorithmic media buying stacks optimized for predictable corporate revenue multiplication.",
-    media: "none",
+    media: "performance",
   },
   {
     number: "03", title: "Autonomous Lifecycle Loops", scene: "Make it last.",
@@ -26,24 +28,28 @@ const projects = [
     challenge: "Attract financial talent across India through a recruitment and branding showcase.",
     approach: "Cinematic storytelling around career acceleration, employee culture, and financial leadership, supported by multi-channel video assets and landing-page media.",
     image: experienceConfig.portfolio[0].image,
+    Icon: FilmIcon,
   },
   {
     slug: "quberx-brand-identity", client: "Quberx: Brand Identity", category: "Brand identity",
     challenge: "Develop a modern brand system and asset library to position Quberx as a technology innovator.",
     approach: "Custom visual identity guidelines, digital interface concepts, and marketing creative.",
     image: experienceConfig.portfolio[1].image,
+    Icon: PenToolIcon,
   },
   {
     slug: "adhyaksh-film-shoot", client: "Adhyaksh: Bhairava Films", category: "Film announcement campaign",
     challenge: "Produce an official announcement shoot with promotional posters and social creative.",
     approach: "Creative direction, set design, portrait photography, promotional assets, and digital rollout.",
     image: experienceConfig.portfolio[2].image,
+    Icon: ClapperIcon,
   },
   {
     slug: "anthem-launch", client: "Anthem Launch: Danny Pandit & Brahmaa", category: "Music promotion / social campaign",
     challenge: "Build momentum and audience traction for an official anthem launch.",
     approach: "Social hooks, creative teasers, and multi-format promotional campaigns across Instagram and YouTube.",
     image: experienceConfig.portfolio[3].image,
+    Icon: MusicIcon,
   },
 ];
 
@@ -78,6 +84,8 @@ export function HomeRedesign() {
                   <h3>{pillar.scene}</h3>
                   <p>{pillar.description}</p>
                 </div>
+                {pillar.media === "attention" && <AttentionDiagram />}
+                {pillar.media === "performance" && <PerformanceDiagram />}
                 {pillar.media === "type" && (
                   <LoyaltyLoop />
                 )}
@@ -99,10 +107,10 @@ export function HomeRedesign() {
               <article className={`work-feature work-feature-${index + 1}`} key={project.slug}>
                 <figure className="work-image"><img src={project.image} alt={`${project.client} campaign`} loading="lazy" /></figure>
                 <div className="work-copy">
-                  <p className="home-eyebrow">{String(index + 1).padStart(2, "0")} / {project.category}</p>
+                  <p className="home-eyebrow"><project.Icon className="work-icon" size={16} />{String(index + 1).padStart(2, "0")} / {project.category}</p>
                   <h3>{project.client}</h3>
-                  <p><strong>Challenge</strong>{project.challenge}</p>
-                  <p><strong>Execution</strong>{project.approach}</p>
+                  <p><strong><TargetIcon size={13} />Challenge</strong>{project.challenge}</p>
+                  <p><strong><SparkIcon size={13} />Execution</strong>{project.approach}</p>
                 </div>
               </article>
             ))}
