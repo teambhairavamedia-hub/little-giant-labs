@@ -136,7 +136,7 @@ test("unverified login offers client-side resend without session exchange", asyn
 test("successful session creation navigates before best-effort Firebase client sign-out", async () => {
   const form = await read("../components/admin/AdminLoginForm.tsx");
   const acceptedResponse = form.indexOf("if (!response.ok) throw new Error");
-  const navigation = form.indexOf('router.replace("/admin")');
+  const navigation = form.indexOf('router.replace("/admin/dashboard")');
   const clientSignOut = form.indexOf("void signOut(auth).catch");
   assert.ok(acceptedResponse < navigation);
   assert.ok(navigation < clientSignOut);

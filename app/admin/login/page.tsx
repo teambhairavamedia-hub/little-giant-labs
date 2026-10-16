@@ -6,7 +6,7 @@ import { AdminLoginForm } from "@/components/admin/AdminLoginForm";
 export const dynamic = "force-dynamic";
 
 export default async function AdminLoginPage() {
-  if (await getAdminSession()) redirect("/admin");
+  if (await getAdminSession()) redirect("/admin/dashboard");
   return <main className="flex min-h-screen items-center justify-center px-5 py-12">
     <div className="w-full max-w-md">
       <Link href="/" className="label-eyebrow text-[#800000]">Little Giant Labs</Link>

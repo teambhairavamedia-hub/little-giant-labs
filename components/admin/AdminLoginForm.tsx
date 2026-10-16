@@ -70,7 +70,7 @@ export function AdminLoginForm() {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || "Sign-in was not authorized.");
       phase = "dashboard_navigation";
-      router.replace("/admin"); router.refresh();
+      router.replace("/admin/dashboard"); router.refresh();
       console.info("admin_login_flow", { phase: `${phase}_started` });
       // The server session is already set. Client sign-out is best-effort and
       // must not block navigation after successful session creation.
