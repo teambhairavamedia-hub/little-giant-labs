@@ -81,7 +81,7 @@ Confirmed in source:
 - Public website routes and application submission/validation/qualification path exist.
 - Supabase table migration and restrictive RLS/grant setup exist in the repository.
 - Firebase login, email verification, server token verification, session cookie, protected admin page, and logout exist.
-- `/admin` redirects authorized sessions to `/admin/dashboard`. The dashboard displays three summary metrics, an all-time qualified/rejected breakdown, and a read-only paginated applications table.
+- `/admin` redirects authorized sessions to `/admin/dashboard`. The dashboard displays three summary metrics, an all-time qualified/rejected breakdown (green for qualified, red for rejected), and a read-only paginated applications table with validated LinkedIn and email contact links.
 - Dashboard metrics use exact database counts and persisted statuses. The rolling seven-day window is calculated from server UTC time. API responses are no-store and use safe error messages.
 - Tests covering application validation, admin-auth behavior, and dashboard route/API contracts pass. `npx tsc --noEmit` and ESLint for changed files pass. The repository-wide lint still reports existing errors in `HomeSections.tsx`, `Footer.tsx`, `Header.tsx`, and `CaseStudyGrid.tsx`. Production build compilation was blocked when Next.js could not fetch the existing Google Fonts; build completion is unverified.
 

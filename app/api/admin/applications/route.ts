@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
 
     const [applicationsResult, totalResult, recentResult, qualifiedRecentResult, qualifiedResult, rejectedResult] = await Promise.all([
       supabase.from("growth_applications")
-        .select("id, legal_name, industry_vertical, ttm_revenue, monthly_ad_spend, qualification_status, submitted_at")
+        .select("id, legal_name, industry_vertical, ttm_revenue, monthly_ad_spend, qualification_status, submitted_at, decision_maker_linkedin, decision_maker_email")
         .order("submitted_at", { ascending: false }).order("id", { ascending: false })
         .range(from, from + pageSize - 1),
       supabase.from("growth_applications").select("id", { count: "exact", head: true }),

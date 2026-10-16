@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { normalizeContactEmail, normalizeLinkedInProfileUrl } from "../lib/admin-contact-links.ts";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
@@ -19,7 +20,7 @@ test("applications endpoint protects access and selects only dashboard columns",
   const route = await read("../app/api/admin/applications/route.ts");
   assert.ok(route.indexOf("getAdminSession") < route.indexOf("createSupabaseServerClient"));
   assert.match(route, /if \(!\(await getAdminSession\(\)\)\) return fail\("Authentication is required\.", 401\)/);
-  assert.match(route, /id, legal_name, industry_vertical, ttm_revenue, monthly_ad_spend, qualification_status, submitted_at/);
+  assert.match(route, /id, legal_name, industry_vertical, ttm_revenue, monthly_ad_spend, qualification_status, submitted_at, decision_maker_linkedin, decision_maker_email/);
   assert.match(route, /\.order\("submitted_at", \{ ascending: false \}\)\.order\("id", \{ ascending: false \}\)/);
   assert.match(route, /PAGE_SIZE_DEFAULT = 25/);
   assert.match(route, /PAGE_SIZE_MAX = 100/);
@@ -37,4 +38,28 @@ test("dashboard uses persisted qualification outcomes and server returned metric
   assert.match(dashboard, /No applications have been received\./);
   assert.match(dashboard, /qualifiedPercent = breakdownTotal \? Math\.round/);
   assert.match(dashboard, /router\.replace\("\/admin\/login"\)/);
+});
+
+test("qualification chart colors match status labels and the table keeps contact links safe", async () => {
+  const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  assert.match(dashboard, /conic-gradient\(#15803d 0% \$\{qualifiedPercent\}%, #b91c1c/);
+  assert.match(dashboard, /label="Qualified"[^\n]*color="#15803d" labelClass="text-green-800"/);
+  assert.match(dashboard, /label="Rejected"[^\n]*color="#b91c1c" labelClass="text-red-800"/);
+  assert.match(dashboard, /target="_blank" rel="noopener noreferrer"/);
+  assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
+  assert.match(dashboard, /min-w-\[1180px\]/);
+  assert.match(dashboard, /overflow-x-auto/);
+});
+
+test("contact values accept valid inputs and reject malformed or unsafe values", () => {
+  assert.equal(normalizeLinkedInProfileUrl("https://www.linkedin.com/in/example-person"), "https://www.linkedin.com/in/example-person/");
+  assert.equal(normalizeLinkedInProfileUrl("https://linkedin.com/in/example_person/"), "https://www.linkedin.com/in/example_person/");
+  for (const unsafe of ["", "javascript:alert(1)", "http://linkedin.com/in/name", "https://linkedin.com.evil.test/in/name", "https://evil.test/in/name", "https://linkedin.com/company/name", "https://user@linkedin.com/in/name", "https://linkedin.com/in/name?next=evil", "https://linkedin.com/in/%2fadmin"]) {
+    assert.equal(normalizeLinkedInProfileUrl(unsafe), null, unsafe);
+  }
+
+  assert.equal(normalizeContactEmail(" person+tag@example.co.uk "), "person+tag@example.co.uk");
+  for (const invalid of ["", "not-an-email", "person@example", "person@@example.com", ".person@example.com", "per..son@example.com", "person@example.com\r\nBcc:x@example.com", `${"a".repeat(250)}@example.com`, null]) {
+    assert.equal(normalizeContactEmail(invalid), null, String(invalid));
+  }
 });
