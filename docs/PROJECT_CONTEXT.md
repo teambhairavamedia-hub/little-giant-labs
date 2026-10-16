@@ -81,7 +81,8 @@ Confirmed in source:
 - Public website routes and application submission/validation/qualification path exist.
 - Supabase table migration and restrictive RLS/grant setup exist in the repository.
 - Firebase login, email verification, server token verification, session cookie, protected admin page, and logout exist.
-- `/admin` redirects authorized sessions to `/admin/dashboard`. The dashboard displays three summary metrics, an all-time qualified/rejected breakdown (green for qualified, red for rejected), and a read-only paginated applications table with validated LinkedIn and email contact links.
+- Phase 2 application details are implemented in the repository. `GET /api/admin/applications/[id]` verifies the administrator session on each request, validates a UUID, and returns only the selected record's submission fields and persisted qualification outcome with no-store headers. Live access remains dependent on existing Firebase, Supabase, and deployment configuration.
+- `/admin` redirects authorized sessions to `/admin/dashboard`. The dashboard displays three summary metrics, an all-time qualified/rejected breakdown (green for qualified, red for rejected), and a read-only paginated applications table with validated LinkedIn and email contact links. Selecting the legal name opens a responsive, keyboard-operable application detail dialog without changing pagination; it displays stored submission answers, persisted status, and mapped stored rejection reasons.
 - Dashboard metrics use exact database counts and persisted statuses. The rolling seven-day window is calculated from server UTC time. API responses are no-store and use safe error messages.
 - Tests covering application validation, admin-auth behavior, and dashboard route/API contracts pass. `npx tsc --noEmit` and ESLint for changed files pass. The repository-wide lint still reports existing errors in `HomeSections.tsx`, `Footer.tsx`, `Header.tsx`, and `CaseStudyGrid.tsx`. Production build compilation was blocked when Next.js could not fetch the existing Google Fonts; build completion is unverified.
 
@@ -94,7 +95,7 @@ Git state at inspection: pre-existing modification to `.gitignore`; it was not c
 Planning only; no phase is marked complete based on plans.
 
 - **Phase 1:** Connect the existing admin dashboard to Supabase, implement the protected applications API, show total and rolling seven-day volume metrics with an all-time qualification breakdown, and build a paginated, newest-first applications table. **Status: implemented in repository; production database and deployment behavior not verified.**
-- **Phase 2:** Add application details and server-side filters. **Status: not implemented.**
+- **Phase 2:** Add application details and server-side filters. **Status: application detail side panel implemented; server-side filters remain unimplemented.**
 - **Phase 3:** Add secure CSV export for records matching active filters. **Status: not implemented.**
 - **Phase 4:** Complete security hardening, tests, deployment verification, and production checks. **Status: pending.**
 

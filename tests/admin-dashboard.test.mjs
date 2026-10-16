@@ -29,6 +29,30 @@ test("applications endpoint protects access and selects only dashboard columns",
   assert.match(route, /Application data is temporarily unavailable\./);
 });
 
+test("application detail endpoint protects and scopes a read to a validated application ID", async () => {
+  const route = await read("../app/api/admin/applications/[id]/route.ts");
+  assert.ok(route.indexOf("getAdminSession") < route.indexOf("createSupabaseServerClient"));
+  assert.match(route, /if \(!\(await getAdminSession\(\)\)\) return fail\("Authentication is required\.", 401\)/);
+  assert.match(route, /\^\[0-9a-f\]\{8\}/i);
+  assert.match(route, /\.eq\("id", id\)/);
+  assert.match(route, /\.maybeSingle\(\)/);
+  assert.match(route, /Application not found\.", 404/);
+  assert.match(route, /growth_bottleneck, partnership_readiness, decision_maker_email, decision_maker_linkedin, qualification_status, rejection_reasons/);
+  assert.match(route, /Cache-Control.*no-store/);
+});
+
+test("dashboard offers a keyboard accessible detail panel and renders every stored answer safely", async () => {
+  const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  for (const label of ["Legal registered enterprise name", "Industry vertical", "Trailing twelve-month revenue", "Monthly paid acquisition spend", "Strategic bottleneck", "Expectations regarding the engagement", "Corporate decision-maker email", "Corporate decision-maker LinkedIn profile"]) assert.ok(dashboard.includes(label));
+  assert.match(dashboard, /role="dialog" aria-modal="true"/);
+  assert.match(dashboard, /event\.key === "Escape"/);
+  assert.match(dashboard, /rejectionLabels\[code\] \?\?/);
+  assert.match(dashboard, /window\.requestAnimationFrame\(\(\) => openerRef\.current\?\.focus\(\)\)/);
+  assert.match(dashboard, /if \(event\.target === event\.currentTarget\) onClose\(\)/);
+  assert.match(dashboard, /target="_blank" rel="noopener noreferrer">\{linkedin\}/);
+  assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
+});
+
 test("dashboard uses persisted qualification outcomes and server returned metrics", async () => {
   const route = await read("../app/api/admin/applications/route.ts");
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
