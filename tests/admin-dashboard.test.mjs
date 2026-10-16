@@ -49,6 +49,8 @@ test("qualification chart colors match status labels and the table keeps contact
   assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
   assert.match(dashboard, /min-w-\[1180px\]/);
   assert.match(dashboard, /overflow-x-auto/);
+  assert.match(dashboard, /timeZone: "Asia\/Kolkata"/);
+  assert.match(dashboard, /Submitted \(IST\)/);
 });
 
 test("contact values accept valid inputs and reject malformed or unsafe values", () => {

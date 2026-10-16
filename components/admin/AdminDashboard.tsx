@@ -19,7 +19,7 @@ type DashboardData = {
 };
 
 const numberFormat = new Intl.NumberFormat("en-US");
-const dateFormat = new Intl.DateTimeFormat("en-US", { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" });
+const dateFormat = new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" });
 
 export function AdminDashboard() {
   const router = useRouter();
@@ -79,7 +79,7 @@ export function AdminDashboard() {
           {loading && <p className="px-6 py-2 text-xs text-[#6b6b6b]" role="status">Loading applications…</p>}
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1180px] border-collapse text-left text-sm">
-              <thead><tr className="bg-[#f7f7f6] text-xs text-[#6b6b6b]"><th scope="col" className="px-5 py-3 font-medium sm:px-7">Legal company name</th><th scope="col" className="px-4 py-3 font-medium">Industry</th><th scope="col" className="px-4 py-3 font-medium">TTM revenue</th><th scope="col" className="px-4 py-3 font-medium">Monthly ad spend</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">LinkedIn</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (UTC)</th></tr></thead>
+              <thead><tr className="bg-[#f7f7f6] text-xs text-[#6b6b6b]"><th scope="col" className="px-5 py-3 font-medium sm:px-7">Legal company name</th><th scope="col" className="px-4 py-3 font-medium">Industry</th><th scope="col" className="px-4 py-3 font-medium">TTM revenue</th><th scope="col" className="px-4 py-3 font-medium">Monthly ad spend</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">LinkedIn</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (IST)</th></tr></thead>
               <tbody>{data.applications.map((application) => {
                 const linkedinUrl = normalizeLinkedInProfileUrl(application.decision_maker_linkedin);
                 const email = normalizeContactEmail(application.decision_maker_email);
