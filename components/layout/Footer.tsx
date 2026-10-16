@@ -6,6 +6,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
 import { Section } from "@/components/ui/Section";
+import { ClockIcon, InstagramIcon, LinkedInIcon, MailIcon, PinIcon, XIcon } from "@/components/ui/Icons";
 
 export function Footer() {
   const pathname = usePathname();
@@ -110,36 +111,40 @@ export function Footer() {
             <p className="label-eyebrow text-lgl-fg/60 mb-2 font-semibold">Connect</p>
             <a
               href={`mailto:${siteConfig.email ?? "hello@bhairavamedia.com"}`}
-              className="text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
+              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
+              <MailIcon size={15} className="text-lgl-gold/80" />
               Email
             </a>
             <a
               href={siteConfig.social?.instagram ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
+              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
+              <InstagramIcon size={15} className="text-lgl-gold/80" />
               Instagram
             </a>
             <a
               href={siteConfig.social?.linkedin ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
+              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
+              <LinkedInIcon size={15} className="text-lgl-gold/80" />
               LinkedIn
             </a>
                         <a
               href={siteConfig.social?.twitter ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
+              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
+              <XIcon size={15} className="text-lgl-gold/80" />
               X
             </a>
 
@@ -149,11 +154,13 @@ export function Footer() {
           {/* Col 4: Location & Local Time */}
           <div className="flex flex-col gap-2">
             <p className="label-eyebrow text-lgl-fg/60 mb-2">Office</p>
-            <p className="text-[0.875rem] font-medium text-lgl-fg/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+            <p className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+              <PinIcon size={15} className="text-lgl-gold/80" />
               PUNE, IN
             </p>
             {localTime && (
-              <p className="text-[0.8125rem] font-medium text-lgl-fg/55 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <p className="inline-flex items-center gap-2.5 text-[0.8125rem] font-medium text-lgl-fg/55 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+                <ClockIcon size={15} className="text-lgl-gold/80" />
                 Local Time: {localTime}
               </p>
             )}
