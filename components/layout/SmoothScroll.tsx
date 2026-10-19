@@ -10,6 +10,9 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
     registerGsap();
 
+    // Respect reduced-motion: keep native scrolling instead of eased smooth scroll
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     // Prevent GSAP from compensating lag spikes (e.g. tab switching)
     gsap.ticker.lagSmoothing(0);
 
@@ -21,6 +24,8 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       smoothWheel: true,
       wheelMultiplier: 0.9,
       touchMultiplier: 1.2,
+      // Smoothly scroll in-page links such as "Explore Our Work" → #selected-work
+      anchors: true,
     });
 
     // Keep ScrollTrigger in sync with Lenis virtual scroll position

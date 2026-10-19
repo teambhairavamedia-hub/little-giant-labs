@@ -1,6 +1,8 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { experienceConfig } from "@/lib/experience";
 import { LoyaltyLoop } from "@/components/experience/LoyaltyLoop";
+import { WorkCarousel } from "@/components/experience/WorkCarousel";
 import { AttentionDiagram, PerformanceDiagram } from "@/components/experience/PillarDiagrams";
 import { ClapperIcon, FilmIcon, MusicIcon, PenToolIcon, SparkIcon, TargetIcon } from "@/components/ui/Icons";
 
@@ -28,6 +30,8 @@ const projects = [
     challenge: "Attract financial talent across India through a recruitment and branding showcase.",
     approach: "Cinematic storytelling around career acceleration, employee culture, and financial leadership, supported by multi-channel video assets and landing-page media.",
     image: experienceConfig.portfolio[0].image,
+    tone: "#9C1D28",
+    alt: "IDFC FIRST Bank logo with the tagline “Always You First” on a red background",
     Icon: FilmIcon,
   },
   {
@@ -35,6 +39,8 @@ const projects = [
     challenge: "Develop a modern brand system and asset library to position Quberx as a technology innovator.",
     approach: "Custom visual identity guidelines, digital interface concepts, and marketing creative.",
     image: experienceConfig.portfolio[1].image,
+    tone: "#6F9AD1",
+    alt: "Quberx social creative reading “Be prepared for every move.” beside glossy blue Bitcoin coins",
     Icon: PenToolIcon,
   },
   {
@@ -42,6 +48,8 @@ const projects = [
     challenge: "Produce an official announcement shoot with promotional posters and social creative.",
     approach: "Creative direction, set design, portrait photography, promotional assets, and digital rollout.",
     image: experienceConfig.portfolio[2].image,
+    tone: "linear-gradient(90deg, #574622, #374F44)",
+    alt: "Adhyaksh film poster by Bhairava Films: the lead in a beige jacket and sunglasses with his crew, under the red Devanagari title",
     Icon: ClapperIcon,
   },
   {
@@ -49,6 +57,8 @@ const projects = [
     challenge: "Build momentum and audience traction for an official anthem launch.",
     approach: "Social hooks, creative teasers, and multi-format promotional campaigns across Instagram and YouTube.",
     image: experienceConfig.portfolio[3].image,
+    tone: "linear-gradient(90deg, #33262A, #422733)",
+    alt: "“Zat Pat Pata Pat” song poster: Danny Pandit in an orange jacket and glowing sunglasses before a bright mandala, releasing 28 November",
     Icon: MusicIcon,
   },
 ];
@@ -62,7 +72,7 @@ export function HomeRedesign() {
           <h1 id="home-title">We Engineer Digital Monopolies for Enterprise <em>Brands.</em></h1>
           <p className="home-intro">A closed-loop growth laboratory combining deep data analytics, high-retention media engineering, and AI-driven lifecycle automation.</p>
           <div className="home-actions">
-            <Link className="home-button home-button-primary" href="/contact">Apply for Strategy Allocation <span aria-hidden="true">↗</span></Link>
+            <Link className="home-button home-button-primary" href="/contact">Discuss Your Project <span aria-hidden="true">↗</span></Link>
             <a className="home-button home-button-secondary" href="#selected-work">Explore Our Work</a>
           </div>
           <span className="home-index">01 / 03 <i /> The growth system</span>
@@ -102,10 +112,10 @@ export function HomeRedesign() {
             <div><p className="home-eyebrow">Selected work</p><h2 id="work-title">Built in the <em>real world.</em></h2></div>
             <p>Creative direction and media systems shaped around each project’s ambition.</p>
           </div>
-          <div className="work-list">
+          <WorkCarousel>
             {projects.map((project, index) => (
-              <article className={`work-feature work-feature-${index + 1}`} key={project.slug}>
-                <figure className="work-image"><img src={project.image} alt={`${project.client} campaign`} loading="lazy" /></figure>
+              <article className={`work-feature work-feature-${index + 1}`} key={project.slug} style={{ "--work-tone": project.tone } as CSSProperties}>
+                <figure className="work-image"><img src={project.image} alt={project.alt} loading="lazy" decoding="async" draggable={false} /></figure>
                 <div className="work-copy">
                   <p className="home-eyebrow"><project.Icon className="work-icon" size={16} />{String(index + 1).padStart(2, "0")} / {project.category}</p>
                   <h3>{project.client}</h3>
@@ -114,7 +124,7 @@ export function HomeRedesign() {
                 </div>
               </article>
             ))}
-          </div>
+          </WorkCarousel>
           {/* The separate work archive is temporarily unavailable. */}
         </div>
       </section>

@@ -164,8 +164,8 @@ export default function AboutPage() {
             <div className="flex flex-col">
               <div className="mb-8 flex items-center gap-4 border-b border-lgl-fg/15 pb-5">
                 <span className="h-px w-10 bg-[#C5A059]" aria-hidden="true" />
-                <p className="label-eyebrow text-lgl-fg/55">Our Leadership</p>
-                <span className="ml-auto text-[0.6rem] tracking-[0.18em] text-lgl-fg/60">01 / THE POINT OF VIEW</span>
+                <p className="label-eyebrow text-lgl-fg/70">Our Leadership</p>
+                <span className="ml-auto text-[0.68rem] tracking-[0.18em] text-lgl-fg/70">01 / THE POINT OF VIEW</span>
               </div>
 
               <h2 className="max-w-[12ch] text-[clamp(3rem,7vw,6rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-lgl-fg" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
@@ -178,7 +178,7 @@ export default function AboutPage() {
 
               <blockquote className="mt-8 max-w-[54ch] border-l-2 border-[#C5A059] pl-5 text-sm italic leading-[1.7] text-lgl-fg/75 md:text-base">
                 &ldquo;Little Giant Labs represents bold ideas and focused execution. We channel that focus into the brands we scale.&rdquo;
-                <cite className="mt-3 block text-[0.6rem] not-italic uppercase tracking-[0.2em] text-lgl-fg/50">Rajesh Waghchaware</cite>
+                <cite className="mt-3 block text-[0.68rem] not-italic uppercase tracking-[0.2em] text-lgl-fg/70">Rajesh Waghchaware</cite>
               </blockquote>
 
               <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-b border-lgl-fg/15">
@@ -188,9 +188,9 @@ export default function AboutPage() {
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className="relative inline-flex items-center gap-2 pb-4 text-[0.65rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold"
+                    className="relative inline-flex items-center gap-2 pb-4 text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold"
                     style={{
-                      color: activeTab === tab ? "var(--lgl-fg)" : "color-mix(in srgb, var(--lgl-fg) 60%, transparent)",
+                      color: activeTab === tab ? "var(--lgl-fg)" : "color-mix(in srgb, var(--lgl-fg) 70%, transparent)",
                       cursor: "pointer",
                     }}
                   >
@@ -256,7 +256,7 @@ export default function AboutPage() {
             <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               Evolution in
               <br />
-              <span className="font-light text-lgl-fg/50" style={{ fontStyle: "italic" }}>
+              <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
                 milestones.
               </span>
             </h2>
@@ -299,13 +299,13 @@ export default function AboutPage() {
                         viewport={{ once: true, margin: "-80px" }}
                         transition={{ duration: 0.7, delay: index * 0.05 }}
                       >
-                        <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-lgl-fg/55 block mb-2" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+                        <span className="text-3xl md:text-4xl font-extrabold tracking-tight text-lgl-fg/70 block mb-2" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                           {m.year}
                         </span>
                         <h3 className="text-lg md:text-xl font-bold text-lgl-fg" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                           {m.title}
                         </h3>
-                        <p className="mt-3 text-xs md:text-sm leading-relaxed text-lgl-fg/50 font-light">
+                        <p className="mt-3 text-xs md:text-sm leading-relaxed text-lgl-fg/70 font-light">
                           {m.desc}
                         </p>
                       </motion.div>
@@ -329,7 +329,7 @@ export default function AboutPage() {
             <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               How we scale
               <br />
-              <span className="font-light text-lgl-fg/50" style={{ fontStyle: "italic" }}>
+              <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
                 your brand.
               </span>
             </h2>
@@ -346,7 +346,7 @@ export default function AboutPage() {
             <h2 className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               Driven by
               <br />
-              <span className="font-light text-lgl-fg/50" style={{ fontStyle: "italic" }}>
+              <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
                 conviction.
               </span>
             </h2>
@@ -357,7 +357,7 @@ export default function AboutPage() {
               <Card key={v.title} className="flex flex-col justify-between p-8 hover:shadow-[0_15px_40px_rgba(0,0,0,0.06)] hover:border-lgl-fg/20 transition-all duration-300">
                 <div>
                   <div className="mb-6 flex items-center justify-between">
-                    <span className="text-2xl font-bold text-lgl-fg/55 tracking-tighter block">
+                    <span className="text-2xl font-bold text-lgl-fg/70 tracking-tighter block">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C5A059]/40 bg-[#C5A059]/10 text-lgl-gold">
@@ -367,7 +367,7 @@ export default function AboutPage() {
                   <h3 className="text-lg font-bold text-lgl-fg tracking-tight" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
                     {v.title}
                   </h3>
-                  <p className="mt-4 text-sm leading-relaxed text-lgl-fg/60 font-light">
+                  <p className="mt-4 text-sm leading-relaxed text-lgl-fg/70 font-light">
                     {v.description}
                   </p>
                 </div>

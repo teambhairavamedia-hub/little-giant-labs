@@ -29,7 +29,7 @@ export function AttentionDiagram() {
         <circle cx="176" cy="104" r="2.5" fill="#0B3E31" />
 
         {/* Retention chart */}
-        <g stroke="rgba(169,210,190,.35)" strokeWidth="1.2">
+        <g fill="none" stroke="rgba(169,210,190,.35)" strokeWidth="1.2">
           <path d="M340,34 V190 H566" />
           <path d="M340,72 H566 M340,112 H566 M340,152 H566" strokeDasharray="2 6" opacity=".6" />
         </g>

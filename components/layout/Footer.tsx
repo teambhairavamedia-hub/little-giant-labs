@@ -45,7 +45,7 @@ export function Footer() {
               href="/contact"
               className="group inline-flex flex-col items-start gap-4 text-left"
             >
-              <p className="label-eyebrow text-lgl-fg/50 tracking-[0.28em]">
+              <p className="label-eyebrow text-lgl-fg/70 tracking-[0.28em]">
                 Start the Conversation
               </p>
               <h2
@@ -92,13 +92,13 @@ export function Footer() {
           </div>
 
           {/* Col 2: Navigation Menu */}
-          <div className="flex flex-col gap-3">
-            <p className="label-eyebrow text-lgl-fg/60 mb-2 font-semibold">Navigation</p>
+          <div className="flex flex-col gap-1">
+            <p className="label-eyebrow text-lgl-fg/70 mb-2 font-semibold">Navigation</p>
             {siteConfig.nav.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-[0.875rem] font-medium text-lgl-fg/80 transition-colors hover:text-lgl-fg"
+                className="inline-flex min-h-8 items-center text-[0.875rem] font-medium text-lgl-fg/80 transition-colors hover:text-lgl-fg"
                 style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
               >
                 {item.label}
@@ -107,11 +107,11 @@ export function Footer() {
           </div>
 
           {/* Col 3: Social/Connect */}
-          <div className="flex flex-col gap-3">
-            <p className="label-eyebrow text-lgl-fg/60 mb-2 font-semibold">Connect</p>
+          <div className="flex flex-col gap-1">
+            <p className="label-eyebrow text-lgl-fg/70 mb-2 font-semibold">Connect</p>
             <a
               href={`mailto:${siteConfig.email ?? "hello@bhairavamedia.com"}`}
-              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
+              className="inline-flex min-h-8 items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/75 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               <MailIcon size={15} className="text-lgl-gold/80" />
@@ -121,7 +121,7 @@ export function Footer() {
               href={siteConfig.social?.instagram ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
+              className="inline-flex min-h-8 items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/75 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               <InstagramIcon size={15} className="text-lgl-gold/80" />
@@ -131,7 +131,7 @@ export function Footer() {
               href={siteConfig.social?.linkedin ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
+              className="inline-flex min-h-8 items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/75 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               <LinkedInIcon size={15} className="text-lgl-gold/80" />
@@ -141,7 +141,7 @@ export function Footer() {
               href={siteConfig.social?.twitter ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/65 transition-colors hover:text-lgl-fg"
+              className="inline-flex min-h-8 items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/75 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
               <XIcon size={15} className="text-lgl-gold/80" />
@@ -153,13 +153,13 @@ export function Footer() {
 
           {/* Col 4: Location & Local Time */}
           <div className="flex flex-col gap-2">
-            <p className="label-eyebrow text-lgl-fg/60 mb-2">Office</p>
+            <p className="label-eyebrow text-lgl-fg/70 mb-2">Office</p>
             <p className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
               <PinIcon size={15} className="text-lgl-gold/80" />
               PUNE, IN
             </p>
             {localTime && (
-              <p className="inline-flex items-center gap-2.5 text-[0.8125rem] font-medium text-lgl-fg/55 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <p className="inline-flex items-center gap-2.5 text-[0.8125rem] font-medium text-lgl-fg/70 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
                 <ClockIcon size={15} className="text-lgl-gold/80" />
                 Local Time: {localTime}
               </p>
@@ -170,10 +170,10 @@ export function Footer() {
 
         {/* Bottom copyright & compliance */}
         <div className="relative pt-8 border-t border-lgl-fg/5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between z-10">
-          <p className="label-eyebrow text-lgl-fg/60">
+          <p className="label-eyebrow text-lgl-fg/70">
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <p className="label-eyebrow text-lgl-fg/60">
+          <p className="label-eyebrow text-lgl-fg/70">
             Engineered for motion, story, and scale.
           </p>
         </div>

@@ -151,7 +151,7 @@ export function Header() {
 
               {/* Hamburger — mobile/tablet */}
               <button
-                className="xl:hidden flex flex-col items-center justify-center gap-[5px] w-9 h-9 rounded-full transition-all duration-200"
+                className="xl:hidden flex flex-col items-center justify-center gap-[5px] w-11 h-11 rounded-full transition-all duration-200"
                 style={{
                   background: "var(--lgl-nav-chip)",
                   border: `1px solid ${pillBorder}`,
