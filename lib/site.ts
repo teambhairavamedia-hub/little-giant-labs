@@ -12,11 +12,11 @@ export const siteConfig = {
   nav: [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
-    { label: "Case Studies", href: "#" },
+    { label: "Case Studies", href: "/#selected-work" },
     { label: "Contact", href: "/contact" },
   ],
   cta: {
-    label: "Book Strategy Call",
+    label: "Book a Consultation",
     href: "/contact",
   },
 };

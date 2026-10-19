@@ -99,7 +99,7 @@ export function ContactForm() {
     </div> */}
     <ol className="mb-10 grid grid-cols-4 gap-2" aria-label={`Step ${step + 1} of 4`}>
       {[0, 1, 2, 3].map((item) => <li key={item} aria-current={item === step ? "step" : undefined} className="flex flex-col gap-2">
-        <span className={`text-[10px] font-semibold tracking-[.2em] ${item <= step ? "text-lgl-gold" : "text-lgl-soft/60"}`}><span className="sr-only">Step </span>{String(item + 1).padStart(2, "0")}</span>
+        <span className={`text-[11px] font-semibold tracking-[.2em] ${item <= step ? "text-lgl-gold" : "text-lgl-soft/60"}`}><span className="sr-only">Step </span>{String(item + 1).padStart(2, "0")}</span>
         <span className={`h-[2px] ${item <= step ? "bg-[#C5A059]" : "bg-lgl-track"}`} />
       </li>)}
     </ol>

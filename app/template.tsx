@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { MotionConfig, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -13,7 +13,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] as const }}
     >
-      {children}
+      {/* Framer Motion animations follow the visitor's reduced-motion setting */}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </motion.div>
   );
 }
