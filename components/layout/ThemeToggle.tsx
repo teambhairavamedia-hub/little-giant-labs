@@ -36,7 +36,7 @@ export function ThemeToggle() {
       onClick={() => setColorTheme(isDark ? "light" : "dark")}
       aria-label={label}
       title={label}
-      className="flex w-11 h-11 items-center justify-center rounded-full transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold"
+      className="flex w-11 h-11 cursor-pointer items-center justify-center rounded-full transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold"
       style={{
         background: "var(--lgl-nav-chip)",
         border: "1px solid var(--lgl-nav-border)",

@@ -7,9 +7,9 @@ import { PageHeader } from "@/components/layout/PageHeader";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
-import { CameraIcon, ChartIcon, ChipIcon, CompassIcon, EyeIcon, FilmIcon, GlobeIcon, LayersIcon, LoopIcon } from "@/components/ui/Icons";
+import { CameraIcon, ChartIcon, ChipIcon, CompassIcon, EyeIcon, FilmIcon, GlobeIcon, LoopIcon } from "@/components/ui/Icons";
 
-const tabIcons = { vision: EyeIcon, background: LayersIcon, philosophy: CompassIcon };
+const tabIcons = { vision: EyeIcon, philosophy: CompassIcon };
 
 /* Header illustration: a lens whose focus resolves into a rising growth line. */
 function AboutHeaderVisual() {
@@ -103,7 +103,7 @@ const values = [
 ];
 
 export default function AboutPage() {
-  const [activeTab, setActiveTab] = useState<"vision" | "background" | "philosophy">("vision");
+  const [activeTab, setActiveTab] = useState<"vision" | "philosophy">("vision");
   const timelineRef = useRef<HTMLDivElement>(null);
 
   // Set up scroll progress tracking for the timeline line animation
@@ -123,10 +123,6 @@ export default function AboutPage() {
       title: "To Build Digital Movements",
       body: "To create a world where brand storytelling is not just ads, but cinematic experiences that build deep-seated loyalty and community. Rajesh believes attention is the ultimate modern currency, and we must treat it with absolute respect by crafting high-value creative content.",
     },
-    background: {
-      title: "10+ Years of Directing Strategy",
-      body: "With a strong background in visual communication and digital strategy, Rajesh has spent over a decade directing commercial video shoots, advising tech start-ups on growth, and developing cross-platform marketing architectures that unify content with automated funnels.",
-    },
     philosophy: {
       title: "Performance is Creative Validation",
       body: "An ad shouldn't just look pretty; it must convert. By bridging the gap between high-end cinema cameras and analytics dashboards, we turn eyeballs into enterprise value. Data tells us what works; creativity tells us why it connects.",
@@ -138,7 +134,7 @@ export default function AboutPage() {
       {/* Page Header */}
       <PageHeader
         eyebrow="About Little Giant Labs"
-        title="We build digital movements."
+        title="We build digital movements"
         description="Little Giant Labs sits at the intersection of high-retention cinematic storytelling and performance marketing, scaling brands that refuse to be ignored."
         theme="dark"
         visual={<AboutHeaderVisual />}
@@ -169,7 +165,7 @@ export default function AboutPage() {
               </div>
 
               <h2 className="max-w-[12ch] text-[clamp(3rem,7vw,6rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-lgl-fg" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
-                Storytelling <span className="font-light italic text-lgl-green-text">with conviction.</span>
+                Storytelling <span className="font-light italic text-lgl-green-text">with conviction</span>
               </h2>
 
               <p className="mt-8 max-w-[58ch] text-base leading-[1.8] text-lgl-fg/75 md:text-[1.05rem]">
@@ -182,7 +178,7 @@ export default function AboutPage() {
               </blockquote>
 
               <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-b border-lgl-fg/15">
-                {(["vision", "background", "philosophy"] as const).map((tab) => {
+                {(["vision", "philosophy"] as const).map((tab) => {
                   const TabIcon = tabIcons[tab];
                   return (
                   <button
@@ -257,7 +253,7 @@ export default function AboutPage() {
               Evolution in
               <br />
               <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
-                milestones.
+                milestones
               </span>
             </h2>
           </div>
@@ -330,7 +326,7 @@ export default function AboutPage() {
               How we scale
               <br />
               <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
-                your brand.
+                your brand
               </span>
             </h2>
           </div>
@@ -347,7 +343,7 @@ export default function AboutPage() {
               Driven by
               <br />
               <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
-                conviction.
+                conviction
               </span>
             </h2>
           </div>
