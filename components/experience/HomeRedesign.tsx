@@ -1,28 +1,9 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { experienceConfig } from "@/lib/experience";
-import { LoyaltyLoop } from "@/components/experience/LoyaltyLoop";
+import { ServiceVideoCards } from "@/components/experience/ServiceVideoCards";
 import { WorkCarousel } from "@/components/experience/WorkCarousel";
-import { AttentionDiagram, PerformanceDiagram } from "@/components/experience/PillarDiagrams";
 import { ClapperIcon, FilmIcon, MusicIcon, PenToolIcon, TargetIcon, TrendIcon } from "@/components/ui/Icons";
-
-const pillars = [
-  {
-    number: "01", title: "Attention Engineering", scene: "Make them look",
-    description: "Data-backed, high-production visual assets built to capture and retain modern consumer attention spans.",
-    media: "attention",
-  },
-  {
-    number: "02", title: "Performance Architecture", scene: "Make it perform",
-    description: "Algorithmic media buying stacks optimized for predictable corporate revenue multiplication.",
-    media: "performance",
-  },
-  {
-    number: "03", title: "Autonomous Lifecycle Loops", scene: "Make it last",
-    description: "AI-powered CRM setups and custom data tracking systems that automate consumer retention.",
-    media: "type",
-  },
-];
 
 const projects = [
   {
@@ -77,40 +58,25 @@ export function HomeRedesign() {
           <p className="home-intro">A closed-loop growth laboratory combining deep data analytics, high-retention media engineering, and AI-driven lifecycle automation.</p>
           <div className="home-actions">
             <Link className="home-button home-button-primary" href="/contact">Discuss Your Project <span aria-hidden="true">↗</span></Link>
-            <a className="home-button home-button-secondary" href="#selected-work">Explore Our Work</a>
+            <a className="home-button home-button-secondary" href="#our-work">Explore Our Work</a>
           </div>
           <span className="home-index"><i /> The growth system</span>
         </div>
       </section>
 
-      <section id="capabilities" className="home-pillars" data-section-theme="dark" aria-labelledby="pillars-title">
+      <section id="services" className="home-pillars" data-section-theme="dark" aria-labelledby="pillars-title">
         <div className="home-shell">
           <div className="home-section-head">
             <p className="home-eyebrow">One connected growth system</p>
             <h2 id="pillars-title">Attention becomes <em>momentum</em></h2>
             <p>Production, distribution, and retention work as one continuous engine.</p>
           </div>
-          <div className="pillar-list">
-            {pillars.map((pillar) => (
-                <article className={`pillar-scene${pillar.media === "none" ? " pillar-scene--text" : ""}`} key={pillar.number}>
-                <div className="pillar-copy">
-                  <p className="home-eyebrow"><span /> {pillar.number} / {pillar.title}</p>
-                  <h3>{pillar.scene}</h3>
-                  <p>{pillar.description}</p>
-                </div>
-                {pillar.media === "attention" && <AttentionDiagram />}
-                {pillar.media === "performance" && <PerformanceDiagram />}
-                {pillar.media === "type" && (
-                  <LoyaltyLoop />
-                )}
-              </article>
-            ))}
-          </div>
+          <ServiceVideoCards />
           <p className="home-transition"><span /> From attention to lasting value</p>
         </div>
       </section>
 
-      <section id="selected-work" className="home-work" data-section-theme="dark" aria-labelledby="work-title">
+      <section id="our-work" className="home-work" data-section-theme="dark" aria-labelledby="work-title">
         <div className="home-shell">
           <div className="work-heading">
             <div><p className="home-eyebrow">Selected work</p><h2 id="work-title">Built in the <em>real world</em></h2></div>
