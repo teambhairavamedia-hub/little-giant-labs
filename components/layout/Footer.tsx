@@ -52,9 +52,9 @@ export function Footer() {
                 className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.04em] text-lgl-fg transition-colors duration-500 group-hover:text-lgl-fg/80"
                 style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
-                Let's create
+                Let&apos;s create
                 <br />
-                something bold.
+                something bold
                 <span className="inline-block ml-4 translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-4 group-hover:-translate-y-2">
                   →
                 </span>

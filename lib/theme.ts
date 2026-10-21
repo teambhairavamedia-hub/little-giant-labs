@@ -8,7 +8,7 @@ export const sectionThemeClass: Record<SectionTheme, string> = {
 /* ── Site colour theme (light / dark toggle) ── */
 export type ColorTheme = "dark" | "light";
 
-export const DEFAULT_COLOR_THEME: ColorTheme = "dark";
+export const DEFAULT_COLOR_THEME: ColorTheme = "light";
 export const THEME_STORAGE_KEY = "lgl-theme";
 
 /* Runs in <head> before first paint so the saved theme never flashes. */
@@ -34,7 +34,7 @@ export function subscribeColorTheme(onChange: () => void) {
 
   const onStorage = (event: StorageEvent) => {
     if (event.key !== THEME_STORAGE_KEY) return;
-    document.documentElement.dataset.theme = event.newValue === "light" ? "light" : DEFAULT_COLOR_THEME;
+    document.documentElement.dataset.theme = event.newValue === "light" || event.newValue === "dark" ? event.newValue : DEFAULT_COLOR_THEME;
   };
   window.addEventListener("storage", onStorage);
 
