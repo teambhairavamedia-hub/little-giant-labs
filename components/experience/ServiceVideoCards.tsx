@@ -8,21 +8,21 @@ const cards = [
     title: "Attention Engineering",
     scene: "Make them look",
     description: "Data-backed, high-production visual assets built to capture and retain modern consumer attention spans.",
-    src: "/media/Little%20Giant%20Labs%20-%20service-01.mp4",
+    src: "https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/services/Little%20Giant%20Labs%20-%20service-01.mp4",
   },
   {
     number: "02",
     title: "Performance Architecture",
     scene: "Make it perform",
     description: "Algorithmic media buying stacks optimized for predictable corporate revenue multiplication.",
-    src: "/media/Little%20Giant%20Labs%20-%20service-02.mp4",
+    src: "https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/services/Little%20Giant%20Labs%20-%20service-02.mp4",
   },
   {
     number: "03",
-    title: "Autonomous Lifecycle Loops",
+    title: "Lifecycle Loops",
     scene: "Make it last",
     description: "AI-powered CRM setups and custom data tracking systems that automate consumer retention.",
-    src: "/media/Little%20Giant%20Labs%20-%20service-03.mp4",
+    src: "https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/services/Little%20Giant%20Labs%20-%20service-03.mp4",
   },
 ];
 
