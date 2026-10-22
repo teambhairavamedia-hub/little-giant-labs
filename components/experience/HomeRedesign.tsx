@@ -84,7 +84,7 @@ export function HomeRedesign() {
           </div>
           <WorkCarousel>
             {projects.map((project, index) => (
-              <article className={`work-feature work-feature-${index + 1}`} key={project.slug} style={{ "--work-tone": project.tone } as CSSProperties}>
+              <article className={`work-card-content work-feature-${index + 1}`} key={project.slug} data-project-id={project.slug} style={{ "--work-tone": project.tone } as CSSProperties}>
                 <figure className="work-image"><img src={project.image} alt={project.alt} loading="lazy" decoding="async" draggable={false} /></figure>
                 <div className="work-copy">
                   <p className="home-eyebrow"><project.Icon className="work-icon" size={16} />{project.category}</p>
