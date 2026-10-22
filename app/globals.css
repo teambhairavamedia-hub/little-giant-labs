@@ -466,8 +466,8 @@ html.lenis, html.lenis body {
 .pillar-image figcaption { position:absolute; z-index:1; left:1.25rem; bottom:1rem; color:#fff; font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; }
 .home-transition { display:flex; align-items:center; justify-content:flex-end; gap:.8rem; margin:2.5rem 0 0; color:var(--home-sage); font-size:.68rem; letter-spacing:.17em; text-transform:uppercase; }
 .home-transition span { width:2.6rem; height:1px; background:var(--home-gold); }
-/* Selected Work sits on its own lighter surface so it reads apart from the deep-navy hero */
-.home-work { position:relative; border-top:1px solid color-mix(in srgb,var(--lgl-gold) 30%,transparent); background:radial-gradient(ellipse 60% 40% at 85% 0%,color-mix(in srgb,var(--lgl-gold) 9%,transparent),transparent 70%),var(--lgl-surface); scroll-margin-top:1rem; overflow-x:clip; }
+/* Selected Work sits on its own lighter, dot-textured surface so it reads apart from the deep-navy hero */
+.home-work { position:relative; border-top:1px solid color-mix(in srgb,var(--lgl-gold) 30%,transparent); background:radial-gradient(ellipse 60% 40% at 85% 0%,color-mix(in srgb,var(--lgl-gold) 9%,transparent),transparent 70%),radial-gradient(color-mix(in srgb,var(--lgl-line) 10%,transparent) 1px,transparent 1.4px) 0 0 / 24px 24px,var(--lgl-surface); scroll-margin-top:1rem; overflow-x:clip; }
 .work-heading { display:flex; align-items:end; justify-content:space-between; gap:2rem; padding-bottom:2rem; border-bottom:1px solid color-mix(in srgb,var(--lgl-line) 14%,transparent); }
 .work-heading>p { max-width:330px; margin-bottom:.6rem; }
 .work-heading .home-eyebrow { width:fit-content; padding:.45rem .95rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 40%,transparent); border-radius:999px; }
