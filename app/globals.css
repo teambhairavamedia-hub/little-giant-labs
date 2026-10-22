@@ -504,13 +504,13 @@ html.lenis, html.lenis body {
 .work-copy>.home-eyebrow { align-self:start; padding-top:var(--work-pad); }
 .work-copy h3 { position:relative; align-self:start; margin:.55rem 0 .65rem; padding-bottom:.65rem; color:var(--home-paper); font-size:clamp(1.05rem,1.5vw,1.45rem); line-height:1.1; }
 .work-copy h3::after { content:""; position:absolute; left:var(--work-pad); bottom:0; width:2.5rem; height:1px; background:var(--home-gold); transform-origin:left; transition:transform .55s cubic-bezier(.2,.7,.2,1); }
-.work-copy .work-challenge,.work-copy .work-outcome { color:var(--lgl-muted-2); font-size:clamp(.72rem,.85vw,.84rem); line-height:1.42; }
+.work-copy .work-challenge,.work-copy .work-outcome { color:var(--lgl-muted-2); font-size:clamp(1.05rem,1.25vw,1.2rem); line-height:1.48; }
 .work-copy .work-challenge { padding-bottom:.55rem; }
 .work-copy .work-outcome { padding-bottom:var(--work-pad); }
 .work-outcome ul { display:grid; gap:.35rem; margin:0; padding:0; list-style:none; }
 .work-outcome li { position:relative; padding-left:1rem; color:var(--lgl-soft); }
 .work-outcome li::before { content:""; position:absolute; left:0; top:.68em; width:5px; height:5px; border-radius:50%; background:var(--home-gold); }
-.work-copy strong { display:block; margin:0 0 .45rem; color:var(--lgl-soft); font-size:.74rem; letter-spacing:.16em; text-transform:uppercase; }
+.work-copy strong { display:block; margin:0 0 .55rem; color:var(--lgl-soft); font-size:.98rem; letter-spacing:.13em; text-transform:uppercase; }
 @media(hover:hover) {
  .work-feature:hover { border-color:color-mix(in srgb,var(--lgl-gold) 45%,transparent); }
  .work-feature:hover::before { opacity:1; }
@@ -586,7 +586,7 @@ html.lenis, html.lenis body {
  .work-list { --work-pad:1.2rem; }
  .work-image { aspect-ratio:1.45; }
  .work-copy h3 { font-size:clamp(1.1rem,5vw,1.45rem); margin:.7rem 0 .8rem; }
- .work-copy .work-challenge,.work-copy .work-outcome { font-size:clamp(.78rem,3.3vw,.95rem); line-height:1.48; }
+ .work-copy .work-challenge,.work-copy .work-outcome { font-size:clamp(1.08rem,4.2vw,1.2rem); line-height:1.48; }
  .work-arrow { width:44px; height:44px; }
  .home-button { flex:1 1 100%; }
 }
@@ -594,7 +594,7 @@ html.lenis, html.lenis body {
  .work-image { aspect-ratio:auto; height:clamp(210px,20vw,280px); }
  .work-copy>.home-eyebrow { padding-top:1rem; font-size:.68rem; }
  .work-copy h3 { margin:.6rem 0 .7rem; font-size:clamp(1.35rem,2vw,1.8rem); }
- .work-copy .work-challenge,.work-copy .work-outcome { font-size:clamp(.78rem,.95vw,.95rem); line-height:1.48; }
+ .work-copy .work-challenge,.work-copy .work-outcome { font-size:clamp(1.12rem,1.3vw,1.24rem); line-height:1.48; }
  .work-copy .work-challenge { padding-bottom:.7rem; }
 }
 @media(prefers-reduced-motion:reduce) {
