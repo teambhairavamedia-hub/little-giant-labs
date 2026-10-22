@@ -79,6 +79,7 @@ Names and purposes above are verified in `.env.example`, README, and source; no 
 Confirmed in source:
 
 - Public website routes and application submission/validation/qualification path exist.
+- The home page Selected Work section uses four logical project cards in circular order, with a centered active card and its two circular neighbors shown as grayscale/dim previews. Direct selection, keyboard and arrow navigation, four progress controls, and horizontal wheel/touch gestures remain wired to one active index. Source content and order remain unchanged. Build and interactive browser verification remain pending; the local build currently cannot fetch its Google Fonts.
 - Supabase table migration and restrictive RLS/grant setup exist in the repository.
 - Firebase login, email verification, server token verification, session cookie, protected admin page, and logout exist.
 - Phase 2 application details are implemented in the repository. `GET /api/admin/applications/[id]` verifies the administrator session on each request, validates a UUID, and returns only the selected record's submission fields and persisted qualification outcome with no-store headers. Live access remains dependent on existing Firebase, Supabase, and deployment configuration.
