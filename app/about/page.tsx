@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, type CSSProperties } from "react";
+import { resolveMediaUrl } from "@/lib/media";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -223,7 +224,7 @@ export default function AboutPage() {
               <div className="absolute -left-3 -top-3 h-full w-full border border-[#C5A059]/55" aria-hidden="true" />
               <div className="relative aspect-[4/5] overflow-hidden bg-[#0B1B2B]">
                 <img
-                  src="https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/founder/founder-f2ovW1aAw2yHLcv2XuCepudGIFnI91.jpg"
+                  src={resolveMediaUrl("https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/founder/founder-f2ovW1aAw2yHLcv2XuCepudGIFnI91.jpg")}
                   alt="Rajesh Waghchaware, Founder and Creative Director"
                   className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out motion-reduce:transition-none hover:scale-[1.02]"
                 />
