@@ -477,7 +477,7 @@ html.lenis, html.lenis body {
 .work-list { --work-pad:clamp(1.1rem,1.7vw,1.5rem); position:relative; width:135%; height:clamp(700px,54vw,780px); margin-left:-17.5%; overflow:hidden; touch-action:pan-y; }
 .work-list:focus-visible { outline:1px solid var(--lgl-gold); outline-offset:-1px; }
 .work-list img { -webkit-user-drag:none; user-select:none; }
-.work-slide { position:absolute; top:50%; left:50%; width:min(56%,760px); height:clamp(620px,49vw,700px); filter:grayscale(1) brightness(.26); opacity:.9; transition:transform .56s cubic-bezier(.2,.7,.2,1),filter .48s cubic-bezier(.2,.7,.2,1),opacity .48s ease; cursor:pointer; }
+.work-slide { position:absolute; top:50%; left:50%; width:min(48%,500px); height:clamp(250px,35vw,700px); filter:grayscale(1) brightness(.26); opacity:.9; transition:transform .56s cubic-bezier(.2,.7,.2,1),filter .48s cubic-bezier(.2,.7,.2,1),opacity .48s ease; cursor:pointer; }
 .work-slide--left { z-index:1; transform:translate(calc(-50% - 43%),-50%) scale(.8); }
 .work-slide--center { z-index:2; transform:translate(-50%,-50%) scale(1.02); }
 .work-slide--right { z-index:1; transform:translate(calc(-50% + 43%),-50%) scale(.8); }
@@ -580,7 +580,7 @@ html.lenis, html.lenis body {
  .work-heading { display:block; }
  .work-heading>p { margin-top:1.2rem; }
  .work-list { width:calc(100% + 2rem); height:730px; margin-left:-1rem; }
- .work-slide { width:91%; height:700px; }
+ .work-slide { width:82%; height:700px; }
  .work-slide--left { transform:translate(calc(-50% - 95%),-50%) scale(.82); }
  .work-slide--right { transform:translate(calc(-50% + 95%),-50%) scale(.82); }
  .work-list { --work-pad:1.2rem; }

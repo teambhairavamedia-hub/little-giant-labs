@@ -14,6 +14,8 @@ export function Header() {
   const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSectionHref, setActiveSectionHref] = useState<string | null>(null);
+  const activeHref = pathname === "/" ? activeSectionHref ?? "/" : pathname;
 
   /* Fade in on mount (the homepage intro that used to gate this was removed) */
   useEffect(() => {
@@ -30,6 +32,38 @@ export function Header() {
 
   /* Close mobile menu on route change */
   useEffect(() => { setMobileOpen(false); }, [pathname]);
+
+  /* Keep homepage hash links in sync with the section at the viewport's activation line. */
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const sections = siteConfig.nav
+      .filter((item) => item.href.startsWith("/#"))
+      .map((item) => ({ href: item.href, element: document.getElementById(item.href.slice(2)) }))
+      .filter((section): section is { href: string; element: HTMLElement } => Boolean(section.element));
+
+    let frame = 0;
+    const updateActiveSection = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const line = window.innerHeight * 0.4;
+        const current = sections.find(({ element }) => {
+          const bounds = element.getBoundingClientRect();
+          return bounds.top <= line && bounds.bottom > line;
+        });
+        setActiveSectionHref(current?.href ?? null);
+      });
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [pathname]);
 
   /* Colors come from the site theme (see --lgl-nav-* in globals.css) + scroll state */
   const pillBg = scrolled ? "var(--lgl-nav-pill-scrolled)" : "var(--lgl-nav-pill)";
@@ -94,11 +128,12 @@ export function Header() {
             {/* Desktop nav — center */}
             <nav className="hidden xl:flex items-center gap-1">
               {siteConfig.nav.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = activeHref === item.href;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => setActiveSectionHref(item.href.startsWith("/#") ? item.href : null)}
                     className="relative rounded-full transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
@@ -208,11 +243,12 @@ export function Header() {
               }}
             >
               {siteConfig.nav.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = activeHref === item.href;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => setActiveSectionHref(item.href.startsWith("/#") ? item.href : null)}
                     className="rounded-[14px] px-4 py-3 transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",

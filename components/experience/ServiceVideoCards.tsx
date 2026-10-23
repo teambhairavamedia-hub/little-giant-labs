@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { resolveRemoteMediaUrl } from "@/lib/media";
+import { mediaUrls } from "@/lib/media-paths";
 
 const cards = [
   {
@@ -8,21 +10,21 @@ const cards = [
     title: "Attention Engineering",
     scene: "Make them look",
     description: "Data-backed, high-production visual assets built to capture and retain modern consumer attention spans.",
-    src: "https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/services/Little%20Giant%20Labs%20-%20service-01.mp4",
+    src: resolveRemoteMediaUrl(mediaUrls.service01),
   },
   {
     number: "02",
     title: "Performance Architecture",
     scene: "Make it perform",
     description: "Algorithmic media buying stacks optimized for predictable corporate revenue multiplication.",
-    src: "https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/services/Little%20Giant%20Labs%20-%20service-02.mp4",
+    src: resolveRemoteMediaUrl(mediaUrls.service02),
   },
   {
     number: "03",
     title: "Lifecycle Loops",
     scene: "Make it last",
     description: "AI-powered CRM setups and custom data tracking systems that automate consumer retention.",
-    src: "https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com/media/services/Little%20Giant%20Labs%20-%20service-03.mp4",
+    src: resolveRemoteMediaUrl(mediaUrls.service03),
   },
 ];
 
