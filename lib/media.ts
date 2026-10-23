@@ -1,21 +1,27 @@
-const DEFAULT_BLOB_MEDIA_URL = "https://6xft9z0vzph7qrfh.public.blob.vercel-storage.com";
+import { blobMediaBaseUrl, localMediaPathsByBlobPath } from "@/lib/media-paths";
 
-const localMediaPaths: Record<string, string> = {
-  "/media/services/Little%20Giant%20Labs%20-%20service-01.mp4": "/media/Little%20Giant%20Labs%20-%20service-01.mp4",
-  "/media/services/Little%20Giant%20Labs%20-%20service-02.mp4": "/media/Little%20Giant%20Labs%20-%20service-02.mp4",
-  "/media/services/Little%20Giant%20Labs%20-%20service-03.mp4": "/media/Little%20Giant%20Labs%20-%20service-03.mp4",
-};
+/** Keep a remote media URL in production; use an explicit local mapping elsewhere. */
+export function resolveRemoteMediaUrl(url: string): string {
+  if (process.env.NODE_ENV === "production") return url;
 
-/** Resolve a Blob media URL to a local public asset outside production. */
-export function resolveMediaUrl(blobUrl: string): string {
-  if (process.env.NODE_ENV === "production") return blobUrl;
+  let parsedUrl: URL;
+  let blobOrigin: string;
+  try {
+    parsedUrl = new URL(url);
+    blobOrigin = new URL(process.env.NEXT_PUBLIC_BLOB_MEDIA_URL || blobMediaBaseUrl).origin;
+  } catch {
+    return url;
+  }
 
-  const url = new URL(blobUrl);
-  const blobMediaUrl = process.env.NEXT_PUBLIC_BLOB_MEDIA_URL || DEFAULT_BLOB_MEDIA_URL;
-  if (url.origin !== new URL(blobMediaUrl).origin) return blobUrl;
+  if (parsedUrl.origin !== blobOrigin) return url;
 
-  const localPath = localMediaPaths[url.pathname];
-  if (!localPath) return blobUrl;
+  const localPath = localMediaPathsByBlobPath[parsedUrl.pathname];
+  if (!localPath) return url;
 
-  return `${localPath}${url.search}${url.hash}`;
+  return `${localPath}${parsedUrl.search}${parsedUrl.hash}`;
+}
+
+/** Keep an already-local public media path unchanged in every environment. */
+export function resolveLocalMediaPath(path: string): string {
+  return path;
 }
