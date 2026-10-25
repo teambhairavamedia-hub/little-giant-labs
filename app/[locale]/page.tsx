@@ -18,7 +18,9 @@ export async function generateMetadata({
   const dict = getDictionary(locale);
 
   return {
-    title: dict.seo.home.title,
+    title: {
+      absolute: dict.seo.home.title,
+    },
     description: dict.seo.home.description,
     alternates: {
       canonical: locale === "en" ? "/" : `/${locale}`,

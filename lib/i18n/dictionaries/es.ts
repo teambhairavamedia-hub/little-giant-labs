@@ -399,26 +399,26 @@ export const es: TranslationDictionary = {
   },
   seo: {
     home: {
-      title: "Little Giant Labs | Convierta la Atención en Ingresos",
+      title: "Little Giant Labs",
       description:
         "Laboratorio moderno de medios y marketing dedicado a construir una sólida presencia de marca a través de contenidos innovadores, marketing digital y soluciones de IA.",
     },
     about: {
-      title: "Sobre Nosotros | Little Giant Labs",
+      title: "Sobre Nosotros",
       description:
         "Conozca nuestra visión, liderazgo y cómo Little Giant Labs impulsa marcas corporativas mediante medios cinematográficos y arquitectura de rendimiento.",
     },
     contact: {
-      title: "Solicitud de Colaboración | Little Giant Labs",
+      title: "Solicitud de Colaboración",
       description:
         "Solicite una alianza de crecimiento institucional. Comparta los objetivos, métricas y desafíos estratégicos de su empresa.",
     },
     work: {
-      title: "Trabajos Seleccionados | Little Giant Labs",
+      title: "Trabajos Seleccionados",
       description: "Explore nuestro portafolio de campañas creativas de alto impacto y sistemas de aceleración digital.",
     },
     applicationReceived: {
-      title: "Solicitud Recibida | Little Giant Labs",
+      title: "Solicitud Recibida",
       description: "Hemos recibido su solicitud de asociación. Nuestro equipo directivo revisará su información.",
     },
   },
