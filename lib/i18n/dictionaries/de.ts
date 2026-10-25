@@ -399,26 +399,26 @@ export const de: TranslationDictionary = {
   },
   seo: {
     home: {
-      title: "Little Giant Labs | Aufmerksamkeit in Umsatz Verwandeln",
+      title: "Little Giant Labs",
       description:
         "Ein modernes Medien- und Marketing-Labor für den Aufbau dominanter Markenpräsenz durch innovative Inhalte, Digitalmarketing und KI-Lösungen.",
     },
     about: {
-      title: "Über Uns | Little Giant Labs",
+      title: "Über Uns",
       description:
         "Erfahren Sie mehr über unsere Vision, Geschäftsführung und wie Little Giant Labs führende Marken durch filmische Medien und Performance-Architektur skaliert.",
     },
     contact: {
-      title: "Partnerschaftsanfrage | Little Giant Labs",
+      title: "Partnerschaftsanfrage",
       description:
         "Bewerben Sie sich für eine institutionelle Wachstumspartnerschaft. Teilen Sie Ihre Ziele, Kennzahlen und strategischen Herausforderungen.",
     },
     work: {
-      title: "Ausgewählte Arbeiten | Little Giant Labs",
+      title: "Ausgewählte Arbeiten",
       description: "Entdecken Sie unser Portfolio wirkungsvoller Kreativkampagnen und Performance-Wachstumssysteme.",
     },
     applicationReceived: {
-      title: "Antrag Eingegangen | Little Giant Labs",
+      title: "Antrag Eingegangen",
       description: "Ihr Antrag ist bei uns eingegangen. Unser Team wird Ihre Einreichung prüfen.",
     },
   },

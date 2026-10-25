@@ -399,26 +399,26 @@ export const en: TranslationDictionary = {
   },
   seo: {
     home: {
-      title: "Little Giant Labs | Turn Attention Into Revenue",
+      title: "Little Giant Labs",
       description:
         "A modern media and marketing laboratory dedicated to building powerful brand presence through innovative content, digital marketing, and AI-powered solutions.",
     },
     about: {
-      title: "About Us | Little Giant Labs",
+      title: "About Us",
       description:
         "Learn about our vision, leadership, and how Little Giant Labs scales enterprise brands through cinematic media and performance architecture.",
     },
     contact: {
-      title: "Partnership Application | Little Giant Labs",
+      title: "Partnership Application",
       description:
         "Apply for an institutional growth partnership. Share your enterprise objectives, metrics, and strategic roadblocks.",
     },
     work: {
-      title: "Selected Work | Little Giant Labs",
+      title: "Selected Work",
       description: "Explore our portfolio of high-impact creative campaigns and performance growth systems.",
     },
     applicationReceived: {
-      title: "Application Received | Little Giant Labs",
+      title: "Application Received",
       description: "Your application has been received. Our leadership team will review your submission.",
     },
   },
