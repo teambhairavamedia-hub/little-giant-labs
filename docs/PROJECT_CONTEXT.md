@@ -91,6 +91,7 @@ Confirmed in source:
   - Localized routing implemented via Next.js App Router dynamic route segments under `app/[locale]/` while preserving canonical root English URLs (`/`, `/about`, `/contact`, `/application-received`, `/work`).
   - Full translation dictionaries created for all 5 languages without placeholders, covering navigation, hero, services, selected work, about/founder/milestones/principles, contact form questions and options, confirmation, footer, and SEO metadata with `hreflang` alternate links.
   - Form submission preserves canonical database enum values to guarantee 100% database constraint and server-validation compatibility across all languages.
+  - Page-level SEO metadata and root layout title template (`%s | Little Giant Labs`) reconciled: home page metadata specifies an absolute title of `Little Giant Labs` to eliminate tagline pollution and duplicate brand suffixes, while child pages use clean localized section titles that render seamlessly with the layout template.
 
 Git state at inspection: pre-existing modification to `.gitignore`; it was not changed for this task. Latest commit shown was `d19e586`.
 

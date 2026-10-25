@@ -184,3 +184,21 @@ test("no placeholder text exists in any dictionary", () => {
     }
   }
 });
+
+test("home SEO title is Little Giant Labs and subpage titles do not duplicate brand template", () => {
+  for (const loc of locales) {
+    const dict = getDictionary(loc);
+    // Home title should be exactly the brand name
+    assert.equal(dict.seo.home.title, "Little Giant Labs");
+
+    // Subpage titles should not include "| Little Giant Labs" to avoid template duplication
+    for (const page of ["about", "contact", "work", "applicationReceived"]) {
+      assert.equal(
+        dict.seo[page].title.includes("| Little Giant Labs"),
+        false,
+        `Subpage ${page} in locale ${loc} should not contain "| Little Giant Labs"`
+      );
+    }
+  }
+});
+
