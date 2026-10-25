@@ -2,55 +2,16 @@
 
 import { motion } from "framer-motion";
 import { CheckIcon, DiamondIcon, FilmIcon, LoopIcon, TrendIcon } from "@/components/ui/Icons";
+import { useI18n } from "@/lib/i18n/context";
 
-const servicesDetails = [
-  {
-    icon: DiamondIcon,
-    title: "Brand Strategy & Design",
-    description: "Positioning, messaging, and identity systems that command trust and build presence.",
-    deliverables: [
-      "Competitor funnel auditing",
-      "Visual identity & logo design",
-      "Brand voice & strategy books",
-      "UX/UI design systems"
-    ]
-  },
-  {
-    icon: FilmIcon,
-    title: "Cinematic Content Production",
-    description: "Premium brand videos, social showreels, and creative assets built for high retention.",
-    deliverables: [
-      "Short-form hook engineering",
-      "Cinematic brand showreels",
-      "Creative copy & scripting",
-      "High-retention editing & sound design"
-    ]
-  },
-  {
-    icon: TrendIcon,
-    title: "Performance & Digital Marketing",
-    description: "Paid acquisition, social growth, and search visibility focused on measurable growth.",
-    deliverables: [
-      "Paid Ads (Meta, Google, YT)",
-      "Growth funnel mapping & CRO",
-      "ROAS-driven ad operations",
-      "Real-time analytics dashboards"
-    ]
-  },
-  {
-    icon: LoopIcon,
-    title: "AI & Automation Solutions",
-    description: "Custom workflow automations, AI analytics tools, and CRM systems engineered for scale.",
-    deliverables: [
-      "AI-powered customer workflows",
-      "CRM & email automation loops",
-      "Lead scoring analytics systems",
-      "Custom business intelligence tools"
-    ]
-  }
-];
+const serviceIcons = [DiamondIcon, FilmIcon, TrendIcon, LoopIcon];
 
 export function ServiceGrid() {
+  const { dict } = useI18n();
+  const services = dict.about.capabilities.services;
+  const deliverablesBadge = dict.about.capabilities.deliverablesBadge;
+  const startProjectLabel = dict.about.capabilities.startProject;
+
   const containerVariants = {
     hidden: {},
     visible: {
@@ -77,51 +38,57 @@ export function ServiceGrid() {
       viewport={{ once: true, margin: "-100px" }}
       className="grid gap-6 md:grid-cols-2"
     >
-      {servicesDetails.map((service) => (
-        <motion.div
-          key={service.title}
-          variants={cardVariants}
-          className="group rounded-3xl border border-theme bg-theme-card p-8 md:p-10 transition-all duration-300 hover:border-theme-hover shadow-[0_4px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.05)] flex flex-col justify-between"
-          style={{ willChange: "transform, opacity" }}
-        >
-          <div>
-            <div className="flex items-center justify-between">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-theme bg-[color-mix(in_srgb,var(--lgl-gold)_10%,transparent)] text-lgl-gold transition-colors duration-300 group-hover:border-[color-mix(in_srgb,var(--lgl-gold)_55%,transparent)] md:h-14 md:w-14">
-                <service.icon size={24} />
+      {services.map((service, index) => {
+        const IconComponent = serviceIcons[index % serviceIcons.length];
+        return (
+          <motion.div
+            key={service.title}
+            variants={cardVariants}
+            className="group rounded-3xl border border-theme bg-theme-card p-8 md:p-10 transition-all duration-300 hover:border-theme-hover shadow-[0_4px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.05)] flex flex-col justify-between"
+            style={{ willChange: "transform, opacity" }}
+          >
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-theme bg-[color-mix(in_srgb,var(--lgl-gold)_10%,transparent)] text-lgl-gold transition-colors duration-300 group-hover:border-[color-mix(in_srgb,var(--lgl-gold)_55%,transparent)] md:h-14 md:w-14">
+                  <IconComponent size={24} />
+                </span>
+                <span className="text-[10px] uppercase tracking-widest text-theme-subtle border border-theme rounded-full px-3 py-1 opacity-70">
+                  {deliverablesBadge}
+                </span>
+              </div>
+
+              <h2
+                className="mt-6 text-xl md:text-2xl font-bold tracking-tight text-[var(--theme-fg)]"
+                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+              >
+                {service.title}
+              </h2>
+
+              <p className="mt-4 text-[0.9375rem] leading-relaxed text-theme-muted font-light">
+                {service.description}
+              </p>
+
+              <ul className="mt-8 space-y-3">
+                {service.deliverables.map((item) => (
+                  <li key={item} className="flex items-center gap-3 text-xs md:text-sm text-theme-muted/80">
+                    <CheckIcon size={14} strokeWidth={2} className="shrink-0 text-lgl-gold" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-theme flex items-center justify-between">
+              <span className="text-xs uppercase tracking-wider text-theme-subtle font-medium">
+                {startProjectLabel}
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-theme-subtle border border-theme rounded-full px-3 py-1 opacity-70">
-                Deliverables
+              <span className="w-8 h-8 rounded-full border border-theme flex items-center justify-center text-theme-subtle transition-all duration-300 group-hover:border-theme-hover group-hover:translate-x-1">
+                →
               </span>
             </div>
-            
-            <h2 className="mt-6 text-xl md:text-2xl font-bold tracking-tight text-[var(--theme-fg)]" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
-              {service.title}
-            </h2>
-            
-            <p className="mt-4 text-[0.9375rem] leading-relaxed text-theme-muted font-light">
-              {service.description}
-            </p>
-
-            <ul className="mt-8 space-y-3">
-              {service.deliverables.map((item) => (
-                <li key={item} className="flex items-center gap-3 text-xs md:text-sm text-theme-muted/80">
-                  <CheckIcon size={14} strokeWidth={2} className="shrink-0 text-lgl-gold" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          <div className="mt-8 pt-6 border-t border-theme flex items-center justify-between">
-            <span className="text-xs uppercase tracking-wider text-theme-subtle font-medium">
-              Start Project
-            </span>
-            <span className="w-8 h-8 rounded-full border border-theme flex items-center justify-center text-theme-subtle transition-all duration-300 group-hover:border-theme-hover group-hover:translate-x-1">
-              →
-            </span>
-          </div>
-        </motion.div>
-      ))}
+          </motion.div>
+        );
+      })}
     </motion.div>
   );
 }
