@@ -7,11 +7,25 @@ import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
 import { Section } from "@/components/ui/Section";
 import { ClockIcon, InstagramIcon, LinkedInIcon, MailIcon, PinIcon, XIcon } from "@/components/ui/Icons";
+import { useI18n } from "@/lib/i18n/context";
+import { getLocalizedPath } from "@/lib/i18n/config";
 
 export function Footer() {
   const pathname = usePathname();
+  const { dict, locale } = useI18n();
   const [localTime, setLocalTime] = useState("");
-  const isContactPage = pathname === "/contact";
+
+  const contactHref = getLocalizedPath("/contact", locale);
+  const homePath = getLocalizedPath("/", locale);
+  const isContactPage = pathname === "/contact" || pathname === `/${locale}/contact`;
+
+  const navItems = [
+    { label: dict.nav.home, href: homePath },
+    { label: dict.nav.services, href: `${homePath === "/" ? "" : homePath}#services` },
+    { label: dict.nav.ourWork, href: `${homePath === "/" ? "" : homePath}#our-work` },
+    { label: dict.nav.aboutUs, href: getLocalizedPath("/about", locale) },
+    { label: dict.nav.contact, href: contactHref },
+  ];
 
   useEffect(() => {
     const updateTime = () => {
@@ -37,24 +51,23 @@ export function Footer() {
       style={{ background: "var(--lgl-bg)", color: "var(--lgl-fg)" }}
     >
       <div className="mx-auto max-w-[1400px] px-6 pt-24 pb-8 md:px-10 lg:px-14 [&_.label-eyebrow]:text-[0.6875rem]">
-        
         {/* Massive Hero CTA */}
         {!isContactPage && (
           <div className="mb-24">
             <Link
-              href="/contact"
+              href={contactHref}
               className="group inline-flex flex-col items-start gap-4 text-left"
             >
               <p className="label-eyebrow text-lgl-fg/70 tracking-[0.28em]">
-                Start the Conversation
+                {dict.footer.ctaEyebrow}
               </p>
               <h2
                 className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.04em] text-lgl-fg transition-colors duration-500 group-hover:text-lgl-fg/80"
                 style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
-                Let&apos;s create
+                {dict.footer.ctaHeading1}
                 <br />
-                something bold
+                {dict.footer.ctaHeading2}
                 <span className="inline-block ml-4 translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-4 group-hover:-translate-y-2">
                   →
                 </span>
@@ -68,7 +81,6 @@ export function Footer() {
 
         {/* Links & Info Columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 items-start mb-28">
-          
           {/* Col 1: Brand details */}
           <div className="col-span-2 md:col-span-1 max-w-xs">
             <div className="flex items-center gap-3 mb-1">
@@ -87,14 +99,16 @@ export function Footer() {
               </p>
             </div>
             <p className="mt-4 text-[0.875rem] leading-[1.7] text-lgl-fg/80 font-normal">
-              Cinematic creative and performance growth engine for scaling brands.
+              {dict.footer.brandTagline}
             </p>
           </div>
 
           {/* Col 2: Navigation Menu */}
           <div className="flex flex-col gap-1">
-            <p className="label-eyebrow text-lgl-fg/70 mb-2 font-semibold">Navigation</p>
-            {siteConfig.nav.map((item) => (
+            <p className="label-eyebrow text-lgl-fg/70 mb-2 font-semibold">
+              {dict.footer.navHeading}
+            </p>
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -108,7 +122,9 @@ export function Footer() {
 
           {/* Col 3: Social/Connect */}
           <div className="flex flex-col gap-1">
-            <p className="label-eyebrow text-lgl-fg/70 mb-2 font-semibold">Connect</p>
+            <p className="label-eyebrow text-lgl-fg/70 mb-2 font-semibold">
+              {dict.footer.connectHeading}
+            </p>
             <a
               href={`mailto:${siteConfig.email ?? "hello@bhairavamedia.com"}`}
               className="inline-flex min-h-8 items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/75 transition-colors hover:text-lgl-fg"
@@ -137,7 +153,7 @@ export function Footer() {
               <LinkedInIcon size={15} className="text-lgl-gold/80" />
               LinkedIn
             </a>
-                        <a
+            <a
               href={siteConfig.social?.twitter ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
@@ -147,34 +163,39 @@ export function Footer() {
               <XIcon size={15} className="text-lgl-gold/80" />
               X
             </a>
-
           </div>
-
 
           {/* Col 4: Location & Local Time */}
           <div className="flex flex-col gap-2">
-            <p className="label-eyebrow text-lgl-fg/70 mb-2">Office</p>
-            <p className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/80" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
+            <p className="label-eyebrow text-lgl-fg/70 mb-2">
+              {dict.footer.officeHeading}
+            </p>
+            <p
+              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/80"
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+            >
               <PinIcon size={15} className="text-lgl-gold/80" />
-              PUNE, IN
+              {dict.footer.location}
             </p>
             {localTime && (
-              <p className="inline-flex items-center gap-2.5 text-[0.8125rem] font-medium text-lgl-fg/70 tabular-nums mt-1" style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}>
+              <p
+                className="inline-flex items-center gap-2.5 text-[0.8125rem] font-medium text-lgl-fg/70 tabular-nums mt-1"
+                style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+              >
                 <ClockIcon size={15} className="text-lgl-gold/80" />
-                Local Time: {localTime}
+                {dict.footer.localTimePrefix} {localTime}
               </p>
             )}
           </div>
-
         </div>
 
         {/* Bottom copyright & compliance */}
         <div className="relative pt-8 border-t border-lgl-fg/5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between z-10">
           <p className="label-eyebrow text-lgl-fg/70">
-            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+            © {new Date().getFullYear()} {dict.footer.copyright}
           </p>
           <p className="label-eyebrow text-lgl-fg/70">
-            Engineered for motion, story, and scale.
+            {dict.footer.slogan}
           </p>
         </div>
 
@@ -195,7 +216,6 @@ export function Footer() {
         >
           LITTLE GIANT LABS
         </div>
-
       </div>
     </Section>
   );
