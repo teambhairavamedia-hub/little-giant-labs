@@ -6,18 +6,34 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
-
+import { LanguageSelector } from "@/components/layout/LanguageSelector";
+import { useI18n } from "@/lib/i18n/context";
+import { getLocalizedPath } from "@/lib/i18n/config";
 
 export function Header() {
   const pathname = usePathname();
+  const { dict, locale } = useI18n();
 
   const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSectionHref, setActiveSectionHref] = useState<string | null>(null);
-  const activeHref = pathname === "/" ? activeSectionHref ?? "/" : pathname;
 
-  /* Fade in on mount (the homepage intro that used to gate this was removed) */
+  const homePath = getLocalizedPath("/", locale);
+  const isHomePage = pathname === "/" || pathname === `/${locale}`;
+
+  const navItems = [
+    { label: dict.nav.home, href: homePath },
+    { label: dict.nav.services, href: `${homePath === "/" ? "" : homePath}#services` },
+    { label: dict.nav.ourWork, href: `${homePath === "/" ? "" : homePath}#our-work` },
+    { label: dict.nav.aboutUs, href: getLocalizedPath("/about", locale) },
+    { label: dict.nav.contact, href: getLocalizedPath("/contact", locale) },
+  ];
+
+  const ctaHref = getLocalizedPath("/contact", locale);
+  const activeHref = isHomePage ? activeSectionHref ?? homePath : pathname;
+
+  /* Fade in on mount */
   useEffect(() => {
     const frame = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(frame);
@@ -31,15 +47,19 @@ export function Header() {
   }, []);
 
   /* Close mobile menu on route change */
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
-
-  /* Keep homepage hash links in sync with the section at the viewport's activation line. */
   useEffect(() => {
-    if (pathname !== "/") return;
+    setMobileOpen(false);
+  }, [pathname]);
 
-    const sections = siteConfig.nav
-      .filter((item) => item.href.startsWith("/#"))
-      .map((item) => ({ href: item.href, element: document.getElementById(item.href.slice(2)) }))
+  /* Keep homepage hash links in sync with viewport activation */
+  useEffect(() => {
+    if (!isHomePage) return;
+
+    const sections = [
+      { id: "services", href: `${homePath === "/" ? "" : homePath}#services` },
+      { id: "our-work", href: `${homePath === "/" ? "" : homePath}#our-work` },
+    ]
+      .map(({ id, href }) => ({ href, element: document.getElementById(id) }))
       .filter((section): section is { href: string; element: HTMLElement } => Boolean(section.element));
 
     let frame = 0;
@@ -63,9 +83,9 @@ export function Header() {
       window.removeEventListener("scroll", updateActiveSection);
       window.removeEventListener("resize", updateActiveSection);
     };
-  }, [pathname]);
+  }, [isHomePage, homePath]);
 
-  /* Colors come from the site theme (see --lgl-nav-* in globals.css) + scroll state */
+  /* Theme styling values */
   const pillBg = scrolled ? "var(--lgl-nav-pill-scrolled)" : "var(--lgl-nav-pill)";
   const pillBorder = scrolled ? "var(--lgl-nav-border-scrolled)" : "var(--lgl-nav-border)";
   const fgColor = "var(--lgl-nav-fg)";
@@ -88,7 +108,7 @@ export function Header() {
           style={{ maxWidth: 1320 }}
         >
           <div
-            className="flex items-center justify-between gap-6 rounded-[100px] transition-all duration-500"
+            className="flex items-center justify-between gap-4 md:gap-6 rounded-[100px] transition-all duration-500"
             style={{
               background: pillBg,
               border: `1px solid ${pillBorder}`,
@@ -100,7 +120,7 @@ export function Header() {
           >
             {/* Wordmark + Icon Logo */}
             <Link
-              href="/"
+              href={homePath}
               className="shrink-0 flex translate-x-1 items-center gap-3 transition-opacity hover:opacity-75 group"
             >
               <Image
@@ -109,9 +129,10 @@ export function Header() {
                 width={80}
                 height={80}
                 priority
-                className="h-12 w-12 object-contain shadow-md transition-transform duration-300 group-hover:scale-105 md:h-16 md:w-16"
+                className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full shadow-md group-hover:scale-105 transition-transform duration-300"
               />
               <span
+                className="hidden sm:inline"
                 style={{
                   fontFamily: "var(--font-manrope), sans-serif",
                   fontSize: "0.75rem",
@@ -127,13 +148,13 @@ export function Header() {
 
             {/* Desktop nav — center */}
             <nav className="hidden xl:flex items-center gap-1">
-              {siteConfig.nav.map((item) => {
+              {navItems.map((item) => {
                 const isActive = activeHref === item.href;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setActiveSectionHref(item.href.startsWith("/#") ? item.href : null)}
+                    onClick={() => setActiveSectionHref(item.href.includes("#") ? item.href : null)}
                     className="relative rounded-full transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
@@ -158,13 +179,13 @@ export function Header() {
               })}
             </nav>
 
-            {/* Right side: theme toggle + CTA + hamburger */}
-            <div className="flex items-center gap-3 shrink-0">
+            {/* Right side: theme toggle + CTA + language selector + hamburger */}
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
               <ThemeToggle />
 
               {/* CTA pill button — desktop */}
               <Link
-                href={siteConfig.cta.href}
+                href={ctaHref}
                 className="lgl-gold-cta hidden xl:inline-flex items-center rounded-full transition-all duration-300"
                 style={{
                   fontFamily: "var(--font-dm-sans), sans-serif",
@@ -181,8 +202,13 @@ export function Header() {
                   (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
                 }}
               >
-                {siteConfig.cta.label}
+                {dict.nav.cta}
               </Link>
+
+              {/* Language Selector: immediately after CTA button */}
+              <div className="hidden sm:inline-flex">
+                <LanguageSelector variant="header" />
+              </div>
 
               {/* Hamburger — mobile/tablet */}
               <button
@@ -192,7 +218,7 @@ export function Header() {
                   border: `1px solid ${pillBorder}`,
                 }}
                 onClick={() => setMobileOpen((o) => !o)}
-                aria-label="Toggle menu"
+                aria-label={dict.nav.toggleMenu}
               >
                 <span
                   className="block rounded-full transition-all duration-300 origin-center"
@@ -229,7 +255,7 @@ export function Header() {
           <div
             className="xl:hidden overflow-hidden transition-all duration-400 ease-out"
             style={{
-              maxHeight: mobileOpen ? 400 : 0,
+              maxHeight: mobileOpen ? 600 : 0,
               opacity: mobileOpen ? 1 : 0,
             }}
           >
@@ -242,13 +268,16 @@ export function Header() {
                 WebkitBackdropFilter: "blur(24px)",
               }}
             >
-              {siteConfig.nav.map((item) => {
+              {navItems.map((item) => {
                 const isActive = activeHref === item.href;
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
-                    onClick={() => setActiveSectionHref(item.href.startsWith("/#") ? item.href : null)}
+                    onClick={() => {
+                      setActiveSectionHref(item.href.includes("#") ? item.href : null);
+                      setMobileOpen(false);
+                    }}
                     className="rounded-[14px] px-4 py-3 transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
@@ -264,9 +293,11 @@ export function Header() {
                   </Link>
                 );
               })}
+
               <div className="mt-2 pt-3" style={{ borderTop: `1px solid ${pillBorder}` }}>
                 <Link
-                  href={siteConfig.cta.href}
+                  href={ctaHref}
+                  onClick={() => setMobileOpen(false)}
                   className="lgl-gold-cta block text-center rounded-full py-2.5 transition-all duration-200"
                   style={{
                     fontFamily: "var(--font-dm-sans), sans-serif",
@@ -276,9 +307,12 @@ export function Header() {
                     textTransform: "uppercase",
                   }}
                 >
-                  {siteConfig.cta.label}
+                  {dict.nav.cta}
                 </Link>
               </div>
+
+              {/* Language Selector in mobile navigation */}
+              <LanguageSelector variant="mobile" />
             </div>
           </div>
         </div>
