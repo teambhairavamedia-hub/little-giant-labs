@@ -109,6 +109,7 @@
 
 html {
   scroll-behavior: auto;
+  overflow-x: clip;
 }
 
 /* ── Base body ── */
@@ -121,6 +122,7 @@ body {
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
 /* ── Editorial heading styles (Noomo-style) ──
@@ -384,21 +386,19 @@ html.lenis, html.lenis body {
 /* Homepage editorial system */
 .home-redesign { --home-ink:#0B1B2B; --home-green:#004B3A; --home-gold:var(--lgl-gold); --home-paper:var(--lgl-fg); --home-sage:var(--lgl-sage); background:var(--lgl-bg); color:var(--lgl-fg); }
 .home-shell { width:min(1120px, calc(100% - 3rem)); margin-inline:auto; }
-.home-hero { min-height: min(860px, 100svh); display:flex; align-items:stretch; border-bottom:1px solid color-mix(in srgb,var(--lgl-line) 8%,transparent); }
-.home-hero-inner { padding-block:clamp(11rem,19vh,13rem) clamp(2rem,4vh,3rem); }
+.home-hero { min-height: min(860px, 100svh); display:flex; align-items:center; justify-content:center; border-bottom:1px solid color-mix(in srgb,var(--lgl-line) 8%,transparent); }
+.home-hero-inner { padding-block:clamp(7.5rem,13vh,10rem) clamp(4rem,7vh,5.5rem); display:flex; flex-direction:column; text-align:center; justify-content:center; width:100%; }
 .home-eyebrow { display:flex; align-items:center; gap:.65rem; margin:0; color:var(--home-gold); font-size:clamp(.8rem,1.1vw,.92rem); line-height:1.4; font-weight:700; letter-spacing:.2em; text-transform:uppercase; }
 /* Metallic gold, matching the hero's 'Intellect. Media. Capital.' treatment */
 .home-eyebrow { background:linear-gradient(180deg,#F4DC9A 0%,#E2BC69 40%,#B98B3C 58%,#D9AE5C 78%,#F0D48E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
 :root[data-theme="light"] .home-eyebrow { background:linear-gradient(180deg,#A47826 0%,#8A621B 45%,#6E4C12 60%,#87601E 80%,#A27A2E 100%); -webkit-background-clip:text; background-clip:text; }
 .home-eyebrow span { display:block; width:1px; height:1rem; background:var(--home-gold); }
-.home-hero-inner { display:flex; flex-direction:column; text-align:center; }
-.home-hero .home-eyebrow { width:fit-content; margin:auto auto 0; padding-left:.16em; font-family:var(--font-manrope),sans-serif; font-size:clamp(1.1rem,2.6vw,2.35rem); font-weight:800; line-height:1.2; letter-spacing:.16em; background:linear-gradient(100deg,transparent 30%,rgba(255,246,214,.55) 46%,transparent 62%),linear-gradient(180deg,#F4DC9A 0%,#E2BC69 38%,#A87A2E 52%,#C99B48 70%,#EED08A 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 2px 1px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(226,188,105,.18)); }
+.home-hero .home-eyebrow { width:fit-content; margin:0 auto; padding-left:.16em; font-family:var(--font-manrope),sans-serif; font-size:clamp(1.1rem,2.6vw,2.35rem); font-weight:800; line-height:1.2; letter-spacing:.16em; background:linear-gradient(100deg,transparent 30%,rgba(255,246,214,.55) 46%,transparent 62%),linear-gradient(180deg,#F4DC9A 0%,#E2BC69 38%,#A87A2E 52%,#C99B48 70%,#EED08A 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 2px 1px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(226,188,105,.18)); }
 .home-hero h1 { max-width:1120px; margin:1.25rem auto 1.5rem; color:var(--home-paper); font-size:clamp(2.5rem,4.8vw,4.7rem); line-height:1.04; letter-spacing:-.045em; text-wrap:balance; }
 .home-hero h1 em,.home-section-head h2 em,.work-heading h2 em { color:var(--home-sage); font-family:Georgia,serif; font-weight:400; }
 .home-intro { max-width:680px; margin:0; color:var(--lgl-muted); font-size:clamp(1.1rem,1.9vw,1.4rem); line-height:1.7; }
 .home-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem; margin-top:2rem; }
 .home-hero .home-intro { margin-inline:auto; }
-.home-hero .home-index { justify-content:center; margin-top:auto; padding-top:clamp(3rem,8vh,5rem); }
 .home-hero .home-actions { margin-top:2.25rem; }
 .home-button { min-height:48px; display:inline-flex; align-items:center; justify-content:center; gap:1rem; padding:.8rem 1.25rem; text-decoration:none; font-size:.7rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; transition:background .2s,border-color .2s,color .2s; }
 .home-button-primary { position:relative; border:1px solid #F3DC9A; background:linear-gradient(135deg,#9C7634 0%,#E4C47A 30%,#FFF0C2 48%,#D2AC5E 66%,#9A7330 100%); color:var(--home-ink); box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 4px rgba(90,62,20,.35),0 6px 22px rgba(197,160,89,.28); text-shadow:0 1px 0 rgba(255,244,214,.45); }
@@ -516,7 +516,7 @@ html.lenis, html.lenis body {
  .work-feature:hover::before { opacity:1; }
  .work-feature:hover .work-copy h3::after { transform:scaleX(2); }
 }
-.work-controls { display:flex; align-items:center; gap:clamp(1rem,3vw,2rem); }
+.work-controls { display:flex; align-items:center; gap:clamp(1rem,3vw,2rem); margin-top:clamp(1.5rem,3.5vw,2.5rem); }
 .work-progress { flex:1; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.5rem; }
 .work-progress-step { height:3px; padding:0; border:0; background:color-mix(in srgb,var(--lgl-line) 25%,transparent); cursor:pointer; transition:background .4s ease,transform .4s ease; }
 .work-progress-step.is-active { background:var(--lgl-gold); transform:scaleY(1.7); }
@@ -558,10 +558,9 @@ html.lenis, html.lenis body {
 @media(max-width:700px) {
  .home-shell { width:calc(100% - 2rem); }
  .home-hero { min-height:88svh; }
- .home-hero-inner { padding-block:9rem 2rem; }
+ .home-hero-inner { padding-block:7.5rem 3.5rem; }
  .home-hero h1 { font-size:clamp(2.25rem,10.2vw,3.55rem); }
  .home-hero .home-eyebrow { padding-left:.1em; font-size:clamp(.9rem,4.2vw,1.1rem); letter-spacing:.1em; }
- .home-index { margin-top:4rem; }
  .pillar-scene { grid-template-columns:1fr; gap:1.5rem; }
  .pillar-scene:nth-child(even) { grid-template-columns:1fr; }
  .pillar-scene:nth-child(even) .pillar-copy { order:initial; }
@@ -632,5 +631,90 @@ html.lenis, html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Devanagari needs a native glyph set and more vertical room than the Latin
+   display system. Scope these overrides to Hindi and Marathi only. */
+.locale-root:lang(hi),
+.locale-root:lang(mr) {
+  display: contents;
+  font-family: var(--font-noto-sans-devanagari), "Noto Sans Devanagari", "Nirmala UI", "Mangal", sans-serif;
+  letter-spacing: 0;
+  line-height: 1.75;
+  font-synthesis: none;
+  font-kerning: normal;
+}
+
+.locale-root:lang(hi) :is(h1, h2, h3, h4, h5, h6, .font-display),
+.locale-root:lang(mr) :is(h1, h2, h3, h4, h5, h6, .font-display) {
+  font-family: var(--font-noto-sans-devanagari), "Noto Sans Devanagari", "Nirmala UI", "Mangal", sans-serif !important;
+  font-synthesis: none;
+  letter-spacing: 0 !important;
+  line-height: 1.35 !important;
+  font-weight: 600;
+}
+
+.locale-root:lang(hi) .home-eyebrow,
+.locale-root:lang(mr) .home-eyebrow {
+  font-family: var(--font-noto-sans-devanagari), "Noto Sans Devanagari", "Nirmala UI", "Mangal", sans-serif !important;
+  font-size: clamp(1rem, 2.2vw, 1.65rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.55 !important;
+  text-transform: none;
+}
+
+.locale-root:lang(hi) .home-hero h1,
+.locale-root:lang(mr) .home-hero h1 {
+  font-size: clamp(2.35rem, 4.8vw, 4.5rem);
+  letter-spacing: 0;
+  line-height: 1.32;
+  font-weight: 600;
+}
+
+.locale-root:lang(hi) .home-hero h1 em,
+.locale-root:lang(mr) .home-hero h1 em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.locale-root:lang(hi) .home-intro,
+.locale-root:lang(mr) .home-intro {
+  font-family: var(--font-noto-sans-devanagari), "Noto Sans Devanagari", "Nirmala UI", "Mangal", sans-serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.8;
+  letter-spacing: 0;
+}
+
+.locale-root:lang(hi) .localized-ui-text,
+.locale-root:lang(mr) .localized-ui-text,
+.locale-root:lang(hi) .home-button,
+.locale-root:lang(mr) .home-button {
+  font-family: var(--font-noto-sans-devanagari), "Noto Sans Devanagari", "Nirmala UI", "Mangal", sans-serif !important;
+  font-size: 0.8125rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+  line-height: 1.55 !important;
+  text-transform: none !important;
+}
+
+.locale-root:lang(hi) .home-button,
+.locale-root:lang(mr) .home-button {
+  min-height: 52px;
+  padding-block: 0.9rem;
+}
+
+@media (max-width: 767px) {
+  .locale-root:lang(hi) .home-hero h1,
+  .locale-root:lang(mr) .home-hero h1 {
+    font-size: clamp(2.1rem, 9vw, 3.2rem);
+    line-height: 1.38;
+  }
+
+  .locale-root:lang(hi) .home-hero .home-actions,
+  .locale-root:lang(mr) .home-hero .home-actions {
+    width: min(100%, 34rem);
   }
 }

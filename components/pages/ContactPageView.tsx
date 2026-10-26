@@ -62,7 +62,7 @@ export function ContactPageView() {
 
   return (
     <main className="min-h-screen bg-lgl-bg text-lgl-fg">
-      <section className="relative overflow-hidden border-b border-lgl-line/20 bg-lgl-bg px-6 pb-16 pt-24 md:px-8 md:pb-20 md:pt-32">
+      <section className="relative overflow-hidden border-b border-lgl-line/20 bg-lgl-bg px-6 pb-16 pt-28 md:px-8 md:pb-20 md:pt-36">
         <Container className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-12">
           <div>
             <p className="mb-6 text-[11px] font-semibold uppercase tracking-[.28em] text-lgl-gold">

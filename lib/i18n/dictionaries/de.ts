@@ -7,12 +7,14 @@ export const de: TranslationDictionary = {
     home: "Startseite",
     services: "Leistungen",
     ourWork: "Unsere Arbeiten",
-    aboutUs: "Über Uns",
+    aboutUs: "Über uns",
     contact: "Kontakt",
-    cta: "Beratungsgespräch Buchen",
+    cta: "Beratungsgespräch buchen",
     language: "Sprache",
     selectLanguage: "Sprache wählen",
     toggleMenu: "Menü öffnen/schließen",
+    switchToLight: "Helles Design aktivieren",
+    switchToDark: "Dunkles Design aktivieren",
   },
   home: {
     hero: {
@@ -44,7 +46,7 @@ export const de: TranslationDictionary = {
           title: "Performance-Architektur",
           scene: "Wirkung erzielen",
           description:
-            "Algorithmische Media-Buying-Strategien, optimiert für planbare und exponentielle Unternehmensumsätze.",
+            "Algorithmische Media-Buying-Strategien, optimiert für planbares Umsatzwachstum.",
         },
         {
           number: "03",
@@ -59,6 +61,7 @@ export const de: TranslationDictionary = {
       prevService: "Vorherige Leistung",
       nextService: "Nächste Leistung",
       chooseService: "Leistung auswählen",
+      carouselControls: "Steuerung des Leistungskarussells",
     },
     work: {
       eyebrow: "Ausgewählte Arbeiten",
@@ -68,6 +71,12 @@ export const de: TranslationDictionary = {
       challengeLabel: "Herausforderung",
       outcomeLabel: "Ergebnis",
       ariaRegion: "Ausgewählte Projekte",
+      chooseProject: "Projekt auswählen",
+      selectProject: "Projekt {current} von {count} auswählen",
+      showProject: "Projekt {current} von {count} anzeigen",
+      previousProject: "Vorheriges Projekt",
+      nextProject: "Nächstes Projekt",
+      projectAnnouncement: "Projekt {current} von {count}",
       projects: [
         {
           slug: "idfc-first-bank",
@@ -271,7 +280,7 @@ export const de: TranslationDictionary = {
       eyebrow: "Ein durchdachter Prozess",
       title: "Die richtige Wachstumspartnerschaft beginnt mit den richtigen Fragen",
       description:
-        "Dieser Antrag vermittelt unserem Führungsteam den notwendigen Kontext zur Bewertung Ihrer Ziele, Rahmenbedingungen und Erwartungen.",
+        "Diese Anfrage vermittelt unserem Führungsteam den notwendigen Kontext zur Bewertung Ihrer Ziele, Rahmenbedingungen und Erwartungen.",
       tagline: "Intellekt. Medien. Kapital.",
     },
     form: {
@@ -337,7 +346,7 @@ export const de: TranslationDictionary = {
         },
         partnership: {
           label:
-            "Wir arbeiten exklusiv als institutioneller Wachstumspartner auf Basis fester Monatsretat-Modelle plus Performance-Beteiligungen. Suchen Sie einen einfachen Umsetzungsdienstleister oder verfügen Sie über das Kapital für eine marktführende Wachstumsarchitektur?",
+            "Wir arbeiten exklusiv als institutioneller Wachstumspartner mit monatlichen Betreuungspauschalen plus Performance-Beteiligungen. Suchen Sie einen einfachen Umsetzungsdienstleister oder verfügen Sie über das Kapital für eine marktführende Wachstumsarchitektur?",
           legend: "Partnerschaftserwartungen",
           options: {
             "We are looking for a cheap, hands-off execution vendor":
@@ -364,38 +373,67 @@ export const de: TranslationDictionary = {
       serverError: "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es später erneut.",
       back: "← Zurück",
       continue: "Weiter →",
-      submit: "Antrag Absenden",
+      submit: "Anfrage senden",
       submitting: "Wird gesendet…",
     },
   },
   applicationReceived: {
-    eyebrow: "Antrag eingegangen",
+    eyebrow: "Anfrage eingegangen",
     headlinePart1: "Der nächste Schritt ",
     headlineEmphasis: "liegt bei uns",
     body1:
-      "Ihr Antrag wurde erfolgreich übermittelt. Unser Führungsteam prüft Ihre Wachstumsziele, Rahmenbedingungen und strategischen Anforderungen sorgfältig.",
+      "Ihre Anfrage wurde erfolgreich übermittelt. Unser Führungsteam prüft Ihre Wachstumsziele, Rahmenbedingungen und strategischen Anforderungen sorgfältig.",
     body2:
       "Bei überzeugender Übereinstimmung mit unserem Kooperationsmodell werden wir uns bezüglich der nächsten Schritte mit Ihnen in Verbindung setzen.",
     tagline: "Little Giant Labs — Intellekt. Medien. Kapital.",
     returnHome: "Zurück zur Hauptseite ↗",
   },
   workUnavailable: {
-    title: "Arbeiten | Vorübergehend Nicht Verfügbar",
+    title: "Arbeiten | Vorübergehend nicht verfügbar",
     description: "Der Bereich für ausgewählte Arbeiten ist vorübergehend nicht verfügbar.",
     returnHome: "Zurück zur Hauptseite ↗",
+  },
+  workPage: {
+    eyebrow: "Ausgewählte Projekte",
+    title: "Im Portfolio von Bhairava Media vorgestellt.",
+    attribution: "Diese sechs Projekte und ihre Kurzbeschreibungen stammen aus dem öffentlichen Portfolio von Bhairava Media. Eine Beteiligung von Little Giant Labs und die Genehmigung, sie als LGL-Arbeiten darzustellen, wurden nicht bestätigt. Bilder, Videos und nicht verifizierte Leistungsversprechen sind daher nicht enthalten.",
+    sourceLink: "Zum Originalportfolio von Bhairava Media",
+    filterLabel: "Projekte nach Kategorie filtern",
+    allCategories: "Alle",
+    searchLabel: "Projekte suchen",
+    searchPlaceholder: "Projekte suchen",
+    viewLabel: "Projektansicht",
+    grid: "Raster",
+    list: "Liste",
+    previewLabel: "Projektvorschau",
+    mediaPending: "Medienfreigabe ausstehend",
+    exploreProject: "Projekt ansehen",
+    readDetails: "Projektdetails lesen",
+    noResults: "Keine Projekte gefunden",
+    clearFilters: "Filter zurücksetzen",
+    closeDetails: "Projektdetails schließen",
+    sourceDetails: "Details bei Bhairava Media ansehen",
+    projects: {
+      "idfc-first-bank": { category: "Markteinführung", displayTag: "Emerging Banker", description: "IDFC FIRST Bank benötigte für sein Emerging Banker Program eine aufmerksamkeitsstarke Recruiting- und Markenpräsentation, um herausragende Finanztalente aus ganz Indien anzusprechen." },
+      "quberx-brand-identity": { category: "Kreativdirektion", displayTag: "Brand Identity", description: "Quberx benötigte ein modernes, minimalistisches Markensystem und eine Asset-Bibliothek, um sich als zukunftsorientierter Technologieinnovator zu positionieren." },
+      "adhyaksh-film-shoot": { category: "Markteinführung", displayTag: "", description: "Für den offiziellen Ankündigungsdreh von ‘Adhyaksh’ für Bhairava Films waren dynamische Werbeplakate und energiegeladene Social-Media-Inhalte gefragt." },
+      "danny-pandit-brahmaa": { category: "Social-Media-Inhalte", displayTag: "", description: "Das Projekt sollte Aufmerksamkeit und virale Reichweite für den offiziellen Anthem-Launch mit Danny Pandit und Brahmaa schaffen." },
+      "erik-vinmayi-96": { category: "Film und Musik", displayTag: "", description: "Eine nostalgische, emotionale visuelle Kampagne zur Veröffentlichung des Musiktitels ‘96’." },
+      "commercial-adshoot-series": { category: "Performance-Werbung", displayTag: "", description: "Eine humorvolle, nahbare Werbeserie, die in sozialen Feeds die Aufmerksamkeit von Gen Z und Millennials gewinnen sollte." },
+    },
   },
   footer: {
     ctaEyebrow: "Lassen Sie uns Sprechen",
     ctaHeading1: "Erschaffen wir",
     ctaHeading2: "etwas Herausragendes",
-    brandTagline: "Filmische Kreativ- und Performance-Wachstumsagentur für skalierende Marken.",
+    brandTagline: "Filmische Kreativität und Performance-Wachstum für Marken mit Skalierungsambitionen.",
     navHeading: "Navigation",
     connectHeading: "Kontakt",
     officeHeading: "Standort",
     location: "PUNE, IN",
     localTimePrefix: "Ortszeit:",
     copyright: "Little Giant Labs. Alle Rechte vorbehalten.",
-    slogan: "Geschaffen für Bewegung, Geschichte und Skalierung.",
+    slogan: "Geschaffen für Bewegung, Geschichten und Wachstum.",
   },
   seo: {
     home: {
@@ -418,8 +456,8 @@ export const de: TranslationDictionary = {
       description: "Entdecken Sie unser Portfolio wirkungsvoller Kreativkampagnen und Performance-Wachstumssysteme.",
     },
     applicationReceived: {
-      title: "Antrag Eingegangen",
-      description: "Ihr Antrag ist bei uns eingegangen. Unser Team wird Ihre Einreichung prüfen.",
+      title: "Anfrage eingegangen",
+      description: "Ihre Anfrage ist bei uns eingegangen. Unser Team wird sie prüfen.",
     },
   },
 };

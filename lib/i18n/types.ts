@@ -13,6 +13,8 @@ export interface TranslationDictionary {
     language: string;
     selectLanguage: string;
     toggleMenu: string;
+    switchToLight: string;
+    switchToDark: string;
   };
   home: {
     hero: {
@@ -41,6 +43,7 @@ export interface TranslationDictionary {
       prevService: string;
       nextService: string;
       chooseService: string;
+      carouselControls: string;
     };
     work: {
       eyebrow: string;
@@ -50,6 +53,12 @@ export interface TranslationDictionary {
       challengeLabel: string;
       outcomeLabel: string;
       ariaRegion: string;
+      chooseProject: string;
+      selectProject: string;
+      showProject: string;
+      previousProject: string;
+      nextProject: string;
+      projectAnnouncement: string;
       projects: Array<{
         slug: string;
         client: string;
@@ -201,6 +210,28 @@ export interface TranslationDictionary {
     title: string;
     description: string;
     returnHome: string;
+  };
+  workPage: {
+    eyebrow: string;
+    title: string;
+    attribution: string;
+    sourceLink: string;
+    filterLabel: string;
+    allCategories: string;
+    searchLabel: string;
+    searchPlaceholder: string;
+    viewLabel: string;
+    grid: string;
+    list: string;
+    previewLabel: string;
+    mediaPending: string;
+    exploreProject: string;
+    readDetails: string;
+    noResults: string;
+    clearFilters: string;
+    closeDetails: string;
+    sourceDetails: string;
+    projects: Record<string, { category: string; displayTag: string; description: string }>;
   };
   footer: {
     ctaEyebrow: string;

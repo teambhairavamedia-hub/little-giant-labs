@@ -92,6 +92,13 @@ Confirmed in source:
   - Full translation dictionaries created for all 5 languages without placeholders, covering navigation, hero, services, selected work, about/founder/milestones/principles, contact form questions and options, confirmation, footer, and SEO metadata with `hreflang` alternate links.
   - Form submission preserves canonical database enum values to guarantee 100% database constraint and server-validation compatibility across all languages.
   - Page-level SEO metadata and root layout title template (`%s | Little Giant Labs`) reconciled: home page metadata specifies an absolute title of `Little Giant Labs` to eliminate tagline pollution and duplicate brand suffixes, while child pages use clean localized section titles that render seamlessly with the layout template.
+- The `/work` page and localized work routes render six projects listed on Bhairava Media's public portfolio through `CaseStudyGrid.tsx`. The page attributes the entries to that source and states that Little Giant Labs' role and authorization to present them as LGL work are unconfirmed. The grid, list, search, category filters, and project dialog use the site theme tokens. Project media is omitted pending rights confirmation; unsubstantiated result badges and expanded narratives are not shown. The shared home portfolio modal likewise omits those unsupported claims.
+- Refresh scroll restoration and section stabilization implemented:
+  - `SmoothScroll.tsx` configures `window.history.scrollRestoration = "manual"` to eliminate stale native browser scroll jumps.
+  - GSAP `ScrollTrigger.clearScrollMemory()` invoked on registration and window unload to prevent ScrollTrigger from restoring recorded scroll positions.
+  - Page refresh and client route changes reliably load from top (`y = 0`) unless a specific anchor hash (e.g. `#services`, `#our-work`) is intentionally targeted in the URL.
+- Homepage hero refined: removed "The growth system" indicator and decorative line element while rebalancing hero vertical padding to maintain premium visual centering without awkward gaps.
+- Spacing and UX improvements: added `overflow-x: clip` to prevent horizontal jitter on mobile, consistent clearance below the floating pill header on child pages, and proper vertical spacing above carousel controls.
 
 Git state at inspection: pre-existing modification to `.gitignore`; it was not changed for this task. Latest commit shown was `d19e586`.
 

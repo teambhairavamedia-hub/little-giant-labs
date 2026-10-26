@@ -13,6 +13,8 @@ export const es: TranslationDictionary = {
     language: "Idioma",
     selectLanguage: "Seleccionar idioma",
     toggleMenu: "Alternar menú",
+    switchToLight: "Cambiar al modo claro",
+    switchToDark: "Cambiar al modo oscuro",
   },
   home: {
     hero: {
@@ -49,7 +51,7 @@ export const es: TranslationDictionary = {
         {
           number: "03",
           title: "Bucles de Fidelización",
-          scene: "Hazlo duradero",
+          scene: "Que perdure",
           description:
             "Implementaciones de CRM con inteligencia artificial y sistemas de seguimiento de datos a medida que automatizan la retención de clientes.",
         },
@@ -59,6 +61,7 @@ export const es: TranslationDictionary = {
       prevService: "Servicio anterior",
       nextService: "Siguiente servicio",
       chooseService: "Elegir un servicio",
+      carouselControls: "Controles del carrusel de servicios",
     },
     work: {
       eyebrow: "Trabajo seleccionado",
@@ -68,6 +71,12 @@ export const es: TranslationDictionary = {
       challengeLabel: "Desafío",
       outcomeLabel: "Resultado",
       ariaRegion: "Proyectos de trabajo seleccionados",
+      chooseProject: "Elegir un proyecto",
+      selectProject: "Seleccionar proyecto {current} de {count}",
+      showProject: "Mostrar proyecto {current} de {count}",
+      previousProject: "Proyecto anterior",
+      nextProject: "Proyecto siguiente",
+      projectAnnouncement: "Proyecto {current} de {count}",
       projects: [
         {
           slug: "idfc-first-bank",
@@ -177,7 +186,7 @@ export const es: TranslationDictionary = {
         {
           year: "2024",
           title: "Sistemas con Inteligencia Artificial",
-          desc: "Pioneros en flujos de posproducción impulsados por IA y ciclos de automatización en CRM. Comenzamos a ayudar a los clientes a operar seguimientos automatizados y retención predictiva, logrando un marketing autónomo.",
+          desc: "Pioneros en flujos de posproducción impulsados por IA y ciclos de automatización en CRM. Comenzamos a ayudar a los clientes a operar seguimientos automatizados y sistemas de fidelización, logrando un marketing autónomo.",
         },
         {
           year: "2026",
@@ -341,7 +350,7 @@ export const es: TranslationDictionary = {
           legend: "Expectativas de colaboración",
           options: {
             "We are looking for a cheap, hands-off execution vendor":
-              "Buscamos un proveedor de ejecución económico y desatendido",
+              "Buscamos un proveedor de ejecución económico que requiera poca dedicación por nuestra parte",
             "We are prepared to invest premium capital for institutional scale and long-term partnership":
               "Estamos preparados para invertir capital premium hacia una escala institucional y una colaboración a largo plazo",
           },
@@ -384,11 +393,40 @@ export const es: TranslationDictionary = {
     description: "La sección de proyectos seleccionados no está disponible de forma temporal.",
     returnHome: "Volver a la página principal ↗",
   },
+  workPage: {
+    eyebrow: "Proyectos destacados",
+    title: "Incluidos en el portafolio de Bhairava Media.",
+    attribution: "Estos seis proyectos y sus resúmenes se atribuyen al portafolio público de Bhairava Media. No se ha confirmado la participación de Little Giant Labs ni la autorización para presentarlos como trabajos de LGL. Se omiten imágenes, vídeos y afirmaciones de rendimiento no verificadas.",
+    sourceLink: "Ver el portafolio original de Bhairava Media",
+    filterLabel: "Filtrar proyectos por categoría",
+    allCategories: "Todas",
+    searchLabel: "Buscar proyectos",
+    searchPlaceholder: "Buscar proyectos",
+    viewLabel: "Vista de proyectos",
+    grid: "Cuadrícula",
+    list: "Lista",
+    previewLabel: "Vista previa del proyecto",
+    mediaPending: "Pendiente de autorización de medios",
+    exploreProject: "Explorar proyecto",
+    readDetails: "Leer detalles del proyecto",
+    noResults: "No se encontraron proyectos",
+    clearFilters: "Borrar filtros",
+    closeDetails: "Cerrar detalles del proyecto",
+    sourceDetails: "Ver detalles en Bhairava Media",
+    projects: {
+      "idfc-first-bank": { category: "Lanzamiento de marca", displayTag: "Emerging Banker", description: "IDFC FIRST Bank necesitaba una presentación de marca y contratación de alto impacto para su programa Emerging Banker, destinada a atraer talento financiero destacado de toda India." },
+      "quberx-brand-identity": { category: "Dirección creativa", displayTag: "Brand Identity", description: "Quberx necesitaba un sistema de marca moderno y minimalista, junto con una biblioteca de recursos, para posicionarse como una empresa tecnológica innovadora y con visión de futuro." },
+      "adhyaksh-film-shoot": { category: "Lanzamiento de marca", displayTag: "", description: "El rodaje del anuncio oficial de ‘Adhyaksh’ para Bhairava Films requería carteles promocionales dinámicos y piezas para redes sociales llenas de energía." },
+      "danny-pandit-brahmaa": { category: "Contenido para redes", displayTag: "", description: "El proyecto buscaba generar impulso y difusión viral para el lanzamiento oficial del himno con Danny Pandit y Brahmaa." },
+      "erik-vinmayi-96": { category: "Cine y música", displayTag: "", description: "Una campaña visual nostálgica y emotiva para el lanzamiento del tema musical ‘96’." },
+      "commercial-adshoot-series": { category: "Publicidad de rendimiento", displayTag: "", description: "Una serie de anuncios humorísticos y cercanos, concebida para captar la atención de la Generación Z y los millennials en sus redes sociales." },
+    },
+  },
   footer: {
     ctaEyebrow: "Iniciemos la Conversación",
     ctaHeading1: "Creemos algo",
     ctaHeading2: "extraordinario",
-    brandTagline: "Motor creativo cinematográfico y de crecimiento de rendimiento para marcas en escala.",
+    brandTagline: "Motor creativo cinematográfico y de crecimiento de rendimiento para marcas en crecimiento.",
     navHeading: "Navegación",
     connectHeading: "Conectar",
     officeHeading: "Oficina",

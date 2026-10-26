@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, DM_Sans } from "next/font/google";
+import { Manrope, DM_Sans, Noto_Sans_Devanagari } from "next/font/google";
 import { PublicChrome } from "@/components/layout/PublicChrome";
 import { siteConfig } from "@/lib/site";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
@@ -19,6 +19,14 @@ const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
+  display: "swap",
+});
+
+// Noto Sans Devanagari provides correctly shaped glyphs and matras for Hindi and Marathi.
+const notoSansDevanagari = Noto_Sans_Devanagari({
+  variable: "--font-noto-sans-devanagari",
+  subsets: ["devanagari", "latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -58,7 +66,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={`${manrope.variable} ${dmSans.variable} antialiased`}>
+      <body className={`${manrope.variable} ${dmSans.variable} ${notoSansDevanagari.variable} antialiased`}>
         <SmoothScroll>
           <PublicChrome>{children}</PublicChrome>
         </SmoothScroll>

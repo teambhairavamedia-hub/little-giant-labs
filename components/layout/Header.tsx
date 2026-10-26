@@ -155,7 +155,7 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setActiveSectionHref(item.href.includes("#") ? item.href : null)}
-                    className="relative rounded-full transition-all duration-200"
+                    className="localized-ui-text relative rounded-full transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
                       fontSize: "0.75rem",
@@ -186,7 +186,7 @@ export function Header() {
               {/* CTA pill button — desktop */}
               <Link
                 href={ctaHref}
-                className="lgl-gold-cta hidden xl:inline-flex items-center rounded-full transition-all duration-300"
+                className="localized-ui-text lgl-gold-cta hidden xl:inline-flex items-center rounded-full transition-all duration-300"
                 style={{
                   fontFamily: "var(--font-dm-sans), sans-serif",
                   fontSize: "0.625rem",
@@ -278,7 +278,7 @@ export function Header() {
                       setActiveSectionHref(item.href.includes("#") ? item.href : null);
                       setMobileOpen(false);
                     }}
-                    className="rounded-[14px] px-4 py-3 transition-all duration-200"
+                    className="localized-ui-text rounded-[14px] px-4 py-3 transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
                       fontSize: "0.875rem",
@@ -298,7 +298,7 @@ export function Header() {
                 <Link
                   href={ctaHref}
                   onClick={() => setMobileOpen(false)}
-                  className="lgl-gold-cta block text-center rounded-full py-2.5 transition-all duration-200"
+                  className="localized-ui-text lgl-gold-cta block text-center rounded-full py-2.5 transition-all duration-200"
                   style={{
                     fontFamily: "var(--font-dm-sans), sans-serif",
                     fontSize: "0.6875rem",

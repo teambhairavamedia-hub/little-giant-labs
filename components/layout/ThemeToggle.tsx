@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { useI18n } from "@/lib/i18n/context";
 import {
   DEFAULT_COLOR_THEME,
   getColorTheme,
@@ -26,9 +27,10 @@ function MoonIcon() {
 }
 
 export function ThemeToggle() {
+  const { dict } = useI18n();
   const theme = useSyncExternalStore(subscribeColorTheme, getColorTheme, () => DEFAULT_COLOR_THEME);
   const isDark = theme === "dark";
-  const label = isDark ? "Switch to light mode" : "Switch to dark mode";
+  const label = isDark ? dict.nav.switchToLight : dict.nav.switchToDark;
 
   return (
     <button
