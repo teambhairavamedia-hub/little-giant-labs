@@ -85,7 +85,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 max-w-xs">
             <div className="flex items-center gap-3 mb-1">
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="Little Giant Labs logo"
                 width={80}
                 height={80}
