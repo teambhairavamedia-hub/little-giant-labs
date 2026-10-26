@@ -124,7 +124,7 @@ export function Header() {
               className="shrink-0 flex translate-x-1 items-center gap-3 transition-opacity hover:opacity-75 group"
             >
               <Image
-                src="/logo.jpeg"
+                src="/logo.png"
                 alt="Little Giant Labs logo"
                 width={80}
                 height={80}
