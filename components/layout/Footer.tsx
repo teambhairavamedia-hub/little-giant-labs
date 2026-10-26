@@ -73,14 +73,14 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 max-w-xs">
             <div className="flex items-center gap-3 mb-1">
               <Image
-                src="/logo.png"
+                src="/logo.jpeg"
                 alt="Little Giant Labs logo"
-                width={44}
-                height={44}
-                className="w-10 h-10 md:w-11 md:h-11 object-contain rounded-full shadow-md"
+                width={80}
+                height={80}
+                className="h-16 w-16 shrink-0 object-contain shadow-md lg:h-20 lg:w-20"
               />
               <p
-                className="text-[0.9375rem] font-bold uppercase tracking-[0.22em] text-lgl-fg"
+                className="text-[0.9375rem] font-bold uppercase tracking-[0.22em] leading-tight text-lgl-fg"
                 style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
                 {siteConfig.name}
