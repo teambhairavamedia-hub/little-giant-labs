@@ -121,13 +121,13 @@ export function Header() {
             {/* Wordmark + Icon Logo */}
             <Link
               href={homePath}
-              className="shrink-0 flex items-center gap-3 transition-opacity hover:opacity-75 group"
+              className="shrink-0 flex translate-x-1 items-center gap-3 transition-opacity hover:opacity-75 group"
             >
               <Image
-                src="/logo.png"
+                src="/logo.jpeg"
                 alt="Little Giant Labs logo"
-                width={48}
-                height={48}
+                width={80}
+                height={80}
                 priority
                 className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full shadow-md group-hover:scale-105 transition-transform duration-300"
               />
@@ -158,12 +158,12 @@ export function Header() {
                     className="localized-ui-text relative rounded-full transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "0.6875rem",
+                      fontSize: "0.75rem",
                       fontWeight: 500,
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
                       color: isActive ? fgColor : fgMuted,
-                      padding: "0.45rem 1rem",
+                      padding: "0.4rem 0.85rem",
                       background: isActive ? "var(--lgl-nav-active)" : "transparent",
                     }}
                     onMouseEnter={(e) => {
@@ -189,11 +189,11 @@ export function Header() {
                 className="localized-ui-text lgl-gold-cta hidden xl:inline-flex items-center rounded-full transition-all duration-300"
                 style={{
                   fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: "0.6875rem",
+                  fontSize: "0.625rem",
                   fontWeight: 600,
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  padding: "0.55rem 1.25rem",
+                  padding: "0.4rem 1rem",
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLAnchorElement).style.opacity = "0.82";
@@ -223,7 +223,7 @@ export function Header() {
                 <span
                   className="block rounded-full transition-all duration-300 origin-center"
                   style={{
-                    width: 14,
+                    width: 16,
                     height: 1.5,
                     background: fgColor,
                     transform: mobileOpen ? "rotate(45deg) translateY(3.5px)" : "none",
@@ -232,7 +232,7 @@ export function Header() {
                 <span
                   className="block rounded-full transition-all duration-300"
                   style={{
-                    width: 14,
+                    width: 16,
                     height: 1.5,
                     background: fgColor,
                     opacity: mobileOpen ? 0 : 1,
@@ -241,7 +241,7 @@ export function Header() {
                 <span
                   className="block rounded-full transition-all duration-300 origin-center"
                   style={{
-                    width: 14,
+                    width: 16,
                     height: 1.5,
                     background: fgColor,
                     transform: mobileOpen ? "rotate(-45deg) translateY(-3.5px)" : "none",
@@ -281,7 +281,7 @@ export function Header() {
                     className="localized-ui-text rounded-[14px] px-4 py-3 transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "0.8125rem",
+                      fontSize: "0.875rem",
                       fontWeight: isActive ? 600 : 400,
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
@@ -298,10 +298,10 @@ export function Header() {
                 <Link
                   href={ctaHref}
                   onClick={() => setMobileOpen(false)}
-                  className="localized-ui-text lgl-gold-cta block text-center rounded-full py-3 transition-all duration-200"
+                  className="localized-ui-text lgl-gold-cta block text-center rounded-full py-2.5 transition-all duration-200"
                   style={{
                     fontFamily: "var(--font-dm-sans), sans-serif",
-                    fontSize: "0.75rem",
+                    fontSize: "0.6875rem",
                     fontWeight: 600,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
