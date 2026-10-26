@@ -611,17 +611,7 @@ type HorizontalPortfolioProps = {
   ready?: boolean;
 };
 
-const portfolioWithRevenue = experienceConfig.portfolio.map((project, index) => {
-  const revenues = ["₹1.8Cr", "₹2.1Cr", "₹4.5Cr", "₹3.2Cr", "₹2.6Cr"];
-  return {
-    ...project,
-    revenue: revenues[index] || "₹2.0Cr",
-  };
-});
-
-type ProjectItem = (typeof experienceConfig.portfolio)[number] & {
-  revenue: string;
-};
+const portfolioWithRevenue = experienceConfig.portfolio;
 
 export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -771,7 +761,7 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
               onClick={() => setSelectedProject(activeProject)}
               className="relative w-full max-w-[440px] overflow-hidden rounded-[1.25rem] bg-[#800000] border border-white/10 shadow-2xl cursor-pointer group flex items-center justify-center transition-all duration-300 ease-out"
               style={{
-                aspectRatio: (activeProject as any).aspectRatio || "16/9",
+                aspectRatio: "aspectRatio" in activeProject ? activeProject.aspectRatio : "16/9",
               }}
             >
               <AnimatePresence mode="wait">
@@ -831,23 +821,6 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
                 </span>
               </div>
 
-              {/* Top-Right Metric Badge */}
-              <div
-                className="absolute top-4 right-4 rounded-full px-3 py-1 z-20 text-white shadow-lg"
-                style={{
-                  background: "rgba(0,0,0,0.75)",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  backdropFilter: "blur(8px)",
-                  fontFamily: "var(--font-dm-sans), sans-serif",
-                  fontSize: "0.6rem",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: "#ffffff",
-                  fontWeight: 700,
-                }}
-              >
-                {activeProject.metric}
-              </div>
             </div>
 
             {/* Project Metadata Under the Preview Card */}
@@ -931,7 +904,7 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
                     />
                   ) : (
                     <img
-                      src={(selectedProject as any).detailImage || selectedProject.image}
+                      src={("detailImage" in selectedProject && selectedProject.detailImage) || selectedProject.image}
                       alt={selectedProject.client}
                       className="w-full h-full object-contain bg-black/90"
                     />
@@ -952,12 +925,6 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
                         {selectedProject.client}
                       </h2>
                     </div>
-                    <div className="rounded-2xl bg-white/5 border border-white/10 px-4 py-2 shrink-0">
-                      <span className="text-xs text-white/40 block text-center mb-0.5">Primary Outcome</span>
-                      <span className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: "var(--font-manrope), sans-serif" }}>
-                        {selectedProject.metric}
-                      </span>
-                    </div>
                   </div>
 
                   <div className="space-y-4">
@@ -966,22 +933,6 @@ export function HorizontalPortfolio({ ready = true }: HorizontalPortfolioProps) 
                       <p className="text-sm text-white/70 leading-relaxed font-light">{selectedProject.challenge}</p>
                     </div>
 
-                    <div>
-                      <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-1">Strategy & Execution</h4>
-                      <p className="text-sm text-white/70 leading-relaxed font-light">{selectedProject.approach}</p>
-                    </div>
-
-                    <div>
-                      <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-2">Key Outcomes</h4>
-                      <ul className="space-y-2">
-                        {selectedProject.results?.map((res, i) => (
-                          <li key={i} className="flex items-start gap-2.5 text-sm text-white/80 font-light">
-                            <span className="text-[#d4af37] mt-0.5 shrink-0">✦</span>
-                            <span>{res}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
                   </div>
                 </div>
 

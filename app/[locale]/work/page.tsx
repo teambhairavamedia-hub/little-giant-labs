@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { isValidLocale, locales } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { WorkPageView } from "@/components/pages/WorkPageView";
 
 export function generateStaticParams() {
   return locales.filter((loc) => loc !== "en").map((locale) => ({ locale }));
@@ -48,5 +49,5 @@ export default async function LocalizedWorkPage({
     redirect("/work");
   }
 
-  notFound();
+  return <WorkPageView dict={getDictionary(locale)} />;
 }

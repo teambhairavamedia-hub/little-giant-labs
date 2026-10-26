@@ -70,7 +70,9 @@ export function I18nProvider({
 
   return (
     <I18nContext.Provider value={{ locale, dict, switchLocale }}>
-      {children}
+      <div className="locale-root" lang={locale}>
+        {children}
+      </div>
     </I18nContext.Provider>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Children, useEffect, useRef, useState, type KeyboardEvent, type ReactElement, type ReactNode, type WheelEvent } from "react";
+import { useI18n } from "@/lib/i18n/context";
 
 type NavigationRequest = { type: "step"; delta: -1 | 1 } | { type: "select"; id: string };
 
@@ -15,6 +16,8 @@ function getProjectId(card: ReactNode, index: number): string {
 /* The active project stays centered while its circular neighbors occupy the
    two preview positions. The fourth card remains reachable through navigation. */
 export function WorkCarousel({ children }: { children: ReactNode }) {
+  const { dict } = useI18n();
+  const copy = dict.home.work;
   const cards = Children.toArray(children);
   const count = cards.length;
   const projectIds = cards.map(getProjectId);
@@ -50,7 +53,7 @@ export function WorkCarousel({ children }: { children: ReactNode }) {
 
   return (
     <div className="work-carousel">
-      <div className="work-list" role="region" aria-label="Selected work projects" tabIndex={0} onKeyDown={onKeyDown} onWheel={onWheel}
+      <div className="work-list" role="region" aria-label={copy.ariaRegion} tabIndex={0} onKeyDown={onKeyDown} onWheel={onWheel}
         onTouchStart={(event) => { const touch = event.touches[0]; touchStart.current = { x: touch.clientX, y: touch.clientY }; }}
         onTouchEnd={(event) => {
           if (!touchStart.current) return;
@@ -66,7 +69,7 @@ export function WorkCarousel({ children }: { children: ReactNode }) {
           const position = selected ? "center" : offset === 1 ? "right" : offset === count - 1 ? "left" : "hidden";
           return (
             <div key={projectId} className={`work-slide work-slide--${position}${selected ? " is-active" : ""}`} role="button" tabIndex={position === "hidden" ? -1 : 0}
-              aria-label={`Select ${projectId}, project ${projectIndex + 1} of ${count}`}
+              aria-label={copy.selectProject.replace("{current}", String(projectIndex + 1)).replace("{count}", String(count))}
               aria-hidden={position === "hidden"}
               aria-current={selected ? "true" : undefined}
               onClick={() => select(projectId)}
@@ -77,15 +80,15 @@ export function WorkCarousel({ children }: { children: ReactNode }) {
         })}
       </div>
       <div className="work-controls">
-        <div className="work-progress" role="group" aria-label="Choose a project">
-          {projectIds.map((id, index) => <button key={id} type="button" className={`work-progress-step${index === activeIndex ? " is-active" : ""}`} aria-label={`Show project ${index + 1} of ${count}`} aria-current={index === activeIndex ? "step" : undefined} onClick={() => select(id)} />)}
+        <div className="work-progress" role="group" aria-label={copy.chooseProject}>
+          {projectIds.map((id, index) => <button key={id} type="button" className={`work-progress-step${index === activeIndex ? " is-active" : ""}`} aria-label={copy.showProject.replace("{current}", String(index + 1)).replace("{count}", String(count))} aria-current={index === activeIndex ? "step" : undefined} onClick={() => select(id)} />)}
         </div>
         <div className="work-arrows">
-          <button type="button" className="work-arrow" onClick={() => step(-1)} aria-label="Previous project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg></button>
-          <button type="button" className="work-arrow" onClick={() => step(1)} aria-label="Next project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
+          <button type="button" className="work-arrow cursor-pointer" onClick={() => step(-1)} aria-label={copy.previousProject}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg></button>
+          <button type="button" className="work-arrow cursor-pointer" onClick={() => step(1)} aria-label={copy.nextProject}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
         </div>
       </div>
-      <span className="sr-only" aria-live="polite">Project {activeIndex + 1} of {count}</span>
+      <span className="sr-only" aria-live="polite">{copy.projectAnnouncement.replace("{current}", String(activeIndex + 1)).replace("{count}", String(count))}</span>
     </div>
   );
 }

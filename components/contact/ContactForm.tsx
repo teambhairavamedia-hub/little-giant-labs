@@ -366,7 +366,7 @@ export function ContactForm() {
       </div>
 
       {error && (
-        <p className="mb-5 border border-[#C5A059] bg-lgl-bg p-4 text-sm text-lgl-fg" role="alert">
+        <p className="mt-8 mb-5 border-l-4 border-[#C5A059] bg-[#C5A059]/10 p-4 text-sm leading-relaxed text-lgl-fg" role="alert">
           {error}
         </p>
       )}
