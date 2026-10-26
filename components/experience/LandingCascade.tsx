@@ -186,13 +186,23 @@ export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProp
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-4 flex items-center justify-center gap-3"
+          className="mb-4 flex items-center justify-center gap-2 sm:gap-5"
         >
           <img
             src="/logo.png"
             alt="Little Giant Labs logo"
-            className="w-10 h-10 object-contain shadow-md rounded-full"
+            width={144}
+            height={74}
+            className="h-auto w-20 object-contain sm:w-36"
           />
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+            className="whitespace-nowrap text-xs font-semibold uppercase tracking-[0.08em] text-[#0a0a0a] sm:text-2xl sm:tracking-[0.14em] md:text-4xl md:tracking-[0.18em] lg:text-5xl"
+          >
+            {siteConfig.name}
+          </motion.h1>
         </motion.div>
         <motion.p
           initial={{ opacity: 0, y: 12 }}
@@ -202,14 +212,6 @@ export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProp
         >
           Digital Growth Studio
         </motion.p>
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-          className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold uppercase tracking-[0.14em] sm:tracking-[0.22em] text-[#0a0a0a]"
-        >
-          {siteConfig.name}
-        </motion.h1>
       </div>
 
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">

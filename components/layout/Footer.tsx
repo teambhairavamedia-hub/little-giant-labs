@@ -85,18 +85,12 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 max-w-xs">
             <div className="flex items-center gap-3 mb-1">
               <Image
-                src="/logo.png"
+                src="/logo-dark.png"
                 alt="Little Giant Labs logo"
-                width={80}
-                height={80}
-                className="h-16 w-16 shrink-0 object-contain shadow-md lg:h-20 lg:w-20"
+                width={880}
+                height={448}
+                className="h-auto w-40 shrink-0 object-contain lg:w-44"
               />
-              <p
-                className="text-[0.9375rem] font-bold uppercase tracking-[0.22em] leading-tight text-lgl-fg"
-                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-              >
-                {siteConfig.name}
-              </p>
             </div>
             <p className="mt-4 text-[0.875rem] leading-[1.7] text-lgl-fg/80 font-normal">
               {dict.footer.brandTagline}

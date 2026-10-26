@@ -79,6 +79,12 @@
   --lgl-nav-menu: rgba(255, 255, 255, 0.95);
 }
 
+.logo-mark-dark { display: none; }
+:root:not([data-theme="light"]) .logo-mark-light { display: none; }
+:root:not([data-theme="light"]) .logo-mark-dark { display: block; }
+section.section-dark .logo-mark-light { display: none; }
+section.section-dark .logo-mark-dark { display: block; }
+
 @theme inline {
   --color-lgl-bg: var(--lgl-bg);
   --color-lgl-section: var(--lgl-section);
@@ -387,7 +393,7 @@ html.lenis, html.lenis body {
 .home-redesign { --home-ink:#0B1B2B; --home-green:#004B3A; --home-gold:var(--lgl-gold); --home-paper:var(--lgl-fg); --home-sage:var(--lgl-sage); background:var(--lgl-bg); color:var(--lgl-fg); }
 .home-shell { width:min(1120px, calc(100% - 3rem)); margin-inline:auto; }
 .home-hero { min-height: min(860px, 100svh); display:flex; align-items:center; justify-content:center; border-bottom:1px solid color-mix(in srgb,var(--lgl-line) 8%,transparent); }
-.home-hero-inner { padding-block:clamp(7.5rem,13vh,10rem) clamp(4rem,7vh,5.5rem); display:flex; flex-direction:column; text-align:center; justify-content:center; width:100%; }
+.home-hero-inner { padding-block:clamp(6.5rem,11vh,9rem) clamp(4rem,7vh,5.5rem); display:flex; flex-direction:column; text-align:center; justify-content:center; width:100%; }
 .home-eyebrow { display:flex; align-items:center; gap:.65rem; margin:0; color:var(--home-gold); font-size:clamp(.8rem,1.1vw,.92rem); line-height:1.4; font-weight:700; letter-spacing:.2em; text-transform:uppercase; }
 /* Metallic gold, matching the hero's 'Intellect. Media. Capital.' treatment */
 .home-eyebrow { background:linear-gradient(180deg,#F4DC9A 0%,#E2BC69 40%,#B98B3C 58%,#D9AE5C 78%,#F0D48E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
@@ -400,6 +406,7 @@ html.lenis, html.lenis body {
 .home-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem; margin-top:2rem; }
 .home-hero .home-intro { margin-inline:auto; }
 .home-hero .home-actions { margin-top:2.25rem; }
+.lgl-header-brand-name { white-space:nowrap; font-family:var(--font-manrope),sans-serif; font-size:.55rem; font-weight:700; letter-spacing:.08em; line-height:1.2; text-transform:uppercase; }
 .home-button { min-height:48px; display:inline-flex; align-items:center; justify-content:center; gap:1rem; padding:.8rem 1.25rem; text-decoration:none; font-size:.7rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase; transition:background .2s,border-color .2s,color .2s; }
 .home-button-primary { position:relative; border:1px solid #F3DC9A; background:linear-gradient(135deg,#9C7634 0%,#E4C47A 30%,#FFF0C2 48%,#D2AC5E 66%,#9A7330 100%); color:var(--home-ink); box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 4px rgba(90,62,20,.35),0 6px 22px rgba(197,160,89,.28); text-shadow:0 1px 0 rgba(255,244,214,.45); }
 .home-button:focus-visible { outline:2px solid var(--lgl-gold); outline-offset:3px; }
@@ -558,7 +565,7 @@ html.lenis, html.lenis body {
 @media(max-width:700px) {
  .home-shell { width:calc(100% - 2rem); }
  .home-hero { min-height:88svh; }
- .home-hero-inner { padding-block:7.5rem 3.5rem; }
+ .home-hero-inner { padding-block:6.5rem 3.5rem; }
  .home-hero h1 { font-size:clamp(2.25rem,10.2vw,3.55rem); }
  .home-hero .home-eyebrow { padding-left:.1em; font-size:clamp(.9rem,4.2vw,1.1rem); letter-spacing:.1em; }
  .pillar-scene { grid-template-columns:1fr; gap:1.5rem; }
@@ -588,6 +595,16 @@ html.lenis, html.lenis body {
  .work-copy .work-challenge,.work-copy .work-outcome { font-size:clamp(1.08rem,4.2vw,1.2rem); line-height:1.48; }
  .work-arrow { width:44px; height:44px; }
  .home-button { flex:1 1 100%; }
+}
+@media(max-width:359px) {
+ .lgl-header-pill { padding-right:.5rem !important; padding-left:.5rem !important; }
+ .lgl-header-brand-name { font-size:.46rem; letter-spacing:.07em; }
+}
+@media(min-width:640px) {
+ .lgl-header-brand-name { font-size:.625rem; letter-spacing:.16em; }
+}
+@media(min-width:768px) {
+ .lgl-header-brand-name { font-size:.6875rem; letter-spacing:.18em; }
 }
 @media(min-width:701px) {
  .work-image { aspect-ratio:auto; height:clamp(210px,20vw,280px); }
