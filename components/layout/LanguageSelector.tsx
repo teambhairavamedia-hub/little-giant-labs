@@ -88,7 +88,7 @@ export function LanguageSelector({ variant = "header" }: { variant?: "header" | 
   if (variant === "mobile") {
     return (
       <div className="mt-2 pt-3 border-t border-[var(--lgl-nav-border)]">
-        <p className="px-2 mb-2 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-[var(--lgl-nav-muted)]">
+        <p className="localized-ui-text px-2 mb-2 text-[0.6875rem] font-semibold uppercase tracking-[0.2em] text-[var(--lgl-nav-muted)]">
           {dict.nav.language}
         </p>
         <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3">
@@ -112,7 +112,7 @@ export function LanguageSelector({ variant = "header" }: { variant?: "header" | 
               >
                 <div className="flex flex-col">
                   <span
-                    className="text-[0.8125rem] font-medium leading-tight"
+                    className="localized-ui-text text-[0.8125rem] font-medium leading-tight"
                     style={{ fontFamily: "var(--font-manrope), sans-serif" }}
                   >
                     {info.name}
@@ -147,7 +147,7 @@ export function LanguageSelector({ variant = "header" }: { variant?: "header" | 
         }}
       >
         <GlobeIcon className="w-4 h-4 text-lgl-gold shrink-0" />
-        <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
+        <span className="localized-ui-text text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
           {currentInfo.name}
         </span>
         <ChevronDownIcon
@@ -204,7 +204,7 @@ export function LanguageSelector({ variant = "header" }: { variant?: "header" | 
               >
                 <div className="flex flex-col">
                   <span
-                    className="text-[0.8125rem] font-semibold leading-snug"
+                    className="localized-ui-text text-[0.8125rem] font-semibold leading-snug"
                     style={{
                       fontFamily: "var(--font-manrope), sans-serif",
                       color: isSelected ? "var(--lgl-gold)" : undefined,

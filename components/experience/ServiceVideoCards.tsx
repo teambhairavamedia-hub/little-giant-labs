@@ -170,7 +170,7 @@ export function ServiceVideoCards() {
           );
         })}
       </div>
-      <div className="service-video-controls" aria-label="Service carousel controls">
+      <div className="service-video-controls" aria-label={serviceDict.carouselControls}>
         <button
           className="work-arrow cursor-pointer"
           type="button"

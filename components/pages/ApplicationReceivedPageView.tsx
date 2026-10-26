@@ -10,7 +10,7 @@ export function ApplicationReceivedPageView() {
   const homePath = getLocalizedPath("/", locale);
 
   return (
-    <main className="flex min-h-[75vh] items-center bg-lgl-bg py-24 text-lgl-fg">
+    <main className="flex min-h-[80vh] items-center bg-lgl-bg pt-32 pb-20 md:pt-40 md:pb-28 text-lgl-fg">
       <Container className="w-full">
         <div className="mx-auto max-w-3xl border-l border-[#C5A059] py-4 pl-7 sm:pl-12">
           <svg viewBox="0 0 96 96" className="mb-8 h-20 w-20" aria-hidden="true" focusable="false">

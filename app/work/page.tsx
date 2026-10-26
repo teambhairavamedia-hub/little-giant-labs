@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { WorkPageView } from "@/components/pages/WorkPageView";
 
 export async function generateMetadata(): Promise<Metadata> {
   const dict = getDictionary("en");
@@ -22,5 +22,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function WorkPage() {
-  notFound();
+  return <WorkPageView dict={getDictionary("en")} />;
 }

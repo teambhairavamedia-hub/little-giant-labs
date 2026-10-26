@@ -66,9 +66,6 @@ export function HomeRedesign() {
               {heroDict.exploreWork}
             </a>
           </div>
-          <span className="home-index">
-            <i /> {heroDict.growthSystem}
-          </span>
         </div>
       </section>
 

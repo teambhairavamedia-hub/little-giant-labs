@@ -13,6 +13,8 @@ export const en: TranslationDictionary = {
     language: "Language",
     selectLanguage: "Select language",
     toggleMenu: "Toggle menu",
+    switchToLight: "Switch to light mode",
+    switchToDark: "Switch to dark mode",
   },
   home: {
     hero: {
@@ -59,6 +61,7 @@ export const en: TranslationDictionary = {
       prevService: "Previous service",
       nextService: "Next service",
       chooseService: "Choose a service",
+      carouselControls: "Service carousel controls",
     },
     work: {
       eyebrow: "Selected work",
@@ -68,6 +71,12 @@ export const en: TranslationDictionary = {
       challengeLabel: "Challenge",
       outcomeLabel: "Outcome",
       ariaRegion: "Selected work projects",
+      chooseProject: "Choose a project",
+      selectProject: "Select project {current} of {count}",
+      showProject: "Show project {current} of {count}",
+      previousProject: "Previous project",
+      nextProject: "Next project",
+      projectAnnouncement: "Project {current} of {count}",
       projects: [
         {
           slug: "idfc-first-bank",
@@ -383,6 +392,59 @@ export const en: TranslationDictionary = {
     title: "Work | Temporarily Unavailable",
     description: "The selected work section is temporarily unavailable.",
     returnHome: "Return to the main website ↗",
+  },
+  workPage: {
+    eyebrow: "Selected projects",
+    title: "Featured by Bhairava Media.",
+    attribution: "These six projects and summaries are attributed to Bhairava Media’s public portfolio. Little Giant Labs’ role in these projects and authorization to present them as LGL work have not been confirmed. Images, video, and unverified performance claims are omitted.",
+    sourceLink: "View Bhairava Media’s source portfolio",
+    filterLabel: "Filter projects by category",
+    allCategories: "All",
+    searchLabel: "Search projects",
+    searchPlaceholder: "Search projects",
+    viewLabel: "Project view",
+    grid: "Grid",
+    list: "List",
+    previewLabel: "Project preview",
+    mediaPending: "Media pending authorization",
+    exploreProject: "Explore project",
+    readDetails: "Read project details",
+    noResults: "No projects found",
+    clearFilters: "Clear filters",
+    closeDetails: "Close project details",
+    sourceDetails: "View details on Bhairava Media",
+    projects: {
+      "idfc-first-bank": {
+        category: "Brand Launch",
+        displayTag: "Emerging Banker",
+        description: "IDFC FIRST Bank needed a high-impact recruitment and branding showcase for its Emerging Banker Program to attract top financial talent from across India.",
+      },
+      "quberx-brand-identity": {
+        category: "Creative Direction",
+        displayTag: "Brand Identity",
+        description: "Quberx needed a modern, minimalist brand system and asset library to position itself as a forward-thinking technology innovator.",
+      },
+      "adhyaksh-film-shoot": {
+        category: "Brand Launch",
+        displayTag: "",
+        description: "Bhairava Films’ official announcement shoot for ‘Adhyaksh’ called for dynamic promotional posters and high-energy social creative.",
+      },
+      "danny-pandit-brahmaa": {
+        category: "Social Content",
+        displayTag: "",
+        description: "The project aimed to build momentum and explosive viral traction for the official anthem launch featuring Danny Pandit and Brahmaa.",
+      },
+      "erik-vinmayi-96": {
+        category: "Cinematic Film",
+        displayTag: "",
+        description: "A nostalgic, emotional visual campaign for the release of the ‘96’ music track.",
+      },
+      "commercial-adshoot-series": {
+        category: "Performance Ads",
+        displayTag: "",
+        description: "A humorous, relatable commercial series designed to capture Gen-Z and millennial attention across social feeds.",
+      },
+    },
   },
   footer: {
     ctaEyebrow: "Start the Conversation",
