@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { siteConfig } from "@/lib/site";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { useI18n } from "@/lib/i18n/context";
@@ -108,7 +107,7 @@ export function Header() {
           style={{ maxWidth: 1320 }}
         >
           <div
-            className="flex items-center justify-between gap-4 md:gap-6 rounded-[100px] transition-all duration-500"
+            className="lgl-header-pill flex items-center justify-between gap-4 md:gap-6 rounded-[100px] transition-all duration-500"
             style={{
               background: pillBg,
               border: `1px solid ${pillBorder}`,
@@ -121,28 +120,27 @@ export function Header() {
             {/* Wordmark + Icon Logo */}
             <Link
               href={homePath}
-              className="shrink-0 flex translate-x-1 items-center gap-3 transition-opacity hover:opacity-75 group"
+              className="shrink-0 flex translate-x-1 items-center gap-2 transition-opacity hover:opacity-75 group sm:gap-3"
             >
               <Image
                 src="/logo.png"
                 alt="Little Giant Labs logo"
-                width={80}
-                height={80}
+                width={880}
+                height={448}
                 priority
-                className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-full shadow-md group-hover:scale-105 transition-transform duration-300"
+                className="logo-mark-light h-9 w-14 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-12 sm:w-24 md:h-14 md:w-28"
               />
-              <span
-                className="hidden sm:inline"
-                style={{
-                  fontFamily: "var(--font-manrope), sans-serif",
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  letterSpacing: "0.22em",
-                  textTransform: "uppercase",
-                  color: fgColor,
-                }}
-              >
-                {siteConfig.name}
+              <Image
+                src="/logo-dark.png"
+                alt=""
+                aria-hidden="true"
+                width={880}
+                height={448}
+                priority
+                className="logo-mark-dark h-9 w-14 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-12 sm:w-24 md:h-14 md:w-28"
+              />
+              <span className="lgl-header-brand-name" style={{ color: fgColor }}>
+                Little Giant Labs
               </span>
             </Link>
 
