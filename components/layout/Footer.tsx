@@ -77,7 +77,7 @@ export function Footer() {
         )}
 
         {/* Separator line */}
-        <div className="h-[1px] w-full bg-lgl-fg/5 mb-16" />
+        <div className="h-[1px] w-full bg-lgl-fg/5 mb-12" />
 
         {/* Links & Info Columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 items-start mb-28">
@@ -85,14 +85,22 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1 max-w-xs">
             <div className="flex items-center gap-3 mb-1">
               <Image
-                src="/logo-dark.png"
+                src="/new-logo-readable.png"
                 alt="Little Giant Labs logo"
-                width={880}
-                height={448}
-                className="h-auto w-40 shrink-0 object-contain lg:w-44"
+                width={824}
+                height={1072}
+                className="logo-mark-light h-24 w-auto shrink-0 object-contain sm:h-[7.5rem] md:h-36 lg:h-40"
+              />
+              <Image
+                src="/new-logo-readable-dark.png"
+                alt=""
+                aria-hidden="true"
+                width={824}
+                height={1072}
+                className="logo-mark-dark h-24 w-auto shrink-0 object-contain sm:h-[7.5rem] md:h-36 lg:h-40"
               />
             </div>
-            <p className="mt-4 text-[0.875rem] leading-[1.7] text-lgl-fg/80 font-normal">
+            <p className="mt-2 text-[0.875rem] leading-[1.7] text-lgl-fg/80 font-normal">
               {dict.footer.brandTagline}
             </p>
           </div>
