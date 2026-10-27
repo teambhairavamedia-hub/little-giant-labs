@@ -14,12 +14,12 @@ export function Header() {
   const { dict, locale } = useI18n();
 
   const [visible, setVisible] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpenForPath, setMobileOpenForPath] = useState<string | null>(null);
   const [activeSectionHref, setActiveSectionHref] = useState<string | null>(null);
 
   const homePath = getLocalizedPath("/", locale);
   const isHomePage = pathname === "/" || pathname === `/${locale}`;
+  const mobileOpen = mobileOpenForPath === pathname;
 
   const navItems = [
     { label: dict.nav.home, href: homePath },
@@ -37,18 +37,6 @@ export function Header() {
     const frame = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(frame);
   }, []);
-
-  /* Scroll detection */
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  /* Close mobile menu on route change */
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
 
   /* Keep homepage hash links in sync with viewport activation */
   useEffect(() => {
@@ -85,8 +73,7 @@ export function Header() {
   }, [isHomePage, homePath]);
 
   /* Theme styling values */
-  const pillBg = scrolled ? "var(--lgl-nav-pill-scrolled)" : "var(--lgl-nav-pill)";
-  const pillBorder = scrolled ? "var(--lgl-nav-border-scrolled)" : "var(--lgl-nav-border)";
+  const pillBorder = "var(--lgl-nav-border)";
   const fgColor = "var(--lgl-nav-fg)";
   const fgMuted = "var(--lgl-nav-muted)";
 
@@ -101,51 +88,39 @@ export function Header() {
           pointerEvents: visible ? "auto" : "none",
         }}
       >
-        {/* Floating pill container */}
         <div
-          className="mx-4 mt-4 w-full transition-all duration-500"
-          style={{ maxWidth: 1320 }}
+          className="mx-4 mt-0 w-[calc(100%-2rem)] transition-all duration-500"
+          style={{ maxWidth: 1400 }}
         >
           <div
-            className="lgl-header-pill flex items-center justify-between gap-4 md:gap-6 rounded-[100px] transition-all duration-500"
-            style={{
-              background: pillBg,
-              border: `1px solid ${pillBorder}`,
-              backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(8px)",
-              WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "blur(8px)",
-              padding: scrolled ? "0.6rem 1.25rem 0.6rem 1.5rem" : "0.75rem 1.5rem 0.75rem 1.75rem",
-              boxShadow: scrolled ? "var(--lgl-nav-shadow)" : "none",
-            }}
+            className="lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-3.5 py-1.5 transition-all duration-300 sm:px-4 md:gap-4 md:px-5 min-[1280px]:grid-cols-[max-content_minmax(0,1fr)_max-content] min-[1280px]:gap-3 min-[1280px]:py-0.5"
           >
-            {/* Wordmark + Icon Logo */}
             <Link
               href={homePath}
-              className="shrink-0 flex translate-x-1 items-center gap-2 transition-opacity hover:opacity-75 group sm:gap-3"
+              aria-label="Little Giant Labs home"
+              className="group col-start-1 flex w-max max-w-none shrink-0 items-center transition-opacity hover:opacity-75 min-[1280px]:justify-self-start"
             >
               <Image
-                src="/logo.png"
+                src="/new-logo-readable.png"
                 alt="Little Giant Labs logo"
-                width={880}
-                height={448}
+                width={824}
+                height={1072}
                 priority
-                className="logo-mark-light h-9 w-14 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-12 sm:w-24 md:h-14 md:w-28"
+                className="logo-mark-light h-36 w-auto max-w-none flex-none object-contain transition-transform duration-300 group-hover:scale-105 sm:h-44 md:h-52 min-[1280px]:h-72"
               />
               <Image
-                src="/logo-dark.png"
+                src="/new-logo-readable-dark.png"
                 alt=""
                 aria-hidden="true"
-                width={880}
-                height={448}
+                width={824}
+                height={1072}
                 priority
-                className="logo-mark-dark h-9 w-14 object-contain transition-transform duration-300 group-hover:scale-105 sm:h-12 sm:w-24 md:h-14 md:w-28"
+                className="logo-mark-dark h-36 w-auto max-w-none flex-none object-contain transition-transform duration-300 group-hover:scale-105 sm:h-44 md:h-52 min-[1280px]:h-72"
               />
-              <span className="lgl-header-brand-name" style={{ color: fgColor }}>
-                Little Giant Labs
-              </span>
             </Link>
 
             {/* Desktop nav — center */}
-            <nav className="hidden xl:flex items-center gap-1">
+            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1 min-[1280px]:whitespace-nowrap">
               {navItems.map((item) => {
                 const isActive = activeHref === item.href;
                 return (
@@ -158,10 +133,10 @@ export function Header() {
                       fontFamily: "var(--font-dm-sans), sans-serif",
                       fontSize: "0.75rem",
                       fontWeight: 500,
-                      letterSpacing: "0.22em",
+                      letterSpacing: "0.14em",
                       textTransform: "uppercase",
                       color: isActive ? fgColor : fgMuted,
-                      padding: "0.4rem 0.85rem",
+                      padding: "0.35rem 0.55rem",
                       background: isActive ? "var(--lgl-nav-active)" : "transparent",
                     }}
                     onMouseEnter={(e) => {
@@ -178,20 +153,19 @@ export function Header() {
             </nav>
 
             {/* Right side: theme toggle + CTA + language selector + hamburger */}
-            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+            <div className="col-start-2 flex shrink-0 items-center gap-2 sm:gap-2.5 min-[1280px]:col-start-3 min-[1280px]:justify-self-end min-[1280px]:gap-3">
               <ThemeToggle />
 
               {/* CTA pill button — desktop */}
               <Link
                 href={ctaHref}
-                className="localized-ui-text lgl-gold-cta hidden xl:inline-flex items-center rounded-full transition-all duration-300"
+                className="localized-ui-text lgl-gold-cta hidden h-10 items-center justify-center rounded-full px-3 transition-all duration-300 sm:px-4 min-[1280px]:inline-flex"
                 style={{
                   fontFamily: "var(--font-dm-sans), sans-serif",
                   fontSize: "0.625rem",
                   fontWeight: 600,
-                  letterSpacing: "0.18em",
+                  letterSpacing: "0.15em",
                   textTransform: "uppercase",
-                  padding: "0.4rem 1rem",
                 }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLAnchorElement).style.opacity = "0.82";
@@ -210,12 +184,12 @@ export function Header() {
 
               {/* Hamburger — mobile/tablet */}
               <button
-                className="xl:hidden flex flex-col items-center justify-center gap-[5px] w-11 h-11 rounded-full transition-all duration-200"
+                className="flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-full transition-all duration-200 hover:opacity-80 sm:h-10 sm:w-10 min-[1280px]:hidden"
                 style={{
                   background: "var(--lgl-nav-chip)",
                   border: `1px solid ${pillBorder}`,
                 }}
-                onClick={() => setMobileOpen((o) => !o)}
+                onClick={() => setMobileOpenForPath((path) => path === pathname ? null : pathname)}
                 aria-label={dict.nav.toggleMenu}
               >
                 <span
@@ -251,7 +225,7 @@ export function Header() {
 
           {/* ── MOBILE DROPDOWN ─────────────────────────────────────── */}
           <div
-            className="xl:hidden overflow-hidden transition-all duration-400 ease-out"
+            className="overflow-hidden transition-all duration-400 ease-out min-[1280px]:hidden"
             style={{
               maxHeight: mobileOpen ? 600 : 0,
               opacity: mobileOpen ? 1 : 0,
@@ -274,7 +248,7 @@ export function Header() {
                     href={item.href}
                     onClick={() => {
                       setActiveSectionHref(item.href.includes("#") ? item.href : null);
-                      setMobileOpen(false);
+                      setMobileOpenForPath(null);
                     }}
                     className="localized-ui-text rounded-[14px] px-4 py-3 transition-all duration-200"
                     style={{
@@ -295,7 +269,7 @@ export function Header() {
               <div className="mt-2 pt-3" style={{ borderTop: `1px solid ${pillBorder}` }}>
                 <Link
                   href={ctaHref}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={() => setMobileOpenForPath(null)}
                   className="localized-ui-text lgl-gold-cta block text-center rounded-full py-2.5 transition-all duration-200"
                   style={{
                     fontFamily: "var(--font-dm-sans), sans-serif",

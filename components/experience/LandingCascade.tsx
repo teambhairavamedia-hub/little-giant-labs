@@ -1,13 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { siteConfig } from "@/lib/site";
+import Image from "next/image";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   dispatchIntroComplete,
   markIntroPlayed,
 } from "@/lib/intro";
 import { cn } from "@/lib/utils";
+import {
+  DEFAULT_COLOR_THEME,
+  getColorTheme,
+  subscribeColorTheme,
+} from "@/lib/theme";
 
 const heroImages = [
   "https://images.unsplash.com/photo-1756312148347-611b60723c7a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzN3x8fGVufDB8fHx8fA%3D%3D",
@@ -84,6 +89,12 @@ function getMultiplier(width: number) {
 }
 
 export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProps) {
+  const colorTheme = useSyncExternalStore(
+    subscribeColorTheme,
+    getColorTheme,
+    () => DEFAULT_COLOR_THEME,
+  );
+  const isDarkTheme = colorTheme === "dark";
   const [visibleCount, setVisibleCount] = useState(0);
   const [isFannedOut, setIsFannedOut] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
@@ -176,7 +187,7 @@ export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProp
         "fixed inset-0 z-[9999] flex h-screen w-full flex-col items-center justify-center overflow-hidden px-4 text-center",
         isExiting ? "pointer-events-none" : "pointer-events-auto",
       )}
-      style={{ background: "#ffffff" }}
+      style={{ background: isDarkTheme ? "var(--lgl-bg)" : "#ffffff" }}
       aria-label="Intro splash screen"
     >
       <div className="theme-noise pointer-events-none absolute inset-0" />
@@ -188,27 +199,22 @@ export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProp
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-4 flex items-center justify-center gap-2 sm:gap-5"
         >
-          <img
-            src="/logo.png"
+          <Image
+            src={isDarkTheme ? "/new-logo-readable-dark.png" : "/new-logo-readable.png"}
             alt="Little Giant Labs logo"
-            width={144}
-            height={74}
-            className="h-auto w-20 object-contain sm:w-36"
+            width={824}
+            height={1072}
+            priority
+            className="h-28 w-auto object-contain sm:h-36"
+            style={{ opacity: 1, mixBlendMode: "normal" }}
           />
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-            className="whitespace-nowrap text-xs font-semibold uppercase tracking-[0.08em] text-[#0a0a0a] sm:text-2xl sm:tracking-[0.14em] md:text-4xl md:tracking-[0.18em] lg:text-5xl"
-          >
-            {siteConfig.name}
-          </motion.h1>
         </motion.div>
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
           className="mb-3 text-[9px] sm:text-[10px] uppercase tracking-[0.28em] sm:tracking-[0.4em] text-[#0a0a0a]/40 font-medium"
+          style={{ color: isDarkTheme ? "rgba(248, 246, 240, 0.55)" : "rgba(10, 10, 10, 0.4)" }}
         >
           Digital Growth Studio
         </motion.p>
