@@ -58,6 +58,7 @@ test("dashboard uses persisted qualification outcomes and server returned metric
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
   assert.match(route, /eq\("qualification_status", "qualified"\)/);
   assert.match(route, /eq\("qualification_status", "rejected"\)/);
+  assert.match(route, /eq\("qualification_status", "pending_review"\)/);
   assert.match(route, /SEVEN_DAYS_MS = 7 \* 24 \* 60 \* 60 \* 1000/);
   assert.match(dashboard, /No applications have been received\./);
   assert.match(dashboard, /qualifiedPercent = breakdownTotal \? Math\.round/);
@@ -69,6 +70,7 @@ test("qualification chart colors match status labels and the table keeps contact
   assert.match(dashboard, /conic-gradient\(#15803d 0% \$\{qualifiedPercent\}%, #b91c1c/);
   assert.match(dashboard, /label="Qualified"[^\n]*color="#15803d" labelClass="text-green-800"/);
   assert.match(dashboard, /label="Rejected"[^\n]*color="#b91c1c" labelClass="text-red-800"/);
+  assert.match(dashboard, /label="Pending review"[^\n]*color="#0284c7" labelClass="text-sky-800"/);
   assert.match(dashboard, /target="_blank" rel="noopener noreferrer"/);
   assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
   assert.match(dashboard, /min-w-\[1180px\]/);

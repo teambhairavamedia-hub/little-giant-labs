@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
+import { EMAIL_ELIGIBILITY_MESSAGES, isEmailFormatValid, type EmailEligibilityOutcome } from "@/lib/email-eligibility";
 
 type Application = {
   enterpriseName: string;
@@ -63,13 +64,6 @@ const inputClass =
 const choiceClass =
   "flex min-h-14 cursor-pointer items-center gap-4 border border-lgl-line/40 px-4 py-3 text-sm leading-relaxed text-lgl-soft transition-colors hover:border-lgl-sage has-[:checked]:border-[#C5A059] has-[:checked]:bg-[#004B3A] has-[:checked]:text-[#F8F6F0] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#C5A059]";
 
-function isEmailValid(email: string) {
-  const match = email.trim().match(/^[^\s@]+@([^\s@]+\.[^\s@]+)$/);
-  if (!match) return false;
-  const domain = match[1].toLowerCase();
-  return !["gmail.com", "googlemail.com", "yahoo.com", "yahoo.co.uk", "yahoo.co.in", "ymail.com"].includes(domain);
-}
-
 function validLinkedIn(url: string) {
   try {
     const parsed = new URL(url.trim());
@@ -91,18 +85,60 @@ export function ContactForm() {
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [emailCheck, setEmailCheck] = useState<{
+    email: string;
+    outcome: EmailEligibilityOutcome | "idle" | "checking" | "invalid" | "unavailable";
+  }>({ email: "", outcome: "idle" });
   const submittingRef = useRef(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
-  const set = (key: keyof Application, value: string) =>
+  const set = (key: keyof Application, value: string) => {
     setValues((current) => ({ ...current, [key]: value }));
+    if (key === "corporateEmail") setError("");
+  };
   const requiredText = (key: keyof Application) => values[key].trim().length > 0;
 
+  useEffect(() => {
+    const email = values.corporateEmail.trim().toLowerCase();
+    if (!email || !isEmailFormatValid(email) || email.length > 254) return;
+
+    const controller = new AbortController();
+    const timer = window.setTimeout(async () => {
+      setEmailCheck({ email, outcome: "checking" });
+      try {
+        const response = await fetch("/api/applications/email-eligibility", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+          cache: "no-store",
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error("Email eligibility could not be checked.");
+        const result = await response.json() as { outcome?: EmailEligibilityOutcome | "invalid" };
+        if (["eligible", "disposable", "free", "invalid"].includes(result.outcome ?? "")) {
+          setEmailCheck({ email, outcome: result.outcome as EmailEligibilityOutcome | "invalid" });
+        } else {
+          setEmailCheck({ email, outcome: "unavailable" });
+        }
+      } catch {
+        if (!controller.signal.aborted) setEmailCheck({ email, outcome: "unavailable" });
+      }
+    }, 250);
+
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
+  }, [values.corporateEmail]);
+
   const stepValid = () => {
-    if (step === 0) return requiredText("enterpriseName") && requiredText("industry");
+    if (step === 0) return requiredText("enterpriseName") && values.enterpriseName.trim().length <= 255 && requiredText("industry");
     if (step === 1) return requiredText("revenue") && requiredText("acquisitionSpend");
     if (step === 2) return requiredText("bottleneck") && requiredText("partnership");
-    return isEmailValid(values.corporateEmail) && validLinkedIn(values.linkedin);
+    const email = values.corporateEmail.trim().toLowerCase();
+    const recognizedIneligible = emailCheck.email === email &&
+      (emailCheck.outcome === "disposable" || emailCheck.outcome === "free");
+    return isEmailFormatValid(email) && !recognizedIneligible && validLinkedIn(values.linkedin);
   };
 
   function changeStep(next: number) {
@@ -241,6 +277,7 @@ export function ContactForm() {
               <input
                 className={inputClass}
                 required
+                maxLength={255}
                 autoComplete="organization"
                 placeholder={formDict.fields.enterpriseName.placeholder}
                 value={values.enterpriseName}
@@ -333,16 +370,25 @@ export function ContactForm() {
                 placeholder={formDict.fields.corporateEmail.placeholder}
                 value={values.corporateEmail}
                 onChange={(e) => set("corporateEmail", e.target.value)}
-                aria-describedby="email-hint"
+                aria-describedby="email-hint email-eligibility-status"
               />
               <span id="email-hint" className="mt-2 block text-xs text-lgl-soft">
                 {formDict.fields.corporateEmail.hint}
               </span>
-              {values.corporateEmail && !isEmailValid(values.corporateEmail) && (
+              {values.corporateEmail && (!isEmailFormatValid(values.corporateEmail) || values.corporateEmail.trim().length > 254) && (
                 <span className="mt-2 block text-xs text-lgl-gold" role="status">
                   {formDict.fields.corporateEmail.error}
                 </span>
               )}
+              <span id="email-eligibility-status" className="mt-2 block text-xs text-lgl-gold" role="status" aria-live="polite">
+                {emailCheck.email === values.corporateEmail.trim().toLowerCase() && emailCheck.outcome === "disposable"
+                  ? EMAIL_ELIGIBILITY_MESSAGES.disposable
+                  : emailCheck.email === values.corporateEmail.trim().toLowerCase() && emailCheck.outcome === "free"
+                    ? EMAIL_ELIGIBILITY_MESSAGES.free
+                    : emailCheck.email === values.corporateEmail.trim().toLowerCase() && emailCheck.outcome === "checking"
+                      ? "Checking email eligibility…"
+                      : ""}
+              </span>
             </label>
             <label className="block text-sm text-lgl-fg">
               {formDict.fields.linkedin.label} <span className="text-lgl-gold">*</span>

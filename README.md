@@ -30,15 +30,9 @@ The service-role key must remain server-side. Never expose it in browser code, u
 
 ## Application Submissions (Supabase)
 
-The form sends JSON to `POST /api/applications`. The server validates required fields and allowed answer values, trims the legal name, normalizes the decision-maker email, and requires a valid HTTPS LinkedIn profile URL. Consumer email providers are rejected. Qualification is calculated server-side, so submitted qualification fields cannot override it.
+The form sends JSON to `POST /api/applications`. The server validates required fields and allowed answer values, trims the legal name (maximum 255 characters), normalizes the decision-maker email, and requires a valid HTTPS LinkedIn profile URL. Consumer email providers are rejected. Submissions are stored with `pending_review` status for administrator review.
 
-Applications are tagged `rejected` with one or more of these `rejection_reasons` when the applicant selects the corresponding answer:
-
-- `ttm_revenue_below_1m` — annual revenue is under $1 million.
-- `monthly_ad_spend_below_10k` — monthly ad spend is under $10,000.
-- `cheap_execution_vendor` — seeking a cheap, hands-off execution vendor.
-
-Applications without those answers are tagged `qualified`. Rejected applications are still saved with their submitted answers and structured reason codes. The route inserts the validated record into `public.growth_applications` using the Supabase service-role client. Validation errors return a client error; database failures return a safe server error, with submitted values redacted from diagnostic logs.
+Application answers do not automatically qualify or reject applicants. The route inserts the validated record and all submitted answers into `public.growth_applications` using the Supabase service-role client. Validation errors return a client error; database failures return a safe server error, with submitted values redacted from diagnostic logs.
 ## Admin Dashboard Authentication
 
 The admin dashboard is available at `/admin`, with authentication handled through `/admin/login`. Authentication uses Firebase Authentication, while the server uses the Firebase Admin SDK to verify identities and manage sessions.

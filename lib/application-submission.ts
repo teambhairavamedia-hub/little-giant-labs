@@ -1,4 +1,5 @@
-import { ValidationError, validateApplication } from "./application-validation.ts";
+import { ValidationError, validateApplication, type ValidatedApplication } from "./application-validation.ts";
+import { EmailDatasetInitializationError, EmailEligibilityError } from "./email-eligibility.ts";
 
 const MAX_BODY_BYTES = 16_384;
 
@@ -58,7 +59,8 @@ async function readLimitedBody(request: Request): Promise<string | null> {
 
 export async function handleApplicationSubmission(
   request: Request,
-  save: (application: ReturnType<typeof validateApplication>) => Promise<void>,
+  save: (application: ValidatedApplication) => Promise<void>,
+  validate: typeof validateApplication = validateApplication,
 ): Promise<Response> {
   const origin = request.headers.get("origin");
   if (origin && origin !== new URL(request.url).origin) {
@@ -77,12 +79,18 @@ export async function handleApplicationSubmission(
     try { body = JSON.parse(rawBody); } catch {
       return Response.json({ error: "Submit a valid application request." }, { status: 400 });
     }
-    const application = validateApplication(body);
+    const application = await validate(body);
     submittedValues = Object.values(application).flatMap((value) => Array.isArray(value) ? value : [value]);
     await save(application);
     return Response.json({ success: true, message: "Your application has been submitted." }, { status: 201 });
   } catch (error) {
+    if (error instanceof EmailEligibilityError) {
+      return Response.json({ error: error.message, code: error.code }, { status: 400 });
+    }
     if (error instanceof ValidationError) return Response.json({ error: error.message }, { status: 400 });
+    if (error instanceof EmailDatasetInitializationError) {
+      return Response.json({ error: "Email eligibility is temporarily unavailable. Please try again later." }, { status: 503 });
+    }
     console.error("Application submission failed", diagnosticMetadata(error, submittedValues));
     return Response.json({ error: "We couldn’t submit your application. Please try again later." }, { status: 500 });
   }

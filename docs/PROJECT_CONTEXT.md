@@ -20,7 +20,7 @@ Little Giant Labs is a company website built with Next.js. Public routes include
 
 - App Router pages are under `app/`; shared UI is under `components/`.
 - The application form posts JSON to `POST /api/applications` (`app/api/applications/route.ts`). `lib/application-submission.ts` enforces JSON content type, a 16 KiB body limit, same-origin check when an Origin header is supplied, validation, safe error responses, and redacted diagnostic logging.
-- `lib/application-validation.ts` validates required fields and enum answers, normalizes legal name/email/LinkedIn, calculates qualification and rejection reasons on the server. Client-supplied qualification fields do not control the saved values.
+- `lib/application-validation.ts` validates required fields and enum answers, normalizes legal name/email/LinkedIn, and assigns new submissions the neutral `pending_review` status. Qualification decisions are left to administrators.
 - The route inserts the validated record into `public.growth_applications` using `lib/supabase/server.ts`. The service-role key is server-only and bypasses RLS.
 
 ### Administrator authentication
@@ -45,11 +45,11 @@ The authoritative checked-in schema is `supabase/migrations/202610150001_create_
 | `partnership_readiness` | required `text`, constrained to two options |
 | `decision_maker_email` | required `text` |
 | `decision_maker_linkedin` | required `text` |
-| `qualification_status` | required `text`, default `qualified`, constrained to `qualified` / `rejected` |
-| `rejection_reasons` | nullable `jsonb`; validator supplies an array of reason-code strings |
+| `qualification_status` | required `text`, default `pending_review`, constrained to `qualified` / `rejected` / `pending_review` |
+| `rejection_reasons` | nullable `jsonb`; retained to display historical stored reason codes |
 | `submitted_at` | required `timestamptz`, default `now()` |
 
-The seven application answers are industry, annual revenue, monthly ad spend, growth bottleneck, partnership readiness, decision-maker email, and LinkedIn profile. Legal name is a separate required field. Qualification rejects applications selecting under $1M revenue, under $10K monthly ad spend, and/or the cheap execution vendor option. Reasons are `ttm_revenue_below_1m`, `monthly_ad_spend_below_10k`, and `cheap_execution_vendor`; rejected submissions are still stored.
+The seven application answers are industry, annual revenue, monthly ad spend, growth bottleneck, partnership readiness, decision-maker email, and LinkedIn profile. Legal name is a separate required field and is limited to 255 characters by server validation and the form. New submissions are stored as `pending_review`; historical qualified/rejected statuses and rejection reasons remain available for administrator review. No application answer automatically determines qualification or rejection.
 
 The migration enables RLS, creates no public/anon/authenticated policies, revokes table access from `PUBLIC`, `anon`, and `authenticated`, grants access to `service_role`, and includes assertions for those controls. This describes the migration only: application of the migration and live database grants/policies must be verified against the target Supabase project. The README contains SQL verification queries.
 
@@ -81,6 +81,7 @@ Confirmed in source:
 - Public website routes and application submission/validation/qualification path exist.
 - The home page Selected Work section uses four logical project cards in circular order, with a centered active card and its two circular neighbors shown as grayscale/dim previews. Direct selection, keyboard and arrow navigation, four progress controls, and horizontal wheel/touch gestures remain wired to one active index. Source content and order remain unchanged. Build and interactive browser verification remain pending; the local build currently cannot fetch its Google Fonts.
 - Supabase table migration and restrictive RLS/grant setup exist in the repository.
+- New application submissions receive `pending_review`; a follow-up migration expands the status constraint and changes the database default while retaining historical statuses/rejection reasons. The admin list displays pending status alongside historical decisions.
 - Firebase login, email verification, server token verification, session cookie, protected admin page, and logout exist.
 - Phase 2 application details are implemented in the repository. `GET /api/admin/applications/[id]` verifies the administrator session on each request, validates a UUID, and returns only the selected record's submission fields and persisted qualification outcome with no-store headers. Live access remains dependent on existing Firebase, Supabase, and deployment configuration.
 - `/admin` redirects authorized sessions to `/admin/dashboard`. The dashboard displays three summary metrics, an all-time qualified/rejected breakdown (green for qualified, red for rejected), and a read-only paginated applications table with validated LinkedIn and email contact links. Selecting the legal name opens a responsive, keyboard-operable application detail dialog without changing pagination; it displays stored submission answers, persisted status, and mapped stored rejection reasons.
