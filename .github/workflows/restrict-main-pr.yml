@@ -1,0 +1,28 @@
+name: Restrict pull requests into main
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+      - edited
+
+permissions: {}
+
+jobs:
+  validate-source-branch:
+    name: Validate PR source branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require dev as the source branch
+        env:
+          PR_SOURCE_BRANCH: ${{ github.head_ref }}
+        run: |
+          if [ "$PR_SOURCE_BRANCH" != "dev" ]; then
+            echo "::error::Pull requests into main must originate from the dev branch."
+            exit 1
+          fi
