@@ -7,6 +7,9 @@ import { EmailDatasetInitializationError, EmailEligibilityError, EMAIL_ELIGIBILI
 import { POST as checkEmailRequest } from "../app/api/applications/email-eligibility/route.ts";
 import { readFile } from "node:fs/promises";
 
+const idempotencyHeaders = { "content-type": "application/json", "idempotency-key": `application-submission:${"ab".repeat(32)}` };
+process.env.EMAIL_TOKEN_ENCRYPTION_KEY = Buffer.alloc(32, 0x41).toString("base64");
+
 const validInput = () => ({
   legal_name: "Example Corporation",
   industry_vertical: "Enterprise Banking & FinTech",
@@ -119,7 +122,7 @@ test("client and endpoint use the same eligibility outcomes and user-facing mess
 test("submission responses expose stable, distinct eligibility codes and exact user messages", async () => {
   for (const [outcome, code] of [["disposable", "DISPOSABLE_EMAIL"], ["free", "FREE_EMAIL_PROVIDER"]]) {
     const response = await handleApplicationSubmission(new Request("https://site.test/api/applications", {
-      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(validInput()),
+      method: "POST", headers: idempotencyHeaders, body: JSON.stringify(validInput()),
     }), async () => {}, async () => { throw new EmailEligibilityError(outcome); });
     assert.equal(response.status, 400);
     assert.deepEqual(await response.json(), { error: EMAIL_ELIGIBILITY_MESSAGES[outcome], code });
@@ -138,7 +141,7 @@ test("dataset initialization failure is cached as failure and cannot permit subm
 
   let saved = false;
   const response = await handleApplicationSubmission(new Request("https://site.test/api/applications", {
-    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(validInput()),
+    method: "POST", headers: idempotencyHeaders, body: JSON.stringify(validInput()),
   }), async () => { saved = true; }, async () => { throw new EmailDatasetInitializationError(); });
   assert.equal(response.status, 503);
   assert.equal(saved, false);
@@ -160,7 +163,7 @@ test("browser-supplied qualification fields cannot override pending review", asy
 test("successful endpoint saves previously disqualifying answers for administrator review", async () => {
   const saved = [];
   const response = await handleApplicationSubmission(new Request("https://site.test/api/applications", {
-    method: "POST", headers: { "content-type": "application/json", origin: "https://site.test" },
+    method: "POST", headers: { ...idempotencyHeaders, origin: "https://site.test" },
     body: JSON.stringify({ ...validInput(), ttm_revenue: "Under $1 Million" }),
   }), async (application) => { saved.push(application); });
   assert.equal(response.status, 201);
@@ -175,7 +178,7 @@ test("database failures return a safe server error", async () => {
   console.error = () => {};
   try {
     const response = await handleApplicationSubmission(new Request("https://site.test/api/applications", {
-      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(validInput()),
+      method: "POST", headers: idempotencyHeaders, body: JSON.stringify(validInput()),
     }), async () => { throw new Error("private SQL details"); });
     assert.equal(response.status, 500);
     assert.doesNotMatch(await response.text(), /private SQL details/);
@@ -188,7 +191,7 @@ test("database diagnostics preserve safe metadata and redact submitted values", 
   console.error = (...args) => entries.push(args);
   try {
     const response = await handleApplicationSubmission(new Request("https://site.test/api/applications", {
-      method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(validInput()),
+      method: "POST", headers: idempotencyHeaders, body: JSON.stringify(validInput()),
     }), async () => {
       throw {
         name: "PostgrestError",

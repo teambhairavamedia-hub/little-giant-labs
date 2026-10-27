@@ -90,9 +90,11 @@ export function ContactForm() {
     outcome: EmailEligibilityOutcome | "idle" | "checking" | "invalid" | "unavailable";
   }>({ email: "", outcome: "idle" });
   const submittingRef = useRef(false);
+  const idempotencyKeyRef = useRef<string | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   const set = (key: keyof Application, value: string) => {
+    if (values[key] !== value) idempotencyKeyRef.current = null;
     setValues((current) => ({ ...current, [key]: value }));
     if (key === "corporateEmail") setError("");
   };
@@ -163,13 +165,15 @@ export function ContactForm() {
     }
     if (!stepValid() || submittingRef.current) return;
     submittingRef.current = true;
+    const idempotencyKey = idempotencyKeyRef.current ?? `application-submission:${Array.from(crypto.getRandomValues(new Uint8Array(32)), (byte) => byte.toString(16).padStart(2, "0")).join("")}`;
+    idempotencyKeyRef.current = idempotencyKey;
     setBusy(true);
     setError("");
 
     try {
       const response = await fetch("/api/applications", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": idempotencyKey },
         body: JSON.stringify({
           legal_name: values.enterpriseName,
           industry_vertical: values.industry,
@@ -188,6 +192,7 @@ export function ContactForm() {
       }
 
       router.push(getLocalizedPath("/application-received", locale));
+      idempotencyKeyRef.current = null;
     } catch (submissionError) {
       setError(
         submissionError instanceof Error

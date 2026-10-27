@@ -1,7 +1,21 @@
 import { ValidationError, validateApplication, type ValidatedApplication } from "./application-validation.ts";
 import { EmailDatasetInitializationError, EmailEligibilityError } from "./email-eligibility.ts";
+import {
+  createInitialVerificationJobMetadata,
+  fingerprintApplication,
+  getVerificationMetadataForRedaction,
+  type InitialVerificationJobMetadata,
+} from "./application-verification.ts";
 
 const MAX_BODY_BYTES = 16_384;
+export const IDEMPOTENCY_CONFLICT_SQLSTATE = "LGL01";
+
+export class SubmissionConflictError extends Error {}
+
+export function isIdempotencyConflict(error: unknown): boolean {
+  return Boolean(error && typeof error === "object" &&
+    (error as Record<string, unknown>).code === IDEMPOTENCY_CONFLICT_SQLSTATE);
+}
 
 function redactDiagnosticText(value: string, submittedValues: string[]): string {
   let safe = value;
@@ -59,8 +73,9 @@ async function readLimitedBody(request: Request): Promise<string | null> {
 
 export async function handleApplicationSubmission(
   request: Request,
-  save: (application: ValidatedApplication) => Promise<void>,
+  save: (application: ValidatedApplication, metadata: InitialVerificationJobMetadata) => Promise<void>,
   validate: typeof validateApplication = validateApplication,
+  createMetadata: typeof createInitialVerificationJobMetadata = createInitialVerificationJobMetadata,
 ): Promise<Response> {
   const origin = request.headers.get("origin");
   if (origin && origin !== new URL(request.url).origin) {
@@ -73,6 +88,10 @@ export async function handleApplicationSubmission(
 
   let submittedValues: string[] = [];
   try {
+    const idempotencyKey = request.headers.get("idempotency-key") ?? "";
+    if (!/^application-submission:[a-f0-9]{64}$/.test(idempotencyKey)) {
+      return Response.json({ error: "Submit a valid application request." }, { status: 400 });
+    }
     const rawBody = await readLimitedBody(request);
     if (rawBody === null) return Response.json({ error: "Submit a valid application request." }, { status: 413 });
     let body: unknown;
@@ -81,9 +100,15 @@ export async function handleApplicationSubmission(
     }
     const application = await validate(body);
     submittedValues = Object.values(application).flatMap((value) => Array.isArray(value) ? value : [value]);
-    await save(application);
+    const requestFingerprintBytea = fingerprintApplication(application);
+    const verificationMetadata = createMetadata(undefined, undefined, undefined, idempotencyKey, requestFingerprintBytea);
+    submittedValues.push(...getVerificationMetadataForRedaction(verificationMetadata));
+    await save(application, verificationMetadata);
     return Response.json({ success: true, message: "Your application has been submitted." }, { status: 201 });
   } catch (error) {
+    if (error instanceof SubmissionConflictError) {
+      return Response.json({ error: "This submission key was already used. Start a new application." }, { status: 409 });
+    }
     if (error instanceof EmailEligibilityError) {
       return Response.json({ error: error.message, code: error.code }, { status: 400 });
     }
