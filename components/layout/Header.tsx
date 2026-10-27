@@ -93,12 +93,12 @@ export function Header() {
           style={{ maxWidth: 1400 }}
         >
           <div
-            className="lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-3.5 py-1.5 transition-all duration-300 sm:px-4 md:gap-4 md:px-5 min-[1280px]:grid-cols-[max-content_minmax(0,1fr)_max-content] min-[1280px]:gap-3 min-[1280px]:py-0.5"
+            className="lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-3.5 py-0 transition-all duration-300 sm:px-4 md:gap-4 md:px-5 min-[1280px]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] min-[1280px]:gap-3 min-[1280px]:py-0.5"
           >
             <Link
               href={homePath}
               aria-label="Little Giant Labs home"
-              className="group col-start-1 flex w-max max-w-none shrink-0 items-center transition-opacity hover:opacity-75 min-[1280px]:justify-self-start"
+              className="group col-start-1 flex w-max max-w-full shrink-0 items-center transition-opacity hover:opacity-75 min-[1280px]:col-start-1 min-[1280px]:justify-self-start"
             >
               <Image
                 src="/new-logo-readable.png"
@@ -106,7 +106,7 @@ export function Header() {
                 width={824}
                 height={1072}
                 priority
-                className="logo-mark-light h-36 w-auto max-w-none flex-none object-contain transition-transform duration-300 group-hover:scale-105 sm:h-44 md:h-52 min-[1280px]:h-72"
+                className="logo-mark-light h-[9.5rem] w-auto max-w-full flex-none object-contain transition-transform duration-300 group-hover:scale-105 md:h-[10.5rem] min-[1280px]:h-56"
               />
               <Image
                 src="/new-logo-readable-dark.png"
@@ -115,12 +115,12 @@ export function Header() {
                 width={824}
                 height={1072}
                 priority
-                className="logo-mark-dark h-36 w-auto max-w-none flex-none object-contain transition-transform duration-300 group-hover:scale-105 sm:h-44 md:h-52 min-[1280px]:h-72"
+                className="logo-mark-dark h-[9.5rem] w-auto max-w-full flex-none object-contain transition-transform duration-300 group-hover:scale-105 md:h-[10.5rem] min-[1280px]:h-56"
               />
             </Link>
 
             {/* Desktop nav — center */}
-            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1 min-[1280px]:whitespace-nowrap">
+            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1.5 min-[1280px]:whitespace-nowrap">
               {navItems.map((item) => {
                 const isActive = activeHref === item.href;
                 return (
@@ -131,12 +131,12 @@ export function Header() {
                     className="localized-ui-text relative rounded-full transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
-                      fontSize: "0.75rem",
+                      fontSize: "0.8125rem",
                       fontWeight: 500,
                       letterSpacing: "0.14em",
                       textTransform: "uppercase",
                       color: isActive ? fgColor : fgMuted,
-                      padding: "0.35rem 0.55rem",
+                      padding: "0.35rem 0.65rem",
                       background: isActive ? "var(--lgl-nav-active)" : "transparent",
                     }}
                     onMouseEnter={(e) => {
