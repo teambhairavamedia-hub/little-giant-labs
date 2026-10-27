@@ -6,7 +6,7 @@ import { normalizeContactEmail, normalizeLinkedInProfileUrl } from "@/lib/admin-
 
 type Application = {
   id: string; legal_name: string; industry_vertical: string; ttm_revenue: string;
-  monthly_ad_spend: string; qualification_status: "qualified" | "rejected"; submitted_at: string;
+  monthly_ad_spend: string; qualification_status: "qualified" | "rejected" | "pending_review"; submitted_at: string;
   decision_maker_linkedin: string; decision_maker_email: string;
 };
 type DashboardData = {
@@ -14,7 +14,7 @@ type DashboardData = {
   pagination: { page: number; pageSize: number; total: number; totalPages: number };
   metrics: {
     totalApplications: number; newApplicationsLast7Days: number; qualifiedApplicationsLast7Days: number;
-    qualification: { qualified: number; rejected: number }; window: { startsAt: string; endsAt: string };
+    qualification: { qualified: number; rejected: number; pendingReview: number }; window: { startsAt: string; endsAt: string };
   };
 };
 type ApplicationDetail = Application & { growth_bottleneck: string; partnership_readiness: string; rejection_reasons: unknown };
@@ -55,9 +55,11 @@ export function AdminDashboard() {
   }, [load]);
   const qualified = data?.metrics.qualification.qualified ?? 0;
   const rejected = data?.metrics.qualification.rejected ?? 0;
-  const breakdownTotal = qualified + rejected;
+  const pendingReview = data?.metrics.qualification.pendingReview ?? 0;
+  const breakdownTotal = qualified + rejected + pendingReview;
   const qualifiedPercent = breakdownTotal ? Math.round(qualified / breakdownTotal * 100) : 0;
-  const rejectedPercent = breakdownTotal ? 100 - qualifiedPercent : 0;
+  const rejectedPercent = breakdownTotal ? Math.round(rejected / breakdownTotal * 100) : 0;
+  const pendingReviewPercent = breakdownTotal ? 100 - qualifiedPercent - rejectedPercent : 0;
 
   const openDetail = (application: Application, button: HTMLButtonElement) => {
     openerRef.current = button;
@@ -81,10 +83,11 @@ export function AdminDashboard() {
       <section aria-labelledby="qualification-heading" className="rounded-2xl border border-[#e8e8e6] bg-white p-6 sm:p-8">
         <div><p className="label-eyebrow text-[#800000]">All time</p><h2 id="qualification-heading" className="mt-3 text-2xl font-semibold">Qualification breakdown</h2></div>
         {breakdownTotal === 0 ? <p className="mt-7 text-sm text-[#6b6b6b]">No applications have been received.</p> : <div className="mt-7 flex flex-col items-center gap-8 sm:flex-row">
-          <div role="img" aria-label={`Qualification breakdown: ${qualified} qualified (${qualifiedPercent}%), ${rejected} rejected (${rejectedPercent}%)`} className="h-40 w-40 shrink-0 rounded-full" style={{ background: `conic-gradient(#15803d 0% ${qualifiedPercent}%, #b91c1c ${qualifiedPercent}% 100%)` }} />
-          <ul className="grid w-full gap-4 sm:grid-cols-2">
+          <div role="img" aria-label={`Application status: ${qualified} qualified (${qualifiedPercent}%), ${rejected} rejected (${rejectedPercent}%), ${pendingReview} pending review (${pendingReviewPercent}%)`} className="h-40 w-40 shrink-0 rounded-full" style={{ background: `conic-gradient(#15803d 0% ${qualifiedPercent}%, #b91c1c ${qualifiedPercent}% ${qualifiedPercent + rejectedPercent}%, #0284c7 ${qualifiedPercent + rejectedPercent}% 100%)` }} />
+          <ul className="grid w-full gap-4 sm:grid-cols-3">
             <Breakdown label="Qualified" count={qualified} percent={qualifiedPercent} color="#15803d" labelClass="text-green-800" />
             <Breakdown label="Rejected" count={rejected} percent={rejectedPercent} color="#b91c1c" labelClass="text-red-800" />
+            <Breakdown label="Pending review" count={pendingReview} percent={pendingReviewPercent} color="#0284c7" labelClass="text-sky-800" />
           </ul>
         </div>}
       </section>
@@ -103,7 +106,7 @@ export function AdminDashboard() {
                 const email = normalizeContactEmail(application.decision_maker_email);
                 return <tr key={application.id} className="border-t border-[#eeeeec] align-top">
                 <td className="px-5 py-4 font-medium sm:px-7"><button type="button" onClick={(event) => openDetail(application, event.currentTarget)} className="text-left underline decoration-[#800000]/30 underline-offset-4 hover:text-[#800000] hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{application.legal_name}<span className="sr-only"> — View application</span></button></td><td className="px-4 py-4">{application.industry_vertical}</td><td className="px-4 py-4">{application.ttm_revenue}</td><td className="px-4 py-4">{application.monthly_ad_spend}</td>
-                <td className="px-4 py-4"><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${application.qualification_status === "qualified" ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-900"}`}>{application.qualification_status === "qualified" ? "Qualified" : "Rejected"}</span></td>
+                <td className="px-4 py-4 text-center"><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${application.qualification_status === "qualified" ? "bg-emerald-50 text-emerald-800" : application.qualification_status === "rejected" ? "bg-amber-50 text-amber-900" : "bg-sky-50 text-sky-900"}`}>{application.qualification_status === "pending_review" ? "Pending review" : application.qualification_status === "qualified" ? "Qualified" : "Rejected"}</span></td>
                 <td className="px-4 py-4">{linkedinUrl ? <a href={linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label={`Open LinkedIn profile for ${application.legal_name}`} title="Open LinkedIn profile in a new tab" className="inline-flex rounded text-[#0a66c2] hover:text-[#004182] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0a66c2]"><LinkedInIcon /></a> : <span className="text-[#6b6b6b]" aria-label="LinkedIn profile unavailable">—</span>}</td>
                 <td className="max-w-44 px-4 py-4">{email ? <a href={`mailto:${email.split("@").map(encodeURIComponent).join("@")}`} title={email} aria-label={`Email applicant at ${email}`} className="block max-w-44 truncate text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{email}</a> : <span className="text-[#6b6b6b]" aria-label="Email unavailable">—</span>}</td>
                 <td className="whitespace-nowrap px-5 py-4 text-[#6b6b6b] sm:px-7"><time dateTime={application.submitted_at}>{dateFormat.format(new Date(application.submitted_at))}</time></td>
@@ -178,7 +181,7 @@ function ApplicationDetailPanel({ id, onClose }: { id: string; onClose: () => vo
         {loading && <p role="status" className="py-8 text-sm text-[#6b6b6b]">Loading application details…</p>}
         {error && <div role="alert" className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-800"><p>{error}</p>{!error.includes("could not be found") && <button type="button" onClick={() => void load()} className="mt-3 font-semibold underline underline-offset-4">Retry</button>}</div>}
         {application && <>
-          <div className="flex flex-wrap items-center justify-between gap-3"><span className={`inline-flex rounded-full px-3 py-1.5 text-sm font-semibold ${application.qualification_status === "qualified" ? "bg-emerald-50 text-emerald-800" : "bg-amber-50 text-amber-900"}`}>{application.qualification_status === "qualified" ? "Qualified" : "Rejected"}</span><time className="text-sm text-[#6b6b6b]" dateTime={application.submitted_at}>{dateFormat.format(new Date(application.submitted_at))} IST</time></div>
+          <div className="flex flex-wrap items-center justify-between gap-3"><span className={`inline-flex rounded-full px-3 py-1.5 text-sm font-semibold ${application.qualification_status === "qualified" ? "bg-emerald-50 text-emerald-800" : application.qualification_status === "rejected" ? "bg-amber-50 text-amber-900" : "bg-sky-50 text-sky-900"}`}>{application.qualification_status === "pending_review" ? "Pending review" : application.qualification_status === "qualified" ? "Qualified" : "Rejected"}</span><time className="text-sm text-[#6b6b6b]" dateTime={application.submitted_at}>{dateFormat.format(new Date(application.submitted_at))} IST</time></div>
           {application.qualification_status === "rejected" && <section aria-labelledby="reasons-heading" className="rounded-xl border border-amber-200 bg-amber-50 p-4"><h3 id="reasons-heading" className="font-semibold text-amber-950">Stored rejection reasons</h3>{reasons.length ? <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-amber-950">{reasons.map((reason, index) => { const code = typeof reason === "string" ? reason : ""; const label = rejectionLabels[code] ?? (code ? code.replace(/[_-]+/g, " ") : "Unrecognized stored reason"); return <li key={`${code}-${index}`}>{label}</li>; })}</ul> : <p className="mt-2 text-sm text-amber-950">No rejection reasons were stored.</p>}</section>}
           <dl className="divide-y divide-[#eeeeec] rounded-xl border border-[#e8e8e6] px-4 sm:px-5">
             <DetailField label="Legal registered enterprise name" value={answer(application.legal_name)} />

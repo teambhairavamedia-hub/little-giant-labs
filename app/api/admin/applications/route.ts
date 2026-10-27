@@ -59,6 +59,8 @@ export async function GET(request: NextRequest) {
     if (page > Math.max(totalPages, 1)) return fail("The requested page is out of range.", 416);
     const qualified = qualifiedResult.count ?? 0;
     const rejected = rejectedResult.count ?? 0;
+    const pendingReviewResult = await supabase.from("growth_applications").select("id", { count: "exact", head: true }).eq("qualification_status", "pending_review");
+    if (pendingReviewResult.error) return fail("Application data is temporarily unavailable.", 500);
     return NextResponse.json({
       applications: applicationsResult.data ?? [],
       pagination: { page, pageSize, total, totalPages },
@@ -66,7 +68,7 @@ export async function GET(request: NextRequest) {
         totalApplications: total,
         newApplicationsLast7Days: recentResult.count ?? 0,
         qualifiedApplicationsLast7Days: qualifiedRecentResult.count ?? 0,
-        qualification: { qualified, rejected },
+        qualification: { qualified, rejected, pendingReview: pendingReviewResult.count ?? 0 },
         window: { startsAt: sevenDaysAgo, endsAt: now.toISOString() },
       },
     }, { headers: { "Cache-Control": "no-store" } });

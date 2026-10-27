@@ -2,6 +2,9 @@
   "name": "little-giant-labs",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "^22.14.0 || >=24.10.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,6 +15,8 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.117.3",
     "@vercel/blob": "^2.8.0",
+    "@visulima/disposable-email-domains": "2.0.8",
+    "@visulima/free-email-domains": "1.0.1",
     "dotenv": "^17.4.2",
     "firebase": "^13.0.0",
     "firebase-admin": "^14.5.0",
