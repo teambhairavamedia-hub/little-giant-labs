@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n/context";
-import { localeDetails, locales, type Locale } from "@/lib/i18n/config";
+import { localeDetails, locales } from "@/lib/i18n/config";
 
 function GlobeIcon({ className = "w-3.5 h-3.5" }: { className?: string }) {
   return (
@@ -138,7 +138,7 @@ export function LanguageSelector({ variant = "header" }: { variant?: "header" | 
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-label={dict.nav.selectLanguage}
-        className="inline-flex items-center gap-2 rounded-full h-11 px-3.5 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold cursor-pointer"
+        className="inline-flex h-9 cursor-pointer items-center gap-1 rounded-full px-2 transition-all duration-200 hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold sm:h-10 sm:gap-1.5 sm:px-3"
         style={{
           background: "var(--lgl-nav-chip)",
           border: "1px solid var(--lgl-nav-border)",
@@ -146,12 +146,12 @@ export function LanguageSelector({ variant = "header" }: { variant?: "header" | 
           fontFamily: "var(--font-dm-sans), sans-serif",
         }}
       >
-        <GlobeIcon className="w-4 h-4 text-lgl-gold shrink-0" />
-        <span className="localized-ui-text text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
+        <GlobeIcon className="h-3.5 w-3.5 shrink-0 text-lgl-gold sm:h-4 sm:w-4" />
+        <span className="localized-ui-text text-[0.625rem] font-semibold uppercase tracking-[0.12em] sm:text-[0.6875rem] sm:tracking-[0.16em]">
           {currentInfo.name}
         </span>
         <ChevronDownIcon
-          className={`w-3 h-3 opacity-70 transition-transform duration-300 ${
+          className={`h-2.5 w-2.5 opacity-70 transition-transform duration-300 sm:h-3 sm:w-3 ${
             open ? "rotate-180" : ""
           }`}
         />
