@@ -142,7 +142,7 @@ begin
      or has_table_privilege('authenticated', 'public.email_jobs', 'INSERT') then
     raise exception 'anon and authenticated must not have email_jobs access';
   end if;
-end
+end;
 $$;
 
 -- Encrypted token material remains until delivery reaches a definitive outcome.

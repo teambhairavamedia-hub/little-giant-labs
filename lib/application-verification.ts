@@ -59,7 +59,9 @@ export function decryptVerificationToken(payloadBytea: string, keyValue = proces
   const key = decodeEncryptionKey(keyValue);
   if (!/^\\x(?:[0-9a-f]{2})+$/i.test(payloadBytea)) throw new Error("Malformed encrypted token payload.");
   const payload = Buffer.from(payloadBytea.slice(2), "hex");
-  if (payload.length < 30 || payload[0] !== 1) throw new Error("Malformed encrypted token payload.");
+  // v1 contains a 1-byte version, 12-byte nonce, 16-byte tag, and the
+  // 43-byte Base64URL token generated from 32 random bytes.
+  if (payload.length !== 72 || payload[0] !== 1) throw new Error("Malformed encrypted token payload.");
   const decipher = createDecipheriv("aes-256-gcm", key, payload.subarray(1, 13));
   decipher.setAuthTag(payload.subarray(13, 29));
   return Buffer.concat([decipher.update(payload.subarray(29)), decipher.final()]).toString("utf8");

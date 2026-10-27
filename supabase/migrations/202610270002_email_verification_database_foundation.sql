@@ -221,7 +221,7 @@ begin
      or has_function_privilege('authenticated', 'public.create_application_with_email_job(text,text,text,text,text,text,text,text,bytea,timestamptz,bytea,text)', 'EXECUTE') then
     raise exception 'anon and authenticated must not be able to execute the application/job RPC';
   end if;
-end
+end;
 $$;
 
 -- Manual database integration checks (run only against a disposable test DB):

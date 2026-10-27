@@ -132,6 +132,35 @@ test("AES-GCM encrypts recoverable tokens with unique nonces and rejects tamperi
   assert.throws(() => createInitialVerificationJobMetadata(undefined, Date.now, "not-a-key"));
 });
 
+test("AES-GCM decryption rejects malformed lengths and unsupported versions before decrypting", () => {
+  const metadata = createInitialVerificationJobMetadata(
+    (size) => Buffer.alloc(size, 0x33),
+    () => 1,
+    key,
+  );
+  const payloadHex = metadata.encryptedTokenPayloadBytea.slice(2);
+
+  assert.equal(payloadHex.length / 2, 72);
+  assert.throws(() => decryptVerificationToken(`\\x${payloadHex.slice(0, -2)}`, key), /Malformed encrypted token payload/);
+  assert.throws(() => decryptVerificationToken(`\\x${payloadHex}00`, key), /Malformed encrypted token payload/);
+  assert.throws(() => decryptVerificationToken(`\\x02${payloadHex.slice(2)}`, key), /Malformed encrypted token payload/);
+});
+
+test("AES-GCM authentication failures from tampered data or an incorrect key are rejected", () => {
+  const metadata = createInitialVerificationJobMetadata(
+    (size) => Buffer.alloc(size, 0x44),
+    () => 1,
+    key,
+  );
+  const payloadHex = metadata.encryptedTokenPayloadBytea.slice(2);
+  const tamperedCiphertext = `${payloadHex.slice(0, -2)}${payloadHex.endsWith("00") ? "01" : "00"}`;
+  const tamperedTag = `${payloadHex.slice(0, 26)}${payloadHex.slice(26, 28) === "00" ? "01" : "00"}${payloadHex.slice(28)}`;
+
+  assert.throws(() => decryptVerificationToken(`\\x${tamperedCiphertext}`, key));
+  assert.throws(() => decryptVerificationToken(`\\x${tamperedTag}`, key));
+  assert.throws(() => decryptVerificationToken(metadata.encryptedTokenPayloadBytea, Buffer.alloc(32, 0x45).toString("base64")));
+});
+
 test("submission rejects missing idempotency keys before creating a job", async () => {
   let saved = false;
   const response = await handleApplicationSubmission(
