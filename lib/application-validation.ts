@@ -1,3 +1,6 @@
+import { checkEmailEligibility } from "./email-domain-eligibility.ts";
+import { EmailEligibilityError, isEmailFormatValid } from "./email-eligibility.ts";
+
 export const applicationOptions = {
   industry_vertical: [
     "Enterprise Banking & FinTech",
@@ -32,8 +35,7 @@ export type ApplicationInput = {
 };
 
 export type ValidatedApplication = ApplicationInput & {
-  qualification_status: "qualified" | "rejected";
-  rejection_reasons: string[];
+  qualification_status: "pending_review";
 };
 
 export class ValidationError extends Error {
@@ -42,20 +44,13 @@ export class ValidationError extends Error {
 
 const fields = Object.keys(applicationOptions);
 const requiredFields = ["legal_name", ...fields, "decision_maker_email", "decision_maker_linkedin"] as const;
-const blockedEmailDomains = new Set([
-  "gmail.com", "googlemail.com", "yahoo.com", "yahoo.co.uk", "yahoo.co.in", "ymail.com",
-  "hotmail.com", "outlook.com", "live.com", "icloud.com", "me.com", "aol.com", "proton.me", "protonmail.com",
-]);
-
-export function normalizeCorporateEmail(value: string): string {
+export async function normalizeCorporateEmail(value: string): Promise<string> {
   const email = value.trim().toLowerCase();
-  if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (email.length > 254 || !isEmailFormatValid(email)) {
     throw new ValidationError("Enter a valid corporate email address.");
   }
-  const domain = email.slice(email.lastIndexOf("@") + 1);
-  if ([...blockedEmailDomains].some((blocked) => domain === blocked || domain.endsWith(`.${blocked}`))) {
-    throw new ValidationError("Use your organization’s email address. Consumer email providers are not accepted.");
-  }
+  const outcome = await checkEmailEligibility(email);
+  if (outcome !== "eligible") throw new EmailEligibilityError(outcome);
   return email;
 }
 
@@ -68,31 +63,28 @@ export function normalizeLinkedInUrl(value: string): string {
   return url.toString();
 }
 
-export function validateApplication(body: unknown): ValidatedApplication {
+export async function validateApplication(body: unknown): Promise<ValidatedApplication> {
   if (!body || typeof body !== "object" || Array.isArray(body)) throw new ValidationError("Submit a valid application.");
   const input = body as Record<string, unknown>;
   for (const field of requiredFields) {
     if (typeof input[field] !== "string" || !input[field].trim()) throw new ValidationError("Complete all required fields before submitting.");
   }
   const legal_name = (input.legal_name as string).trim();
-  if (legal_name.length > 200) throw new ValidationError("The legal enterprise name is too long.");
+  if (legal_name.length > 255) throw new ValidationError("The legal enterprise name is too long.");
   const answers: Record<string, string> = {};
   for (const [field, options] of Object.entries(applicationOptions)) {
     const answer = (input[field] as string).trim();
     if (!(options as readonly string[]).includes(answer)) throw new ValidationError("One or more answers are invalid. Review your selections and try again.");
     answers[field] = answer;
   }
-  const rejection_reasons: string[] = [];
-  if (answers.ttm_revenue === "Under $1 Million") rejection_reasons.push("ttm_revenue_below_1m");
-  if (answers.monthly_ad_spend === "Under $10,000 / month") rejection_reasons.push("monthly_ad_spend_below_10k");
-  if (answers.partnership_readiness === applicationOptions.partnership_readiness[0]) rejection_reasons.push("cheap_execution_vendor");
+  const decision_maker_linkedin = normalizeLinkedInUrl(input.decision_maker_linkedin as string);
+  const decision_maker_email = await normalizeCorporateEmail(input.decision_maker_email as string);
 
   return {
     legal_name,
     ...answers,
-    decision_maker_email: normalizeCorporateEmail(input.decision_maker_email as string),
-    decision_maker_linkedin: normalizeLinkedInUrl(input.decision_maker_linkedin as string),
-    qualification_status: rejection_reasons.length ? "rejected" : "qualified",
-    rejection_reasons,
+    decision_maker_email,
+    decision_maker_linkedin,
+    qualification_status: "pending_review",
   } as ValidatedApplication;
 }
