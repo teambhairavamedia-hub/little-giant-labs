@@ -559,7 +559,7 @@ html.lenis, html.lenis body {
 @media(max-width:700px) {
  .home-shell { width:calc(100% - 2rem); }
  .home-hero { min-height:88svh; }
- .home-hero-inner { padding-block:6.5rem 3.5rem; }
+ .home-hero-inner { padding-block:10rem 3.5rem; }
  .home-hero h1 { font-size:clamp(2.25rem,10.2vw,3.55rem); }
  .home-hero .home-eyebrow { padding-left:.1em; font-size:clamp(.9rem,4.2vw,1.1rem); letter-spacing:.1em; }
  .pillar-scene { grid-template-columns:1fr; gap:1.5rem; }
