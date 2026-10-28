@@ -1,17 +1,20 @@
 "use client";
 
 import { type CSSProperties } from "react";
+import { useRouter } from "next/navigation";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import {
   ChartIcon,
   FilmIcon,
   LoopIcon,
 } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
+import { getLocalizedPath } from "@/lib/i18n/config";
 
 const valueIcons = [FilmIcon, ChartIcon, LoopIcon];
 
@@ -63,7 +66,8 @@ function AboutHeaderVisual() {
 }
 
 export function AboutPageView() {
-  const { dict } = useI18n();
+  const { dict, locale } = useI18n();
+  const router = useRouter();
   const aboutDict = dict.about;
 
   return (
@@ -71,7 +75,7 @@ export function AboutPageView() {
       {/* Page Header */}
       <PageHeader
         description="We turn business ideas into meaningful brand experiences."
-        descriptionClassName="max-w-[19ch] text-[clamp(1.45rem,3.2vw,2.35rem)] font-medium leading-[1.18] tracking-[-0.035em] text-[var(--theme-fg)]"
+        descriptionClassName="max-w-[19ch] text-[21px] md:text-[25px] lg:text-[29px] font-normal italic leading-[1.4] tracking-[-0.02em] text-[var(--theme-fg)]"
         theme="dark"
         visual={<AboutHeaderVisual />}
         style={
@@ -106,7 +110,7 @@ export function AboutPageView() {
               </div>
             </div>
             <div className="mt-10 md:mt-12">
-              <p className="text-center text-[clamp(1.3rem,2.5vw,2rem)] font-medium italic leading-tight tracking-[-0.035em] text-lgl-fg">
+              <p className="text-center text-[21px] md:text-[25px] lg:text-[29px] font-normal italic leading-[1.4] tracking-[-0.02em] text-lgl-fg">
                 “Little Giant Labs. Big ideas, meaningfully told.”
               </p>
             </div>
@@ -130,7 +134,7 @@ export function AboutPageView() {
             </h2>
           </div>
           <div className="mb-12 max-w-4xl space-y-5 text-base leading-[1.8] text-lgl-fg/75 md:mb-16 md:text-lg">
-            <p className="text-xl font-medium italic tracking-[-0.02em] text-lgl-fg md:text-2xl">
+            <p className="text-[21px] font-normal italic leading-[1.4] tracking-[-0.02em] text-lgl-fg md:text-[25px] lg:text-[29px]">
               Strategy meets creativity. Creativity drives connection.
             </p>
             <p>Every business has a story worth telling. The challenge is making that story clear, compelling and relevant to the people who matter.</p>
@@ -142,20 +146,28 @@ export function AboutPageView() {
       </Section>
 
       {/* Our Values Section */}
-      <Section theme="light" className="border-t border-lgl-fg/5 py-24 md:py-32">
+      <Section theme="light" className="border-t border-lgl-fg/5 pb-24 pt-14 md:pb-32 md:pt-20">
         <Container>
-          <div className="mb-16 text-center max-w-xl mx-auto">
+          <div className="mb-10 text-center max-w-xl mx-auto md:mb-14">
             <p className="label-eyebrow text-lgl-fg/65 mb-5">{aboutDict.principles.eyebrow}</p>
             <h2
               className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg"
               style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
-              {aboutDict.principles.titlePart1}
-              <br />
+              {aboutDict.principles.titlePart1}{" "}
               <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
                 {aboutDict.principles.titleItalic}
               </span>
             </h2>
+          </div>
+
+          <div className="mb-12 w-full space-y-5 text-base leading-[1.8] text-lgl-fg/75 md:mb-16 md:text-lg">
+            <h3 className="mb-6 text-2xl font-semibold leading-tight tracking-[-0.035em] text-lgl-fg md:text-3xl">
+              One partner. Connected capabilities.
+            </h3>
+            <p>Great communication rarely happens in isolation. A brand strategy informs the creative direction. The creative direction shapes the content. And the content finds its audience through the right channels.</p>
+            <p>Little Giant Labs brings these capabilities together to help businesses move from an idea to a coherent brand experience.</p>
+            <p>Whether you need support with a single project or a coordinated set of communication initiatives, we work with you to identify the right approach for your goals.</p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
@@ -188,6 +200,36 @@ export function AboutPageView() {
                 </Card>
               );
             })}
+          </div>
+
+          <div className="mt-12 border-t border-lgl-fg/10 pt-10 md:mt-16 md:pt-12">
+            <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.035em] text-lgl-fg md:text-3xl">
+              {"Have a story to tell? Let's make it matter."}
+            </h3>
+            <p className="mt-5 w-full text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+              {"Tell us about your business, your audience and what you want to achieve. Let's explore how the right mix of strategy, creativity and digital communication can help bring your vision to life."}
+            </p>
+            <Button
+              type="button"
+              className="lgl-gold-cta mt-8 rounded-full transition-all duration-300"
+              style={{
+                fontFamily: "var(--font-dm-sans), sans-serif",
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                padding: "0.75rem 1.5rem",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "0.82";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "1";
+              }}
+              onClick={() => router.push(getLocalizedPath("/contact", locale))}
+            >
+              {"Let's Talk"}
+            </Button>
           </div>
         </Container>
       </Section>
