@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
+import { accentTitle } from "@/components/ui/accentTitle";
 import { CheckIcon } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
@@ -40,10 +41,7 @@ export function ServicesPageView() {
               {intro.eyebrow}
             </p>
             <h1 className={`mt-5 ${headingClass}`} style={headingFont}>
-              {intro.titlePart1}
-              <span className="font-normal italic text-lgl-sage" style={{ fontFamily: "Georgia, serif" }}>
-                {intro.titleEmphasis}
-              </span>
+              {accentTitle(page.heading)}
             </h1>
             <p className="mt-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{intro.subheading}</p>
           </div>
@@ -95,7 +93,7 @@ export function ServicesPageView() {
                     {number} / {item.label}
                   </p>
                   <h2 className={`mt-5 ${headingClass}`} style={headingFont}>
-                    {item.title}
+                    {accentTitle(item.title)}
                   </h2>
                   <p className="mt-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{item.intro}</p>
 

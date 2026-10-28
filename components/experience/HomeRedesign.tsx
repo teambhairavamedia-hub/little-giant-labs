@@ -72,7 +72,7 @@ export function HomeRedesign() {
             {heroDict.titlePart2}
           </h1>
           <p className="home-intro home-tagline">{heroDict.tagline}</p>
-          <p className="home-intro">{heroDict.intro}</p>
+          <p className="home-intro home-hero-intro">{heroDict.intro}</p>
           <div className="home-actions">
             <Link className="home-button home-button-primary" href={contactHref}>
               {heroDict.discussProject} <span aria-hidden="true">↗</span>
@@ -126,8 +126,9 @@ export function HomeRedesign() {
               <h3>{whatWeDo.ctaTitle}</h3>
               <p>{whatWeDo.ctaText}</p>
             </div>
-            <Link className="home-button home-button-primary" href={servicesHref}>
-              {whatWeDo.ctaButton} <span aria-hidden="true">→</span>
+            {/* Same golden pill and label as the header's "Book a Consultation" */}
+            <Link className="localized-ui-text lgl-gold-cta offer-cta-button" href={contactHref}>
+              {dict.nav.cta} <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
