@@ -86,6 +86,8 @@ export interface TranslationDictionary {
         title: string;
         description: string;
         deliverables: string[];
+        tagline?: string;
+        outcome?: string;
       }>;
     };
     principles: {

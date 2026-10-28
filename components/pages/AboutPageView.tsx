@@ -122,17 +122,20 @@ export function AboutPageView() {
       >
         <Container>
           <div className="mb-16">
-            <p className="label-eyebrow text-lgl-fg/65 mb-5">{aboutDict.capabilities.eyebrow}</p>
             <h2
               className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg"
               style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
-              {aboutDict.capabilities.titlePart1}
-              <br />
-              <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
-                {aboutDict.capabilities.titleItalic}
-              </span>
+              Services
             </h2>
+          </div>
+          <div className="mb-12 max-w-4xl space-y-5 text-base leading-[1.8] text-lgl-fg/75 md:mb-16 md:text-lg">
+            <p className="text-xl font-medium italic tracking-[-0.02em] text-lgl-fg md:text-2xl">
+              Strategy meets creativity. Creativity drives connection.
+            </p>
+            <p>Every business has a story worth telling. The challenge is making that story clear, compelling and relevant to the people who matter.</p>
+            <p>At Little Giant Labs, we bring together brand strategy, creative communication, content production and digital marketing to help businesses express their value, strengthen their presence and build meaningful connections with their audiences.</p>
+            <p>From defining your brand story to bringing it to life across digital and visual channels, we turn ideas into communication that makes an impact.</p>
           </div>
           <ServiceGrid />
         </Container>
