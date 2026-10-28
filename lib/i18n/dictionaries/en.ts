@@ -21,7 +21,7 @@ export const en: TranslationDictionary = {
       eyebrow: "Brand Strategy · Creative · Digital Growth",
       titlePart1: "Make your brand ",
       titleEmphasis: "matter",
-      titlePart2: ".",
+      titlePart2: "",
       tagline: "Strategy that shapes it. Creativity that brings it to life. Digital that moves it forward.",
       intro:
         "We help startups, growing businesses and established enterprises turn their value into clear positioning, compelling communication and meaningful audience connections.",
@@ -95,7 +95,6 @@ export const en: TranslationDictionary = {
       exploreLabel: "Explore service",
       ctaTitle: "Have a specific business challenge?",
       ctaText: "Let's identify the right combination of strategy, creative and execution for your needs.",
-      ctaButton: "Explore Our Services",
     },
     why: {
       eyebrow: "Why Little Giant Labs",
@@ -236,21 +235,6 @@ export const en: TranslationDictionary = {
         "From defining a product's narrative to creating compelling campaigns and taking them to market, we bring strategy and execution together to build communication with purpose.",
         "Our multidisciplinary perspective combines business, technology and creative thinking, allowing us to look beyond the deliverable and focus on the business challenge behind it.",
       ],
-      factsLabel: "At a glance",
-      facts: [
-        {
-          label: "Legal entity",
-          value: "Bhairava Media House LLP",
-        },
-        {
-          label: "Team expertise",
-          value: "Software engineering, human resources and marketing",
-        },
-        {
-          label: "Based in",
-          value: "Pune, Maharashtra, India",
-        },
-      ],
     },
     purpose: {
       missionLabel: "Our mission",
@@ -319,32 +303,9 @@ export const en: TranslationDictionary = {
         },
       ],
     },
-    principles: {
-      eyebrow: "Our Principles",
-      titlePart1: "Driven by",
-      titleItalic: "conviction",
-      values: [
-        {
-          title: "Understand Before You Communicate",
-          description: "We begin with the business challenge, the audience and the value of the solution before deciding what the brand should say.",
-        },
-        {
-          title: "Strategy Gives Creativity Direction",
-          description: "We bring business thinking and creative imagination together to build communication with a clear purpose.",
-        },
-        {
-          title: "Make Every Touchpoint Count",
-          description: "From the first interaction to the final conversion, we aim for consistency across the channels and experiences through which people encounter a brand.",
-        },
-        {
-          title: "Learn, Measure and Improve",
-          description: "We use audience feedback and relevant performance evidence to understand what works and continuously improve our approach.",
-        },
-      ],
-    },
     approach: {
       eyebrow: "How we work",
-      title: "From business challenge to purposeful execution.",
+      title: "From business challenge to *purposeful execution.*",
       paragraphs: [
         "Every engagement starts with understanding what you need to achieve. We then shape the strategy, develop the creative and activate the work in a way that fits your goals.",
       ],
@@ -369,7 +330,7 @@ export const en: TranslationDictionary = {
     },
     engagement: {
       eyebrow: "Engagement options",
-      title: "The right expertise for the stage you're at.",
+      title: "The right expertise for *the stage you're at.*",
       description: "Whether you need strategic clarity, creative execution or support for a larger campaign, we shape our engagement around your objectives and requirements.",
       options: [
         {
@@ -387,7 +348,7 @@ export const en: TranslationDictionary = {
       ],
     },
     cta: {
-      title: "Let’s solve the right problem first.",
+      title: "Let’s solve *the right problem first.*",
       paragraphs: [
         "Tell us what you’re trying to achieve. We’ll start with your business challenge and explore where strategy, creative and digital execution can make a difference.",
       ],
@@ -395,6 +356,7 @@ export const en: TranslationDictionary = {
     },
   },
   servicesPage: {
+    heading: "Good marketing starts with a *clear business strategy.*",
     jumpLabel: "Jump to a service",
     helpLabel: "What we can help with",
     outcomeLabel: "The outcome",
@@ -402,7 +364,7 @@ export const en: TranslationDictionary = {
     items: [
       {
         label: "Brand Strategy",
-        title: "Know what makes you different—and make it matter.",
+        title: "Know what makes you different—and *make it matter.*",
         intro: "When a business cannot clearly articulate its value, even great products and services can struggle to stand out. We help you define your positioning, sharpen your story and create a foundation for consistent brand communication.",
         help: [
           "Brand discovery and strategic assessment",
@@ -418,7 +380,7 @@ export const en: TranslationDictionary = {
       },
       {
         label: "Creative & Content",
-        title: "Make your brand recognisable, relevant and memorable.",
+        title: "Make your brand recognisable, *relevant and memorable.*",
         intro: "A strong strategy needs an equally strong expression. We turn brand direction into creative ideas, content and communication that help your business show up consistently across the places your audience encounters it.",
         help: [
           "Creative concept development and art direction",
@@ -434,7 +396,7 @@ export const en: TranslationDictionary = {
       },
       {
         label: "Digital Growth",
-        title: "Turn your strategy into meaningful audience engagement.",
+        title: "Turn your strategy into *meaningful audience engagement.*",
         intro: "Digital marketing works best when the audience, message, channel and business objective are aligned. We help translate your strategy into focused digital activity and use relevant performance signals to inform what happens next.",
         help: [
           "Digital campaign strategy and planning",
@@ -450,7 +412,7 @@ export const en: TranslationDictionary = {
       },
       {
         label: "Employer Brand",
-        title: "Help the right people see why they should work with you.",
+        title: "Help the right people see *why they should work with you.*",
         intro: "The way an organisation communicates its culture and opportunities influences how prospective employees perceive it. We help businesses articulate their employer story and translate it into recruitment and talent communication.",
         help: [
           "Employer brand positioning and messaging",
@@ -660,8 +622,8 @@ export const en: TranslationDictionary = {
   },
   seo: {
     services: {
-      title: "Services",
-      description: "Brand strategy, creative and content, digital growth and employer branding from Little Giant Labs—shaped around your business challenge.",
+      title: "Little Giant Labs | Brand Strategy, Creative & Digital Marketing",
+      description: "Explore Little Giant Labs' brand strategy, creative, digital marketing and employer branding services. We help businesses clarify their value and connect with the audiences that matter.",
     },
     home: {
       title: "Little Giant Labs",

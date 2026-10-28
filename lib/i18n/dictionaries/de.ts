@@ -21,7 +21,7 @@ export const de: TranslationDictionary = {
       eyebrow: "Markenstrategie · Kreation · Digitales Wachstum",
       titlePart1: "Machen Sie Ihre Marke ",
       titleEmphasis: "bedeutsam",
-      titlePart2: ".",
+      titlePart2: "",
       tagline: "Strategie, die sie formt. Kreativität, die sie lebendig macht. Digitales, das sie voranbringt.",
       intro:
         "Wir helfen Start-ups, wachsenden Unternehmen und etablierten Konzernen, ihren Wert in klare Positionierung, überzeugende Kommunikation und bedeutsame Verbindungen zu ihren Zielgruppen zu verwandeln.",
@@ -95,7 +95,6 @@ export const de: TranslationDictionary = {
       exploreLabel: "Leistung entdecken",
       ctaTitle: "Sie haben eine konkrete geschäftliche Herausforderung?",
       ctaText: "Lassen Sie uns die richtige Kombination aus Strategie, Kreation und Umsetzung für Ihre Anforderungen finden.",
-      ctaButton: "Unsere Leistungen Entdecken",
     },
     why: {
       eyebrow: "Warum Little Giant Labs",
@@ -236,21 +235,6 @@ export const de: TranslationDictionary = {
         "Von der Definition der Erzählung eines Produkts über die Entwicklung überzeugender Kampagnen bis zur Markteinführung verbinden wir Strategie und Umsetzung zu Kommunikation mit klarem Zweck.",
         "Unsere interdisziplinäre Perspektive vereint unternehmerisches, technologisches und kreatives Denken. So blicken wir über das einzelne Ergebnis hinaus und konzentrieren uns auf die geschäftliche Herausforderung dahinter.",
       ],
-      factsLabel: "Auf einen Blick",
-      facts: [
-        {
-          label: "Rechtliche Einheit",
-          value: "Bhairava Media House LLP",
-        },
-        {
-          label: "Team-Expertise",
-          value: "Softwareentwicklung, Personalwesen und Marketing",
-        },
-        {
-          label: "Standort",
-          value: "Pune, Maharashtra, Indien",
-        },
-      ],
     },
     purpose: {
       missionLabel: "Unsere Mission",
@@ -319,32 +303,9 @@ export const de: TranslationDictionary = {
         },
       ],
     },
-    principles: {
-      eyebrow: "Unsere Grundsätze",
-      titlePart1: "Geleitet von",
-      titleItalic: "Überzeugung",
-      values: [
-        {
-          title: "Verstehen, bevor man kommuniziert",
-          description: "Wir beginnen mit der geschäftlichen Herausforderung, der Zielgruppe und dem Wert der Lösung, bevor wir entscheiden, was die Marke sagen soll.",
-        },
-        {
-          title: "Strategie gibt Kreativität Richtung",
-          description: "Wir verbinden unternehmerisches Denken und kreative Vorstellungskraft zu Kommunikation mit klarem Zweck.",
-        },
-        {
-          title: "Jeder Touchpoint zählt",
-          description: "Vom ersten Kontakt bis zur finalen Conversion streben wir Konsistenz über alle Kanäle und Erlebnisse an, in denen Menschen einer Marke begegnen.",
-        },
-        {
-          title: "Lernen, messen und verbessern",
-          description: "Wir nutzen Feedback der Zielgruppe und relevante Leistungsdaten, um zu verstehen, was funktioniert, und unseren Ansatz kontinuierlich zu verbessern.",
-        },
-      ],
-    },
     approach: {
       eyebrow: "So arbeiten wir",
-      title: "Von der geschäftlichen Herausforderung zur zielgerichteten Umsetzung.",
+      title: "Von der geschäftlichen Herausforderung zur *zielgerichteten Umsetzung.*",
       paragraphs: [
         "Jede Zusammenarbeit beginnt mit dem Verständnis dessen, was Sie erreichen möchten. Dann formen wir die Strategie, entwickeln die Kreation und aktivieren die Arbeit so, dass sie zu Ihren Zielen passt.",
       ],
@@ -369,7 +330,7 @@ export const de: TranslationDictionary = {
     },
     engagement: {
       eyebrow: "Formen der Zusammenarbeit",
-      title: "Die richtige Expertise für Ihre aktuelle Phase.",
+      title: "Die richtige Expertise für *Ihre aktuelle Phase.*",
       description: "Ob Sie strategische Klarheit, kreative Umsetzung oder Unterstützung für eine größere Kampagne brauchen – wir gestalten die Zusammenarbeit rund um Ihre Ziele und Anforderungen.",
       options: [
         {
@@ -387,7 +348,7 @@ export const de: TranslationDictionary = {
       ],
     },
     cta: {
-      title: "Lösen wir zuerst das richtige Problem.",
+      title: "Lösen wir zuerst *das richtige Problem.*",
       paragraphs: [
         "Erzählen Sie uns, was Sie erreichen möchten. Wir beginnen mit Ihrer geschäftlichen Herausforderung und prüfen, wo Strategie, Kreation und digitale Umsetzung den Unterschied machen können.",
       ],
@@ -395,6 +356,7 @@ export const de: TranslationDictionary = {
     },
   },
   servicesPage: {
+    heading: "Gutes Marketing beginnt mit einer *klaren Geschäftsstrategie.*",
     jumpLabel: "Zu einer Leistung springen",
     helpLabel: "Wobei wir helfen können",
     outcomeLabel: "Das Ergebnis",
@@ -402,7 +364,7 @@ export const de: TranslationDictionary = {
     items: [
       {
         label: "Markenstrategie",
-        title: "Wissen, was Sie unterscheidet – und es zur Geltung bringen.",
+        title: "Wissen, was Sie unterscheidet – und *es zur Geltung bringen.*",
         intro: "Wenn ein Unternehmen seinen Wert nicht klar formulieren kann, haben es selbst großartige Produkte und Dienstleistungen schwer, sich abzuheben. Wir helfen Ihnen, Ihre Positionierung zu definieren, Ihre Geschichte zu schärfen und eine Grundlage für konsistente Markenkommunikation zu schaffen.",
         help: [
           "Markenanalyse und strategische Bewertung",
@@ -418,7 +380,7 @@ export const de: TranslationDictionary = {
       },
       {
         label: "Kreation & Content",
-        title: "Machen Sie Ihre Marke wiedererkennbar, relevant und einprägsam.",
+        title: "Machen Sie Ihre Marke wiedererkennbar, *relevant und einprägsam.*",
         intro: "Eine starke Strategie braucht einen ebenso starken Ausdruck. Wir übersetzen die Markenrichtung in kreative Ideen, Inhalte und Kommunikation, mit denen Ihr Unternehmen überall dort konsistent auftritt, wo Ihre Zielgruppe ihm begegnet.",
         help: [
           "Entwicklung kreativer Konzepte und Art Direction",
@@ -434,7 +396,7 @@ export const de: TranslationDictionary = {
       },
       {
         label: "Digitales Wachstum",
-        title: "Verwandeln Sie Ihre Strategie in echtes Engagement Ihrer Zielgruppe.",
+        title: "Verwandeln Sie Ihre Strategie in *echtes Engagement Ihrer Zielgruppe.*",
         intro: "Digitales Marketing wirkt am besten, wenn Zielgruppe, Botschaft, Kanal und Geschäftsziel aufeinander abgestimmt sind. Wir übersetzen Ihre Strategie in fokussierte digitale Aktivitäten und nutzen relevante Leistungssignale, um die nächsten Schritte zu bestimmen.",
         help: [
           "Strategie und Planung digitaler Kampagnen",
@@ -450,7 +412,7 @@ export const de: TranslationDictionary = {
       },
       {
         label: "Employer Brand",
-        title: "Zeigen Sie den richtigen Menschen, warum sie mit Ihnen arbeiten sollten.",
+        title: "Zeigen Sie den richtigen Menschen, *warum sie mit Ihnen arbeiten sollten.*",
         intro: "Wie eine Organisation ihre Kultur und ihre Chancen kommuniziert, prägt, wie potenzielle Mitarbeitende sie wahrnehmen. Wir helfen Unternehmen, ihre Arbeitgebergeschichte zu formulieren und in Recruiting- und Talent-Kommunikation zu übersetzen.",
         help: [
           "Employer-Brand-Positionierung und Botschaften",
@@ -636,8 +598,8 @@ export const de: TranslationDictionary = {
   },
   seo: {
     services: {
-      title: "Leistungen",
-      description: "Markenstrategie, Kreation und Content, digitales Wachstum und Employer Branding von Little Giant Labs – ausgerichtet auf Ihre geschäftliche Herausforderung.",
+      title: "Little Giant Labs | Markenstrategie, Kreation & Digitales Marketing",
+      description: "Entdecken Sie die Leistungen von Little Giant Labs in Markenstrategie, Kreation, digitalem Marketing und Employer Branding. Wir helfen Unternehmen, ihren Wert zu schärfen und die Zielgruppen zu erreichen, auf die es ankommt.",
     },
     home: {
       title: "Little Giant Labs",

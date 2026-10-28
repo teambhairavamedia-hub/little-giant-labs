@@ -60,7 +60,6 @@ export interface TranslationDictionary {
       exploreLabel: string;
       ctaTitle: string;
       ctaText: string;
-      ctaButton: string;
     };
     why: {
       eyebrow: string;
@@ -122,11 +121,6 @@ export interface TranslationDictionary {
     story: {
       eyebrow: string;
       paragraphs: string[];
-      factsLabel: string;
-      facts: Array<{
-        label: string;
-        value: string;
-      }>;
     };
     purpose: {
       missionLabel: string;
@@ -152,17 +146,9 @@ export interface TranslationDictionary {
         outcome?: string;
       }>;
     };
-    principles: {
-      eyebrow: string;
-      titlePart1: string;
-      titleItalic: string;
-      values: Array<{
-        title: string;
-        description: string;
-      }>;
-    };
     approach: {
       eyebrow: string;
+      /* Headings may mark their sage serif-italic accent with *…* (see accentTitle) */
       title: string;
       paragraphs: string[];
       steps: Array<{
@@ -186,6 +172,8 @@ export interface TranslationDictionary {
     };
   };
   servicesPage: {
+    /* Page H1; text between *…* renders as the sage serif-italic accent */
+    heading: string;
     jumpLabel: string;
     helpLabel: string;
     outcomeLabel: string;
