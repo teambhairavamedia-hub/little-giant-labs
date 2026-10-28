@@ -8,8 +8,9 @@ import { motion } from "framer-motion";
 
 type PageHeaderProps = {
   eyebrow?: string;
-  title: string;
+  title?: string;
   description?: string;
+  descriptionClassName?: string;
   theme?: SectionTheme;
   children?: ReactNode;
   /** Decorative illustration shown beside the heading on large screens. */
@@ -21,6 +22,7 @@ export function PageHeader({
   eyebrow,
   title,
   description,
+  descriptionClassName,
   theme = "dark",
   children,
   visual,
@@ -69,17 +71,19 @@ export function PageHeader({
               {eyebrow}
             </motion.p>
           ) : null}
-          <motion.h1
-            variants={itemVariants}
-            className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[var(--theme-fg)] max-w-3xl"
-            style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-          >
-            {title}
-          </motion.h1>
+          {title ? (
+            <motion.h1
+              variants={itemVariants}
+              className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-[var(--theme-fg)] max-w-3xl"
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+            >
+              {title}
+            </motion.h1>
+          ) : null}
           {description ? (
             <motion.p
               variants={itemVariants}
-              className="mt-6 max-w-lg text-[0.9375rem] leading-[1.7] text-theme-muted font-light"
+              className={`mt-6 max-w-lg text-[0.9375rem] leading-[1.7] text-theme-muted font-light ${descriptionClassName ?? ""}`}
             >
               {description}
             </motion.p>

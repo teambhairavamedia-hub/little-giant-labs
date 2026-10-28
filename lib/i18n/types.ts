@@ -76,35 +76,6 @@ export interface TranslationDictionary {
       title: string;
       description: string;
     };
-    leadership: {
-      eyebrow: string;
-      pointOfView: string;
-      titlePart1: string;
-      titleItalic: string;
-      intro: string;
-      quote: string;
-      quoteAuthor: string;
-      visionTab: string;
-      philosophyTab: string;
-      tabs: {
-        vision: { title: string; body: string };
-        philosophy: { title: string; body: string };
-      };
-      founderRole: string;
-      founderName: string;
-      founderBio: string;
-      founderAlt: string;
-    };
-    timeline: {
-      eyebrow: string;
-      titlePart1: string;
-      titleItalic: string;
-      milestones: Array<{
-        year: string;
-        title: string;
-        desc: string;
-      }>;
-    };
     capabilities: {
       eyebrow: string;
       titlePart1: string;
@@ -115,6 +86,8 @@ export interface TranslationDictionary {
         title: string;
         description: string;
         deliverables: string[];
+        tagline?: string;
+        outcome?: string;
       }>;
     };
     principles: {

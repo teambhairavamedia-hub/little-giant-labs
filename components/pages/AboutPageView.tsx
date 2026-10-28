@@ -1,28 +1,21 @@
 "use client";
 
-import { useState, useRef, type CSSProperties } from "react";
-import { resolveRemoteMediaUrl } from "@/lib/media";
-import { mediaUrls } from "@/lib/media-paths";
-import { motion, useScroll, useSpring } from "framer-motion";
+import { type CSSProperties } from "react";
+import { useRouter } from "next/navigation";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
 import {
-  CameraIcon,
   ChartIcon,
-  ChipIcon,
-  CompassIcon,
-  EyeIcon,
   FilmIcon,
-  GlobeIcon,
   LoopIcon,
 } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
+import { getLocalizedPath } from "@/lib/i18n/config";
 
-const tabIcons = { vision: EyeIcon, philosophy: CompassIcon };
-const milestoneIcons = [CameraIcon, ChartIcon, ChipIcon, GlobeIcon];
 const valueIcons = [FilmIcon, ChartIcon, LoopIcon];
 
 /* Header illustration */
@@ -72,66 +65,17 @@ function AboutHeaderVisual() {
   );
 }
 
-function LinkedInIcon() {
-  return (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-    </svg>
-  );
-}
-
-function TwitterIcon() {
-  return (
-    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
-    </svg>
-  );
-}
-
-function InstagramIcon() {
-  return (
-    <svg
-      className="w-5 h-5"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-    </svg>
-  );
-}
-
 export function AboutPageView() {
-  const { dict } = useI18n();
-  const [activeTab, setActiveTab] = useState<"vision" | "philosophy">("vision");
-  const timelineRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: timelineRef,
-    offset: ["start center", "end center"],
-  });
-
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
+  const { dict, locale } = useI18n();
+  const router = useRouter();
   const aboutDict = dict.about;
-  const tabContents = aboutDict.leadership.tabs;
 
   return (
     <main>
       {/* Page Header */}
       <PageHeader
-        eyebrow={aboutDict.header.eyebrow}
-        title={aboutDict.header.title}
-        description={aboutDict.header.description}
+        description="We turn business ideas into meaningful brand experiences."
+        descriptionClassName="max-w-[19ch] text-[21px] md:text-[25px] lg:text-[29px] font-normal italic leading-[1.4] tracking-[-0.02em] text-[var(--theme-fg)]"
         theme="dark"
         visual={<AboutHeaderVisual />}
         style={
@@ -147,236 +91,28 @@ export function AboutPageView() {
         }
       />
 
-      {/* Founder Spotlight Section */}
       <Section
         theme="light"
-        className="relative overflow-hidden border-b border-lgl-fg/10 py-20 md:py-28"
+        className="border-b border-lgl-fg/10 py-14 md:py-20 lg:py-24"
         style={{ background: "var(--lgl-section)", color: "var(--lgl-fg)" }}
       >
         <Container>
-          <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.72fr)] lg:gap-20">
-            <div className="flex flex-col">
-              <div className="mb-8 flex items-center gap-4 border-b border-lgl-fg/15 pb-5">
-                <span className="h-px w-10 bg-[#C5A059]" aria-hidden="true" />
-                <p className="label-eyebrow text-lgl-fg/70">{aboutDict.leadership.eyebrow}</p>
-                <span className="ml-auto text-[0.68rem] tracking-[0.18em] text-lgl-fg/70">
-                  {aboutDict.leadership.pointOfView}
-                </span>
+          <div className="mx-auto max-w-6xl">
+            <div className="grid gap-x-14 gap-y-7 md:grid-cols-2 md:gap-x-16 lg:gap-x-24">
+              <div className="space-y-7 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+                <p>Little Giant Labs helps businesses build powerful brands and accelerate growth through strategic marketing, creative storytelling and digital innovation.</p>
+                <p>As a legal entity of Bhairava Media House LLP, we bring together business understanding, creative communication and technology to help organisations articulate their value, connect with their audiences and stand out in a crowded marketplace.</p>
               </div>
-
-              <h2
-                className="max-w-[14ch] text-[clamp(2.75rem,6.5vw,5.5rem)] font-semibold leading-[0.92] tracking-[-0.055em] text-lgl-fg"
-                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-              >
-                {aboutDict.leadership.titlePart1}
-                <span className="font-light italic text-lgl-green-text">
-                  {aboutDict.leadership.titleItalic}
-                </span>
-              </h2>
-
-              <p className="mt-8 max-w-[58ch] text-base leading-[1.8] text-lgl-fg/75 md:text-[1.05rem]">
-                {aboutDict.leadership.intro}
-              </p>
-
-              <blockquote className="mt-8 max-w-[54ch] border-l-2 border-[#C5A059] pl-5 text-sm italic leading-[1.7] text-lgl-fg/75 md:text-base">
-                {aboutDict.leadership.quote}
-                <cite className="mt-3 block text-[0.68rem] not-italic uppercase tracking-[0.2em] text-lgl-fg/70">
-                  {aboutDict.leadership.quoteAuthor}
-                </cite>
-              </blockquote>
-
-              <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-b border-lgl-fg/15">
-                {(["vision", "philosophy"] as const).map((tab) => {
-                  const TabIcon = tabIcons[tab];
-                  const label =
-                    tab === "vision"
-                      ? aboutDict.leadership.visionTab
-                      : aboutDict.leadership.philosophyTab;
-                  return (
-                    <button
-                      key={tab}
-                      onClick={() => setActiveTab(tab)}
-                      className="relative inline-flex items-center gap-2 pb-4 text-[0.7rem] font-semibold uppercase tracking-[0.18em] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lgl-gold cursor-pointer"
-                      style={{
-                        color:
-                          activeTab === tab
-                            ? "var(--lgl-fg)"
-                            : "color-mix(in srgb, var(--lgl-fg) 70%, transparent)",
-                      }}
-                    >
-                      <TabIcon size={14} className={activeTab === tab ? "text-[#C5A059]" : undefined} />
-                      {label}
-                      {activeTab === tab && (
-                        <motion.div
-                          layoutId="activeTabUnderline"
-                          className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C5A059]"
-                        />
-                      )}
-                    </button>
-                  );
-                })}
+              <div className="space-y-7 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+                <p>From brand strategy and visual communication to social media, digital campaigns, video production and employer branding, we create communication that brings clarity to your message and consistency to your brand.</p>
+                <p>Our multidisciplinary team brings together experience across software engineering, human resources and marketing, enabling us to approach business challenges with both creative thinking and a practical understanding of execution.</p>
+                <p>{"We believe the best brand communication doesn't just get noticed. It makes people understand, connect and remember."}</p>
               </div>
-
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="mt-6 min-h-[150px] max-w-[58ch]"
-              >
-                <h3
-                  className="text-xl font-semibold tracking-[-0.03em] text-lgl-fg"
-                  style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-                >
-                  {tabContents[activeTab].title}
-                </h3>
-                <p className="mt-3 text-sm leading-[1.8] text-lgl-fg/65">
-                  {tabContents[activeTab].body}
-                </p>
-              </motion.div>
             </div>
-
-            <figure className="relative isolate mx-auto w-full max-w-[500px] lg:mt-12 lg:max-w-none">
-              <div
-                className="absolute -left-3 -top-3 h-full w-full border border-[#C5A059]/55"
-                aria-hidden="true"
-              />
-              <div className="relative aspect-[4/5] overflow-hidden bg-[#0B1B2B]">
-                <img
-                  src={resolveRemoteMediaUrl(mediaUrls.founder)}
-                  alt={aboutDict.leadership.founderAlt}
-                  className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out motion-reduce:transition-none hover:scale-[1.02]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B2B]/90 via-[#0B1B2B]/10 to-transparent" />
-                <figcaption className="absolute inset-x-0 bottom-0 p-6 text-[#E2E8F0] md:p-8">
-                  <p className="label-eyebrow text-[#C5A059]">{aboutDict.leadership.founderRole}</p>
-                  <h3
-                    className="mt-3 text-2xl font-semibold tracking-[-0.04em] md:text-3xl"
-                    style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-                  >
-                    {aboutDict.leadership.founderName}
-                  </h3>
-                  <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#E2E8F0]/80">
-                    {aboutDict.leadership.founderBio}
-                  </p>
-                  <div className="mt-6 flex items-center gap-3 border-t border-[#E2E8F0]/20 pt-5">
-                    <a
-                      href="https://linkedin.com/in/rajesh-waghchaware"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-10 w-10 items-center justify-center border border-[#E2E8F0]/30 text-[#E2E8F0] transition-colors hover:border-[#C5A059] hover:text-[#C5A059] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A059]"
-                      aria-label="LinkedIn"
-                    >
-                      <LinkedInIcon />
-                    </a>
-                    <a
-                      href="https://twitter.com/rajesh_w"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-10 w-10 items-center justify-center border border-[#E2E8F0]/30 text-[#E2E8F0] transition-colors hover:border-[#C5A059] hover:text-[#C5A059] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A059]"
-                      aria-label="Twitter/X"
-                    >
-                      <TwitterIcon />
-                    </a>
-                    <a
-                      href="https://www.instagram.com/bhairava.media/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex h-10 w-10 items-center justify-center border border-[#E2E8F0]/30 text-[#E2E8F0] transition-colors hover:border-[#C5A059] hover:text-[#C5A059] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A059]"
-                      aria-label="Instagram"
-                    >
-                      <InstagramIcon />
-                    </a>
-                  </div>
-                </figcaption>
-              </div>
-            </figure>
-          </div>
-        </Container>
-      </Section>
-
-      {/* Interactive Milestone Timeline */}
-      <Section
-        theme="light"
-        className="py-24 md:py-32 border-t border-lgl-fg/5 bg-lgl-section"
-        ref={timelineRef}
-      >
-        <Container>
-          <div className="mb-20 text-center max-w-xl mx-auto">
-            <p className="label-eyebrow text-lgl-fg/65 mb-5">{aboutDict.timeline.eyebrow}</p>
-            <h2
-              className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg"
-              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-            >
-              {aboutDict.timeline.titlePart1}
-              <br />
-              <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
-                {aboutDict.timeline.titleItalic}
-              </span>
-            </h2>
-          </div>
-
-          <div className="relative max-w-4xl mx-auto">
-            {/* Scroll-Progress Line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-lgl-line/15 -translate-x-[1px]" />
-            <motion.div
-              style={{
-                scaleY,
-                transformOrigin: "top",
-              }}
-              className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[2px] bg-lgl-fg -translate-x-[1px] z-10"
-            />
-
-            {/* Timeline Cards */}
-            <div className="space-y-16 md:space-y-24">
-              {aboutDict.timeline.milestones.map((m, index) => {
-                const isEven = index % 2 === 0;
-                const IconComponent = milestoneIcons[index % milestoneIcons.length];
-
-                return (
-                  <div
-                    key={m.year}
-                    className="relative flex flex-col md:flex-row items-start md:justify-between group"
-                  >
-                    {/* Circle Node Indicator */}
-                    <div className="absolute left-4 md:left-1/2 top-0 z-20 flex h-9 w-9 -translate-x-1/2 items-center justify-center rounded-full border-2 border-lgl-section bg-lgl-fg text-lgl-section shadow-[0_0_0_1px_rgba(197,160,89,0.55)] transition-all duration-300 group-hover:scale-110 group-hover:text-[#C5A059]">
-                      <IconComponent size={16} />
-                    </div>
-
-                    {/* Timeline Content Block */}
-                    <div
-                      className={`w-full md:w-[45%] pl-12 md:pl-0 ${
-                        isEven ? "md:text-right md:order-1" : "md:order-2"
-                      }`}
-                    >
-                      <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, margin: "-80px" }}
-                        transition={{ duration: 0.7, delay: index * 0.05 }}
-                      >
-                        <span
-                          className="text-3xl md:text-4xl font-extrabold tracking-tight text-lgl-fg/70 block mb-2"
-                          style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-                        >
-                          {m.year}
-                        </span>
-                        <h3
-                          className="text-lg md:text-xl font-bold text-lgl-fg"
-                          style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-                        >
-                          {m.title}
-                        </h3>
-                        <p className="mt-3 text-xs md:text-sm leading-relaxed text-lgl-fg/70 font-light">
-                          {m.desc}
-                        </p>
-                      </motion.div>
-                    </div>
-
-                    <div className="hidden md:block w-[45%] md:order-2" />
-                  </div>
-                );
-              })}
+            <div className="mt-10 md:mt-12">
+              <p className="text-center text-[21px] md:text-[25px] lg:text-[29px] font-normal italic leading-[1.4] tracking-[-0.02em] text-lgl-fg">
+                “Little Giant Labs. Big ideas, meaningfully told.”
+              </p>
             </div>
           </div>
         </Container>
@@ -390,37 +126,48 @@ export function AboutPageView() {
       >
         <Container>
           <div className="mb-16">
-            <p className="label-eyebrow text-lgl-fg/65 mb-5">{aboutDict.capabilities.eyebrow}</p>
             <h2
               className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg"
               style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
-              {aboutDict.capabilities.titlePart1}
-              <br />
-              <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
-                {aboutDict.capabilities.titleItalic}
-              </span>
+              Services
             </h2>
+          </div>
+          <div className="mb-12 max-w-4xl space-y-5 text-base leading-[1.8] text-lgl-fg/75 md:mb-16 md:text-lg">
+            <p className="text-[21px] font-normal italic leading-[1.4] tracking-[-0.02em] text-lgl-fg md:text-[25px] lg:text-[29px]">
+              Strategy meets creativity. Creativity drives connection.
+            </p>
+            <p>Every business has a story worth telling. The challenge is making that story clear, compelling and relevant to the people who matter.</p>
+            <p>At Little Giant Labs, we bring together brand strategy, creative communication, content production and digital marketing to help businesses express their value, strengthen their presence and build meaningful connections with their audiences.</p>
+            <p>From defining your brand story to bringing it to life across digital and visual channels, we turn ideas into communication that makes an impact.</p>
           </div>
           <ServiceGrid />
         </Container>
       </Section>
 
       {/* Our Values Section */}
-      <Section theme="light" className="border-t border-lgl-fg/5 py-24 md:py-32">
+      <Section theme="light" className="border-t border-lgl-fg/5 pb-24 pt-14 md:pb-32 md:pt-20">
         <Container>
-          <div className="mb-16 text-center max-w-xl mx-auto">
+          <div className="mb-10 text-center max-w-xl mx-auto md:mb-14">
             <p className="label-eyebrow text-lgl-fg/65 mb-5">{aboutDict.principles.eyebrow}</p>
             <h2
               className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg"
               style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
-              {aboutDict.principles.titlePart1}
-              <br />
+              {aboutDict.principles.titlePart1}{" "}
               <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
                 {aboutDict.principles.titleItalic}
               </span>
             </h2>
+          </div>
+
+          <div className="mb-12 w-full space-y-5 text-base leading-[1.8] text-lgl-fg/75 md:mb-16 md:text-lg">
+            <h3 className="mb-6 text-2xl font-semibold leading-tight tracking-[-0.035em] text-lgl-fg md:text-3xl">
+              One partner. Connected capabilities.
+            </h3>
+            <p>Great communication rarely happens in isolation. A brand strategy informs the creative direction. The creative direction shapes the content. And the content finds its audience through the right channels.</p>
+            <p>Little Giant Labs brings these capabilities together to help businesses move from an idea to a coherent brand experience.</p>
+            <p>Whether you need support with a single project or a coordinated set of communication initiatives, we work with you to identify the right approach for your goals.</p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-3">
@@ -453,6 +200,36 @@ export function AboutPageView() {
                 </Card>
               );
             })}
+          </div>
+
+          <div className="mt-12 border-t border-lgl-fg/10 pt-10 md:mt-16 md:pt-12">
+            <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.035em] text-lgl-fg md:text-3xl">
+              {"Have a story to tell? Let's make it matter."}
+            </h3>
+            <p className="mt-5 w-full text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+              {"Tell us about your business, your audience and what you want to achieve. Let's explore how the right mix of strategy, creativity and digital communication can help bring your vision to life."}
+            </p>
+            <Button
+              type="button"
+              className="lgl-gold-cta mt-8 rounded-full transition-all duration-300"
+              style={{
+                fontFamily: "var(--font-dm-sans), sans-serif",
+                fontSize: "0.75rem",
+                fontWeight: 600,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                padding: "0.75rem 1.5rem",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.opacity = "0.82";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.opacity = "1";
+              }}
+              onClick={() => router.push(getLocalizedPath("/contact", locale))}
+            >
+              {"Let's Talk"}
+            </Button>
           </div>
         </Container>
       </Section>
