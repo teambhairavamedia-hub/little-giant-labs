@@ -138,8 +138,38 @@ export const es: TranslationDictionary = {
     header: {
       eyebrow: "Sobre Little Giant Labs",
       title: "Construimos movimientos digitales",
-      description:
-        "Little Giant Labs se sitúa en la confluencia entre la narrativa cinematográfica de alta retención y el marketing de rendimiento, escalando marcas que se niegan a pasar desapercibidas.",
+      description: "Convertimos ideas de negocio en experiencias de marca con significado.",
+      secondaryCta: "Ver nuestros servicios",
+    },
+    story: {
+      eyebrow: "Nuestra historia",
+      title: "Little Giant Labs. Grandes ideas, contadas con sentido.",
+      paragraphs: [
+        "Como entidad legal de Bhairava Media House LLP, unimos visión de negocio, comunicación creativa y tecnología para ayudar a las organizaciones a expresar su valor, conectar con su público y destacar en un mercado saturado.",
+        "Desde la estrategia de marca y la comunicación visual hasta las redes sociales, las campañas digitales, la producción de vídeo y el employer branding, creamos comunicación que aporta claridad a tu mensaje y coherencia a tu marca.",
+        "Nuestro equipo multidisciplinar reúne experiencia en ingeniería de software, recursos humanos y marketing, lo que nos permite abordar los retos de negocio con pensamiento creativo y una comprensión práctica de la ejecución.",
+      ],
+      factsLabel: "De un vistazo",
+      facts: [
+        {
+          label: "Entidad legal",
+          value: "Bhairava Media House LLP",
+        },
+        {
+          label: "Experiencia del equipo",
+          value: "Ingeniería de software, recursos humanos y marketing",
+        },
+        {
+          label: "Ubicación",
+          value: "Pune, Maharashtra, India",
+        },
+      ],
+    },
+    purpose: {
+      missionLabel: "Nuestra misión",
+      mission: "Ayudar a las empresas a construir marcas sólidas y a acelerar su crecimiento mediante marketing estratégico, narrativa creativa e innovación digital.",
+      beliefLabel: "En qué creemos",
+      belief: "La mejor comunicación de marca no solo se hace notar. Hace que las personas entiendan, conecten y recuerden.",
     },
 
 
@@ -149,6 +179,14 @@ export const es: TranslationDictionary = {
       titleItalic: "su marca",
       deliverablesBadge: "Entregables",
       startProject: "Iniciar Proyecto",
+      lead: "La estrategia se une a la creatividad. La creatividad impulsa la conexión.",
+      paragraphs: [
+        "Toda empresa tiene una historia que merece ser contada. El reto es hacer que esa historia sea clara, convincente y relevante para las personas que importan.",
+        "En Little Giant Labs unimos estrategia de marca, comunicación creativa, producción de contenido y marketing digital para ayudar a las empresas a expresar su valor, reforzar su presencia y crear conexiones significativas con su público.",
+        "Desde definir la historia de tu marca hasta darle vida en canales digitales y visuales, convertimos las ideas en comunicación que genera impacto.",
+      ],
+      capabilitiesLabel: "Nuestras capacidades incluyen",
+      outcomeLabel: "El resultado:",
       services: [
         {
           title: "Estrategia y Diseño de Marca",
@@ -213,6 +251,38 @@ export const es: TranslationDictionary = {
             "Diseñamos flujos de trabajo personalizados y ciclos de CRM que automatizan las tareas repetitivas, permitiendo centrar todo el ancho de banda mental en la estrategia creativa de alto impacto.",
         },
       ],
+    },
+    approach: {
+      eyebrow: "Cómo ayudamos a crecer a las marcas",
+      title: "Un solo socio. Capacidades conectadas.",
+      paragraphs: [
+        "La gran comunicación rara vez ocurre de forma aislada. La estrategia de marca orienta la dirección creativa. La dirección creativa da forma al contenido. Y el contenido llega a su público a través de los canales adecuados.",
+        "Little Giant Labs reúne estas capacidades para ayudar a las empresas a pasar de una idea a una experiencia de marca coherente.",
+        "Tanto si necesitas apoyo en un único proyecto como en un conjunto coordinado de iniciativas de comunicación, trabajamos contigo para definir el enfoque adecuado para tus objetivos.",
+      ],
+      steps: [
+        {
+          title: "Estrategia de marca",
+          description: "Aclara la historia de tu marca y orienta la dirección creativa.",
+        },
+        {
+          title: "Dirección creativa",
+          description: "Define cómo se ve, suena y se siente la historia en cada contenido.",
+        },
+        {
+          title: "Contenido",
+          description: "Da vida a la historia mediante diseño, vídeo y contenido digital.",
+        },
+        {
+          title: "Canales",
+          description: "Llevan el contenido a su público a través de los canales adecuados.",
+        },
+      ],
+    },
+    cta: {
+      title: "¿Tienes una historia que contar? Hagamos que importe.",
+      description: "Cuéntanos sobre tu negocio, tu público y lo que quieres lograr. Exploremos cómo la combinación adecuada de estrategia, creatividad y comunicación digital puede ayudarte a hacer realidad tu visión.",
+      button: "Hablemos",
     },
   },
   contact: {

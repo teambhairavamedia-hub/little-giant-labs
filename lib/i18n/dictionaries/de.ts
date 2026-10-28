@@ -138,8 +138,38 @@ export const de: TranslationDictionary = {
     header: {
       eyebrow: "Über Little Giant Labs",
       title: "Wir schaffen digitale Bewegungen",
-      description:
-        "Little Giant Labs verbindet filmisches High-Retention-Storytelling mit Performance-Marketing – für Marken, die den Markt anführen wollen.",
+      description: "Wir verwandeln Geschäftsideen in bedeutungsvolle Markenerlebnisse.",
+      secondaryCta: "Unsere Leistungen ansehen",
+    },
+    story: {
+      eyebrow: "Unsere Geschichte",
+      title: "Little Giant Labs. Große Ideen, bedeutungsvoll erzählt.",
+      paragraphs: [
+        "Als rechtliche Einheit der Bhairava Media House LLP verbinden wir Geschäftsverständnis, kreative Kommunikation und Technologie, damit Organisationen ihren Wert klar vermitteln, ihre Zielgruppen erreichen und sich in einem umkämpften Markt abheben können.",
+        "Von Markenstrategie und visueller Kommunikation bis zu Social Media, digitalen Kampagnen, Videoproduktion und Employer Branding schaffen wir Kommunikation, die Ihrer Botschaft Klarheit und Ihrer Marke Konsistenz verleiht.",
+        "Unser interdisziplinäres Team vereint Erfahrung aus Softwareentwicklung, Personalwesen und Marketing. So gehen wir geschäftliche Herausforderungen mit kreativem Denken und einem praktischen Verständnis für die Umsetzung an.",
+      ],
+      factsLabel: "Auf einen Blick",
+      facts: [
+        {
+          label: "Rechtliche Einheit",
+          value: "Bhairava Media House LLP",
+        },
+        {
+          label: "Team-Expertise",
+          value: "Softwareentwicklung, Personalwesen und Marketing",
+        },
+        {
+          label: "Standort",
+          value: "Pune, Maharashtra, Indien",
+        },
+      ],
+    },
+    purpose: {
+      missionLabel: "Unsere Mission",
+      mission: "Unternehmen dabei zu helfen, durch strategisches Marketing, kreatives Storytelling und digitale Innovation starke Marken aufzubauen und ihr Wachstum zu beschleunigen.",
+      beliefLabel: "Woran wir glauben",
+      belief: "Die beste Markenkommunikation wird nicht nur wahrgenommen. Sie sorgt dafür, dass Menschen verstehen, sich verbunden fühlen und sich erinnern.",
     },
 
 
@@ -149,6 +179,14 @@ export const de: TranslationDictionary = {
       titleItalic: "skalieren",
       deliverablesBadge: "Leistungsumfang",
       startProject: "Projekt Starten",
+      lead: "Strategie trifft Kreativität. Kreativität schafft Verbindung.",
+      paragraphs: [
+        "Jedes Unternehmen hat eine Geschichte, die es wert ist, erzählt zu werden. Die Herausforderung besteht darin, sie für die Menschen, auf die es ankommt, klar, überzeugend und relevant zu machen.",
+        "Bei Little Giant Labs verbinden wir Markenstrategie, kreative Kommunikation, Content-Produktion und digitales Marketing, damit Unternehmen ihren Wert vermitteln, ihre Präsenz stärken und echte Verbindungen zu ihren Zielgruppen aufbauen können.",
+        "Von der Definition Ihrer Markengeschichte bis zu ihrer Umsetzung über digitale und visuelle Kanäle verwandeln wir Ideen in Kommunikation, die Wirkung entfaltet.",
+      ],
+      capabilitiesLabel: "Unsere Leistungen umfassen",
+      outcomeLabel: "Das Ergebnis:",
       services: [
         {
           title: "Markenstrategie & Design",
@@ -213,6 +251,38 @@ export const de: TranslationDictionary = {
             "Wir entwickeln maßgeschneiderte Pipelines und CRM-Zyklen, die Routineaufgaben automatisieren – damit volle mentale Kapazität für strategische Spitzenkreativität frei bleibt.",
         },
       ],
+    },
+    approach: {
+      eyebrow: "Wie wir Marken beim Wachsen helfen",
+      title: "Ein Partner. Vernetzte Kompetenzen.",
+      paragraphs: [
+        "Großartige Kommunikation entsteht selten isoliert. Die Markenstrategie bestimmt die kreative Richtung. Die kreative Richtung prägt den Content. Und der Content erreicht sein Publikum über die richtigen Kanäle.",
+        "Little Giant Labs bündelt diese Kompetenzen, damit Unternehmen von einer Idee zu einem stimmigen Markenerlebnis gelangen.",
+        "Ob Sie Unterstützung bei einem einzelnen Projekt oder bei einer abgestimmten Reihe von Kommunikationsinitiativen benötigen – wir finden gemeinsam mit Ihnen den richtigen Ansatz für Ihre Ziele.",
+      ],
+      steps: [
+        {
+          title: "Markenstrategie",
+          description: "Schärft Ihre Markengeschichte und bestimmt die kreative Richtung.",
+        },
+        {
+          title: "Kreative Richtung",
+          description: "Legt fest, wie die Geschichte in jedem Content aussieht, klingt und wirkt.",
+        },
+        {
+          title: "Content",
+          description: "Erweckt die Geschichte durch Design, Video und digitale Inhalte zum Leben.",
+        },
+        {
+          title: "Kanäle",
+          description: "Bringen den Content über die richtigen Kanäle zu seinem Publikum.",
+        },
+      ],
+    },
+    cta: {
+      title: "Sie haben eine Geschichte zu erzählen? Lassen Sie sie wirken.",
+      description: "Erzählen Sie uns von Ihrem Unternehmen, Ihrer Zielgruppe und Ihren Zielen. Lassen Sie uns herausfinden, wie die richtige Mischung aus Strategie, Kreativität und digitaler Kommunikation Ihre Vision Wirklichkeit werden lässt.",
+      button: "Lassen Sie uns sprechen",
     },
   },
   contact: {

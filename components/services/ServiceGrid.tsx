@@ -8,7 +8,7 @@ const serviceIcons = [DiamondIcon, FilmIcon, TrendIcon, LoopIcon];
 
 export function ServiceGrid() {
   const { dict } = useI18n();
-  const services = dict.about.capabilities.services;
+  const { services, capabilitiesLabel, outcomeLabel } = dict.about.capabilities;
 
   const containerVariants = {
     hidden: {},
@@ -73,7 +73,7 @@ export function ServiceGrid() {
               </p>
 
               <p className="mt-7 text-xs font-semibold uppercase tracking-[0.1em] text-theme-subtle">
-                Our capabilities include
+                {capabilitiesLabel}
               </p>
               <ul className="mt-3 space-y-2.5">
                 {service.deliverables.map((item) => (
@@ -87,7 +87,7 @@ export function ServiceGrid() {
 
             {service.outcome && (
               <p className="mt-auto border-t border-theme pt-5 text-sm leading-relaxed text-theme-muted">
-                <span className="font-semibold text-[var(--theme-fg)]">The outcome: </span>
+                <span className="font-semibold text-[var(--theme-fg)]">{outcomeLabel} </span>
                 {service.outcome}
               </p>
             )}
