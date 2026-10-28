@@ -13,7 +13,6 @@ export function Header() {
   const pathname = usePathname();
   const { dict, locale } = useI18n();
 
-  const [visible, setVisible] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpenForPath, setMobileOpenForPath] = useState<string | null>(null);
   const [activeSectionHref, setActiveSectionHref] = useState<string | null>(null);
@@ -33,13 +32,7 @@ export function Header() {
   const ctaHref = getLocalizedPath("/contact", locale);
   const activeHref = isHomePage ? activeSectionHref ?? homePath : pathname;
 
-  /* Fade in on mount */
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => setVisible(true));
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  /* Page-colored backdrop + compact logo once content scrolls beneath the fixed header */
+  /* Page-colored backdrop once content scrolls beneath the fixed header (color only — no size change) */
   useEffect(() => {
     let frame = 0;
     const updateScrolled = () => {
@@ -94,33 +87,22 @@ export function Header() {
   const fgColor = "var(--lgl-nav-fg)";
   const fgMuted = "var(--lgl-nav-muted)";
 
-  /* Portrait mark (824×1072): one logo that smoothly shrinks to compact navbar size once scrolled */
-  const logoClass = `w-auto max-w-full flex-none object-contain transition-[height,transform] duration-300 ease-out group-hover:scale-105 ${
-    scrolled ? "h-[3.75rem] md:h-16 xl:h-[4.5rem]" : "h-[5.5rem] md:h-[6.25rem] xl:h-32"
-  }`;
+  /* Portrait mark (824×1072): one fixed size per breakpoint so the navbar never resizes while scrolling */
+  const logoClass =
+    "h-[4.5rem] w-auto max-w-full flex-none object-contain transition-transform duration-300 group-hover:scale-105 md:h-20 xl:h-24";
+  /* Rendered widths are ~55/62/74px, so request a small optimized variant instead of the 824px source */
+  const logoSizes = "(min-width: 1280px) 74px, 62px";
 
   return (
     <>
       {/* ── HEADER ────────────────────────────────────────────────────── */}
       <header
-        className={`fixed inset-x-0 top-0 z-50 flex justify-center transition-all duration-500 ease-out ${
+        className={`fixed inset-x-0 top-0 z-50 flex justify-center transition-colors duration-300 ${
           scrolled || mobileOpen ? "bg-lgl-bg" : "bg-transparent"
         }`}
-        style={{
-          opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(-12px)",
-          pointerEvents: visible ? "auto" : "none",
-        }}
       >
-        <div
-          className="mx-4 mt-0 w-[calc(100%-2rem)] transition-all duration-500"
-          style={{ maxWidth: 1400 }}
-        >
-          <div
-            className={`lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 transition-all duration-300 sm:px-6 md:gap-6 md:px-8 min-[1280px]:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] min-[1280px]:gap-6 min-[1280px]:px-10 ${
-              scrolled ? "py-1 md:py-1.5" : "py-2 md:py-3"
-            }`}
-          >
+        <div className="mx-4 mt-0 w-[calc(100%-2rem)]" style={{ maxWidth: 1400 }}>
+          <div className="lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-2 sm:px-6 md:gap-6 md:px-8 md:py-3 min-[1280px]:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] min-[1280px]:gap-6 min-[1280px]:px-10">
             {/* Logo — left side; inset ~2cm further on desktop */}
             <Link
               href={homePath}
@@ -132,6 +114,7 @@ export function Header() {
                 alt="Little Giant Labs logo"
                 width={824}
                 height={1072}
+                sizes={logoSizes}
                 priority
                 className={`logo-mark-light ${logoClass}`}
               />
@@ -141,13 +124,14 @@ export function Header() {
                 aria-hidden="true"
                 width={824}
                 height={1072}
+                sizes={logoSizes}
                 priority
                 className={`logo-mark-dark ${logoClass}`}
               />
             </Link>
 
-            {/* Desktop nav — center */}
-            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:row-start-1 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1.5 min-[1280px]:whitespace-nowrap">
+            {/* Desktop nav — center, nudged ~0.5cm left */}
+            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:row-start-1 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1.5 min-[1280px]:whitespace-nowrap xl:-translate-x-5">
               {navItems.map((item) => {
                 const isActive = activeHref === item.href;
                 return (

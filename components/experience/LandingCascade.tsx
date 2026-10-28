@@ -204,6 +204,7 @@ export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProp
             alt="Little Giant Labs logo"
             width={824}
             height={1072}
+            sizes="(min-width: 640px) 111px, 86px"
             priority
             className="h-28 w-auto object-contain sm:h-36"
             style={{ opacity: 1, mixBlendMode: "normal" }}
