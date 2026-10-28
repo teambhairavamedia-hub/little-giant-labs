@@ -47,7 +47,7 @@ export function PageHeader({
   };
 
   return (
-    <Section theme={theme} className="border-b border-theme pt-28 md:pt-32" style={style}>
+    <Section theme={theme} className="border-b border-theme pt-28 md:pt-32 xl:pt-40" style={style}>
       <Container className="relative py-16 md:py-20">
         {visual ? (
           <motion.div

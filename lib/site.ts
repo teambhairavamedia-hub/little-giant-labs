@@ -4,6 +4,15 @@ export const siteConfig = {
   description:
     "A modern media and marketing company dedicated to building powerful brand presence through innovative content, digital marketing, and AI-powered solutions.",
   email: "hello@bhairavamedia.com",
+  address: {
+    building: "Delta Square",
+    lines: [
+      "Unit 302 & 303, 3rd Floor",
+      "Paud Road, Bhugaon",
+      "Pune 412115, Maharashtra, India",
+    ],
+    full: "Unit 302 & 303, 3rd Floor, Delta Square, Paud Road, Bhugaon, Pune 412115, Maharashtra, India",
+  },
   social: {
     instagram: "https://www.instagram.com/littlegiantlabs/",
     linkedin: "https://www.linkedin.com/company/bhairava-mediaa",

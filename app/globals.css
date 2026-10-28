@@ -615,6 +615,11 @@ html.lenis, html.lenis body {
 @media(prefers-reduced-motion:reduce) {
  .service-video-card { transition:none; }
 }
+/* Footer brand statement card: soft gold glow from the top-left over a faint theme tint */
+.lgl-brand-card { background:radial-gradient(120% 110% at 0% 0%,color-mix(in srgb,var(--lgl-gold) 16%,transparent) 0%,transparent 55%),linear-gradient(160deg,color-mix(in srgb,var(--lgl-fg) 5%,transparent),color-mix(in srgb,var(--lgl-fg) 1%,transparent)); box-shadow:inset 0 1px 0 color-mix(in srgb,var(--lgl-gold) 28%,transparent),0 24px 60px -30px color-mix(in srgb,var(--lgl-gold) 35%,transparent); }
+/* Footer tagline accent word: same metallic gold as the hero eyebrow */
+.lgl-tagline-accent { padding-right:.08em; background:linear-gradient(100deg,transparent 30%,rgba(255,246,214,.55) 46%,transparent 62%),linear-gradient(180deg,#F4DC9A 0%,#E2BC69 38%,#A87A2E 52%,#C99B48 70%,#EED08A 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+:root[data-theme="light"] .lgl-tagline-accent { background:linear-gradient(100deg,transparent 30%,rgba(255,240,200,.6) 46%,transparent 62%),linear-gradient(180deg,#B8892F 0%,#9A6F22 40%,#6E4C12 55%,#8C6420 72%,#B98C34 100%); -webkit-background-clip:text; background-clip:text; }
 :root[data-theme="light"] .home-hero .home-eyebrow { background:linear-gradient(100deg,transparent 30%,rgba(255,240,200,.6) 46%,transparent 62%),linear-gradient(180deg,#B8892F 0%,#9A6F22 40%,#6E4C12 55%,#8C6420 72%,#B98C34 100%); -webkit-background-clip:text; background-clip:text; filter:drop-shadow(0 1px 0 rgba(255,255,255,.7)) drop-shadow(0 0 14px rgba(185,140,52,.15)); }
 :root[data-theme="light"] .home-button-primary { box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 4px rgba(90,62,20,.3),0 6px 18px rgba(133,97,31,.22); }
 :root[data-theme="light"] .home-button-secondary { box-shadow:inset 0 1px 0 rgba(160,255,215,.3),inset 0 -2px 4px rgba(0,20,15,.45),0 6px 18px rgba(0,75,58,.2); }

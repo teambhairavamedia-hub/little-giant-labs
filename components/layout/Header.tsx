@@ -14,6 +14,7 @@ export function Header() {
   const { dict, locale } = useI18n();
 
   const [visible, setVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [mobileOpenForPath, setMobileOpenForPath] = useState<string | null>(null);
   const [activeSectionHref, setActiveSectionHref] = useState<string | null>(null);
 
@@ -36,6 +37,22 @@ export function Header() {
   useEffect(() => {
     const frame = requestAnimationFrame(() => setVisible(true));
     return () => cancelAnimationFrame(frame);
+  }, []);
+
+  /* Page-colored backdrop + compact logo once content scrolls beneath the fixed header */
+  useEffect(() => {
+    let frame = 0;
+    const updateScrolled = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setScrolled(window.scrollY > 12));
+    };
+
+    updateScrolled();
+    window.addEventListener("scroll", updateScrolled, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateScrolled);
+    };
   }, []);
 
   /* Keep homepage hash links in sync with viewport activation */
@@ -77,11 +94,18 @@ export function Header() {
   const fgColor = "var(--lgl-nav-fg)";
   const fgMuted = "var(--lgl-nav-muted)";
 
+  /* Portrait mark (824×1072): one logo that smoothly shrinks to compact navbar size once scrolled */
+  const logoClass = `w-auto max-w-full flex-none object-contain transition-[height,transform] duration-300 ease-out group-hover:scale-105 ${
+    scrolled ? "h-[3.75rem] md:h-16 xl:h-[4.5rem]" : "h-[5.5rem] md:h-[6.25rem] xl:h-32"
+  }`;
+
   return (
     <>
       {/* ── HEADER ────────────────────────────────────────────────────── */}
       <header
-        className="fixed inset-x-0 top-0 z-50 flex justify-center transition-all duration-500 ease-out"
+        className={`fixed inset-x-0 top-0 z-50 flex justify-center transition-all duration-500 ease-out ${
+          scrolled || mobileOpen ? "bg-lgl-bg" : "bg-transparent"
+        }`}
         style={{
           opacity: visible ? 1 : 0,
           transform: visible ? "translateY(0)" : "translateY(-12px)",
@@ -93,12 +117,15 @@ export function Header() {
           style={{ maxWidth: 1400 }}
         >
           <div
-            className="lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-3.5 py-0 transition-all duration-300 sm:px-4 md:gap-4 md:px-5 min-[1280px]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] min-[1280px]:gap-3 min-[1280px]:py-0.5"
+            className={`lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 transition-all duration-300 sm:px-6 md:gap-6 md:px-8 min-[1280px]:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] min-[1280px]:gap-6 min-[1280px]:px-10 ${
+              scrolled ? "py-1 md:py-1.5" : "py-2 md:py-3"
+            }`}
           >
+            {/* Logo — left side; inset ~2cm further on desktop */}
             <Link
               href={homePath}
               aria-label="Little Giant Labs home"
-              className="group col-start-1 flex w-max max-w-full shrink-0 items-center transition-opacity hover:opacity-75 min-[1280px]:col-start-1 min-[1280px]:justify-self-start"
+              className="group col-start-1 row-start-1 flex w-max shrink-0 items-center justify-self-start transition-opacity hover:opacity-75 xl:ml-29"
             >
               <Image
                 src="/new-logo-readable.png"
@@ -106,7 +133,7 @@ export function Header() {
                 width={824}
                 height={1072}
                 priority
-                className="logo-mark-light h-[9.5rem] w-auto max-w-full flex-none object-contain transition-transform duration-300 group-hover:scale-105 md:h-[10.5rem] min-[1280px]:h-56"
+                className={`logo-mark-light ${logoClass}`}
               />
               <Image
                 src="/new-logo-readable-dark.png"
@@ -115,12 +142,12 @@ export function Header() {
                 width={824}
                 height={1072}
                 priority
-                className="logo-mark-dark h-[9.5rem] w-auto max-w-full flex-none object-contain transition-transform duration-300 group-hover:scale-105 md:h-[10.5rem] min-[1280px]:h-56"
+                className={`logo-mark-dark ${logoClass}`}
               />
             </Link>
 
             {/* Desktop nav — center */}
-            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1.5 min-[1280px]:whitespace-nowrap">
+            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:row-start-1 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1.5 min-[1280px]:whitespace-nowrap">
               {navItems.map((item) => {
                 const isActive = activeHref === item.href;
                 return (
@@ -153,7 +180,7 @@ export function Header() {
             </nav>
 
             {/* Right side: theme toggle + CTA + language selector + hamburger */}
-            <div className="col-start-2 flex shrink-0 items-center gap-2 sm:gap-2.5 min-[1280px]:col-start-3 min-[1280px]:justify-self-end min-[1280px]:gap-3">
+            <div className="col-start-2 row-start-1 flex shrink-0 items-center gap-2.5 justify-self-end sm:gap-3 min-[1280px]:col-start-3 min-[1280px]:gap-4">
               <ThemeToggle />
 
               {/* CTA pill button — desktop */}
@@ -191,6 +218,7 @@ export function Header() {
                 }}
                 onClick={() => setMobileOpenForPath((path) => path === pathname ? null : pathname)}
                 aria-label={dict.nav.toggleMenu}
+                aria-expanded={mobileOpen}
               >
                 <span
                   className="block rounded-full transition-all duration-300 origin-center"
