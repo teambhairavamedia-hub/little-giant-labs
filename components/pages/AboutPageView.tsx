@@ -7,6 +7,7 @@ import { Container } from "@/components/layout/Container";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
+import { accentTitle } from "@/components/ui/accentTitle";
 import {
   ChartIcon,
   CompassIcon,
@@ -21,7 +22,6 @@ import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
 import { siteConfig } from "@/lib/site";
 
-const valueIcons = [SearchIcon, CompassIcon, LayersIcon, ChartIcon];
 const stepIcons = [SearchIcon, CompassIcon, PenToolIcon, GlobeIcon];
 const stageIcons = [SparkIcon, ChartIcon, LayersIcon];
 
@@ -80,21 +80,6 @@ function AboutHeaderVisual() {
   );
 }
 
-/* Two-sentence titles: the first sentence stays bold, the rest takes the serif-italic sage accent.
-   Splits on the first "." or "।" followed by a space; single-sentence titles render unchanged. */
-function accentTitle(title: string): ReactNode {
-  const match = /[.।]\s/.exec(title);
-  if (!match) return title;
-  return (
-    <>
-      {title.slice(0, match.index + 1)}{" "}
-      <span className="font-normal italic text-lgl-sage" style={{ fontFamily: "Georgia, serif" }}>
-        {title.slice(match.index + 2)}
-      </span>
-    </>
-  );
-}
-
 /* Gold-rule eyebrow + section title */
 function SectionHeading({
   eyebrow,
@@ -129,7 +114,7 @@ function SectionHeading({
 export function AboutPageView() {
   const { dict, locale } = useI18n();
   const reduceMotion = useReducedMotion();
-  const { header, story, purpose, capabilities, approach, engagement, principles, cta } = dict.about;
+  const { header, story, purpose, capabilities, approach, engagement, cta } = dict.about;
   const contactHref = getLocalizedPath("/contact", locale);
 
 
@@ -197,13 +182,6 @@ export function AboutPageView() {
               {story.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
-              <ul className="space-y-1">
-                {story.facts.map((fact) => (
-                  <li key={fact.label}>
-                    <span className="font-semibold text-lgl-fg">{fact.label}:</span> {fact.value}
-                  </li>
-                ))}
-              </ul>
             </div>
           </motion.div>
         </Container>
@@ -248,12 +226,11 @@ export function AboutPageView() {
       >
         <Container>
           <motion.div {...reveal()}>
-            <SectionHeading eyebrow={capabilities.eyebrow} title={capabilities.lead} />
-            <div className="mt-8 grid gap-6 text-justify text-base leading-[1.8] text-lgl-fg/75 [hyphens:auto] lg:grid-cols-3 lg:gap-10">
-              {capabilities.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
+            <SectionHeading eyebrow={capabilities.eyebrow} title={accentTitle(capabilities.lead)} />
+            {/* The intro paragraphs read as one continuous statement */}
+            <p className="mt-8 max-w-4xl text-base leading-[1.8] text-lgl-fg/75">
+              {capabilities.paragraphs.join(" ")}
+            </p>
           </motion.div>
           <div className="mt-12 md:mt-16">
             <ServiceGrid />
@@ -319,7 +296,7 @@ export function AboutPageView() {
       >
         <Container>
           <motion.div {...reveal()} className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
-            <SectionHeading eyebrow={engagement.eyebrow} title={engagement.title} />
+            <SectionHeading eyebrow={engagement.eyebrow} title={accentTitle(engagement.title)} />
             <p className="text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{engagement.description}</p>
           </motion.div>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -344,53 +321,8 @@ export function AboutPageView() {
         </Container>
       </Section>
 
-      {/* ── Principles ───────────────────────────────────────────── */}
-      <Section theme="light" className="py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
-        <Container>
-          <div>
-            <motion.div {...reveal()}>
-              <SectionHeading
-                eyebrow={principles.eyebrow}
-                align="center"
-                title={
-                  <>
-                    {principles.titlePart1}{" "}
-                    <span className="font-normal italic text-lgl-sage" style={{ fontFamily: "Georgia, serif" }}>
-                      {principles.titleItalic}
-                    </span>
-                  </>
-                }
-              />
-            </motion.div>
-            <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {principles.values.map((value, index) => {
-                const ValueIcon = valueIcons[index % valueIcons.length];
-                return (
-                  <motion.div key={value.title} {...reveal(index * 0.08)}>
-                    <Card className="flex h-full flex-col p-8 transition-all duration-300 hover:border-lgl-gold/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.06)] motion-safe:hover:-translate-y-1">
-                      <div className="mb-6 flex items-center justify-between">
-                        <span className="text-2xl font-bold tracking-tighter text-lgl-fg/60">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className="flex h-11 w-11 items-center justify-center rounded-full border border-lgl-gold/40 bg-lgl-gold/10 text-lgl-gold">
-                          <ValueIcon size={20} />
-                        </span>
-                      </div>
-                      <h3 className="text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
-                        {value.title}
-                      </h3>
-                      <p className="mt-4 text-sm leading-relaxed text-lgl-fg/70">{value.description}</p>
-                    </Card>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </Container>
-      </Section>
-
       {/* ── Closing CTA ──────────────────────────────────────────── */}
-      <Section theme="light" className="pb-20 pt-4 md:pb-28" style={{ background: "var(--lgl-bg)" }}>
+      <Section theme="light" className="pb-20 pt-16 md:pb-28 md:pt-24" style={{ background: "var(--lgl-bg)" }}>
         <Container>
           <motion.div
             {...reveal()}
@@ -402,7 +334,7 @@ export function AboutPageView() {
                   className="max-w-2xl text-balance text-[clamp(1.75rem,3.6vw,2.75rem)] font-bold leading-[1.08] tracking-[-0.04em] text-lgl-fg"
                   style={headingFont}
                 >
-                  {cta.title}
+                  {accentTitle(cta.title)}
                 </h2>
                 <div className="mt-5 max-w-2xl space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
                   {cta.paragraphs.map((paragraph) => (

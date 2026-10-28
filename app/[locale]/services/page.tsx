@@ -18,7 +18,8 @@ export async function generateMetadata({
   const dict = getDictionary(locale);
 
   return {
-    title: dict.seo.services.title,
+    // Full SEO title, so the layout template must not append "| Little Giant Labs" again
+    title: { absolute: dict.seo.services.title },
     description: dict.seo.services.description,
     alternates: {
       canonical: locale === "en" ? "/services" : `/${locale}/services`,

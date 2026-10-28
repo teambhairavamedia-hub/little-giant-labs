@@ -21,7 +21,7 @@ export const es: TranslationDictionary = {
       eyebrow: "Estrategia de marca · Creatividad · Crecimiento digital",
       titlePart1: "Haga que su marca ",
       titleEmphasis: "importe",
-      titlePart2: ".",
+      titlePart2: "",
       tagline: "Estrategia que le da forma. Creatividad que le da vida. Digital que la impulsa.",
       intro:
         "Ayudamos a startups, empresas en crecimiento y grandes compañías a convertir su valor en un posicionamiento claro, una comunicación convincente y conexiones significativas con su público.",
@@ -95,7 +95,6 @@ export const es: TranslationDictionary = {
       exploreLabel: "Explorar servicio",
       ctaTitle: "¿Tiene un reto de negocio concreto?",
       ctaText: "Identifiquemos la combinación adecuada de estrategia, creatividad y ejecución para sus necesidades.",
-      ctaButton: "Explore Nuestros Servicios",
     },
     why: {
       eyebrow: "Por qué Little Giant Labs",
@@ -236,21 +235,6 @@ export const es: TranslationDictionary = {
         "Desde definir la narrativa de un producto hasta crear campañas convincentes y llevarlas al mercado, unimos estrategia y ejecución para construir comunicación con propósito.",
         "Nuestra perspectiva multidisciplinar combina pensamiento de negocio, tecnológico y creativo, lo que nos permite mirar más allá del entregable y centrarnos en el reto de negocio que hay detrás.",
       ],
-      factsLabel: "De un vistazo",
-      facts: [
-        {
-          label: "Entidad legal",
-          value: "Bhairava Media House LLP",
-        },
-        {
-          label: "Experiencia del equipo",
-          value: "Ingeniería de software, recursos humanos y marketing",
-        },
-        {
-          label: "Ubicación",
-          value: "Pune, Maharashtra, India",
-        },
-      ],
     },
     purpose: {
       missionLabel: "Nuestra misión",
@@ -319,32 +303,9 @@ export const es: TranslationDictionary = {
         },
       ],
     },
-    principles: {
-      eyebrow: "Nuestros Principios",
-      titlePart1: "Guiados por la",
-      titleItalic: "convicción",
-      values: [
-        {
-          title: "Entender antes de comunicar",
-          description: "Empezamos por el reto de negocio, el público y el valor de la solución antes de decidir qué debe decir la marca.",
-        },
-        {
-          title: "La estrategia da dirección a la creatividad",
-          description: "Unimos pensamiento de negocio e imaginación creativa para construir comunicación con un propósito claro.",
-        },
-        {
-          title: "Que cada punto de contacto cuente",
-          description: "Desde la primera interacción hasta la conversión final, buscamos coherencia en todos los canales y experiencias a través de los cuales las personas se encuentran con una marca.",
-        },
-        {
-          title: "Aprender, medir y mejorar",
-          description: "Utilizamos la opinión del público y la evidencia de rendimiento relevante para entender qué funciona y mejorar continuamente nuestro enfoque.",
-        },
-      ],
-    },
     approach: {
       eyebrow: "Cómo trabajamos",
-      title: "Del reto de negocio a una ejecución con propósito.",
+      title: "Del reto de negocio a una *ejecución con propósito.*",
       paragraphs: [
         "Cada colaboración empieza por entender lo que necesitas lograr. Después damos forma a la estrategia, desarrollamos la creatividad y activamos el trabajo de la manera que mejor se ajuste a tus objetivos.",
       ],
@@ -369,7 +330,7 @@ export const es: TranslationDictionary = {
     },
     engagement: {
       eyebrow: "Formas de colaboración",
-      title: "La experiencia adecuada para la etapa en la que estás.",
+      title: "La experiencia adecuada para *la etapa en la que estás.*",
       description: "Tanto si necesitas claridad estratégica como ejecución creativa o apoyo para una campaña más amplia, adaptamos la colaboración a tus objetivos y necesidades.",
       options: [
         {
@@ -387,7 +348,7 @@ export const es: TranslationDictionary = {
       ],
     },
     cta: {
-      title: "Resolvamos primero el problema correcto.",
+      title: "Resolvamos primero *el problema correcto.*",
       paragraphs: [
         "Cuéntanos qué quieres lograr. Empezaremos por tu reto de negocio y exploraremos dónde la estrategia, la creatividad y la ejecución digital pueden marcar la diferencia.",
       ],
@@ -395,6 +356,7 @@ export const es: TranslationDictionary = {
     },
   },
   servicesPage: {
+    heading: "El buen marketing empieza con una *estrategia de negocio clara.*",
     jumpLabel: "Ir a un servicio",
     helpLabel: "En qué podemos ayudarle",
     outcomeLabel: "El resultado",
@@ -402,7 +364,7 @@ export const es: TranslationDictionary = {
     items: [
       {
         label: "Estrategia de marca",
-        title: "Sepa qué le hace diferente y haga que importe.",
+        title: "Sepa qué le hace diferente y *haga que importe.*",
         intro: "Cuando una empresa no logra expresar con claridad su valor, incluso los mejores productos y servicios pueden tener dificultades para destacar. Le ayudamos a definir su posicionamiento, afinar su historia y crear una base para una comunicación de marca coherente.",
         help: [
           "Descubrimiento de marca y evaluación estratégica",
@@ -418,7 +380,7 @@ export const es: TranslationDictionary = {
       },
       {
         label: "Creatividad y contenido",
-        title: "Haga que su marca sea reconocible, relevante y memorable.",
+        title: "Haga que su marca sea reconocible, *relevante y memorable.*",
         intro: "Una estrategia sólida necesita una expresión igual de sólida. Convertimos la dirección de marca en ideas creativas, contenido y comunicación que ayudan a su empresa a mostrarse de forma coherente allí donde su público la encuentra.",
         help: [
           "Desarrollo de conceptos creativos y dirección de arte",
@@ -434,7 +396,7 @@ export const es: TranslationDictionary = {
       },
       {
         label: "Crecimiento digital",
-        title: "Convierta su estrategia en una interacción significativa con su público.",
+        title: "Convierta su estrategia en una *interacción significativa con su público.*",
         intro: "El marketing digital funciona mejor cuando el público, el mensaje, el canal y el objetivo de negocio están alineados. Le ayudamos a traducir su estrategia en una actividad digital enfocada y a usar señales de rendimiento relevantes para decidir los siguientes pasos.",
         help: [
           "Estrategia y planificación de campañas digitales",
@@ -450,7 +412,7 @@ export const es: TranslationDictionary = {
       },
       {
         label: "Marca empleadora",
-        title: "Ayude a las personas adecuadas a ver por qué deberían trabajar con usted.",
+        title: "Ayude a las personas adecuadas a ver *por qué deberían trabajar con usted.*",
         intro: "La forma en que una organización comunica su cultura y sus oportunidades influye en cómo la perciben los posibles empleados. Ayudamos a las empresas a articular su historia como empleador y a trasladarla a la comunicación de reclutamiento y talento.",
         help: [
           "Posicionamiento y mensajes de marca empleadora",
@@ -636,8 +598,8 @@ export const es: TranslationDictionary = {
   },
   seo: {
     services: {
-      title: "Servicios",
-      description: "Estrategia de marca, creatividad y contenido, crecimiento digital y marca empleadora de Little Giant Labs, en torno a su reto de negocio.",
+      title: "Little Giant Labs | Estrategia de marca, creatividad y marketing digital",
+      description: "Descubra los servicios de estrategia de marca, creatividad, marketing digital y marca empleadora de Little Giant Labs. Ayudamos a las empresas a aclarar su valor y conectar con los públicos que importan.",
     },
     home: {
       title: "Little Giant Labs",
