@@ -227,10 +227,12 @@ export function AboutPageView() {
         <Container>
           <motion.div {...reveal()}>
             <SectionHeading eyebrow={capabilities.eyebrow} title={accentTitle(capabilities.lead)} />
-            {/* The intro paragraphs read as one continuous statement */}
-            <p className="mt-8 max-w-4xl text-base leading-[1.8] text-lgl-fg/75">
-              {capabilities.paragraphs.join(" ")}
-            </p>
+            {/* Intro paragraphs stacked in one column, with a gap between them */}
+            <div className="mt-8 max-w-4xl space-y-5 text-base leading-[1.8] text-lgl-fg/75">
+              {capabilities.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
           </motion.div>
           <div className="mt-12 md:mt-16">
             <ServiceGrid />

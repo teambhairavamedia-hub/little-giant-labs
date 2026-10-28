@@ -1,40 +1,36 @@
 import { checkEmailEligibility } from "./email-domain-eligibility.ts";
 import { EmailEligibilityError, isEmailFormatValid } from "./email-eligibility.ts";
+import {
+  APPLICATION_LIMITS,
+  applicationOptions,
+  optionalOptionFields,
+  requiredOptionFields,
+} from "./application-options.ts";
 
-export const applicationOptions = {
-  industry_vertical: [
-    "Enterprise Banking & FinTech",
-    "Heavy Infrastructure & Real Estate",
-    "Premium Consumer Goods (D2C)",
-    "Venture-Backed Technology",
-    "High-Ticket B2B Services",
-  ],
-  ttm_revenue: ["Under $1 Million", "$1M – $5 Million", "$5M – $20 Million", "$20 Million+"],
-  monthly_ad_spend: ["Under $10,000 / month", "$10,000 – $50,000 / month", "$50,000 – $150,000 / month", "$150,000+ / month"],
-  growth_bottleneck: [
-    "Ad platform algorithmic fatigue & dropping ROAS",
-    "Inability to produce high-retention visual media at scale",
-    "Lack of advanced attribution models and data tracking",
-    "Sub-optimal customer lifetime value (LTV) and backend CRM systems",
-  ],
-  partnership_readiness: [
-    "We are looking for a cheap, hands-off execution vendor",
-    "We are prepared to invest premium capital for institutional scale and long-term partnership",
-  ],
-} as const;
+export { applicationOptions } from "./application-options.ts";
 
 export type ApplicationInput = {
-  legal_name: string;
-  industry_vertical: string;
-  ttm_revenue: string;
-  monthly_ad_spend: string;
-  growth_bottleneck: string;
-  partnership_readiness: string;
+  contact_name: string;
   decision_maker_email: string;
-  decision_maker_linkedin: string;
+  legal_name: string;
+  help_with: string;
+  project_details: string;
+  company_size?: string;
+  industry_vertical?: string;
+  budget_range?: string;
+  timeline?: string;
 };
 
-export type ValidatedApplication = ApplicationInput & {
+export type ValidatedApplication = {
+  contact_name: string;
+  decision_maker_email: string;
+  legal_name: string;
+  help_with: string;
+  project_details: string;
+  company_size: string | null;
+  industry_vertical: string | null;
+  budget_range: string | null;
+  timeline: string | null;
   qualification_status: "pending_review";
 };
 
@@ -42,49 +38,63 @@ export class ValidationError extends Error {
   constructor(message: string) { super(message); this.name = "ValidationError"; }
 }
 
-const fields = Object.keys(applicationOptions);
-const requiredFields = ["legal_name", ...fields, "decision_maker_email", "decision_maker_linkedin"] as const;
+const requiredTextFields = ["contact_name", "decision_maker_email", "legal_name", "project_details", ...requiredOptionFields] as const;
+
 export async function normalizeCorporateEmail(value: string): Promise<string> {
   const email = value.trim().toLowerCase();
   if (email.length > 254 || !isEmailFormatValid(email)) {
-    throw new ValidationError("Enter a valid corporate email address.");
+    throw new ValidationError("Enter a valid work email address.");
   }
   const outcome = await checkEmailEligibility(email);
   if (outcome !== "eligible") throw new EmailEligibilityError(outcome);
   return email;
 }
 
-export function normalizeLinkedInUrl(value: string): string {
-  let url: URL;
-  try { url = new URL(value.trim()); } catch { throw new ValidationError("Enter a valid LinkedIn profile URL."); }
-  if (url.protocol !== "https:" || !["linkedin.com", "www.linkedin.com"].includes(url.hostname.toLowerCase()) || url.username || url.password || url.search || url.hash || !/^\/in\/[A-Za-z0-9_%.-]+\/?$/.test(url.pathname)) {
-    throw new ValidationError("Enter a valid LinkedIn profile URL, such as https://www.linkedin.com/in/your-profile.");
-  }
-  return url.toString();
+function isOption(field: keyof typeof applicationOptions, value: string): boolean {
+  return (applicationOptions[field] as readonly string[]).includes(value);
 }
 
 export async function validateApplication(body: unknown): Promise<ValidatedApplication> {
-  if (!body || typeof body !== "object" || Array.isArray(body)) throw new ValidationError("Submit a valid application.");
+  if (!body || typeof body !== "object" || Array.isArray(body)) throw new ValidationError("Submit a valid enquiry.");
   const input = body as Record<string, unknown>;
-  for (const field of requiredFields) {
+  for (const field of requiredTextFields) {
     if (typeof input[field] !== "string" || !input[field].trim()) throw new ValidationError("Complete all required fields before submitting.");
   }
+
+  const contact_name = (input.contact_name as string).trim();
+  if (contact_name.length > APPLICATION_LIMITS.contactName) throw new ValidationError("Your name is too long.");
   const legal_name = (input.legal_name as string).trim();
-  if (legal_name.length > 255) throw new ValidationError("The legal enterprise name is too long.");
-  const answers: Record<string, string> = {};
-  for (const [field, options] of Object.entries(applicationOptions)) {
-    const answer = (input[field] as string).trim();
-    if (!(options as readonly string[]).includes(answer)) throw new ValidationError("One or more answers are invalid. Review your selections and try again.");
-    answers[field] = answer;
+  if (legal_name.length > APPLICATION_LIMITS.companyName) throw new ValidationError("The company or brand name is too long.");
+  const project_details = (input.project_details as string).trim();
+  if (project_details.length > APPLICATION_LIMITS.projectDetails) {
+    throw new ValidationError(`Keep your project description under ${APPLICATION_LIMITS.projectDetails} characters.`);
   }
-  const decision_maker_linkedin = normalizeLinkedInUrl(input.decision_maker_linkedin as string);
+
+  const help_with = (input.help_with as string).trim();
+  if (!isOption("help_with", help_with)) throw new ValidationError("One or more answers are invalid. Review your selections and try again.");
+
+  // Optional answers: missing or blank → null; anything else must be a listed option.
+  const optional: Record<(typeof optionalOptionFields)[number], string | null> = {
+    company_size: null, industry_vertical: null, budget_range: null, timeline: null,
+  };
+  for (const field of optionalOptionFields) {
+    const raw = input[field];
+    if (raw === undefined || raw === null || (typeof raw === "string" && !raw.trim())) continue;
+    if (typeof raw !== "string" || !isOption(field, raw.trim())) {
+      throw new ValidationError("One or more answers are invalid. Review your selections and try again.");
+    }
+    optional[field] = raw.trim();
+  }
+
   const decision_maker_email = await normalizeCorporateEmail(input.decision_maker_email as string);
 
   return {
-    legal_name,
-    ...answers,
+    contact_name,
     decision_maker_email,
-    decision_maker_linkedin,
+    legal_name,
+    help_with,
+    project_details,
+    ...optional,
     qualification_status: "pending_review",
-  } as ValidatedApplication;
+  };
 }

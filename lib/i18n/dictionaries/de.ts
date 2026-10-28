@@ -430,123 +430,122 @@ export const de: TranslationDictionary = {
   },
   contact: {
     header: {
-      eyebrow: "Little Giant Labs",
-      tagline: "Partnerschaftsanfrage",
-      titlePart1: "Wachstum konzipiert für ",
-      titleEmphasis: "die nächste Stufe",
-      description:
-        "Ein fundierter Dialog beginnt mit Kontext. Beschreiben Sie den aktuellen Stand Ihres Unternehmens, bestehende Wachstumsbremsen und Ihre strategischen Ziele.",
+      eyebrow: "Lassen Sie uns ins Gespräch kommen",
+      title: "Erzählen Sie uns, *was Sie erreichen möchten.*",
+      description: "Ob Sie eine neue Marke aufbauen, Ihre Marktposition stärken oder Ihre nächste Kampagne planen – wir möchten Ihre Herausforderung verstehen.",
     },
     sidebar: {
-      eyebrow: "Ein durchdachter Prozess",
-      title: "Die richtige Wachstumspartnerschaft beginnt mit den richtigen Fragen",
-      description:
-        "Diese Anfrage vermittelt unserem Führungsteam den notwendigen Kontext zur Bewertung Ihrer Ziele, Rahmenbedingungen und Erwartungen.",
-      tagline: "Intellekt. Medien. Kapital.",
+      intro: "Erzählen Sie uns ein wenig über Ihr Unternehmen und wobei Sie Unterstützung brauchen. Mit diesem Kontext prüfen wir, ob Little Giant Labs der richtige Partner für Ihr Projekt ist.",
+      stepsLabel: "So geht es weiter",
+      steps: [
+        "Sie erzählen uns von Ihrem Unternehmen und Ihren Zielen.",
+        "Wir prüfen Ihre Anforderungen.",
+        "Wir melden uns, um die sinnvollsten nächsten Schritte zu besprechen.",
+      ],
+      tagline: "Markenstrategie · Kreation · Digitales Wachstum",
     },
     form: {
       stepTitles: [
-        "Unternehmensidentität & Positionierung",
-        "Finanzprofil",
-        "Strategische Hürden & Erwartungen",
-        "Geschäftsleitungskontakt",
+        "Über Sie",
+        "Ihr Projekt",
+        "Über Ihr Unternehmen",
+        "Budget & Zeitplan",
       ],
       stepAria: "Schritt {step} von 4",
       stepPrefix: "Schritt",
+      optionalTag: "Optional",
+      optionalNote: "Optional – teilen Sie nur, was Sie möchten.",
+      selectPlaceholder: "Keine Angabe",
       fields: {
-        enterpriseName: {
-          label: "Wie lautet der offiziell eingetragene Name Ihres Unternehmens?",
-          placeholder: "Offiziellen Firmennamen eingeben",
+        contactName: {
+          label: "Ihr Name",
+          placeholder: "Vor- und Nachname",
+        },
+        workEmail: {
+          label: "Geschäftliche E-Mail",
+          placeholder: "name@unternehmen.de",
+          hint: "Bitte nutzen Sie Ihre geschäftliche E-Mail. Private Adressen wie Gmail oder Yahoo werden nicht akzeptiert.",
+          error: "Geben Sie eine gültige geschäftliche E-Mail-Adresse ein.",
+        },
+        companyName: {
+          label: "Unternehmens- oder Markenname",
+          placeholder: "Ihr Unternehmen oder Ihre Marke",
+        },
+        helpWith: {
+          label: "Wobei brauchen Sie Unterstützung?",
+          legend: "Gewünschte Unterstützung",
+          options: {
+            "Brand strategy & positioning": "Markenstrategie & Positionierung",
+            "Creative & content": "Kreation & Content",
+            "Digital marketing & growth": "Digitales Marketing & Wachstum",
+            "Employer brand & talent communication": "Employer Brand & Talent-Kommunikation",
+            "Not sure yet / help me decide": "Noch unsicher / helfen Sie mir bei der Entscheidung",
+          },
+        },
+        projectDetails: {
+          label: "Erzählen Sie uns ein wenig über Ihr Projekt",
+          placeholder: "Was möchten Sie erreichen – und was steht Ihnen dabei im Weg?",
+          hint: "Bis zu 2.000 Zeichen.",
+        },
+        companySize: {
+          label: "Unternehmensgröße",
+          options: {
+            "1–10 people": "1–10 Personen",
+            "11–50 people": "11–50 Personen",
+            "51–200 people": "51–200 Personen",
+            "201–1,000 people": "201–1.000 Personen",
+            "1,000+ people": "1.000+ Personen",
+          },
         },
         industry: {
-          label: "In welchem Branchensegment strebt Ihre Marke die Marktführerschaft an?",
-          legend: "Branchensegment",
+          label: "Branche",
           options: {
-            "Enterprise Banking & FinTech": "Unternehmensbanking & FinTech",
-            "Heavy Infrastructure & Real Estate": "Großinfrastruktur & Immobilien",
-            "Premium Consumer Goods (D2C)": "Premium-Konsumgüter (D2C)",
-            "Venture-Backed Technology": "Venture-finanzierte Technologie",
-            "High-Ticket B2B Services": "Hochpreisige B2B-Dienstleistungen",
+            "Technology & SaaS": "Technologie & SaaS",
+            "Financial services & fintech": "Finanzdienstleistungen & Fintech",
+            "Consumer, retail & D2C": "Konsumgüter, Handel & D2C",
+            "Media, entertainment & music": "Medien, Entertainment & Musik",
+            "Real estate & infrastructure": "Immobilien & Infrastruktur",
+            "Professional & B2B services": "Professionelle & B2B-Dienstleistungen",
+            "Healthcare & life sciences": "Gesundheit & Life Sciences",
+            "Education": "Bildung",
+            "Other": "Sonstiges",
           },
         },
-        revenue: {
-          label: "Wie hoch war Ihr Jahresumsatz der letzten 12 Monate (TTM)?",
-          legend: "Jahresumsatz (TTM)",
+        budget: {
+          label: "Budgetrahmen",
           options: {
-            "Under $1 Million": "Unter 1 Million USD",
-            "$1M – $5 Million": "1 – 5 Millionen USD",
-            "$5M – $20 Million": "5 – 20 Millionen USD",
-            "$20 Million+": "Über 20 Millionen USD",
+            "Under $5,000": "Unter 5.000 $",
+            "$5,000 – $15,000": "5.000 – 15.000 $",
+            "$15,000 – $50,000": "15.000 – 50.000 $",
+            "$50,000+": "50.000 $+",
+            "Not sure yet": "Noch unklar",
           },
         },
-        acquisitionSpend: {
-          label: "Wie hoch ist Ihr derzeitiges monatliches Werbebudget für Kundenakquise?",
-          legend: "Monatliches Akquisebudget",
+        timeline: {
+          label: "Gewünschter Zeitplan",
           options: {
-            "Under $10,000 / month": "Unter 10.000 USD / Monat",
-            "$10,000 – $50,000 / month": "10.000 – 50.000 USD / Monat",
-            "$50,000 – $150,000 / month": "50.000 – 150.000 USD / Monat",
-            "$150,000+ / month": "Über 150.000 USD / Monat",
+            "As soon as possible": "So bald wie möglich",
+            "Within 1–3 months": "Innerhalb von 1–3 Monaten",
+            "Within 3–6 months": "Innerhalb von 3–6 Monaten",
+            "Flexible / not decided": "Flexibel / noch offen",
           },
-          financialNote:
-            "Finanzangaben dienen ausschließlich der internen Prüfung. Sie schließen niemanden pauschal von einer Anfrage aus.",
-        },
-        bottleneck: {
-          label: "Was ist der primäre strukturelle Engpass, der Ihr digitales Wachstum derzeit bremst?",
-          legend: "Wachstumsengpass",
-          options: {
-            "Ad platform algorithmic fatigue & dropping ROAS":
-              "Algorithmus-Ermüdung auf Werbeplattformen & sinkender ROAS",
-            "Inability to produce high-retention visual media at scale":
-              "Mangelnde Kapazität für skalierbare High-Retention-Medieninhalte",
-            "Lack of advanced attribution models and data tracking":
-              "Fehlen fortschrittlicher Attributionsmodelle & präzisen Datentrackings",
-            "Sub-optimal customer lifetime value (LTV) and backend CRM systems":
-              "Unzureichender Customer Lifetime Value (LTV) & ineffizientes CRM",
-          },
-        },
-        partnership: {
-          label:
-            "Wir arbeiten exklusiv als institutioneller Wachstumspartner mit monatlichen Betreuungspauschalen plus Performance-Beteiligungen. Suchen Sie einen einfachen Umsetzungsdienstleister oder verfügen Sie über das Kapital für eine marktführende Wachstumsarchitektur?",
-          legend: "Partnerschaftserwartungen",
-          options: {
-            "We are looking for a cheap, hands-off execution vendor":
-              "Wir suchen einen günstigen, reinen Umsetzungsdienstleister",
-            "We are prepared to invest premium capital for institutional scale and long-term partnership":
-              "Wir sind bereit, Premium-Kapital in institutionelle Skalierung und eine langfristige Partnerschaft zu investieren",
-          },
-        },
-        corporateEmail: {
-          instruction:
-            "Geben Sie die direkte geschäftliche E-Mail-Adresse sowie das LinkedIn-Profil des verantwortlichen Entscheidungsträgers an (CEO, CMO oder Managing Partner).",
-          label: "A. Geschäftliche E-Mail-Adresse",
-          placeholder: "name@unternehmen.de",
-          hint: "Bitte offizielle Firmen-E-Mail verwenden. Freemail-Adressen wie Gmail oder Yahoo werden nicht akzeptiert.",
-          error: "Gültige geschäftliche E-Mail-Adresse angeben. Gmail- und Yahoo-Adressen sind unzulässig.",
-        },
-        linkedin: {
-          label: "B. LinkedIn-Profil-URL",
-          placeholder: "https://www.linkedin.com/in/ihr-profil",
-          error: "Bitte eine gültige LinkedIn-Profil-URL angeben (z. B. https://www.linkedin.com/in/ihr-profil).",
         },
       },
-      validationError: "Bitte füllen Sie alle Pflichtfelder aus und überprüfen Sie Ihre Angaben.",
-      serverError: "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es später erneut.",
+      validationError: "Bitte füllen Sie die Pflichtfelder aus, um fortzufahren.",
+      serverError: "Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es später erneut.",
       back: "← Zurück",
       continue: "Weiter →",
-      submit: "Anfrage senden",
+      submit: "Anfrage Senden",
       submitting: "Wird gesendet…",
     },
   },
   applicationReceived: {
-    eyebrow: "Anfrage eingegangen",
+    eyebrow: "Anfrage erhalten",
     headlinePart1: "Der nächste Schritt ",
     headlineEmphasis: "liegt bei uns",
-    body1:
-      "Ihre Anfrage wurde erfolgreich übermittelt. Unser Führungsteam prüft Ihre Wachstumsziele, Rahmenbedingungen und strategischen Anforderungen sorgfältig.",
-    body2:
-      "Bei überzeugender Übereinstimmung mit unserem Kooperationsmodell werden wir uns bezüglich der nächsten Schritte mit Ihnen in Verbindung setzen.",
-    tagline: "Little Giant Labs — Intellekt. Medien. Kapital.",
+    body1: "Danke für Ihre Nachricht. Wir haben Ihre Anfrage erhalten und prüfen Ihr Unternehmen, Ihre Ziele und Ihre Anforderungen.",
+    body2: "Wir melden uns, um die sinnvollsten nächsten Schritte zu besprechen.",
+    tagline: "Little Giant Labs — Markenstrategie · Kreation · Digitales Wachstum",
     returnHome: "Zurück zur Hauptseite ↗",
   },
   workUnavailable: {
@@ -587,14 +586,14 @@ export const de: TranslationDictionary = {
     ctaEyebrow: "Lassen Sie uns Sprechen",
     ctaHeading1: "Erschaffen wir",
     ctaHeading2: "etwas Herausragendes",
-    brandTagline: "Filmische Kreativität und Performance-Wachstum für Marken mit Skalierungsambitionen.",
+    brandTagline: "Ein strategiegeleiteter Marken- und Kreativpartner, der unternehmerisches Denken, überzeugendes Storytelling und digitale Umsetzung verbindet.",
     navHeading: "Navigation",
     connectHeading: "Kontakt",
     officeHeading: "Standort",
     location: "PUNE, IN",
     localTimePrefix: "Ortszeit:",
     copyright: "Little Giant Labs. Alle Rechte vorbehalten.",
-    slogan: "Geschaffen für Bewegung, Geschichten und Wachstum.",
+    slogan: "Markenstrategie · Kreation · Digitales Wachstum",
   },
   seo: {
     services: {
