@@ -138,8 +138,38 @@ export const en: TranslationDictionary = {
     header: {
       eyebrow: "About Little Giant Labs",
       title: "We build digital movements",
-      description:
-        "Little Giant Labs sits at the intersection of high-retention cinematic storytelling and performance marketing, scaling brands that refuse to be ignored.",
+      description: "We turn business ideas into meaningful brand experiences.",
+      secondaryCta: "Explore our services",
+    },
+    story: {
+      eyebrow: "Our story",
+      title: "Little Giant Labs. Big ideas, meaningfully told.",
+      paragraphs: [
+        "As a legal entity of Bhairava Media House LLP, we bring together business understanding, creative communication and technology to help organisations articulate their value, connect with their audiences and stand out in a crowded marketplace.",
+        "From brand strategy and visual communication to social media, digital campaigns, video production and employer branding, we create communication that brings clarity to your message and consistency to your brand.",
+        "Our multidisciplinary team brings together experience across software engineering, human resources and marketing, enabling us to approach business challenges with both creative thinking and a practical understanding of execution.",
+      ],
+      factsLabel: "At a glance",
+      facts: [
+        {
+          label: "Legal entity",
+          value: "Bhairava Media House LLP",
+        },
+        {
+          label: "Team expertise",
+          value: "Software engineering, human resources and marketing",
+        },
+        {
+          label: "Based in",
+          value: "Pune, Maharashtra, India",
+        },
+      ],
+    },
+    purpose: {
+      missionLabel: "Our mission",
+      mission: "To help businesses build powerful brands and accelerate growth through strategic marketing, creative storytelling and digital innovation.",
+      beliefLabel: "What we believe",
+      belief: "The best brand communication doesn't just get noticed. It makes people understand, connect and remember.",
     },
 
 
@@ -149,6 +179,14 @@ export const en: TranslationDictionary = {
       titleItalic: "",
       deliverablesBadge: "Deliverables",
       startProject: "Start Project",
+      lead: "Strategy meets creativity. Creativity drives connection.",
+      paragraphs: [
+        "Every business has a story worth telling. The challenge is making that story clear, compelling and relevant to the people who matter.",
+        "At Little Giant Labs, we bring together brand strategy, creative communication, content production and digital marketing to help businesses express their value, strengthen their presence and build meaningful connections with their audiences.",
+        "From defining your brand story to bringing it to life across digital and visual channels, we turn ideas into communication that makes an impact.",
+      ],
+      capabilitiesLabel: "Our capabilities include",
+      outcomeLabel: "The outcome:",
       services: [
         {
           title: "Brand Building & Strategy",
@@ -255,6 +293,38 @@ export const en: TranslationDictionary = {
             "We design custom workflow pipelines and CRM loops that automate the mundane, freeing up mindshare to focus entirely on high-leverage strategic creative.",
         },
       ],
+    },
+    approach: {
+      eyebrow: "How we help brands grow",
+      title: "One partner. Connected capabilities.",
+      paragraphs: [
+        "Great communication rarely happens in isolation. A brand strategy informs the creative direction. The creative direction shapes the content. And the content finds its audience through the right channels.",
+        "Little Giant Labs brings these capabilities together to help businesses move from an idea to a coherent brand experience.",
+        "Whether you need support with a single project or a coordinated set of communication initiatives, we work with you to identify the right approach for your goals.",
+      ],
+      steps: [
+        {
+          title: "Brand strategy",
+          description: "Clarifies your brand story and informs the creative direction.",
+        },
+        {
+          title: "Creative direction",
+          description: "Shapes how the story looks, sounds and feels across every piece of content.",
+        },
+        {
+          title: "Content",
+          description: "Brings the story to life through design, video and digital content.",
+        },
+        {
+          title: "Channels",
+          description: "Help the content find its audience through the right channels.",
+        },
+      ],
+    },
+    cta: {
+      title: "Have a story to tell? Let's make it matter.",
+      description: "Tell us about your business, your audience and what you want to achieve. Let's explore how the right mix of strategy, creativity and digital communication can help bring your vision to life.",
+      button: "Let's Talk",
     },
   },
   contact: {

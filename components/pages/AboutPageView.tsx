@@ -1,22 +1,37 @@
 "use client";
 
-import { type CSSProperties } from "react";
-import { useRouter } from "next/navigation";
+import { type CSSProperties, type ReactNode } from "react";
+import Link from "next/link";
+import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
-import { PageHeader } from "@/components/layout/PageHeader";
 import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
 import {
   ChartIcon,
+  CompassIcon,
   FilmIcon,
+  GlobeIcon,
+  LayersIcon,
   LoopIcon,
+  MailIcon,
+  PenToolIcon,
+  SparkIcon,
 } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
+import { siteConfig } from "@/lib/site";
 
 const valueIcons = [FilmIcon, ChartIcon, LoopIcon];
+const stepIcons = [CompassIcon, PenToolIcon, LayersIcon, GlobeIcon];
+
+const easeOut = [0.22, 1, 0.36, 1] as const;
+
+/* Shared pill-button styles (gold primary matches the header CTA) */
+const pillBase =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[0.75rem] font-semibold uppercase tracking-[0.18em] transition-all duration-300";
+const pillFont: CSSProperties = { fontFamily: "var(--font-dm-sans), sans-serif" };
+const headingFont: CSSProperties = { fontFamily: "var(--font-manrope), sans-serif" };
 
 /* Header illustration */
 function AboutHeaderVisual() {
@@ -65,172 +80,323 @@ function AboutHeaderVisual() {
   );
 }
 
+/* Two-sentence titles: the first sentence stays bold, the rest takes the serif-italic sage accent.
+   Splits on the first "." or "।" followed by a space; single-sentence titles render unchanged. */
+function accentTitle(title: string): ReactNode {
+  const match = /[.।]\s/.exec(title);
+  if (!match) return title;
+  return (
+    <>
+      {title.slice(0, match.index + 1)}{" "}
+      <span className="font-normal italic text-lgl-sage" style={{ fontFamily: "Georgia, serif" }}>
+        {title.slice(match.index + 2)}
+      </span>
+    </>
+  );
+}
+
+/* Gold-rule eyebrow + section title */
+function SectionHeading({
+  eyebrow,
+  title,
+  align = "left",
+  className = "",
+}: {
+  eyebrow: string;
+  title: ReactNode;
+  align?: "left" | "center";
+  className?: string;
+}) {
+  const centered = align === "center";
+  return (
+    <div className={`${centered ? "mx-auto text-center" : ""} max-w-3xl ${className}`}>
+      <p className={`label-eyebrow flex items-center gap-3 text-lgl-gold ${centered ? "justify-center" : ""}`}>
+        <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-lgl-gold to-lgl-gold/0" />
+        {eyebrow}
+      </p>
+      <h2
+        className="mt-5 text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-bold leading-[1.04] tracking-[-0.04em] text-lgl-fg"
+        style={headingFont}
+      >
+        {title}
+      </h2>
+    </div>
+  );
+}
+
 export function AboutPageView() {
   const { dict, locale } = useI18n();
-  const router = useRouter();
-  const aboutDict = dict.about;
+  const reduceMotion = useReducedMotion();
+  const { header, story, purpose, capabilities, approach, principles, cta } = dict.about;
+  const contactHref = getLocalizedPath("/contact", locale);
+
+
+  /* Scroll-reveal for content blocks; disabled entirely for reduced-motion users */
+  const reveal = (delay = 0) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 24 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: "-80px" },
+          transition: { duration: 0.7, delay, ease: easeOut },
+        };
 
   return (
-    <main>
-      {/* Page Header */}
-      <PageHeader
-        description="We turn business ideas into meaningful brand experiences."
-        descriptionClassName="max-w-[19ch] text-[21px] md:text-[25px] lg:text-[29px] font-normal italic leading-[1.4] tracking-[-0.02em] text-[var(--theme-fg)]"
-        theme="dark"
-        visual={<AboutHeaderVisual />}
-        style={
-          {
-            background: "var(--lgl-bg)",
-            color: "var(--lgl-soft)",
-            "--theme-bg": "var(--lgl-bg)",
-            "--theme-fg": "var(--lgl-soft)",
-            "--theme-fg-muted": "color-mix(in srgb, var(--lgl-soft) 80%, transparent)",
-            "--theme-fg-subtle": "color-mix(in srgb, var(--lgl-soft) 72%, transparent)",
-            "--theme-border": "color-mix(in srgb, var(--lgl-line) 18%, transparent)",
-          } as CSSProperties
-        }
-      />
-
+    <main className="[&_:is(h1,h2,h3)]:[overflow-wrap:break-word]">
+      {/* ── Hero: centred statement over a faded growth illustration ── */}
       <Section
         theme="light"
-        className="border-b border-lgl-fg/10 py-14 md:py-20 lg:py-24"
+        className="relative overflow-hidden border-b border-lgl-fg/10 pt-28 md:pt-32 xl:pt-40"
+        style={{ background: "var(--lgl-bg)" }}
+      >
+        <Container className="relative py-16 md:py-24">
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[clamp(280px,42vw,520px)] w-[clamp(280px,42vw,520px)] -translate-x-1/2 -translate-y-1/2 opacity-20"
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 0.2, scale: 1 }}
+            transition={{ duration: 1, ease: easeOut }}
+          >
+            <AboutHeaderVisual />
+          </motion.div>
+          <motion.div
+            className="relative mx-auto flex max-w-3xl flex-col items-center text-center"
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: easeOut }}
+          >
+            <span aria-hidden="true" className="h-0.5 w-16 rounded-full bg-gradient-to-r from-lgl-gold/0 via-lgl-gold to-lgl-gold/0" />
+            {/* Serif italic with a fg → gold sweep, echoing the homepage hero's "Brands" accent */}
+            <h1
+              className="mt-7 max-w-[20ch] text-balance bg-[linear-gradient(100deg,var(--lgl-fg)_30%,var(--lgl-gold)_100%)] bg-clip-text pb-1 pr-[0.08em] text-[1.875rem] font-normal italic leading-[1.2] tracking-[-0.015em] text-transparent [box-decoration-break:clone] sm:text-[2.375rem] md:text-[2.875rem] lg:text-[3.375rem]"
+              style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+            >
+              {header.description}
+            </h1>
+            <a href="#services" className={`lgl-gold-cta ${pillBase} mt-9 hover:opacity-85`} style={pillFont}>
+              {header.secondaryCta}
+              <span aria-hidden="true">↓</span>
+            </a>
+          </motion.div>
+        </Container>
+      </Section>
+
+      {/* ── Our story ────────────────────────────────────────────── */}
+      <Section
+        theme="light"
+        className="border-b border-lgl-fg/10 py-16 md:py-24"
         style={{ background: "var(--lgl-section)", color: "var(--lgl-fg)" }}
       >
         <Container>
-          <div className="mx-auto max-w-6xl">
-            <div className="grid gap-x-14 gap-y-7 md:grid-cols-2 md:gap-x-16 lg:gap-x-24">
-              <div className="space-y-7 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
-                <p>Little Giant Labs helps businesses build powerful brands and accelerate growth through strategic marketing, creative storytelling and digital innovation.</p>
-                <p>As a legal entity of Bhairava Media House LLP, we bring together business understanding, creative communication and technology to help organisations articulate their value, connect with their audiences and stand out in a crowded marketplace.</p>
+          <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)] lg:gap-16">
+            <motion.div {...reveal()}>
+              <SectionHeading eyebrow={story.eyebrow} title={accentTitle(story.title)} />
+              <div className="mt-8 space-y-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+                {story.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
               </div>
-              <div className="space-y-7 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
-                <p>From brand strategy and visual communication to social media, digital campaigns, video production and employer branding, we create communication that brings clarity to your message and consistency to your brand.</p>
-                <p>Our multidisciplinary team brings together experience across software engineering, human resources and marketing, enabling us to approach business challenges with both creative thinking and a practical understanding of execution.</p>
-                <p>{"We believe the best brand communication doesn't just get noticed. It makes people understand, connect and remember."}</p>
+            </motion.div>
+
+            <motion.aside {...reveal(0.1)} className="lg:sticky lg:top-36 lg:self-start">
+              <div className="lgl-brand-card rounded-3xl border border-lgl-gold/25 p-7 md:p-8">
+                <p className="label-eyebrow text-lgl-gold">{story.factsLabel}</p>
+                <dl className="mt-6 divide-y divide-lgl-fg/10">
+                  {story.facts.map((fact) => (
+                    <div key={fact.label} className="py-4 first:pt-0 last:pb-0">
+                      <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-lgl-fg/55">
+                        {fact.label}
+                      </dt>
+                      <dd className="mt-1.5 text-base font-semibold leading-snug text-lgl-fg" style={headingFont}>
+                        {fact.value}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
-            </div>
-            <div className="mt-10 md:mt-12">
-              <p className="text-center text-[21px] md:text-[25px] lg:text-[29px] font-normal italic leading-[1.4] tracking-[-0.02em] text-lgl-fg">
-                “Little Giant Labs. Big ideas, meaningfully told.”
-              </p>
-            </div>
+            </motion.aside>
           </div>
         </Container>
       </Section>
 
-      {/* Services Capabilities Section */}
+      {/* ── Mission & belief ─────────────────────────────────────── */}
+      <Section theme="light" className="py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
+        <Container>
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
+            <motion.div {...reveal()}>
+              <Card className="group flex h-full flex-col p-8 transition-all duration-300 hover:border-lgl-gold/40 md:p-10 motion-safe:hover:-translate-y-1">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-lgl-gold/35 bg-lgl-gold/10 text-lgl-gold">
+                  <CompassIcon size={22} />
+                </span>
+                <p className="label-eyebrow mt-7 text-lgl-gold">{purpose.missionLabel}</p>
+                <p
+                  className="mt-4 text-balance text-xl font-semibold leading-[1.35] tracking-[-0.02em] text-lgl-fg md:text-2xl"
+                  style={headingFont}
+                >
+                  {purpose.mission}
+                </p>
+              </Card>
+            </motion.div>
+            <motion.div {...reveal(0.1)}>
+              <Card className="group flex h-full flex-col p-8 transition-all duration-300 hover:border-lgl-gold/40 md:p-10 motion-safe:hover:-translate-y-1">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-lgl-gold/35 bg-lgl-gold/10 text-lgl-gold">
+                  <SparkIcon size={22} />
+                </span>
+                <p className="label-eyebrow mt-7 text-lgl-gold">{purpose.beliefLabel}</p>
+                <p
+                  className="mt-4 text-balance text-xl italic leading-[1.4] text-lgl-fg md:text-2xl"
+                  style={{ fontFamily: "Georgia, serif" }}
+                >
+                  {purpose.belief}
+                </p>
+              </Card>
+            </motion.div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Services ─────────────────────────────────────────────── */}
       <Section
+        id="services"
         theme="light"
-        className="border-t border-lgl-fg/5 py-24 md:py-32"
+        className="scroll-mt-28 border-y border-lgl-fg/10 py-16 md:py-24"
         style={{ background: "var(--lgl-section)" }}
       >
         <Container>
-          <div className="mb-16">
-            <h2
-              className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg"
-              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-            >
-              Services
-            </h2>
+          <motion.div {...reveal()}>
+            <SectionHeading eyebrow={capabilities.eyebrow} title={capabilities.lead} />
+            <div className="mt-8 grid gap-6 text-base leading-[1.8] text-lgl-fg/75 md:grid-cols-3 md:gap-10">
+              {capabilities.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </motion.div>
+          <div className="mt-12 md:mt-16">
+            <ServiceGrid />
           </div>
-          <div className="mb-12 max-w-4xl space-y-5 text-base leading-[1.8] text-lgl-fg/75 md:mb-16 md:text-lg">
-            <p className="text-[21px] font-normal italic leading-[1.4] tracking-[-0.02em] text-lgl-fg md:text-[25px] lg:text-[29px]">
-              Strategy meets creativity. Creativity drives connection.
-            </p>
-            <p>Every business has a story worth telling. The challenge is making that story clear, compelling and relevant to the people who matter.</p>
-            <p>At Little Giant Labs, we bring together brand strategy, creative communication, content production and digital marketing to help businesses express their value, strengthen their presence and build meaningful connections with their audiences.</p>
-            <p>From defining your brand story to bringing it to life across digital and visual channels, we turn ideas into communication that makes an impact.</p>
-          </div>
-          <ServiceGrid />
         </Container>
       </Section>
 
-      {/* Our Values Section */}
-      <Section theme="light" className="border-t border-lgl-fg/5 pb-24 pt-14 md:pb-32 md:pt-20">
+      {/* ── How we help brands grow ──────────────────────────────── */}
+      <Section theme="light" className="py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
         <Container>
-          <div className="mb-10 text-center max-w-xl mx-auto md:mb-14">
-            <p className="label-eyebrow text-lgl-fg/65 mb-5">{aboutDict.principles.eyebrow}</p>
-            <h2
-              className="text-[clamp(2.2rem,5vw,3.5rem)] font-bold tracking-[-0.04em] leading-[0.96] text-lgl-fg"
-              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-            >
-              {aboutDict.principles.titlePart1}{" "}
-              <span className="font-light text-lgl-fg/70" style={{ fontStyle: "italic" }}>
-                {aboutDict.principles.titleItalic}
-              </span>
-            </h2>
-          </div>
+          {/* Centred: heading, lead paragraph, gold divider, supporting paragraphs */}
+          <motion.div {...reveal()} className="mx-auto flex max-w-3xl flex-col items-center text-center">
+            <SectionHeading eyebrow={approach.eyebrow} title={accentTitle(approach.title)} align="center" />
+            <p className="mt-8 text-lg leading-[1.7] text-lgl-fg md:text-xl">{approach.paragraphs[0]}</p>
+            <span aria-hidden="true" className="mt-8 h-0.5 w-16 rounded-full bg-gradient-to-r from-lgl-gold/0 via-lgl-gold to-lgl-gold/0" />
+            <div className="mt-8 max-w-2xl space-y-4 text-base leading-[1.8] text-lgl-fg/70">
+              {approach.paragraphs.slice(1).map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </motion.div>
 
-          <div className="mb-12 w-full space-y-5 text-base leading-[1.8] text-lgl-fg/75 md:mb-16 md:text-lg">
-            <h3 className="mb-6 text-2xl font-semibold leading-tight tracking-[-0.035em] text-lgl-fg md:text-3xl">
-              One partner. Connected capabilities.
-            </h3>
-            <p>Great communication rarely happens in isolation. A brand strategy informs the creative direction. The creative direction shapes the content. And the content finds its audience through the right channels.</p>
-            <p>Little Giant Labs brings these capabilities together to help businesses move from an idea to a coherent brand experience.</p>
-            <p>Whether you need support with a single project or a coordinated set of communication initiatives, we work with you to identify the right approach for your goals.</p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {aboutDict.principles.values.map((v, i) => {
-              const ValueIcon = valueIcons[i % valueIcons.length];
+          {/* Strategy → creative direction → content → channels */}
+          <ol className="relative mt-12 grid gap-5 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-6">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-[12%] top-[2.75rem] hidden h-px bg-gradient-to-r from-lgl-gold/0 via-lgl-gold/45 to-lgl-gold/0 lg:block"
+            />
+            {approach.steps.map((step, index) => {
+              const StepIcon = stepIcons[index % stepIcons.length];
               return (
-                <Card
-                  key={v.title}
-                  className="flex flex-col justify-between p-8 hover:shadow-[0_15px_40px_rgba(0,0,0,0.06)] hover:border-lgl-fg/20 transition-all duration-300"
-                >
-                  <div>
-                    <div className="mb-6 flex items-center justify-between">
-                      <span className="text-2xl font-bold text-lgl-fg/70 tracking-tighter block">
-                        {String(i + 1).padStart(2, "0")}
+                <motion.li key={step.title} {...reveal(index * 0.08)} className="relative">
+                  <Card className="flex h-full flex-col p-7 transition-all duration-300 hover:border-lgl-gold/40 motion-safe:hover:-translate-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-lgl-gold/40 bg-lgl-bg text-lgl-gold">
+                        <StepIcon size={20} />
                       </span>
-                      <span className="flex h-11 w-11 items-center justify-center rounded-full border border-[#C5A059]/40 bg-[#C5A059]/10 text-lgl-gold">
-                        <ValueIcon size={20} />
+                      <span className="text-sm font-semibold tracking-[0.12em] text-lgl-fg/45">
+                        {String(index + 1).padStart(2, "0")}
                       </span>
                     </div>
-                    <h3
-                      className="text-lg font-bold text-lgl-fg tracking-tight"
-                      style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-                    >
-                      {v.title}
+                    <h3 className="mt-6 text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
+                      {step.title}
                     </h3>
-                    <p className="mt-4 text-sm leading-relaxed text-lgl-fg/70 font-light">
-                      {v.description}
-                    </p>
-                  </div>
-                </Card>
+                    <p className="mt-3 text-sm leading-relaxed text-lgl-fg/70">{step.description}</p>
+                  </Card>
+                </motion.li>
               );
             })}
-          </div>
+          </ol>
 
-          <div className="mt-12 border-t border-lgl-fg/10 pt-10 md:mt-16 md:pt-12">
-            <h3 className="max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.035em] text-lgl-fg md:text-3xl">
-              {"Have a story to tell? Let's make it matter."}
-            </h3>
-            <p className="mt-5 w-full text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
-              {"Tell us about your business, your audience and what you want to achieve. Let's explore how the right mix of strategy, creativity and digital communication can help bring your vision to life."}
-            </p>
-            <Button
-              type="button"
-              className="lgl-gold-cta mt-8 rounded-full transition-all duration-300"
-              style={{
-                fontFamily: "var(--font-dm-sans), sans-serif",
-                fontSize: "0.75rem",
-                fontWeight: 600,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                padding: "0.75rem 1.5rem",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.opacity = "0.82";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.opacity = "1";
-              }}
-              onClick={() => router.push(getLocalizedPath("/contact", locale))}
-            >
-              {"Let's Talk"}
-            </Button>
+          {/* Principles */}
+          <div className="mt-20 border-t border-lgl-fg/10 pt-16 md:mt-24 md:pt-20">
+            <motion.div {...reveal()}>
+              <SectionHeading
+                eyebrow={principles.eyebrow}
+                align="center"
+                title={
+                  <>
+                    {principles.titlePart1}{" "}
+                    <span className="font-normal italic text-lgl-sage" style={{ fontFamily: "Georgia, serif" }}>
+                      {principles.titleItalic}
+                    </span>
+                  </>
+                }
+              />
+            </motion.div>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {principles.values.map((value, index) => {
+                const ValueIcon = valueIcons[index % valueIcons.length];
+                return (
+                  <motion.div key={value.title} {...reveal(index * 0.08)}>
+                    <Card className="flex h-full flex-col p-8 transition-all duration-300 hover:border-lgl-gold/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.06)] motion-safe:hover:-translate-y-1">
+                      <div className="mb-6 flex items-center justify-between">
+                        <span className="text-2xl font-bold tracking-tighter text-lgl-fg/60">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <span className="flex h-11 w-11 items-center justify-center rounded-full border border-lgl-gold/40 bg-lgl-gold/10 text-lgl-gold">
+                          <ValueIcon size={20} />
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
+                        {value.title}
+                      </h3>
+                      <p className="mt-4 text-sm leading-relaxed text-lgl-fg/70">{value.description}</p>
+                    </Card>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
+        </Container>
+      </Section>
+
+      {/* ── Closing CTA ──────────────────────────────────────────── */}
+      <Section theme="light" className="pb-20 pt-4 md:pb-28" style={{ background: "var(--lgl-bg)" }}>
+        <Container>
+          <motion.div
+            {...reveal()}
+            className="lgl-brand-card relative overflow-hidden rounded-[2rem] border border-lgl-gold/25 px-7 py-10 md:px-14 md:py-14"
+          >
+            <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-14">
+              <div>
+                <h2
+                  className="max-w-2xl text-balance text-[clamp(1.75rem,3.6vw,2.75rem)] font-bold leading-[1.08] tracking-[-0.04em] text-lgl-fg"
+                  style={headingFont}
+                >
+                  {cta.title}
+                </h2>
+                <p className="mt-5 max-w-2xl text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{cta.description}</p>
+              </div>
+              <div className="flex flex-col items-start gap-4">
+                <Link href={contactHref} className={`lgl-gold-cta ${pillBase} hover:opacity-85`} style={pillFont}>
+                  {cta.button}
+                  <span aria-hidden="true">→</span>
+                </Link>
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="inline-flex items-center gap-2 text-sm font-medium text-lgl-fg/70 transition-colors hover:text-lgl-gold"
+                >
+                  <MailIcon size={15} className="text-lgl-gold" />
+                  {siteConfig.email}
+                </a>
+              </div>
+            </div>
+          </motion.div>
         </Container>
       </Section>
     </main>
