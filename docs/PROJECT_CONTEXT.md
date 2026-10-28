@@ -108,6 +108,8 @@ Confirmed in source:
   - Page refresh and client route changes reliably load from top (`y = 0`) unless a specific anchor hash (e.g. `#services`, `#our-work`) is intentionally targeted in the URL.
 - Homepage hero refined: removed "The growth system" indicator and decorative line element while rebalancing hero vertical padding to maintain premium visual centering without awkward gaps.
 - Spacing and UX improvements: added `overflow-x: clip` to prevent horizontal jitter on mobile, consistent clearance below the floating pill header on child pages, and proper vertical spacing above carousel controls.
+- Header logo (`components/layout/Header.tsx`): theme-specific portrait mark (`new-logo-readable.png` / `-dark.png`) on the left (inset an extra 116px at ≥1280px); controls on the right; nav centered at ≥1280px. A single portrait mark (theme variants swapped by CSS) is 88/100/128px (base/md/xl) at the top and smoothly shrinks to 60/64/72px after 12px of scroll while the header padding compacts; inner pages use `xl:pt-40` for clearance. Nav and controls are vertically centered on the logo. The fixed header is transparent at the top and gets a full-width `bg-lgl-bg` backdrop (no box, border, or radius) after 12px of scroll or while the mobile menu is open, so content scrolls cleanly beneath it. At ≥1280px the right header column is at least max-content wide so the CTA never wraps.
+- Footer (`components/layout/Footer.tsx`): no logo image; the brand column is a "brand statement" card with the localized `footer.brandTagline` revealed word by word (final word in metallic-gold serif italic, `.lgl-tagline-accent`). The office address lives in `siteConfig.address` (`lib/site.ts`) and is shown, linked to Google Maps, in the footer Office column and in an Office card in the contact page sidebar.
 
 Git state at inspection: pre-existing modification to `.gitignore`; it was not changed for this task. Latest commit shown was `d19e586`.
 
@@ -128,6 +130,7 @@ Planning only; no phase is marked complete based on plans.
 - Vercel deployment existence, environment variable values/scopes, and production behavior are not verified.
 - Firebase sign-in settings, verified admin accounts, service-account permissions, and project alignment are not verified.
 - Public submission abuse controls such as rate limiting/CAPTCHA were not found in the inspected handler; decide whether and how to address in a security-hardening task.
+- Favicon/app icons (`favicon.ico`, `favicon-96x96.png`, `apple-touch-icon.png`, `web-app-manifest-*.png`) contain the wide wordmark letterboxed into a square and are illegible at tab size; no square brand icon exists in `public/`. A designer-supplied square mark is needed.
 
 ## 9. Maintenance Instructions
 

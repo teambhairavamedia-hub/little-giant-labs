@@ -2,7 +2,8 @@
 
 import { Container } from "@/components/layout/Container";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { DocumentIcon, HandshakeIcon, SearchIcon } from "@/components/ui/Icons";
+import { DocumentIcon, HandshakeIcon, PinIcon, SearchIcon } from "@/components/ui/Icons";
+import { siteConfig } from "@/lib/site";
 import { useI18n } from "@/lib/i18n/context";
 
 /* Apply → review → partner, drawn as a connected three-step pictograph. */
@@ -62,7 +63,7 @@ export function ContactPageView() {
 
   return (
     <main className="min-h-screen bg-lgl-bg text-lgl-fg">
-      <section className="relative overflow-hidden border-b border-lgl-line/20 bg-lgl-bg px-6 pb-16 pt-28 md:px-8 md:pb-20 md:pt-36">
+      <section className="relative overflow-hidden border-b border-lgl-line/20 bg-lgl-bg px-6 pb-16 pt-28 md:px-8 md:pb-20 md:pt-36 xl:pt-40">
         <Container className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-12">
           <div>
             <p className="mb-6 text-[11px] font-semibold uppercase tracking-[.28em] text-lgl-gold">
@@ -99,6 +100,30 @@ export function ContactPageView() {
               <div className="mt-10 border-t border-lgl-line/30 pt-5 text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-soft">
                 {dict.contact.sidebar.tagline}
               </div>
+              {/* Office address — opens in Google Maps */}
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.address.full)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-8 flex max-w-sm items-start gap-4 rounded-2xl border border-lgl-line/30 p-5 transition-colors hover:border-lgl-gold/50"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-lgl-gold/30 text-lgl-gold">
+                  <PinIcon size={17} />
+                </span>
+                <span>
+                  <span className="block text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-gold">
+                    {dict.footer.officeHeading}
+                  </span>
+                  <address className="mt-2 text-sm not-italic leading-relaxed text-lgl-soft">
+                    <span className="block font-semibold text-lgl-fg">{siteConfig.address.building}</span>
+                    {siteConfig.address.lines.map((line) => (
+                      <span key={line} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </address>
+                </span>
+              </a>
             </aside>
             <ContactForm />
           </div>

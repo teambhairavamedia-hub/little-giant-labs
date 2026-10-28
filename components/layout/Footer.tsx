@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
 import { Section } from "@/components/ui/Section";
@@ -14,6 +14,12 @@ export function Footer() {
   const pathname = usePathname();
   const { dict, locale } = useI18n();
   const [localTime, setLocalTime] = useState("");
+  const reduceMotion = useReducedMotion();
+
+  const taglineWords = dict.footer.brandTagline.trim().split(/\s+/);
+  const taglineAccent = taglineWords.pop();
+  const wordReveal = { hidden: { opacity: 0, y: "0.45em", filter: "blur(6px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)" } };
+  const wordTransition = { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] as const };
 
   const contactHref = getLocalizedPath("/contact", locale);
   const homePath = getLocalizedPath("/", locale);
@@ -80,30 +86,55 @@ export function Footer() {
         <div className="h-[1px] w-full bg-lgl-fg/5 mb-12" />
 
         {/* Links & Info Columns */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8 items-start mb-28">
-          {/* Col 1: Brand details */}
-          <div className="col-span-2 md:col-span-1 max-w-xs">
-            <div className="flex items-center gap-3 mb-1">
-              <Image
-                src="/new-logo-readable.png"
-                alt="Little Giant Labs logo"
-                width={824}
-                height={1072}
-                className="logo-mark-light h-24 w-auto shrink-0 object-contain sm:h-[7.5rem] md:h-36 lg:h-40"
-              />
-              <Image
-                src="/new-logo-readable-dark.png"
-                alt=""
+        <div className="grid grid-cols-2 gap-12 md:grid-cols-3 md:gap-8 xl:grid-cols-5 items-start mb-28">
+          {/* Col 1: Brand statement card — gold rule draws in, then the tagline rises in word by word */}
+          <motion.div
+            className="lgl-brand-card relative col-span-2 overflow-hidden w-full max-w-lg rounded-3xl border border-lgl-gold/25 p-6 sm:p-7 md:col-span-3 xl:col-span-2 xl:mr-10"
+            initial={reduceMotion ? false : "hidden"}
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+          >
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute right-5 top-4 select-none text-[4.5rem] leading-[0.75] text-lgl-gold/20 sm:right-6 sm:text-[5rem]"
+              style={{ fontFamily: "Georgia, serif" }}
+            >
+              &ldquo;
+            </span>
+            <div className="relative mb-4 flex items-center gap-3">
+              <motion.span
                 aria-hidden="true"
-                width={824}
-                height={1072}
-                className="logo-mark-dark h-24 w-auto shrink-0 object-contain sm:h-[7.5rem] md:h-36 lg:h-40"
+                className="block h-0.5 w-10 origin-left rounded-full bg-gradient-to-r from-lgl-gold to-lgl-gold/0"
+                variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
+                transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
               />
+              <span className="label-eyebrow text-lgl-gold">{siteConfig.name}</span>
             </div>
-            <p className="mt-2 text-[0.875rem] leading-[1.7] text-lgl-fg/80 font-normal">
-              {dict.footer.brandTagline}
-            </p>
-          </div>
+            <motion.p
+              className="relative max-w-[21ch] text-[1.375rem] font-semibold leading-[1.15] tracking-[-0.03em] text-lgl-fg sm:text-[1.625rem] xl:text-[1.75rem]"
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
+              variants={{ visible: { transition: { delayChildren: 0.2, staggerChildren: 0.06 } } }}
+            >
+              {taglineWords.map((word, index) => (
+                <motion.span
+                  key={`${word}-${index}`}
+                  className="mr-[0.26em] inline-block"
+                  variants={wordReveal}
+                  transition={wordTransition}
+                >
+                  {word}
+                </motion.span>
+              ))}
+              <motion.em
+                className="lgl-tagline-accent inline-block text-[1.12em] font-normal tracking-[-0.01em]"
+                style={{ fontFamily: "Georgia, serif" }}
+                variants={wordReveal}
+                transition={wordTransition}
+              >
+                {taglineAccent}
+              </motion.em>
+            </motion.p>
+          </motion.div>
 
           {/* Col 2: Navigation Menu */}
           <div className="flex flex-col gap-1">
@@ -167,18 +198,28 @@ export function Footer() {
             </a>
           </div>
 
-          {/* Col 4: Location & Local Time */}
-          <div className="flex flex-col gap-2">
+          {/* Col 4: Location & Local Time — full row on mobile so the address doesn't wrap awkwardly */}
+          <div className="col-span-2 flex flex-col gap-2 md:col-span-1">
             <p className="label-eyebrow text-lgl-fg/70 mb-2">
               {dict.footer.officeHeading}
             </p>
-            <p
-              className="inline-flex items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/80"
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.address.full)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-start gap-2.5 text-[0.875rem] font-medium leading-[1.6] text-lgl-fg/80 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
-              <PinIcon size={15} className="text-lgl-gold/80" />
-              {dict.footer.location}
-            </p>
+              <PinIcon size={15} className="mt-[0.2rem] shrink-0 text-lgl-gold/80" />
+              <address className="not-italic">
+                <span className="block font-semibold text-lgl-fg">{siteConfig.address.building}</span>
+                {siteConfig.address.lines.map((line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ))}
+              </address>
+            </a>
             {localTime && (
               <p
                 className="inline-flex items-center gap-2.5 text-[0.8125rem] font-medium text-lgl-fg/70 tabular-nums mt-1"
