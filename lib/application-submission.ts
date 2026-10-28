@@ -99,7 +99,8 @@ export async function handleApplicationSubmission(
       return Response.json({ error: "Submit a valid application request." }, { status: 400 });
     }
     const application = await validate(body);
-    submittedValues = Object.values(application).flatMap((value) => Array.isArray(value) ? value : [value]);
+    // Optional answers are null; only submitted strings are candidates for log redaction.
+    submittedValues = Object.values(application).filter((value): value is string => typeof value === "string");
     const requestFingerprintBytea = fingerprintApplication(application);
     const verificationMetadata = createMetadata(undefined, undefined, undefined, idempotencyKey, requestFingerprintBytea);
     submittedValues.push(...getVerificationMetadataForRedaction(verificationMetadata));

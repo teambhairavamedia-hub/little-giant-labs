@@ -430,123 +430,122 @@ export const es: TranslationDictionary = {
   },
   contact: {
     header: {
-      eyebrow: "Little Giant Labs",
-      tagline: "Solicitud de colaboración",
-      titlePart1: "Crecimiento concebido para ",
-      titleEmphasis: "el siguiente nivel",
-      description:
-        "Una conversación reflexiva comienza con contexto. Comparta la situación actual de su empresa, qué obstáculos frenan su crecimiento y hacia dónde proyecta avanzar.",
+      eyebrow: "Empecemos una conversación",
+      title: "Cuéntenos *qué quiere lograr.*",
+      description: "Tanto si está creando una nueva marca como reforzando su posición en el mercado o planificando su próxima campaña, queremos entender su reto.",
     },
     sidebar: {
-      eyebrow: "Un proceso deliberado",
-      title: "La alianza de crecimiento adecuada comienza con las preguntas correctas",
-      description:
-        "Esta solicitud proporciona a nuestro equipo el contexto necesario para evaluar sus objetivos, su entorno operativo y sus expectativas.",
-      tagline: "Intelecto. Medios. Capital.",
+      intro: "Cuéntenos un poco sobre su empresa y en qué necesita ayuda. Usaremos ese contexto para valorar si Little Giant Labs es el socio adecuado para su proyecto.",
+      stepsLabel: "Qué ocurre después",
+      steps: [
+        "Nos cuenta sobre su empresa y sus objetivos.",
+        "Revisamos sus necesidades.",
+        "Nos ponemos en contacto para hablar de los siguientes pasos más adecuados.",
+      ],
+      tagline: "Estrategia de marca · Creatividad · Crecimiento digital",
     },
     form: {
       stepTitles: [
-        "Identidad corporativa y posicionamiento",
-        "Perfil financiero",
-        "Obstáculos estratégicos y expectativas",
-        "Contacto ejecutivo",
+        "Sobre usted",
+        "Su proyecto",
+        "Sobre su empresa",
+        "Presupuesto y plazos",
       ],
       stepAria: "Paso {step} de 4",
       stepPrefix: "Paso",
+      optionalTag: "Opcional",
+      optionalNote: "Opcional: comparta solo lo que quiera.",
+      selectPlaceholder: "Prefiero no decirlo",
       fields: {
-        enterpriseName: {
-          label: "¿Cuál es la razón social o nombre legal de su empresa?",
-          placeholder: "Introduzca el nombre registrado de su empresa",
+        contactName: {
+          label: "Su nombre",
+          placeholder: "Nombre y apellidos",
+        },
+        workEmail: {
+          label: "Correo de trabajo",
+          placeholder: "nombre@empresa.com",
+          hint: "Use su correo de trabajo. No se aceptan direcciones personales como Gmail o Yahoo.",
+          error: "Introduzca un correo de trabajo válido.",
+        },
+        companyName: {
+          label: "Nombre de la empresa o marca",
+          placeholder: "Su empresa o marca",
+        },
+        helpWith: {
+          label: "¿En qué necesita ayuda?",
+          legend: "Ayuda que necesita",
+          options: {
+            "Brand strategy & positioning": "Estrategia y posicionamiento de marca",
+            "Creative & content": "Creatividad y contenido",
+            "Digital marketing & growth": "Marketing digital y crecimiento",
+            "Employer brand & talent communication": "Marca empleadora y comunicación de talento",
+            "Not sure yet / help me decide": "Aún no lo sé / ayúdenme a decidir",
+          },
+        },
+        projectDetails: {
+          label: "Cuéntenos un poco sobre su proyecto",
+          placeholder: "¿Qué quiere lograr y qué se lo está impidiendo?",
+          hint: "Hasta 2.000 caracteres.",
+        },
+        companySize: {
+          label: "Tamaño de la empresa",
+          options: {
+            "1–10 people": "1–10 personas",
+            "11–50 people": "11–50 personas",
+            "51–200 people": "51–200 personas",
+            "201–1,000 people": "201–1.000 personas",
+            "1,000+ people": "Más de 1.000 personas",
+          },
         },
         industry: {
-          label: "¿En qué sector o vertical de la industria aspira a consolidar su liderazgo?",
-          legend: "Sector empresarial",
+          label: "Sector",
           options: {
-            "Enterprise Banking & FinTech": "Banca Corporativa y FinTech",
-            "Heavy Infrastructure & Real Estate": "Infraestructura Pesada y Real Estate",
-            "Premium Consumer Goods (D2C)": "Bienes de Consumo Premium (D2C)",
-            "Venture-Backed Technology": "Tecnología Respaldada por Capital Riesgo",
-            "High-Ticket B2B Services": "Servicios B2B de Alto Valor",
+            "Technology & SaaS": "Tecnología y SaaS",
+            "Financial services & fintech": "Servicios financieros y fintech",
+            "Consumer, retail & D2C": "Consumo, retail y D2C",
+            "Media, entertainment & music": "Medios, entretenimiento y música",
+            "Real estate & infrastructure": "Inmobiliario e infraestructuras",
+            "Professional & B2B services": "Servicios profesionales y B2B",
+            "Healthcare & life sciences": "Salud y ciencias de la vida",
+            "Education": "Educación",
+            "Other": "Otro",
           },
         },
-        revenue: {
-          label: "¿Cuál es su facturación en los últimos 12 meses (TTM)?",
-          legend: "Facturación últimos 12 meses",
+        budget: {
+          label: "Rango de presupuesto",
           options: {
-            "Under $1 Million": "Menos de 1 millón de dólares",
-            "$1M – $5 Million": "Entre 1 y 5 millones de dólares",
-            "$5M – $20 Million": "Entre 5 y 20 millones de dólares",
-            "$20 Million+": "Más de 20 millones de dólares",
+            "Under $5,000": "Menos de 5.000 $",
+            "$5,000 – $15,000": "5.000 – 15.000 $",
+            "$15,000 – $50,000": "15.000 – 50.000 $",
+            "$50,000+": "Más de 50.000 $",
+            "Not sure yet": "Aún no lo sé",
           },
         },
-        acquisitionSpend: {
-          label: "¿Cuál es su inversión mensual asignada actualmente a captación de pago?",
-          legend: "Gasto mensual en captación",
+        timeline: {
+          label: "Plazo deseado",
           options: {
-            "Under $10,000 / month": "Menos de 10.000 $ / mes",
-            "$10,000 – $50,000 / month": "10.000 $ – 50.000 $ / mes",
-            "$50,000 – $150,000 / month": "50.000 $ – 150.000 $ / mes",
-            "$150,000+ / month": "Más de 150.000 $ / mes",
+            "As soon as possible": "Lo antes posible",
+            "Within 1–3 months": "En 1–3 meses",
+            "Within 3–6 months": "En 3–6 meses",
+            "Flexible / not decided": "Flexible / sin decidir",
           },
-          financialNote:
-            "La información financiera se destina exclusivamente a la evaluación interna. No condiciona la posibilidad de enviar la solicitud.",
-        },
-        bottleneck: {
-          label: "¿Cuál es el principal obstáculo estructural que limita su crecimiento digital actual?",
-          legend: "Principal obstáculo de crecimiento",
-          options: {
-            "Ad platform algorithmic fatigue & dropping ROAS":
-              "Fatiga algorítmica en plataformas publicitarias y caída del ROAS",
-            "Inability to produce high-retention visual media at scale":
-              "Incapacidad para producir contenido audiovisual de alta retención a escala",
-            "Lack of advanced attribution models and data tracking":
-              "Carencia de modelos avanzados de atribución y seguimiento de datos",
-            "Sub-optimal customer lifetime value (LTV) and backend CRM systems":
-              "Valor de vida del cliente (LTV) deficiente y sistemas CRM insuficientes",
-          },
-        },
-        partnership: {
-          label:
-            "Operamos estrictamente como socios de crecimiento institucional mediante honorarios mensuales de alto valor más incentivos por resultados. ¿Busca un proveedor de ejecución tradicional o dispone del capital necesario para invertir en una arquitectura de crecimiento de primer nivel?",
-          legend: "Expectativas de colaboración",
-          options: {
-            "We are looking for a cheap, hands-off execution vendor":
-              "Buscamos un proveedor de ejecución económico que requiera poca dedicación por nuestra parte",
-            "We are prepared to invest premium capital for institutional scale and long-term partnership":
-              "Estamos preparados para invertir capital premium hacia una escala institucional y una colaboración a largo plazo",
-          },
-        },
-        corporateEmail: {
-          instruction:
-            "Facilite la dirección de correo corporativo directo y el perfil de LinkedIn del responsable principal de la toma de decisiones (CEO, CMO o Socio Director).",
-          label: "A. Correo electrónico corporativo",
-          placeholder: "nombre@empresa.com",
-          hint: "Utilice el dominio corporativo de su organización. No se aceptan cuentas personales como Gmail o Yahoo.",
-          error: "Introduzca una dirección corporativa válida. No se admiten cuentas de Gmail ni Yahoo.",
-        },
-        linkedin: {
-          label: "B. URL del perfil de LinkedIn",
-          placeholder: "https://www.linkedin.com/in/su-perfil",
-          error: "Introduzca una URL válida de perfil de LinkedIn, como https://www.linkedin.com/in/su-perfil.",
         },
       },
-      validationError: "Complete los campos obligatorios y revise sus respuestas para continuar.",
-      serverError: "No pudimos enviar su solicitud. Por favor, inténtelo de nuevo más tarde.",
+      validationError: "Complete los campos obligatorios para continuar.",
+      serverError: "No pudimos enviar su consulta. Inténtelo de nuevo más tarde.",
       back: "← Atrás",
       continue: "Continuar →",
-      submit: "Enviar Solicitud",
+      submit: "Enviar su Consulta",
       submitting: "Enviando…",
     },
   },
   applicationReceived: {
-    eyebrow: "Solicitud recibida",
+    eyebrow: "Consulta recibida",
     headlinePart1: "El siguiente paso ",
     headlineEmphasis: "es nuestro",
-    body1:
-      "Su solicitud se ha registrado correctamente. Nuestro equipo directivo examinará los objetivos de expansión, el contexto financiero y los requisitos estratégicos de su organización.",
-    body2:
-      "Si identificamos una sólida afinidad con nuestro modelo de trabajo, nos pondremos en contacto con usted para definir los siguientes pasos.",
-    tagline: "Little Giant Labs — Intelecto. Medios. Capital.",
+    body1: "Gracias por ponerse en contacto. Hemos recibido su consulta y revisaremos su empresa, sus objetivos y sus necesidades.",
+    body2: "Nos pondremos en contacto para hablar de los siguientes pasos más adecuados.",
+    tagline: "Little Giant Labs — Estrategia de marca · Creatividad · Crecimiento digital",
     returnHome: "Volver a la página principal ↗",
   },
   workUnavailable: {
@@ -587,14 +586,14 @@ export const es: TranslationDictionary = {
     ctaEyebrow: "Iniciemos la Conversación",
     ctaHeading1: "Creemos algo",
     ctaHeading2: "extraordinario",
-    brandTagline: "Motor creativo cinematográfico y de crecimiento de rendimiento para marcas en crecimiento.",
+    brandTagline: "Un socio estratégico de marca y creatividad que une visión de negocio, storytelling convincente y ejecución digital.",
     navHeading: "Navegación",
     connectHeading: "Conectar",
     officeHeading: "Oficina",
     location: "PUNE, IN",
     localTimePrefix: "Hora local:",
     copyright: "Little Giant Labs. Todos los derechos reservados.",
-    slogan: "Diseñado para el movimiento, la historia y la escala.",
+    slogan: "Estrategia de marca · Creatividad · Crecimiento digital",
   },
   seo: {
     services: {

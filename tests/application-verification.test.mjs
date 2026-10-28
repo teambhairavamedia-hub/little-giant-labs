@@ -14,14 +14,15 @@ import {
 } from "../lib/application-submission.ts";
 
 const validatedApplication = {
-  legal_name: "Example Corporation",
-  industry_vertical: "Enterprise Banking & FinTech",
-  ttm_revenue: "$1M – $5 Million",
-  monthly_ad_spend: "$10,000 – $50,000 / month",
-  growth_bottleneck: "Ad platform algorithmic fatigue & dropping ROAS",
-  partnership_readiness: "We are prepared to invest premium capital for institutional scale and long-term partnership",
+  contact_name: "Asha Rao",
   decision_maker_email: "ceo@example.org",
-  decision_maker_linkedin: "https://www.linkedin.com/in/example-ceo",
+  legal_name: "Example Corporation",
+  help_with: "Creative & content",
+  project_details: "Refresh our campaign creative for the next launch.",
+  company_size: "51–200 people",
+  industry_vertical: null,
+  budget_range: "$15,000 – $50,000",
+  timeline: null,
   qualification_status: "pending_review",
 };
 
@@ -57,14 +58,15 @@ test("verification expiry is exactly 24 hours after token creation time", () => 
 test("RPC arguments map validated fields and serialize SHA-256 as PostgreSQL bytea hex", () => {
   const args = buildCreateApplicationWithEmailJobArgs(validatedApplication, fixedMetadata);
   assert.deepEqual(args, {
-    p_legal_name: validatedApplication.legal_name,
-    p_industry_vertical: validatedApplication.industry_vertical,
-    p_ttm_revenue: validatedApplication.ttm_revenue,
-    p_monthly_ad_spend: validatedApplication.monthly_ad_spend,
-    p_growth_bottleneck: validatedApplication.growth_bottleneck,
-    p_partnership_readiness: validatedApplication.partnership_readiness,
+    p_contact_name: validatedApplication.contact_name,
     p_decision_maker_email: validatedApplication.decision_maker_email,
-    p_decision_maker_linkedin: validatedApplication.decision_maker_linkedin,
+    p_legal_name: validatedApplication.legal_name,
+    p_help_with: validatedApplication.help_with,
+    p_project_details: validatedApplication.project_details,
+    p_company_size: validatedApplication.company_size,
+    p_industry_vertical: null,
+    p_budget_range: validatedApplication.budget_range,
+    p_timeline: null,
     p_token_hash: fixedMetadata.tokenHashBytea,
     p_token_expires_at: fixedMetadata.tokenExpiresAt,
     p_encrypted_token_payload: fixedMetadata.encryptedTokenPayloadBytea,

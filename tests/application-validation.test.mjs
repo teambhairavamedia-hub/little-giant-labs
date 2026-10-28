@@ -6,60 +6,78 @@ import { createEmailDomainEligibilityChecker } from "../lib/email-domain-eligibi
 import { EmailDatasetInitializationError, EmailEligibilityError, EMAIL_ELIGIBILITY_MESSAGES } from "../lib/email-eligibility.ts";
 import { POST as checkEmailRequest } from "../app/api/applications/email-eligibility/route.ts";
 import { readFile } from "node:fs/promises";
+import { APPLICATION_LIMITS, applicationOptions } from "../lib/application-options.ts";
 
 const idempotencyHeaders = { "content-type": "application/json", "idempotency-key": `application-submission:${"ab".repeat(32)}` };
 process.env.EMAIL_TOKEN_ENCRYPTION_KEY = Buffer.alloc(32, 0x41).toString("base64");
 
 const validInput = () => ({
-  legal_name: "Example Corporation",
-  industry_vertical: "Enterprise Banking & FinTech",
-  ttm_revenue: "$1M – $5 Million",
-  monthly_ad_spend: "$10,000 – $50,000 / month",
-  growth_bottleneck: "Ad platform algorithmic fatigue & dropping ROAS",
-  partnership_readiness: "We are prepared to invest premium capital for institutional scale and long-term partnership",
+  contact_name: "  Asha Rao ",
   decision_maker_email: "  CEO@Example.com ",
-  decision_maker_linkedin: "https://www.linkedin.com/in/example-ceo",
+  legal_name: "Example Corporation",
+  help_with: "Brand strategy & positioning",
+  project_details: "  We are launching a new product line and need positioning. ",
 });
 
-test("valid application is pending review and normalized", async () => {
+test("valid enquiry is pending review, trimmed and normalized", async () => {
   const result = await validateApplication(validInput());
   assert.equal(result.qualification_status, "pending_review");
   assert.equal("rejection_reasons" in result, false);
   assert.equal(result.decision_maker_email, "ceo@example.com");
+  assert.equal(result.contact_name, "Asha Rao");
+  assert.equal(result.project_details, "We are launching a new product line and need positioning.");
 });
 
-test("all previously disqualifying answers and their combination remain pending review", async () => {
-  const cases = [
-    { ttm_revenue: "Under $1 Million" },
-    { monthly_ad_spend: "Under $10,000 / month" },
-    { partnership_readiness: "We are looking for a cheap, hands-off execution vendor" },
-    { ttm_revenue: "Under $1 Million", monthly_ad_spend: "Under $10,000 / month", partnership_readiness: "We are looking for a cheap, hands-off execution vendor" },
-  ];
-  for (const answers of cases) {
-    const result = await validateApplication({ ...validInput(), ...answers });
-    assert.equal(result.qualification_status, "pending_review");
-    for (const [key, value] of Object.entries(answers)) assert.equal(result[key], value);
-    assert.equal("rejection_reasons" in result, false);
+test("company size, industry, budget and timeline are optional and stored as null when skipped", async () => {
+  for (const blanks of [{}, { company_size: "", industry_vertical: "  ", budget_range: null, timeline: "" }]) {
+    const result = await validateApplication({ ...validInput(), ...blanks });
+    for (const field of ["company_size", "industry_vertical", "budget_range", "timeline"]) assert.equal(result[field], null, field);
+  }
+  const answered = await validateApplication({
+    ...validInput(),
+    company_size: "11–50 people", industry_vertical: " Technology & SaaS ", budget_range: "$5,000 – $15,000", timeline: "Within 1–3 months",
+  });
+  assert.equal(answered.company_size, "11–50 people");
+  assert.equal(answered.industry_vertical, "Technology & SaaS");
+  assert.equal(answered.budget_range, "$5,000 – $15,000");
+  assert.equal(answered.timeline, "Within 1–3 months");
+});
+
+test("every listed option is accepted for each answer field", async () => {
+  for (const [field, options] of Object.entries(applicationOptions)) {
+    for (const option of options) {
+      const result = await validateApplication({ ...validInput(), [field]: option });
+      assert.equal(result[field], option);
+    }
   }
 });
 
-test("legal name is trimmed and accepts up to 255 characters", async () => {
+test("text answers are trimmed and limited to the database lengths", async () => {
   for (const length of [200, 255]) {
     const result = await validateApplication({ ...validInput(), legal_name: ` ${"x".repeat(length)} ` });
     assert.equal(result.legal_name.length, length);
   }
   await assert.rejects(validateApplication({ ...validInput(), legal_name: "x".repeat(256) }), ValidationError);
+  await assert.rejects(validateApplication({ ...validInput(), contact_name: "x".repeat(APPLICATION_LIMITS.contactName + 1) }), ValidationError);
+  const longest = await validateApplication({ ...validInput(), project_details: "y".repeat(APPLICATION_LIMITS.projectDetails) });
+  assert.equal(longest.project_details.length, APPLICATION_LIMITS.projectDetails);
+  await assert.rejects(validateApplication({ ...validInput(), project_details: "y".repeat(APPLICATION_LIMITS.projectDetails + 1) }), ValidationError);
+  assert.deepEqual(APPLICATION_LIMITS, { contactName: 120, companyName: 255, projectDetails: 2000 });
   const form = await readFile(new URL("../components/contact/ContactForm.tsx", import.meta.url), "utf8");
-  assert.match(form, /maxLength=\{255\}/);
-  assert.match(form, /values\.enterpriseName\.trim\(\)\.length <= 255/);
+  assert.match(form, /maxLength=\{APPLICATION_LIMITS\.companyName\}/);
+  assert.match(form, /maxLength=\{APPLICATION_LIMITS\.projectDetails\}/);
 });
 
-test("invalid enumerations and missing required fields are rejected", async () => {
-  await assert.rejects(validateApplication({ ...validInput(), industry_vertical: "Other" }), ValidationError);
-  const missing = validInput();
-  delete missing.legal_name;
-  await assert.rejects(validateApplication(missing), ValidationError);
-  await assert.rejects(validateApplication({ ...validInput(), legal_name: "   " }), ValidationError);
+test("invalid answers and missing required fields are rejected", async () => {
+  await assert.rejects(validateApplication({ ...validInput(), help_with: "Something else" }), ValidationError);
+  await assert.rejects(validateApplication({ ...validInput(), industry_vertical: "Bogus" }), ValidationError);
+  await assert.rejects(validateApplication({ ...validInput(), budget_range: 5000 }), ValidationError);
+  for (const field of ["contact_name", "decision_maker_email", "legal_name", "help_with", "project_details"]) {
+    const missing = validInput();
+    delete missing[field];
+    await assert.rejects(validateApplication(missing), ValidationError, field);
+    await assert.rejects(validateApplication({ ...validInput(), [field]: "   " }), ValidationError, field);
+  }
   await assert.rejects(validateApplication(null), ValidationError);
   await assert.rejects(validateApplication([]), ValidationError);
   await assert.rejects(validateApplication("application"), ValidationError);
@@ -148,28 +166,23 @@ test("dataset initialization failure is cached as failure and cannot permit subm
   assert.doesNotMatch(await response.text(), /private package loading detail/);
 });
 
-test("malformed or non-profile LinkedIn URLs are rejected", async () => {
-  for (const linkedin of ["not a url", "http://linkedin.com/in/a", "https://linkedin.com/company/acme", "https://linkedin.com.evil.test/in/a"]) {
-    await assert.rejects(validateApplication({ ...validInput(), decision_maker_linkedin: linkedin }), ValidationError);
-  }
-});
-
 test("browser-supplied qualification fields cannot override pending review", async () => {
   const result = await validateApplication({ ...validInput(), qualification_status: "rejected", rejection_reasons: ["fake"] });
   assert.equal(result.qualification_status, "pending_review");
   assert.equal("rejection_reasons" in result, false);
 });
 
-test("successful endpoint saves previously disqualifying answers for administrator review", async () => {
+test("successful endpoint saves the enquiry for administrator review with skipped answers as null", async () => {
   const saved = [];
   const response = await handleApplicationSubmission(new Request("https://site.test/api/applications", {
     method: "POST", headers: { ...idempotencyHeaders, origin: "https://site.test" },
-    body: JSON.stringify({ ...validInput(), ttm_revenue: "Under $1 Million" }),
+    body: JSON.stringify({ ...validInput(), budget_range: "Not sure yet", timeline: "" }),
   }), async (application) => { saved.push(application); });
   assert.equal(response.status, 201);
   assert.equal(saved.length, 1);
   assert.equal(saved[0].qualification_status, "pending_review");
-  assert.equal(saved[0].ttm_revenue, "Under $1 Million");
+  assert.equal(saved[0].budget_range, "Not sure yet");
+  assert.equal(saved[0].timeline, null);
   assert.equal("rejection_reasons" in saved[0], false);
 });
 
