@@ -75,6 +75,23 @@ export interface TranslationDictionary {
       eyebrow: string;
       title: string;
       description: string;
+      secondaryCta: string;
+    };
+    story: {
+      eyebrow: string;
+      title: string;
+      paragraphs: string[];
+      factsLabel: string;
+      facts: Array<{
+        label: string;
+        value: string;
+      }>;
+    };
+    purpose: {
+      missionLabel: string;
+      mission: string;
+      beliefLabel: string;
+      belief: string;
     };
     capabilities: {
       eyebrow: string;
@@ -82,6 +99,10 @@ export interface TranslationDictionary {
       titleItalic: string;
       deliverablesBadge: string;
       startProject: string;
+      lead: string;
+      paragraphs: string[];
+      capabilitiesLabel: string;
+      outcomeLabel: string;
       services: Array<{
         title: string;
         description: string;
@@ -98,6 +119,20 @@ export interface TranslationDictionary {
         title: string;
         description: string;
       }>;
+    };
+    approach: {
+      eyebrow: string;
+      title: string;
+      paragraphs: string[];
+      steps: Array<{
+        title: string;
+        description: string;
+      }>;
+    };
+    cta: {
+      title: string;
+      description: string;
+      button: string;
     };
   };
   contact: {

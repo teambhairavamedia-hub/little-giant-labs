@@ -87,11 +87,17 @@ export function Header() {
   const fgColor = "var(--lgl-nav-fg)";
   const fgMuted = "var(--lgl-nav-muted)";
 
-  /* Portrait mark (824×1072): one fixed size per breakpoint so the navbar never resizes while scrolling */
-  const logoClass =
-    "h-[4.5rem] w-auto max-w-full flex-none object-contain transition-transform duration-300 group-hover:scale-105 md:h-20 xl:h-24";
-  /* Rendered widths are ~55/62/74px, so request a small optimized variant instead of the 824px source */
-  const logoSizes = "(min-width: 1280px) 74px, 62px";
+  /* Logo sizes are fixed per breakpoint (never changed by scrolling), so the navbar height stays constant.
+     Below 1280px the horizontal wordmark (880×448) is used: its lettering fills ~77% of its height, versus
+     ~11% per line in the portrait mark, so it reads far larger in a compact mobile header.
+     At ≥1280px the portrait mark (824×1072) keeps the existing desktop layout. */
+  const logoImageClass =
+    "w-auto max-w-full flex-none object-contain transition-transform duration-300 group-hover:scale-105";
+  const wordmarkClass = `${logoImageClass} h-16 min-[375px]:h-[4.5rem] md:h-20`;
+  const portraitClass = `${logoImageClass} h-24`;
+  /* Request small optimized variants matching the rendered widths instead of the full-size sources */
+  const wordmarkSizes = "(min-width: 768px) 157px, (min-width: 375px) 141px, 126px";
+  const portraitSizes = "74px";
 
   return (
     <>
@@ -109,25 +115,51 @@ export function Header() {
               aria-label="Little Giant Labs home"
               className="group col-start-1 row-start-1 flex w-max shrink-0 items-center justify-self-start transition-opacity hover:opacity-75 xl:ml-29"
             >
-              <Image
-                src="/new-logo-readable.png"
-                alt="Little Giant Labs logo"
-                width={824}
-                height={1072}
-                sizes={logoSizes}
-                priority
-                className={`logo-mark-light ${logoClass}`}
-              />
-              <Image
-                src="/new-logo-readable-dark.png"
-                alt=""
-                aria-hidden="true"
-                width={824}
-                height={1072}
-                sizes={logoSizes}
-                priority
-                className={`logo-mark-dark ${logoClass}`}
-              />
+              {/* Mobile, tablet and laptop: horizontal wordmark */}
+              <span className="flex xl:hidden">
+                <Image
+                  src="/logo.png"
+                  alt="Little Giant Labs logo"
+                  width={880}
+                  height={448}
+                  sizes={wordmarkSizes}
+                  priority
+                  className={`logo-mark-light ${wordmarkClass}`}
+                />
+                <Image
+                  src="/logo-dark.png"
+                  alt=""
+                  aria-hidden="true"
+                  width={880}
+                  height={448}
+                  sizes={wordmarkSizes}
+                  priority
+                  className={`logo-mark-dark ${wordmarkClass}`}
+                />
+              </span>
+              {/* Desktop: portrait mark */}
+              <span className="hidden xl:flex">
+                <Image
+                  src="/new-logo-readable.png"
+                  alt=""
+                  aria-hidden="true"
+                  width={824}
+                  height={1072}
+                  sizes={portraitSizes}
+                  priority
+                  className={`logo-mark-light ${portraitClass}`}
+                />
+                <Image
+                  src="/new-logo-readable-dark.png"
+                  alt=""
+                  aria-hidden="true"
+                  width={824}
+                  height={1072}
+                  sizes={portraitSizes}
+                  priority
+                  className={`logo-mark-dark ${portraitClass}`}
+                />
+              </span>
             </Link>
 
             {/* Desktop nav — center, nudged ~0.5cm left */}
