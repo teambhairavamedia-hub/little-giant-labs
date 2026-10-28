@@ -22,6 +22,7 @@ export interface TranslationDictionary {
       titlePart1: string;
       titleEmphasis: string;
       titlePart2: string;
+      tagline: string;
       intro: string;
       discussProject: string;
       exploreWork: string;
@@ -39,11 +40,52 @@ export interface TranslationDictionary {
         description: string;
       }>;
       transition: string;
+      knowMore: string;
       ariaServices: string;
       prevService: string;
       nextService: string;
       chooseService: string;
       carouselControls: string;
+    };
+    whatWeDo: {
+      eyebrow: string;
+      titlePart1: string;
+      titleEmphasis: string;
+      subheading: string;
+      items: Array<{
+        title: string;
+        description: string;
+        alt: string;
+      }>;
+      exploreLabel: string;
+      ctaTitle: string;
+      ctaText: string;
+      ctaButton: string;
+    };
+    why: {
+      eyebrow: string;
+      titlePart1: string;
+      titleEmphasis: string;
+      intro: string;
+      points: Array<{
+        title: string;
+        description: string;
+      }>;
+    };
+    process: {
+      eyebrow: string;
+      titlePart1: string;
+      titleEmphasis: string;
+      intro: string;
+      steps: Array<{
+        title: string;
+        description: string;
+      }>;
+    };
+    finalCta: {
+      title: string;
+      text: string;
+      button: string;
     };
     work: {
       eyebrow: string;
@@ -79,7 +121,6 @@ export interface TranslationDictionary {
     };
     story: {
       eyebrow: string;
-      title: string;
       paragraphs: string[];
       factsLabel: string;
       facts: Array<{
@@ -129,11 +170,35 @@ export interface TranslationDictionary {
         description: string;
       }>;
     };
-    cta: {
+    engagement: {
+      eyebrow: string;
       title: string;
       description: string;
+      options: Array<{
+        title: string;
+        description: string;
+      }>;
+    };
+    cta: {
+      title: string;
+      paragraphs: string[];
       button: string;
     };
+  };
+  servicesPage: {
+    jumpLabel: string;
+    helpLabel: string;
+    outcomeLabel: string;
+    fitLabel: string;
+    items: Array<{
+      label: string;
+      title: string;
+      intro: string;
+      help: string[];
+      outcome: string;
+      fit: string;
+      cta: string;
+    }>;
   };
   contact: {
     header: {
@@ -257,6 +322,7 @@ export interface TranslationDictionary {
   seo: {
     home: { title: string; description: string };
     about: { title: string; description: string };
+    services: { title: string; description: string };
     contact: { title: string; description: string };
     work: { title: string; description: string };
     applicationReceived: { title: string; description: string };

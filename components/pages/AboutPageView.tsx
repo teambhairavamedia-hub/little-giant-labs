@@ -10,20 +10,20 @@ import { Card } from "@/components/ui/Card";
 import {
   ChartIcon,
   CompassIcon,
-  FilmIcon,
   GlobeIcon,
   LayersIcon,
-  LoopIcon,
   MailIcon,
   PenToolIcon,
+  SearchIcon,
   SparkIcon,
 } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
 import { siteConfig } from "@/lib/site";
 
-const valueIcons = [FilmIcon, ChartIcon, LoopIcon];
-const stepIcons = [CompassIcon, PenToolIcon, LayersIcon, GlobeIcon];
+const valueIcons = [SearchIcon, CompassIcon, LayersIcon, ChartIcon];
+const stepIcons = [SearchIcon, CompassIcon, PenToolIcon, GlobeIcon];
+const stageIcons = [SparkIcon, ChartIcon, LayersIcon];
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -103,7 +103,7 @@ function SectionHeading({
   className = "",
 }: {
   eyebrow: string;
-  title: ReactNode;
+  title?: ReactNode;
   align?: "left" | "center";
   className?: string;
 }) {
@@ -114,12 +114,14 @@ function SectionHeading({
         <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-lgl-gold to-lgl-gold/0" />
         {eyebrow}
       </p>
-      <h2
-        className="mt-5 text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-bold leading-[1.04] tracking-[-0.04em] text-lgl-fg"
-        style={headingFont}
-      >
-        {title}
-      </h2>
+      {title && (
+        <h2
+          className="mt-5 text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-bold leading-[1.04] tracking-[-0.04em] text-lgl-fg"
+          style={headingFont}
+        >
+          {title}
+        </h2>
+      )}
     </div>
   );
 }
@@ -127,7 +129,7 @@ function SectionHeading({
 export function AboutPageView() {
   const { dict, locale } = useI18n();
   const reduceMotion = useReducedMotion();
-  const { header, story, purpose, capabilities, approach, principles, cta } = dict.about;
+  const { header, story, purpose, capabilities, approach, engagement, principles, cta } = dict.about;
   const contactHref = getLocalizedPath("/contact", locale);
 
 
@@ -189,34 +191,21 @@ export function AboutPageView() {
         style={{ background: "var(--lgl-section)", color: "var(--lgl-fg)" }}
       >
         <Container>
-          <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)] gap-12 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,0.85fr)] lg:gap-16">
-            <motion.div {...reveal()}>
-              <SectionHeading eyebrow={story.eyebrow} title={accentTitle(story.title)} />
-              <div className="mt-8 space-y-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
-                {story.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+          <motion.div {...reveal()} className="mx-auto max-w-4xl">
+            <SectionHeading eyebrow={story.eyebrow} />
+            <div className="mt-8 space-y-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+              {story.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+              <ul className="space-y-1">
+                {story.facts.map((fact) => (
+                  <li key={fact.label}>
+                    <span className="font-semibold text-lgl-fg">{fact.label}:</span> {fact.value}
+                  </li>
                 ))}
-              </div>
-            </motion.div>
-
-            <motion.aside {...reveal(0.1)} className="lg:sticky lg:top-36 lg:self-start">
-              <div className="lgl-brand-card rounded-3xl border border-lgl-gold/25 p-7 md:p-8">
-                <p className="label-eyebrow text-lgl-gold">{story.factsLabel}</p>
-                <dl className="mt-6 divide-y divide-lgl-fg/10">
-                  {story.facts.map((fact) => (
-                    <div key={fact.label} className="py-4 first:pt-0 last:pb-0">
-                      <dt className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-lgl-fg/55">
-                        {fact.label}
-                      </dt>
-                      <dd className="mt-1.5 text-base font-semibold leading-snug text-lgl-fg" style={headingFont}>
-                        {fact.value}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            </motion.aside>
-          </div>
+              </ul>
+            </div>
+          </motion.div>
         </Container>
       </Section>
 
@@ -230,10 +219,7 @@ export function AboutPageView() {
                   <CompassIcon size={22} />
                 </span>
                 <p className="label-eyebrow mt-7 text-lgl-gold">{purpose.missionLabel}</p>
-                <p
-                  className="mt-4 text-balance text-xl font-semibold leading-[1.35] tracking-[-0.02em] text-lgl-fg md:text-2xl"
-                  style={headingFont}
-                >
+                <p className="mt-4 text-lg leading-[1.7] text-lgl-fg md:text-xl">
                   {purpose.mission}
                 </p>
               </Card>
@@ -244,10 +230,7 @@ export function AboutPageView() {
                   <SparkIcon size={22} />
                 </span>
                 <p className="label-eyebrow mt-7 text-lgl-gold">{purpose.beliefLabel}</p>
-                <p
-                  className="mt-4 text-balance text-xl italic leading-[1.4] text-lgl-fg md:text-2xl"
-                  style={{ fontFamily: "Georgia, serif" }}
-                >
+                <p className="mt-4 text-lg leading-[1.7] text-lgl-fg md:text-xl">
                   {purpose.belief}
                 </p>
               </Card>
@@ -266,7 +249,7 @@ export function AboutPageView() {
         <Container>
           <motion.div {...reveal()}>
             <SectionHeading eyebrow={capabilities.eyebrow} title={capabilities.lead} />
-            <div className="mt-8 grid gap-6 text-base leading-[1.8] text-lgl-fg/75 md:grid-cols-3 md:gap-10">
+            <div className="mt-8 grid gap-6 text-justify text-base leading-[1.8] text-lgl-fg/75 [hyphens:auto] lg:grid-cols-3 lg:gap-10">
               {capabilities.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -278,22 +261,26 @@ export function AboutPageView() {
         </Container>
       </Section>
 
-      {/* ── How we help brands grow ──────────────────────────────── */}
+      {/* ── How we work ──────────────────────────────────────────── */}
       <Section theme="light" className="py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
         <Container>
           {/* Centred: heading, lead paragraph, gold divider, supporting paragraphs */}
           <motion.div {...reveal()} className="mx-auto flex max-w-3xl flex-col items-center text-center">
             <SectionHeading eyebrow={approach.eyebrow} title={accentTitle(approach.title)} align="center" />
             <p className="mt-8 text-lg leading-[1.7] text-lgl-fg md:text-xl">{approach.paragraphs[0]}</p>
-            <span aria-hidden="true" className="mt-8 h-0.5 w-16 rounded-full bg-gradient-to-r from-lgl-gold/0 via-lgl-gold to-lgl-gold/0" />
-            <div className="mt-8 max-w-2xl space-y-4 text-base leading-[1.8] text-lgl-fg/70">
-              {approach.paragraphs.slice(1).map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
+            {approach.paragraphs.length > 1 && (
+              <>
+                <span aria-hidden="true" className="mt-8 h-0.5 w-16 rounded-full bg-gradient-to-r from-lgl-gold/0 via-lgl-gold to-lgl-gold/0" />
+                <div className="mt-8 max-w-2xl space-y-4 text-base leading-[1.8] text-lgl-fg/70">
+                  {approach.paragraphs.slice(1).map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              </>
+            )}
           </motion.div>
 
-          {/* Strategy → creative direction → content → channels */}
+          {/* Understand → position → create → activate & learn */}
           <ol className="relative mt-12 grid gap-5 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-6">
             <span
               aria-hidden="true"
@@ -321,9 +308,46 @@ export function AboutPageView() {
               );
             })}
           </ol>
+        </Container>
+      </Section>
 
-          {/* Principles */}
-          <div className="mt-20 border-t border-lgl-fg/10 pt-16 md:mt-24 md:pt-20">
+      {/* ── Engagement options ───────────────────────────────────── */}
+      <Section
+        theme="light"
+        className="border-y border-lgl-fg/10 py-16 md:py-24"
+        style={{ background: "var(--lgl-section)" }}
+      >
+        <Container>
+          <motion.div {...reveal()} className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
+            <SectionHeading eyebrow={engagement.eyebrow} title={engagement.title} />
+            <p className="text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{engagement.description}</p>
+          </motion.div>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {engagement.options.map((option, index) => {
+              const StageIcon = stageIcons[index % stageIcons.length];
+              return (
+                <motion.div key={option.title} {...reveal(index * 0.08)}>
+                  <Card className="relative flex h-full flex-col overflow-hidden p-8 transition-all duration-300 hover:border-lgl-gold/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.06)] motion-safe:hover:-translate-y-1">
+                    <span aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-lgl-gold via-lgl-gold/40 to-lgl-gold/0" />
+                    <span className="flex h-11 w-11 items-center justify-center rounded-full border border-lgl-gold/40 bg-lgl-gold/10 text-lgl-gold">
+                      <StageIcon size={20} />
+                    </span>
+                    <h3 className="mt-6 text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
+                      {option.title}
+                    </h3>
+                    <p className="mt-4 text-sm leading-relaxed text-lgl-fg/70">{option.description}</p>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ── Principles ───────────────────────────────────────────── */}
+      <Section theme="light" className="py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
+        <Container>
+          <div>
             <motion.div {...reveal()}>
               <SectionHeading
                 eyebrow={principles.eyebrow}
@@ -338,7 +362,7 @@ export function AboutPageView() {
                 }
               />
             </motion.div>
-            <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
               {principles.values.map((value, index) => {
                 const ValueIcon = valueIcons[index % valueIcons.length];
                 return (
@@ -380,7 +404,11 @@ export function AboutPageView() {
                 >
                   {cta.title}
                 </h2>
-                <p className="mt-5 max-w-2xl text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{cta.description}</p>
+                <div className="mt-5 max-w-2xl space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+                  {cta.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
               </div>
               <div className="flex flex-col items-start gap-4">
                 <Link href={contactHref} className={`lgl-gold-cta ${pillBase} hover:opacity-85`} style={pillFont}>

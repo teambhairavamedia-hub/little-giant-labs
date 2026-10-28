@@ -18,13 +18,14 @@ export const de: TranslationDictionary = {
   },
   home: {
     hero: {
-      eyebrow: "Intellekt. Medien. Kapital.",
-      titlePart1: "Wir erschaffen digitale Monopole für führende ",
-      titleEmphasis: "Marken",
-      titlePart2: "",
+      eyebrow: "Markenstrategie · Kreation · Digitales Wachstum",
+      titlePart1: "Machen Sie Ihre Marke ",
+      titleEmphasis: "bedeutsam",
+      titlePart2: ".",
+      tagline: "Strategie, die sie formt. Kreativität, die sie lebendig macht. Digitales, das sie voranbringt.",
       intro:
-        "Ein ganzheitliches Wachstumslabor, das fundierte Datenanalyse, wirkungsstarke audiovisuelle Medien und KI-gestützte Lebenszyklus-Automatisierung vereint.",
-      discussProject: "Projekt Besprechen",
+        "Wir helfen Start-ups, wachsenden Unternehmen und etablierten Konzernen, ihren Wert in klare Positionierung, überzeugende Kommunikation und bedeutsame Verbindungen zu ihren Zielgruppen zu verwandeln.",
+      discussProject: "Ihre Herausforderung Besprechen",
       exploreWork: "Unsere Arbeiten Entdecken",
       growthSystem: "Das Wachstumssystem",
     },
@@ -57,17 +58,103 @@ export const de: TranslationDictionary = {
         },
       ],
       transition: "Von bloßer Aufmerksamkeit zu bleibendem Wert",
+      knowMore: "Mehr erfahren?",
       ariaServices: "Unsere Leistungen",
       prevService: "Vorherige Leistung",
       nextService: "Nächste Leistung",
       chooseService: "Leistung auswählen",
       carouselControls: "Steuerung des Leistungskarussells",
     },
+    whatWeDo: {
+      eyebrow: "Was wir tun",
+      titlePart1: "Die Marke aufbauen. Die Geschichte erzählen. ",
+      titleEmphasis: "Dynamik erzeugen.",
+      subheading: "Wir verbinden Strategie, Kreation und digitale Umsetzung, damit Unternehmen klar kommunizieren, sich in ihren Märkten abheben und stärkere Verbindungen zu ihren Zielgruppen aufbauen.",
+      items: [
+        {
+          title: "Markenstrategie & Positionierung",
+          description: "Definieren Sie, was Ihr Unternehmen unterscheidet, wem es dient und warum Menschen sich dafür entscheiden sollten.",
+          alt: "Hand, die Notizen an einer Markenstrategie-Planungstafel befestigt",
+        },
+        {
+          title: "Kreativ- & Content-Studio",
+          description: "Verwandeln Sie Ihre Strategie in überzeugende Geschichten und kreative Assets, die Ihre Marke wiedererkennbar und relevant machen.",
+          alt: "Farbmuster und Designpaletten auf einem Kreativstudio-Tisch",
+        },
+        {
+          title: "Digitales Marketing & Wachstum",
+          description: "Erreichen Sie die richtigen Zielgruppen durch zielgerichtete digitale Kampagnen, Inhalte und Kanalaktivierung.",
+          alt: "Laptop mit einem Analyse-Dashboard für digitales Marketing",
+        },
+        {
+          title: "Employer Brand & Talent-Kommunikation",
+          description: "Helfen Sie Organisationen, ihre Kultur auszudrücken, ihr Arbeitgeberversprechen zu kommunizieren und die Menschen zu erreichen, die sie brauchen.",
+          alt: "Kollegen, die in einem hellen Büro gemeinsam feiern",
+        },
+      ],
+      exploreLabel: "Leistung entdecken",
+      ctaTitle: "Sie haben eine konkrete geschäftliche Herausforderung?",
+      ctaText: "Lassen Sie uns die richtige Kombination aus Strategie, Kreation und Umsetzung für Ihre Anforderungen finden.",
+      ctaButton: "Unsere Leistungen Entdecken",
+    },
+    why: {
+      eyebrow: "Warum Little Giant Labs",
+      titlePart1: "Strategie zuerst. Kreativ aus Überzeugung. ",
+      titleEmphasis: "Umsetzung mit Zweck.",
+      intro: "Wir sind überzeugt, dass die stärkste Marken- und Marketingarbeit mit dem Verständnis des Geschäfts beginnt – nicht mit der Wahl eines Kanals, der Produktion von Inhalten oder dem Start einer Kampagne, bevor das Problem klar ist.",
+      points: [
+        {
+          title: "Wir beginnen mit der geschäftlichen Herausforderung.",
+          description: "Wir richten die Markenkommunikation an Geschäftszielen, den Bedürfnissen der Zielgruppe und den Marktrealitäten aus.",
+        },
+        {
+          title: "Wir verbinden Strategie mit Umsetzung.",
+          description: "Positionierung, Storytelling, Kreation und digitale Aktivierung greifen ineinander, statt als getrennte Aktivitäten nebeneinanderher zu laufen.",
+        },
+        {
+          title: "Wir passen uns der Herausforderung an.",
+          description: "Von der jungen Marke bis zum etablierten Unternehmen gestalten wir die Zusammenarbeit rund um Problem, Zielgruppe und gewünschtes Ergebnis.",
+        },
+        {
+          title: "Wir blicken über das Ergebnis hinaus.",
+          description: "Wir definieren, wie Erfolg aussehen soll, und bewerten die Arbeit anhand relevanter Nachweise.",
+        },
+      ],
+    },
+    process: {
+      eyebrow: "Ein einfacher, wiederholbarer Prozess",
+      titlePart1: "Von der geschäftlichen Herausforderung zu ",
+      titleEmphasis: "echter Wirkung.",
+      intro: "Ein klarer Prozess hält die Arbeit fokussiert, kooperativ und auf das Ergebnis ausgerichtet.",
+      steps: [
+        {
+          title: "Verstehen",
+          description: "Ihre Geschäftsziele, Zielgruppe, Herausforderungen und Ihre Definition von Erfolg klären.",
+        },
+        {
+          title: "Positionieren",
+          description: "Die strategische Richtung, die Kernbotschaft und den Ansatz definieren, die die Arbeit relevant machen.",
+        },
+        {
+          title: "Gestalten",
+          description: "Die Konzepte, Geschichten, Inhalte und kreativen Assets entwickeln, die die Strategie zum Leben erwecken.",
+        },
+        {
+          title: "Aktivieren & Lernen",
+          description: "Die Arbeit über relevante Kanäle ausrollen, die Leistung prüfen und Verbesserungsmöglichkeiten erkennen.",
+        },
+      ],
+    },
+    finalCta: {
+      title: "Haben Sie eine Herausforderung, die es wert ist, gelöst zu werden?",
+      text: "Ob Sie eine neue Marke aufbauen, Ihre Marktposition schärfen oder Ihre nächste Kampagne planen – lassen Sie uns mit dem beginnen, was Sie erreichen möchten.",
+      button: "Lassen Sie uns über Ihr Projekt sprechen",
+    },
     work: {
       eyebrow: "Ausgewählte Arbeiten",
-      titlePart1: "Entwickelt in der ",
-      titleEmphasis: "realen Welt",
-      subheading: "Kreativdirektion und Mediensysteme, präzise zugeschnitten auf die Ambitionen jedes Projekts.",
+      titlePart1: "Ideen sind nur der Anfang. ",
+      titleEmphasis: "Wirkung ist das Ziel.",
+      subheading: "Entdecken Sie, wie wir geschäftliche Herausforderungen, strategisches Denken und kreative Umsetzung zusammenbringen, um Arbeiten zu schaffen, die Menschen erreichen.",
       challengeLabel: "Herausforderung",
       outcomeLabel: "Ergebnis",
       ariaRegion: "Ausgewählte Projekte",
@@ -138,16 +225,16 @@ export const de: TranslationDictionary = {
     header: {
       eyebrow: "Über Little Giant Labs",
       title: "Wir schaffen digitale Bewegungen",
-      description: "Wir verwandeln Geschäftsideen in bedeutungsvolle Markenerlebnisse.",
+      description: "Wir verwandeln geschäftlichen Mehrwert in Marken, die Menschen verstehen, sich merken und wählen.",
       secondaryCta: "Unsere Leistungen ansehen",
     },
     story: {
       eyebrow: "Unsere Geschichte",
-      title: "Little Giant Labs. Große Ideen, bedeutungsvoll erzählt.",
       paragraphs: [
-        "Als rechtliche Einheit der Bhairava Media House LLP verbinden wir Geschäftsverständnis, kreative Kommunikation und Technologie, damit Organisationen ihren Wert klar vermitteln, ihre Zielgruppen erreichen und sich in einem umkämpften Markt abheben können.",
-        "Von Markenstrategie und visueller Kommunikation bis zu Social Media, digitalen Kampagnen, Videoproduktion und Employer Branding schaffen wir Kommunikation, die Ihrer Botschaft Klarheit und Ihrer Marke Konsistenz verleiht.",
-        "Unser interdisziplinäres Team vereint Erfahrung aus Softwareentwicklung, Personalwesen und Marketing. So gehen wir geschäftliche Herausforderungen mit kreativem Denken und einem praktischen Verständnis für die Umsetzung an.",
+        "Little Giant Labs ist ein strategisches Studio für Marke, Kreation und digitales Wachstum, das Unternehmen hilft, das, was sie tun, in das zu übersetzen, warum es wichtig ist.",
+        "Wir arbeiten an der Schnittstelle von Geschäftsverständnis, Markenstrategie, Storytelling und Technologie – und helfen Unternehmen, ihren Wert zu artikulieren, ihre Angebote zu differenzieren und die Zielgruppen zu erreichen, auf die es ankommt.",
+        "Von der Definition der Erzählung eines Produkts über die Entwicklung überzeugender Kampagnen bis zur Markteinführung verbinden wir Strategie und Umsetzung zu Kommunikation mit klarem Zweck.",
+        "Unsere interdisziplinäre Perspektive vereint unternehmerisches, technologisches und kreatives Denken. So blicken wir über das einzelne Ergebnis hinaus und konzentrieren uns auf die geschäftliche Herausforderung dahinter.",
       ],
       factsLabel: "Auf einen Blick",
       facts: [
@@ -167,7 +254,7 @@ export const de: TranslationDictionary = {
     },
     purpose: {
       missionLabel: "Unsere Mission",
-      mission: "Unternehmen dabei zu helfen, durch strategisches Marketing, kreatives Storytelling und digitale Innovation starke Marken aufzubauen und ihr Wachstum zu beschleunigen.",
+      mission: "Unternehmen dabei zu helfen, ihren Wert zu schärfen, unverwechselbare Marken aufzubauen und bedeutungsvolle Geschichten in Marktwirkung zu verwandeln.",
       beliefLabel: "Woran wir glauben",
       belief: "Die beste Markenkommunikation wird nicht nur wahrgenommen. Sie sorgt dafür, dass Menschen verstehen, sich verbunden fühlen und sich erinnern.",
     },
@@ -189,43 +276,45 @@ export const de: TranslationDictionary = {
       outcomeLabel: "Das Ergebnis:",
       services: [
         {
-          title: "Markenstrategie & Design",
-          description: "Positionierung, Tonalität und visuelle Identitätssysteme, die Autorität ausstrahlen und Markenpräsenz sichern.",
+          title: "Markenstrategie & Positionierung",
+          description: "Wir helfen Unternehmen zu definieren, was sie unverwechselbar macht, den Wert zu artikulieren, den sie schaffen, und eine Markenerzählung zu entwickeln, die bei den relevanten Zielgruppen Resonanz findet.",
           deliverables: [
-            "Auditierung von Wettbewerber-Funnels",
-            "Visuelle Identität & Logo-Entwicklung",
-            "Brand-Voice- und Strategie-Handbücher",
-            "Hochwertige UX/UI-Designsysteme",
+            "Markenpositionierung und Differenzierung",
+            "Wertversprechen und Messaging",
+            "Unternehmens- und Produkterzählungen",
+            "Kampagnenstrategie und kreative Leitung",
           ],
         },
         {
-          title: "Cineastische Content-Produktion",
-          description: "Premium-Markenfilme, Social Showreels und Werbemittel mit maximaler Zuschauerbindung.",
+          title: "Kreativ- & Content-Studio",
+          description: "Wir übersetzen Markenstrategie in überzeugenden kreativen Ausdruck – von visuellen Identitäten und Kampagnenkonzepten bis zu Filmen, digitalen Inhalten und Motion-Storytelling. Jedes Format wird so gewählt, dass es Botschaft, Zielgruppe und angestrebtem Ergebnis dient.",
           deliverables: [
-            "Kurzformat-Hook-Engineering",
-            "Filmische Marken-Showreels",
-            "Konzeption & Werbetexting",
-            "High-Retention Schnitt & Sounddesign",
+            "Visuelle Identität und Marketingmaterialien",
+            "Kampagnenkonzepte und kreative Assets",
+            "Unternehmensfilme, Video und Podcasts",
+            "Kurzvideos, Motion Graphics und Animation",
+            "KI-gestützte kreative Exploration und Produktion",
           ],
         },
         {
-          title: "Performance- & Digital-Marketing",
-          description: "Bezahlte Neukundengewinnung, Social Growth und Suchmaschinenpräsenz mit Fokus auf messbares Wachstum.",
+          title: "Digitales Marketing & Wachstum",
+          description: "Wir helfen Marken, durch zielgerichtete digitale Kampagnen, relevante Inhalte und kontinuierliche Optimierung die richtigen Zielgruppen zu erreichen. Dabei richten wir Engagement und Kampagnenleistung konsequent an klaren Geschäftszielen aus.",
           deliverables: [
-            "Paid Ads (Meta, Google, YouTube)",
-            "Funnel-Optimierung & CRO",
-            "ROAS-gesteuerte Kampagnenführung",
-            "Echtzeit-Attributions-Dashboards",
+            "Digital- und Social-Media-Strategie",
+            "Content-Planung und Kanalaktivierung",
+            "Paid Media und Kampagnen-Kreation",
+            "Zielgruppen-Targeting und Kampagnenoptimierung",
+            "Leistungsmessung und Reporting",
           ],
         },
         {
-          title: "KI- & Automatisierungslösungen",
-          description: "Maßgeschneiderte Workflow-Automatisierungen, KI-Analysetools und CRM-Systeme für maximale Skalierbarkeit.",
+          title: "Employer Brand & Talent-Kommunikation",
+          description: "Wir helfen Organisationen, ihre Kultur, ihre Menschen und ihr Arbeitgeberversprechen durch authentische Geschichten und zielgerichtete Recruiting-Kommunikation zu vermitteln – damit potenzielle Talente leichter verstehen, was die Organisation unverwechselbar macht.",
           deliverables: [
-            "KI-gestützte Kunden-Workflows",
-            "CRM- & E-Mail-Automationsschleifen",
-            "Lead-Scoring-Analysesysteme",
-            "Individuelle Business-Intelligence-Tools",
+            "Employer-Brand-Positionierung und -Kommunikation",
+            "Storytelling zu Arbeitsplatz und Kultur",
+            "Recruiting-Kampagnen und Kreation",
+            "Mitarbeitergeschichten und Talent-Kommunikation",
           ],
         },
       ],
@@ -236,54 +325,146 @@ export const de: TranslationDictionary = {
       titleItalic: "Überzeugung",
       values: [
         {
-          title: "Story First",
-          description:
-            "Jeder Pixel, jedes Bild und jedes Wort entsteht mit klarer Absicht. In Zeiten endlosen Scrollens durchdringen nur mitreißende Hooks und authentisches Storytelling den Lärm.",
+          title: "Verstehen, bevor man kommuniziert",
+          description: "Wir beginnen mit der geschäftlichen Herausforderung, der Zielgruppe und dem Wert der Lösung, bevor wir entscheiden, was die Marke sagen soll.",
         },
         {
-          title: "Datenbasierte Validierung",
-          description:
-            "Kreativität begeistert, aber Konversionen entscheiden. Wir analysieren Wachstums-Funnels, auditieren Metriken und steuern wissenschaftlich fundierte Kampagnen zur ROAS-Maximierung.",
+          title: "Strategie gibt Kreativität Richtung",
+          description: "Wir verbinden unternehmerisches Denken und kreative Vorstellungskraft zu Kommunikation mit klarem Zweck.",
         },
         {
-          title: "KI- & Automatisierungs-Hebel",
-          description:
-            "Wir entwickeln maßgeschneiderte Pipelines und CRM-Zyklen, die Routineaufgaben automatisieren – damit volle mentale Kapazität für strategische Spitzenkreativität frei bleibt.",
+          title: "Jeder Touchpoint zählt",
+          description: "Vom ersten Kontakt bis zur finalen Conversion streben wir Konsistenz über alle Kanäle und Erlebnisse an, in denen Menschen einer Marke begegnen.",
+        },
+        {
+          title: "Lernen, messen und verbessern",
+          description: "Wir nutzen Feedback der Zielgruppe und relevante Leistungsdaten, um zu verstehen, was funktioniert, und unseren Ansatz kontinuierlich zu verbessern.",
         },
       ],
     },
     approach: {
-      eyebrow: "Wie wir Marken beim Wachsen helfen",
-      title: "Ein Partner. Vernetzte Kompetenzen.",
+      eyebrow: "So arbeiten wir",
+      title: "Von der geschäftlichen Herausforderung zur zielgerichteten Umsetzung.",
       paragraphs: [
-        "Großartige Kommunikation entsteht selten isoliert. Die Markenstrategie bestimmt die kreative Richtung. Die kreative Richtung prägt den Content. Und der Content erreicht sein Publikum über die richtigen Kanäle.",
-        "Little Giant Labs bündelt diese Kompetenzen, damit Unternehmen von einer Idee zu einem stimmigen Markenerlebnis gelangen.",
-        "Ob Sie Unterstützung bei einem einzelnen Projekt oder bei einer abgestimmten Reihe von Kommunikationsinitiativen benötigen – wir finden gemeinsam mit Ihnen den richtigen Ansatz für Ihre Ziele.",
+        "Jede Zusammenarbeit beginnt mit dem Verständnis dessen, was Sie erreichen möchten. Dann formen wir die Strategie, entwickeln die Kreation und aktivieren die Arbeit so, dass sie zu Ihren Zielen passt.",
       ],
       steps: [
         {
-          title: "Markenstrategie",
-          description: "Schärft Ihre Markengeschichte und bestimmt die kreative Richtung.",
+          title: "Verstehen",
+          description: "Wir lernen Ihr Unternehmen, Ihre Zielgruppe, Ihre Ziele und Ihre aktuellen Herausforderungen kennen.",
         },
         {
-          title: "Kreative Richtung",
-          description: "Legt fest, wie die Geschichte in jedem Content aussieht, klingt und wirkt.",
+          title: "Positionieren",
+          description: "Wir legen die strategische Richtung, die Kernbotschaft und den Ansatz fest.",
         },
         {
-          title: "Content",
-          description: "Erweckt die Geschichte durch Design, Video und digitale Inhalte zum Leben.",
+          title: "Gestalten",
+          description: "Wir entwickeln die Kreation, die Inhalte und die Kampagnen-Assets, die die Strategie zum Leben erwecken.",
         },
         {
-          title: "Kanäle",
-          description: "Bringen den Content über die richtigen Kanäle zu seinem Publikum.",
+          title: "Aktivieren & Lernen",
+          description: "Wir setzen die Arbeit um, prüfen die relevanten Ergebnisse und erkennen Verbesserungsmöglichkeiten.",
+        },
+      ],
+    },
+    engagement: {
+      eyebrow: "Formen der Zusammenarbeit",
+      title: "Die richtige Expertise für Ihre aktuelle Phase.",
+      description: "Ob Sie strategische Klarheit, kreative Umsetzung oder Unterstützung für eine größere Kampagne brauchen – wir gestalten die Zusammenarbeit rund um Ihre Ziele und Anforderungen.",
+      options: [
+        {
+          title: "Für Start-ups und junge Marken",
+          description: "Etablieren Sie Ihre Positionierung, schärfen Sie Ihre Geschichte und schaffen Sie die Grundlagen für konsistente Markenkommunikation.",
+        },
+        {
+          title: "Für wachsende Unternehmen",
+          description: "Stärken Sie Ihre Differenzierung im Markt, stimmen Sie Ihre Marketingaktivitäten aufeinander ab und schaffen Sie eine stimmigere Marke im Kundenkontakt.",
+        },
+        {
+          title: "Für etablierte Unternehmen",
+          description: "Unterstützung für klar definierte Marken-, Kampagnen- oder Kommunikationsinitiativen mit fokussierter Strategie und koordinierter Umsetzung.",
         },
       ],
     },
     cta: {
-      title: "Sie haben eine Geschichte zu erzählen? Lassen Sie sie wirken.",
-      description: "Erzählen Sie uns von Ihrem Unternehmen, Ihrer Zielgruppe und Ihren Zielen. Lassen Sie uns herausfinden, wie die richtige Mischung aus Strategie, Kreativität und digitaler Kommunikation Ihre Vision Wirklichkeit werden lässt.",
-      button: "Lassen Sie uns sprechen",
+      title: "Lösen wir zuerst das richtige Problem.",
+      paragraphs: [
+        "Erzählen Sie uns, was Sie erreichen möchten. Wir beginnen mit Ihrer geschäftlichen Herausforderung und prüfen, wo Strategie, Kreation und digitale Umsetzung den Unterschied machen können.",
+      ],
+      button: "Ihre Herausforderung Besprechen",
     },
+  },
+  servicesPage: {
+    jumpLabel: "Zu einer Leistung springen",
+    helpLabel: "Wobei wir helfen können",
+    outcomeLabel: "Das Ergebnis",
+    fitLabel: "Passt gut, wenn…",
+    items: [
+      {
+        label: "Markenstrategie",
+        title: "Wissen, was Sie unterscheidet – und es zur Geltung bringen.",
+        intro: "Wenn ein Unternehmen seinen Wert nicht klar formulieren kann, haben es selbst großartige Produkte und Dienstleistungen schwer, sich abzuheben. Wir helfen Ihnen, Ihre Positionierung zu definieren, Ihre Geschichte zu schärfen und eine Grundlage für konsistente Markenkommunikation zu schaffen.",
+        help: [
+          "Markenanalyse und strategische Bewertung",
+          "Markt- und Wettbewerbspositionierung",
+          "Zielgruppen- und Kundeneinblicke, sofern durch Recherche gestützt",
+          "Wertversprechen und Markenbotschaften",
+          "Markenarchitektur und Portfolio-Klarheit",
+          "Markenerzählung und Kommunikationsrichtung",
+        ],
+        outcome: "Eine klarere Markenrichtung, stärkere Botschaften und ein gemeinsames Verständnis dafür, wie Ihr Unternehmen positioniert und kommuniziert werden sollte.",
+        fit: "Sie gründen ein Unternehmen, erschließen einen neuen Markt, entwickeln Ihre Marke weiter oder können nur schwer erklären, warum Kunden sich für Sie entscheiden sollten.",
+        cta: "Markenstrategie Besprechen",
+      },
+      {
+        label: "Kreation & Content",
+        title: "Machen Sie Ihre Marke wiedererkennbar, relevant und einprägsam.",
+        intro: "Eine starke Strategie braucht einen ebenso starken Ausdruck. Wir übersetzen die Markenrichtung in kreative Ideen, Inhalte und Kommunikation, mit denen Ihr Unternehmen überall dort konsistent auftritt, wo Ihre Zielgruppe ihm begegnet.",
+        help: [
+          "Entwicklung kreativer Konzepte und Art Direction",
+          "Markenidentität und visuelle Kommunikation",
+          "Kampagnenkonzepte und kreative Assets",
+          "Website- und Marketingtexte",
+          "Content-Planung und Brand Storytelling",
+          "Kreative Produktion für Digital und Social Media",
+        ],
+        outcome: "Ein stimmigeres Markenerlebnis, unverwechselbarere Kommunikation und kreative Assets, die auf einer klaren Botschaft aufbauen.",
+        fit: "Ihre Marke wirkt uneinheitlich, Ihrer Botschaft fehlt das Unterscheidende oder Ihre Kampagnen brauchen eine klarere kreative Idee.",
+        cta: "Kreativprojekt Besprechen",
+      },
+      {
+        label: "Digitales Wachstum",
+        title: "Verwandeln Sie Ihre Strategie in echtes Engagement Ihrer Zielgruppe.",
+        intro: "Digitales Marketing wirkt am besten, wenn Zielgruppe, Botschaft, Kanal und Geschäftsziel aufeinander abgestimmt sind. Wir übersetzen Ihre Strategie in fokussierte digitale Aktivitäten und nutzen relevante Leistungssignale, um die nächsten Schritte zu bestimmen.",
+        help: [
+          "Strategie und Planung digitaler Kampagnen",
+          "Social-Media- und Content-Aktivierung",
+          "Planung bezahlter Medien und Kampagnenmanagement, sofern angeboten",
+          "Optimierung der Botschaften auf Website und Landingpages",
+          "Zielgruppenbindung und Content-Distribution",
+          "Kampagnen-Reporting und Leistungsauswertung",
+        ],
+        outcome: "Fokussiertere Kampagnen, eine bessere Abstimmung von Botschaft und Zielgruppe sowie klarere Erkenntnisse darüber, was funktioniert und wo Verbesserungen möglich sind.",
+        fit: "Ihren digitalen Aktivitäten fehlt eine schlüssige Strategie, Ihre Kampagnen sind nicht miteinander verbunden oder Sie brauchen einen klareren Weg, die Wirksamkeit Ihres Marketings zu bewerten.",
+        cta: "Digitalstrategie Besprechen",
+      },
+      {
+        label: "Employer Brand",
+        title: "Zeigen Sie den richtigen Menschen, warum sie mit Ihnen arbeiten sollten.",
+        intro: "Wie eine Organisation ihre Kultur und ihre Chancen kommuniziert, prägt, wie potenzielle Mitarbeitende sie wahrnehmen. Wir helfen Unternehmen, ihre Arbeitgebergeschichte zu formulieren und in Recruiting- und Talent-Kommunikation zu übersetzen.",
+        help: [
+          "Employer-Brand-Positionierung und Botschaften",
+          "Kommunikation des Arbeitgeberversprechens",
+          "Konzepte und Kreation für Recruiting-Kampagnen",
+          "Talentorientierte digitale Inhalte",
+          "Inhalte für Karriereseiten und Recruiting-Kommunikation",
+          "Kampagnen-Reporting, sofern Messung vereinbart ist",
+        ],
+        outcome: "Eine klarere Arbeitgebererzählung und konsistentere Kommunikation mit den Menschen, die Ihre Organisation gewinnen möchte.",
+        fit: "Sie bauen Ihr Team aus, starten eine Recruiting-Kampagne oder möchten Ihre Kultur und Ihr Arbeitgeberversprechen wirkungsvoller kommunizieren.",
+        cta: "Employer Branding Besprechen",
+      },
+    ],
   },
   contact: {
     header: {
@@ -454,6 +635,10 @@ export const de: TranslationDictionary = {
     slogan: "Geschaffen für Bewegung, Geschichten und Wachstum.",
   },
   seo: {
+    services: {
+      title: "Leistungen",
+      description: "Markenstrategie, Kreation und Content, digitales Wachstum und Employer Branding von Little Giant Labs – ausgerichtet auf Ihre geschäftliche Herausforderung.",
+    },
     home: {
       title: "Little Giant Labs",
       description:
