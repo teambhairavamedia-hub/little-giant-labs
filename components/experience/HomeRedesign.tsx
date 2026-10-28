@@ -1,13 +1,26 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { experienceConfig } from "@/lib/experience";
-import { ServiceVideoCards } from "@/components/experience/ServiceVideoCards";
 import { WorkCarousel } from "@/components/experience/WorkCarousel";
-import { ClapperIcon, FilmIcon, MusicIcon, PenToolIcon, TargetIcon, TrendIcon } from "@/components/ui/Icons";
+import {
+  ChartIcon,
+  ClapperIcon,
+  CompassIcon,
+  FilmIcon,
+  LayersIcon,
+  MusicIcon,
+  PenToolIcon,
+  TargetIcon,
+  TrendIcon,
+} from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
+import { servicePillars } from "@/lib/service-pillars";
+
+const whyIcons = [TargetIcon, LayersIcon, CompassIcon, ChartIcon];
 
 const projectMeta = [
   {
@@ -35,10 +48,11 @@ const projectMeta = [
 export function HomeRedesign() {
   const { dict, locale } = useI18n();
   const heroDict = dict.home.hero;
-  const servicesDict = dict.home.services;
+  const { whatWeDo, why, process, finalCta } = dict.home;
   const workDict = dict.home.work;
 
   const contactHref = getLocalizedPath("/contact", locale);
+  const servicesHref = getLocalizedPath("/services", locale);
 
   const projects = workDict.projects.map((proj, idx) => ({
     ...proj,
@@ -57,6 +71,7 @@ export function HomeRedesign() {
             <em>{heroDict.titleEmphasis}</em>
             {heroDict.titlePart2}
           </h1>
+          <p className="home-intro home-tagline">{heroDict.tagline}</p>
           <p className="home-intro">{heroDict.intro}</p>
           <div className="home-actions">
             <Link className="home-button home-button-primary" href={contactHref}>
@@ -71,18 +86,50 @@ export function HomeRedesign() {
 
       <section id="services" className="home-pillars" data-section-theme="dark" aria-labelledby="pillars-title">
         <div className="home-shell">
-          <div className="home-section-head">
-            <p className="home-eyebrow">{servicesDict.eyebrow}</p>
+          <div className="home-section-head home-split-head">
+            <p className="home-eyebrow">{whatWeDo.eyebrow}</p>
             <h2 id="pillars-title">
-              {servicesDict.titlePart1}
-              <em>{servicesDict.titleEmphasis}</em>
+              {whatWeDo.titlePart1}
+              <em>{whatWeDo.titleEmphasis}</em>
             </h2>
-            <p>{servicesDict.subheading}</p>
+            <p>{whatWeDo.subheading}</p>
           </div>
-          <ServiceVideoCards />
-          <p className="home-transition">
-            <span /> {servicesDict.transition}
-          </p>
+          {/* Four pillar cards: a row on desktop, stacked on mobile; each opens its Services page section */}
+          <ol className="offer-grid">
+            {whatWeDo.items.map((item, index) => {
+              const pillar = servicePillars[index];
+              return (
+                <li className="offer-card" key={item.title}>
+                  <figure className="offer-image">
+                    <Image
+                      src={pillar.image}
+                      alt={item.alt}
+                      width={640}
+                      height={800}
+                      sizes="(max-width: 700px) 92vw, (max-width: 1000px) 46vw, 270px"
+                    />
+                  </figure>
+                  <div className="offer-copy">
+                    <span className="offer-number">{String(index + 1).padStart(2, "0")}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                    <Link className="offer-link" href={`${servicesHref}#${pillar.slug}`}>
+                      {whatWeDo.exploreLabel} <span aria-hidden="true">→</span>
+                    </Link>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+          <div className="offer-cta">
+            <div>
+              <h3>{whatWeDo.ctaTitle}</h3>
+              <p>{whatWeDo.ctaText}</p>
+            </div>
+            <Link className="home-button home-button-primary" href={servicesHref}>
+              {whatWeDo.ctaButton} <span aria-hidden="true">→</span>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -137,6 +184,81 @@ export function HomeRedesign() {
               </article>
             ))}
           </WorkCarousel>
+        </div>
+      </section>
+
+      <section className="home-why" data-section-theme="dark" aria-labelledby="why-title">
+        <div className="home-shell">
+          <div className="home-section-head why-head">
+            <p className="home-eyebrow">{why.eyebrow}</p>
+            <h2 id="why-title">
+              {why.titlePart1}
+              <em>{why.titleEmphasis}</em>
+            </h2>
+            <p>{why.intro}</p>
+          </div>
+          <ol className="why-grid">
+            {why.points.map((point, index) => {
+              const PointIcon = whyIcons[index % whyIcons.length];
+              return (
+                <li className="why-card" key={point.title}>
+                  <div className="why-card-top">
+                    <span className="why-icon">
+                      <PointIcon size={20} />
+                    </span>
+                    <span className="why-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <h3>{point.title}</h3>
+                  <p>{point.description}</p>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+
+      <section className="home-process" data-section-theme="dark" aria-labelledby="process-title">
+        <div className="home-shell">
+          <div className="home-section-head">
+            <p className="home-eyebrow">{process.eyebrow}</p>
+            <h2 id="process-title">
+              {process.titlePart1}
+              <em>{process.titleEmphasis}</em>
+            </h2>
+            <p>{process.intro}</p>
+          </div>
+          {/* Four steps: a row on desktop, a vertical timeline on mobile */}
+          <ol className="process-steps">
+            {process.steps.map((step, index) => (
+              <li className="process-step" key={step.title}>
+                <span className="process-marker" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3>{step.title}</h3>
+                  <p>{step.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="home-final" data-section-theme="dark" aria-labelledby="final-title">
+        <div className="home-shell">
+          <div className="final-card lgl-brand-card">
+            <div className="home-section-head">
+              <h2 id="final-title">{finalCta.title}</h2>
+              <p>{finalCta.text}</p>
+            </div>
+            <div className="home-actions">
+              <Link className="home-button home-button-primary" href={contactHref}>
+                {finalCta.button} <span aria-hidden="true">↗</span>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>

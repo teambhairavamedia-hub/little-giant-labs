@@ -200,11 +200,11 @@ export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProp
           className="mb-4 flex items-center justify-center gap-2 sm:gap-5"
         >
           <Image
-            src={isDarkTheme ? "/new-logo-readable-dark.png" : "/new-logo-readable.png"}
+            src={isDarkTheme ? "/lgl-logo-horizontal-dark.png" : "/lgl-logo-horizontal.png"}
             alt="Little Giant Labs logo"
-            width={824}
-            height={1072}
-            sizes="(min-width: 640px) 111px, 86px"
+            width={1200}
+            height={766}
+            sizes="(min-width: 640px) 226px, 176px"
             priority
             className="h-28 w-auto object-contain sm:h-36"
             style={{ opacity: 1, mixBlendMode: "normal" }}

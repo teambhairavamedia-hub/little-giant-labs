@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckIcon, DiamondIcon, FilmIcon, LoopIcon, TrendIcon } from "@/components/ui/Icons";
+import { CheckIcon, DiamondIcon, FilmIcon, HandshakeIcon, TrendIcon } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 
-const serviceIcons = [DiamondIcon, FilmIcon, TrendIcon, LoopIcon];
+const serviceIcons = [DiamondIcon, FilmIcon, TrendIcon, HandshakeIcon];
 
 export function ServiceGrid() {
   const { dict } = useI18n();
