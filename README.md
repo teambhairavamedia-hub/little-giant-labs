@@ -1,4 +1,4 @@
-# Little Giant Labs
+# Little-Giant-Labs
 
 The company's landing page, built with Next.js and React. The site includes company, work, and contact pages, along with an application form that submits to a server-side API route backed by Supabase.
 

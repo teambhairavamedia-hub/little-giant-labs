@@ -371,6 +371,18 @@ html.lenis, html.lenis body {
   display: none;
 }
 
+/* Keep the About service cards on a shared track height at wider breakpoints. */
+.about-service-grid {
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+@media (max-width: 639px) {
+  .about-service-grid {
+    grid-auto-rows: auto;
+  }
+}
+
 /* ── AboutSnap responsive grid ── */
 @media (max-width: 768px) {
   .about-snap-grid {
