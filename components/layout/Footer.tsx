@@ -27,8 +27,9 @@ export function Footer() {
 
   const navItems = [
     { label: dict.nav.home, href: homePath },
-    { label: dict.nav.services, href: `${homePath === "/" ? "" : homePath}#services` },
-    { label: dict.nav.ourWork, href: `${homePath === "/" ? "" : homePath}#our-work` },
+    // Same targets as the header: the Services page, and the homepage Our Work section from any page
+    { label: dict.nav.services, href: getLocalizedPath("/services", locale) },
+    { label: dict.nav.ourWork, href: `${homePath}#our-work` },
     { label: dict.nav.aboutUs, href: getLocalizedPath("/about", locale) },
     { label: dict.nav.contact, href: contactHref },
   ];
@@ -89,7 +90,7 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-12 md:grid-cols-3 md:gap-8 xl:grid-cols-5 items-start mb-28">
           {/* Col 1: Brand statement card — gold rule draws in, then the tagline rises in word by word */}
           <motion.div
-            className="lgl-brand-card relative col-span-2 overflow-hidden w-full max-w-lg rounded-3xl border border-lgl-gold/25 p-6 sm:p-7 md:col-span-3 xl:col-span-2 xl:mr-10"
+            className="relative col-span-2 overflow-hidden w-full max-w-lg rounded-3xl border border-lgl-gold/25 p-6 sm:p-7 md:col-span-3 xl:col-span-2 xl:mr-10"
             initial={reduceMotion ? false : "hidden"}
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
@@ -111,7 +112,7 @@ export function Footer() {
               <span className="label-eyebrow text-lgl-gold">{siteConfig.name}</span>
             </div>
             <motion.p
-              className="relative max-w-[21ch] text-[1.375rem] font-semibold leading-[1.15] tracking-[-0.03em] text-lgl-fg sm:text-[1.625rem] xl:text-[1.75rem]"
+              className="relative max-w-[34ch] text-[1.0625rem] font-semibold leading-[1.4] tracking-[-0.02em] text-lgl-fg sm:text-[1.1875rem] xl:text-[1.25rem]"
               style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               variants={{ visible: { transition: { delayChildren: 0.2, staggerChildren: 0.06 } } }}
             >

@@ -430,123 +430,122 @@ export const en: TranslationDictionary = {
   },
   contact: {
     header: {
-      eyebrow: "Little Giant Labs",
-      tagline: "Partnership application",
-      titlePart1: "Growth built for ",
-      titleEmphasis: "the next order",
-      description:
-        "A considered conversation begins with context. Share where your enterprise is today, what is holding growth back, and where you intend to go.",
+      eyebrow: "Let's start a conversation",
+      title: "Tell us *what you're trying to achieve.*",
+      description: "Whether you're building a new brand, strengthening your market position or planning your next campaign, we'd like to understand your challenge.",
     },
     sidebar: {
-      eyebrow: "A deliberate process",
-      title: "The right growth partnership starts with the right questions",
-      description:
-        "This application gives our team the context to review your objectives, operating environment, and expectations.",
-      tagline: "Intellect. Media. Capital.",
+      intro: "Share a little about your business and what you need help with. We'll use that context to explore whether Little Giant Labs is the right partner for your project.",
+      stepsLabel: "What happens next",
+      steps: [
+        "Tell us about your business and objectives.",
+        "We'll review your requirements.",
+        "We'll connect to discuss the most appropriate next steps.",
+      ],
+      tagline: "Brand Strategy · Creative · Digital Growth",
     },
     form: {
       stepTitles: [
-        "Corporate identity & positioning",
-        "Financial profile",
-        "Strategic roadblocks & expectations",
-        "Executive access",
+        "About you",
+        "Your project",
+        "About your company",
+        "Budget & timeline",
       ],
       stepAria: "Step {step} of 4",
       stepPrefix: "Step",
+      optionalTag: "Optional",
+      optionalNote: "Optional — share only what you're comfortable with.",
+      selectPlaceholder: "Prefer not to say",
       fields: {
-        enterpriseName: {
-          label: "What is the legal registered name of your enterprise?",
-          placeholder: "Enter your registered enterprise name",
+        contactName: {
+          label: "Your name",
+          placeholder: "First and last name",
+        },
+        workEmail: {
+          label: "Work email",
+          placeholder: "name@company.com",
+          hint: "Use your work email. Personal addresses such as Gmail and Yahoo are not accepted.",
+          error: "Enter a valid work email address.",
+        },
+        companyName: {
+          label: "Company or brand name",
+          placeholder: "Your company or brand",
+        },
+        helpWith: {
+          label: "What do you need help with?",
+          legend: "What you need help with",
+          options: {
+            "Brand strategy & positioning": "Brand strategy & positioning",
+            "Creative & content": "Creative & content",
+            "Digital marketing & growth": "Digital marketing & growth",
+            "Employer brand & talent communication": "Employer brand & talent communication",
+            "Not sure yet / help me decide": "Not sure yet / help me decide",
+          },
+        },
+        projectDetails: {
+          label: "Tell us a little about your project",
+          placeholder: "What are you trying to achieve, and what's getting in the way?",
+          hint: "Up to 2,000 characters.",
+        },
+        companySize: {
+          label: "Company size",
+          options: {
+            "1–10 people": "1–10 people",
+            "11–50 people": "11–50 people",
+            "51–200 people": "51–200 people",
+            "201–1,000 people": "201–1,000 people",
+            "1,000+ people": "1,000+ people",
+          },
         },
         industry: {
-          label: "Which industry vertical does your brand seek to dominate?",
-          legend: "Industry vertical",
+          label: "Industry",
           options: {
-            "Enterprise Banking & FinTech": "Enterprise Banking & FinTech",
-            "Heavy Infrastructure & Real Estate": "Heavy Infrastructure & Real Estate",
-            "Premium Consumer Goods (D2C)": "Premium Consumer Goods (D2C)",
-            "Venture-Backed Technology": "Venture-Backed Technology",
-            "High-Ticket B2B Services": "High-Ticket B2B Services",
+            "Technology & SaaS": "Technology & SaaS",
+            "Financial services & fintech": "Financial services & fintech",
+            "Consumer, retail & D2C": "Consumer, retail & D2C",
+            "Media, entertainment & music": "Media, entertainment & music",
+            "Real estate & infrastructure": "Real estate & infrastructure",
+            "Professional & B2B services": "Professional & B2B services",
+            "Healthcare & life sciences": "Healthcare & life sciences",
+            "Education": "Education",
+            "Other": "Other",
           },
         },
-        revenue: {
-          label: "What is your trailing 12-month (TTM) revenue?",
-          legend: "Trailing 12-month revenue",
+        budget: {
+          label: "Budget range",
           options: {
-            "Under $1 Million": "Under $1 Million",
-            "$1M – $5 Million": "$1M – $5 Million",
-            "$5M – $20 Million": "$5M – $20 Million",
-            "$20 Million+": "$20 Million+",
+            "Under $5,000": "Under $5,000",
+            "$5,000 – $15,000": "$5,000 – $15,000",
+            "$15,000 – $50,000": "$15,000 – $50,000",
+            "$50,000+": "$50,000+",
+            "Not sure yet": "Not sure yet",
           },
         },
-        acquisitionSpend: {
-          label: "What is your current allocated monthly capital spend for paid customer acquisition?",
-          legend: "Monthly customer acquisition spend",
+        timeline: {
+          label: "Desired timeline",
           options: {
-            "Under $10,000 / month": "Under $10,000 / month",
-            "$10,000 – $50,000 / month": "$10,000 – $50,000 / month",
-            "$50,000 – $150,000 / month": "$50,000 – $150,000 / month",
-            "$150,000+ / month": "$150,000+ / month",
+            "As soon as possible": "As soon as possible",
+            "Within 1–3 months": "Within 1–3 months",
+            "Within 3–6 months": "Within 3–6 months",
+            "Flexible / not decided": "Flexible / not decided",
           },
-          financialNote:
-            "Financial information supports internal review only. It does not determine eligibility to submit.",
-        },
-        bottleneck: {
-          label: "What is the primary architectural bottleneck stalling your current digital growth scale?",
-          legend: "Primary growth bottleneck",
-          options: {
-            "Ad platform algorithmic fatigue & dropping ROAS":
-              "Ad platform algorithmic fatigue & dropping ROAS",
-            "Inability to produce high-retention visual media at scale":
-              "Inability to produce high-retention visual media at scale",
-            "Lack of advanced attribution models and data tracking":
-              "Lack of advanced attribution models and data tracking",
-            "Sub-optimal customer lifetime value (LTV) and backend CRM systems":
-              "Sub-optimal customer lifetime value (LTV) and backend CRM systems",
-          },
-        },
-        partnership: {
-          label:
-            "We operate strictly as an institutional growth partner on high-ticket monthly retainers + performance incentives. Are you looking for a traditional execution vendor, or are you fully capitalized to invest in top-tier growth architecture?",
-          legend: "Partnership expectations",
-          options: {
-            "We are looking for a cheap, hands-off execution vendor":
-              "We are looking for a cheap, hands-off execution vendor",
-            "We are prepared to invest premium capital for institutional scale and long-term partnership":
-              "We are prepared to invest premium capital for institutional scale and long-term partnership",
-          },
-        },
-        corporateEmail: {
-          instruction:
-            "Provide the direct corporate email address and LinkedIn profile of the presiding decision-maker (CEO, CMO, or Managing Partner).",
-          label: "A. Corporate email address",
-          placeholder: "name@company.com",
-          hint: "Use your organization’s email. Consumer addresses such as Gmail and Yahoo are not accepted.",
-          error: "Enter a valid corporate email address. Gmail and Yahoo addresses are not accepted.",
-        },
-        linkedin: {
-          label: "B. LinkedIn profile URL",
-          placeholder: "https://www.linkedin.com/in/your-profile",
-          error: "Enter a valid LinkedIn profile URL, such as https://www.linkedin.com/in/your-profile.",
         },
       },
-      validationError: "Complete the required fields and check your answers to continue.",
-      serverError: "We couldn’t submit your application. Please try again later.",
+      validationError: "Complete the required fields to continue.",
+      serverError: "We couldn’t submit your enquiry. Please try again later.",
       back: "← Back",
       continue: "Continue →",
-      submit: "Submit Application",
+      submit: "Submit Your Enquiry",
       submitting: "Submitting…",
     },
   },
   applicationReceived: {
-    eyebrow: "Application received",
+    eyebrow: "Enquiry received",
     headlinePart1: "The next move ",
     headlineEmphasis: "is ours",
-    body1:
-      "Your application has been submitted successfully. Our team will review your organization's growth objectives, financial context, and strategic requirements.",
-    body2:
-      "If there is a strong alignment with our engagement model, we'll be in touch regarding the next steps.",
-    tagline: "Little Giant Labs — Intellect. Media. Capital.",
+    body1: "Thanks for getting in touch. We've received your enquiry and will review your business, objectives and requirements.",
+    body2: "We'll connect to discuss the most appropriate next steps.",
+    tagline: "Little Giant Labs — Brand Strategy · Creative · Digital Growth",
     returnHome: "Return to the main website ↗",
   },
   workUnavailable: {
@@ -611,14 +610,14 @@ export const en: TranslationDictionary = {
     ctaEyebrow: "Start the Conversation",
     ctaHeading1: "Let's create",
     ctaHeading2: "something bold",
-    brandTagline: "Cinematic creative and performance growth engine for scaling brands.",
+    brandTagline: "A strategy-led brand and creative partner connecting business thinking, compelling storytelling and digital execution.",
     navHeading: "Navigation",
     connectHeading: "Connect",
     officeHeading: "Office",
     location: "PUNE, IN",
     localTimePrefix: "Local Time:",
     copyright: "Little Giant Labs. All rights reserved.",
-    slogan: "Engineered for motion, story, and scale.",
+    slogan: "Brand Strategy · Creative · Digital Growth",
   },
   seo: {
     services: {

@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { applicationOptions } from "../lib/application-options.ts";
 
 const migration = await readFile(
   new URL("../supabase/migrations/202610270002_email_verification_database_foundation.sql", import.meta.url),
@@ -12,6 +13,10 @@ const priorQualificationMigration = await readFile(
 );
 const idempotencyMigration = await readFile(
   new URL("../supabase/migrations/202610270003_idempotent_application_submissions.sql", import.meta.url),
+  "utf8",
+);
+const enquiryMigration = await readFile(
+  new URL("../supabase/migrations/202610290001_contact_enquiry_fields.sql", import.meta.url),
   "utf8",
 );
 
@@ -88,22 +93,55 @@ test("forward migration fingerprints requests and serializes same-key retries at
   assert.match(idempotencyMigration, /p_idempotency_key is null or pg_catalog\.length\(pg_catalog\.btrim\(p_idempotency_key\)\) = 0/i);
 });
 
-test("final RPC signature matches all 13 named arguments in the application call", async () => {
+test("final RPC signature (enquiry migration) matches all 14 named arguments in the application call", async () => {
   const route = await readFile(new URL("../app/api/applications/route.ts", import.meta.url), "utf8");
   const helper = await readFile(new URL("../lib/application-verification.ts", import.meta.url), "utf8");
-  const signature = idempotencyMigration.match(/create function public\.create_application_with_email_job\(([\s\S]*?)\)\s*returns table/i)?.[1] ?? "";
+  const signature = enquiryMigration.match(/create function public\.create_application_with_email_job\(([\s\S]*?)\)\s*returns table/i)?.[1] ?? "";
   const args = [...signature.matchAll(/\b(p_[a-z_]+)\s+(text|bytea|timestamptz)\b/gi)].map((match) => [match[1], match[2].toLowerCase()]);
   const expected = [
-    ["p_legal_name", "text"], ["p_industry_vertical", "text"], ["p_ttm_revenue", "text"],
-    ["p_monthly_ad_spend", "text"], ["p_growth_bottleneck", "text"], ["p_partnership_readiness", "text"],
-    ["p_decision_maker_email", "text"], ["p_decision_maker_linkedin", "text"], ["p_token_hash", "bytea"],
-    ["p_token_expires_at", "timestamptz"], ["p_encrypted_token_payload", "bytea"], ["p_idempotency_key", "text"],
-    ["p_request_fingerprint", "bytea"],
+    ["p_contact_name", "text"], ["p_decision_maker_email", "text"], ["p_legal_name", "text"],
+    ["p_help_with", "text"], ["p_project_details", "text"], ["p_company_size", "text"],
+    ["p_industry_vertical", "text"], ["p_budget_range", "text"], ["p_timeline", "text"],
+    ["p_token_hash", "bytea"], ["p_token_expires_at", "timestamptz"], ["p_encrypted_token_payload", "bytea"],
+    ["p_idempotency_key", "text"], ["p_request_fingerprint", "bytea"],
   ];
   assert.deepEqual(args, expected);
   for (const [name] of expected) assert.match(helper, new RegExp(`${name}:`));
   assert.match(route, /buildCreateApplicationWithEmailJobArgs\(application, metadata\)/);
-  assert.match(idempotencyMigration, /returns table \(application_id uuid, email_job_id uuid, generation integer, job_status text\)/i);
+  assert.match(enquiryMigration, /returns table \(application_id uuid, email_job_id uuid, generation integer, job_status text\)/i);
+  assert.match(enquiryMigration, /drop function public\.create_application_with_email_job\(\s*text, text, text, text, text, text, text, text, bytea, timestamptz, bytea, text, bytea\s*\)/i);
+});
+
+test("enquiry migration keeps legacy rows valid and restricts new answers to the shared option lists", () => {
+  for (const column of ["industry_vertical", "ttm_revenue", "monthly_ad_spend", "growth_bottleneck", "partnership_readiness", "decision_maker_linkedin"]) {
+    assert.match(enquiryMigration, new RegExp(`alter column ${column} drop not null`, "i"));
+  }
+  for (const column of ["contact_name", "help_with", "project_details", "company_size", "budget_range", "timeline"]) {
+    assert.match(enquiryMigration, new RegExp(`add column ${column} text`, "i"));
+  }
+  // Every option the form can send is allowed by the database (and legacy industries stay allowed).
+  for (const options of Object.values(applicationOptions)) {
+    for (const option of options) assert.ok(enquiryMigration.includes(`'${option}'`), option);
+  }
+  for (const legacy of ["Enterprise Banking & FinTech", "High-Ticket B2B Services"]) assert.ok(enquiryMigration.includes(`'${legacy}'`), legacy);
+  assert.match(enquiryMigration, /char_length\(contact_name\) between 1 and 120/i);
+  assert.match(enquiryMigration, /char_length\(project_details\) between 1 and 2000/i);
+});
+
+test("enquiry RPC keeps the restricted, idempotent contract and requires the enquiry answers", () => {
+  const rpc = enquiryMigration.slice(enquiryMigration.indexOf("create function public.create_application_with_email_job"));
+  assert.match(rpc, /language plpgsql\s+security invoker\s+set search_path = pg_catalog/i);
+  assert.doesNotMatch(rpc, /security\s+definer/i);
+  assert.match(rpc, /p_contact_name is null[\s\S]*p_help_with is null[\s\S]*p_project_details is null/i);
+  assert.match(rpc, /pg_advisory_xact_lock[\s\S]*hashtextextended\(p_idempotency_key, 0\)/i);
+  assert.match(rpc, /v_fingerprint is distinct from p_request_fingerprint/i);
+  assert.match(rpc, /errcode = 'LGL01'/i);
+  assert.match(rpc, /octet_length\(p_encrypted_token_payload\) <> 72/i);
+  const applicationInsert = rpc.match(/insert into public\.growth_applications \(([\s\S]*?)\) values/i)?.[1] ?? "";
+  assert.doesNotMatch(applicationInsert, /qualification_status/i);
+  assert.match(rpc, /revoke all on function public\.create_application_with_email_job[\s\S]*?from public, anon, authenticated/i);
+  assert.match(rpc, /grant execute on function public\.create_application_with_email_job[\s\S]*?to service_role/i);
+  assert.match(rpc, /create_application_with_email_job\(text,text,text,text,text,text,text,text,text,bytea,timestamptz,bytea,text,bytea\)/i);
 });
 
 test("final migration documentation no longer describes duplicate-key uniqueness failure", () => {

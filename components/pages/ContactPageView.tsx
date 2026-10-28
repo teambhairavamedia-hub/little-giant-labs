@@ -2,29 +2,41 @@
 
 import { Container } from "@/components/layout/Container";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { DocumentIcon, HandshakeIcon, PinIcon, SearchIcon } from "@/components/ui/Icons";
-import { siteConfig } from "@/lib/site";
+import { DocumentIcon, HandshakeIcon, SearchIcon } from "@/components/ui/Icons";
+import { accentTitle } from "@/components/ui/accentTitle";
 import { useI18n } from "@/lib/i18n/context";
 
-/* Apply → review → partner, drawn as a connected three-step pictograph. */
-function ProcessPictograph() {
-  const steps = [DocumentIcon, SearchIcon, HandshakeIcon];
+/* "What happens next": tell us → we review → we connect, as a connected vertical timeline. */
+function NextSteps({ label, steps }: { label: string; steps: readonly string[] }) {
+  const icons = [DocumentIcon, SearchIcon, HandshakeIcon];
   return (
-    <div className="mt-10 flex items-center" aria-hidden="true">
-      {steps.map((StepIcon, i) => (
-        <div key={i} className="flex items-center">
-          {i > 0 && <span className="h-px w-8 border-t border-dashed border-[#C5A059]/60 sm:w-10" />}
-          <span
-            className={`flex h-12 w-12 items-center justify-center rounded-full border ${
-              i === steps.length - 1
-                ? "border-[#C5A059] bg-[#C5A059]/10 text-lgl-gold"
-                : "border-lgl-line/30 text-lgl-sage"
-            }`}
-          >
-            <StepIcon size={20} />
-          </span>
-        </div>
-      ))}
+    <div className="mt-10">
+      <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-lgl-gold">{label}</p>
+      <ol className="mt-6 space-y-0">
+        {steps.map((step, i) => {
+          const StepIcon = icons[i % icons.length];
+          const last = i === steps.length - 1;
+          return (
+            <li key={step} className="relative flex gap-4 pb-6 last:pb-0">
+              {!last && (
+                <span aria-hidden="true" className="absolute left-6 top-12 bottom-0 border-l border-dashed border-[#C5A059]/50" />
+              )}
+              <span
+                aria-hidden="true"
+                className={`relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border ${
+                  last ? "border-[#C5A059] bg-[#C5A059]/10 text-lgl-gold" : "border-lgl-line/30 text-lgl-sage"
+                }`}
+              >
+                <StepIcon size={20} />
+              </span>
+              <p className="pt-3 text-sm leading-relaxed text-lgl-fg/85">
+                <span className="mr-1.5 font-semibold text-lgl-gold">{i + 1}.</span>
+                {step}
+              </p>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 }
@@ -67,13 +79,10 @@ export function ContactPageView() {
         <Container className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-12">
           <div>
             <p className="mb-6 text-[11px] font-semibold uppercase tracking-[.28em] text-lgl-gold">
-              {dict.contact.header.eyebrow} <span className="px-2 text-lgl-soft">/</span>{" "}
-              {dict.contact.header.tagline}
+              {dict.contact.header.eyebrow}
             </p>
-            <h1 className="max-w-4xl font-display text-5xl leading-[.98] tracking-[-.055em] text-lgl-fg sm:text-6xl md:text-7xl">
-              {dict.contact.header.titlePart1}
-              <br />
-              <span className="text-lgl-sage">{dict.contact.header.titleEmphasis}</span>
+            <h1 className="max-w-4xl text-balance font-display text-5xl leading-[.98] tracking-[-.055em] text-lgl-fg sm:text-6xl md:text-7xl">
+              {accentTitle(dict.contact.header.title)}
             </h1>
             <p className="mt-8 max-w-xl text-sm leading-relaxed text-lgl-soft md:text-base">
               {dict.contact.header.description}
@@ -83,47 +92,16 @@ export function ContactPageView() {
         </Container>
       </section>
 
-      <section className="bg-lgl-bg px-6 py-14 md:px-8 md:py-20">
+      <section className="bg-lgl-bg px-6 py-14 md:px-8 md:pb-12 md:pt-20">
         <Container>
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
             <aside className="lg:sticky lg:top-12 lg:self-start">
-              <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-lgl-gold">
-                {dict.contact.sidebar.eyebrow}
-              </p>
-              <h2 className="mt-5 max-w-sm font-display text-3xl leading-[1.35] tracking-[-.04em] text-lgl-fg [word-spacing:0.17em]">
-                {dict.contact.sidebar.title}
-              </h2>
-              <p className="mt-5 max-w-sm text-sm leading-relaxed text-lgl-soft">
-                {dict.contact.sidebar.description}
-              </p>
-              <ProcessPictograph />
+              <p className="max-w-sm text-base leading-relaxed text-lgl-soft">{dict.contact.sidebar.intro}</p>
+              <NextSteps label={dict.contact.sidebar.stepsLabel} steps={dict.contact.sidebar.steps} />
               <div className="mt-10 border-t border-lgl-line/30 pt-5 text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-soft">
                 {dict.contact.sidebar.tagline}
               </div>
-              {/* Office address — opens in Google Maps */}
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(siteConfig.address.full)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group mt-8 flex max-w-sm items-start gap-4 rounded-2xl border border-lgl-line/30 p-5 transition-colors hover:border-lgl-gold/50"
-              >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-lgl-gold/30 text-lgl-gold">
-                  <PinIcon size={17} />
-                </span>
-                <span>
-                  <span className="block text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-gold">
-                    {dict.footer.officeHeading}
-                  </span>
-                  <address className="mt-2 text-sm not-italic leading-relaxed text-lgl-soft">
-                    <span className="block font-semibold text-lgl-fg">{siteConfig.address.building}</span>
-                    {siteConfig.address.lines.map((line) => (
-                      <span key={line} className="block">
-                        {line}
-                      </span>
-                    ))}
-                  </address>
-                </span>
-              </a>
+              {/* The office address lives in the footer only */}
             </aside>
             <ContactForm />
           </div>

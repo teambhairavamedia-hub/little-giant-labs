@@ -406,7 +406,7 @@ html.lenis, html.lenis body {
 .home-eyebrow { background:linear-gradient(180deg,#F4DC9A 0%,#E2BC69 40%,#B98B3C 58%,#D9AE5C 78%,#F0D48E 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
 :root[data-theme="light"] .home-eyebrow { background:linear-gradient(180deg,#A47826 0%,#8A621B 45%,#6E4C12 60%,#87601E 80%,#A27A2E 100%); -webkit-background-clip:text; background-clip:text; }
 .home-eyebrow span { display:block; width:1px; height:1rem; background:var(--home-gold); }
-.home-hero .home-eyebrow { width:fit-content; max-width:100%; margin:0 auto; padding-left:.16em; font-family:var(--font-manrope),sans-serif; font-size:clamp(1.1rem,2.6vw,2.35rem); font-weight:800; line-height:1.2; letter-spacing:.16em; text-wrap:balance; background:linear-gradient(100deg,transparent 30%,rgba(255,246,214,.55) 46%,transparent 62%),linear-gradient(180deg,#F4DC9A 0%,#E2BC69 38%,#A87A2E 52%,#C99B48 70%,#EED08A 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 2px 1px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(226,188,105,.18)); }
+.home-hero .home-eyebrow { width:fit-content; max-width:100%; margin:0 auto; padding-left:.16em; font-family:var(--font-manrope),sans-serif; font-size:clamp(.95rem,1.8vw,1.6rem); font-weight:800; line-height:1.2; letter-spacing:.16em; text-wrap:balance; background:linear-gradient(100deg,transparent 30%,rgba(255,246,214,.55) 46%,transparent 62%),linear-gradient(180deg,#F4DC9A 0%,#E2BC69 38%,#A87A2E 52%,#C99B48 70%,#EED08A 100%); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 2px 1px rgba(0,0,0,.55)) drop-shadow(0 0 18px rgba(226,188,105,.18)); }
 .home-hero h1 { max-width:1120px; margin:1.25rem auto 1.5rem; color:var(--home-paper); font-size:clamp(2.5rem,4.8vw,4.7rem); line-height:1.04; letter-spacing:-.045em; text-wrap:balance; }
 .home-hero h1 em,.home-section-head h2 em,.work-heading h2 em { color:var(--home-sage); font-family:Georgia,serif; font-weight:400; }
 /* Tagline reuses .home-intro typography; this only adds spacing below it */
@@ -429,7 +429,7 @@ html.lenis, html.lenis body {
 .home-index i { width:3rem; height:1px; background:color-mix(in srgb,var(--lgl-line) 20%,transparent); }
 .home-pillars,.home-work { padding-block:clamp(5rem,10vw,9rem); }
 .home-pillars { padding-top:clamp(3rem,6vw,5rem); }
-.home-pillars { background:linear-gradient(180deg,var(--lgl-bg),var(--lgl-bg-alt)); }
+.home-pillars { background:var(--lgl-bg); }
 .home-section-head { max-width:660px; margin-bottom:clamp(3rem,7vw,6rem); }
 .home-section-head h2,.work-heading h2 { margin:1rem 0; font-size:clamp(2.6rem,6vw,5rem); line-height:1; }
 .home-section-head>p:last-child,.work-heading>p { max-width:500px; color:var(--lgl-muted-2); font-size:clamp(1.05rem,1.4vw,1.2rem); line-height:1.7; }
@@ -505,7 +505,7 @@ html.lenis, html.lenis body {
 .offer-link::after { content:""; position:absolute; inset:0; }
 .offer-link:focus-visible { outline:none; }
 .offer-link span { transition:transform .3s ease; }
-.offer-cta { display:flex; align-items:center; justify-content:space-between; gap:1.5rem 2.5rem; flex-wrap:wrap; margin-top:clamp(2.5rem,5vw,4rem); padding:clamp(1.5rem,3vw,2.25rem); border:1px solid color-mix(in srgb,var(--lgl-gold) 28%,transparent); border-radius:1.25rem; background:color-mix(in srgb,var(--lgl-gold) 6%,transparent); }
+.offer-cta { display:flex; align-items:center; justify-content:space-between; gap:1.5rem 2.5rem; flex-wrap:wrap; margin-top:clamp(2.5rem,5vw,4rem); padding:clamp(1.5rem,3vw,2.25rem); border:1px solid color-mix(in srgb,var(--lgl-gold) 28%,transparent); border-radius:1.25rem; background:transparent; }
 .offer-cta h3 { margin:0 0 .5rem; color:var(--home-paper); font-size:clamp(1.35rem,2.2vw,2rem); line-height:1.1; }
 .offer-cta-button { display:inline-flex; min-height:48px; align-items:center; justify-content:center; gap:.6rem; padding:0 1.5rem; border-radius:999px; font-family:var(--font-dm-sans),sans-serif; font-size:.75rem; font-weight:600; letter-spacing:.18em; text-decoration:none; text-transform:uppercase; transition:opacity .3s ease; }
 .offer-cta-button:hover { opacity:.85; }
@@ -513,8 +513,7 @@ html.lenis, html.lenis body {
 
 /* Why Little Giant Labs: statement above a staggered row of numbered cards */
 .home-why,.home-process,.home-final { padding-block:clamp(5rem,10vw,9rem); }
-.home-why { background:radial-gradient(ellipse 55% 45% at 0% 100%,color-mix(in srgb,var(--lgl-sage) 10%,transparent),transparent 70%),var(--lgl-bg); }
-.why-head { max-width:820px; }
+.home-why { background:var(--lgl-bg); }
 .why-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(.9rem,1.8vw,1.35rem); margin:0; padding:0; list-style:none; }
 .why-card { position:relative; overflow:hidden; display:flex; flex-direction:column; padding:clamp(1.4rem,2.4vw,2rem); border:1px solid color-mix(in srgb,var(--lgl-line) 16%,transparent); border-radius:1.25rem; background:linear-gradient(160deg,color-mix(in srgb,var(--lgl-fg) 5%,transparent),color-mix(in srgb,var(--lgl-fg) 1%,transparent)); transition:border-color .3s ease,transform .3s ease,box-shadow .3s ease; }
 .why-card::before { content:""; position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,var(--home-gold),transparent); transform:scaleX(.25); transform-origin:left; transition:transform .5s cubic-bezier(.22,1,.36,1); }
@@ -525,7 +524,7 @@ html.lenis, html.lenis body {
 .why-card p { margin:0; color:var(--lgl-muted); font-size:clamp(.95rem,1.1vw,1.02rem); line-height:1.65; }
 
 /* Process: four steps in a row with a connecting rule; vertical timeline on mobile */
-.home-process { border-top:1px solid color-mix(in srgb,var(--lgl-line) 10%,transparent); background:linear-gradient(180deg,var(--lgl-bg-alt),var(--lgl-bg)); }
+.home-process { border-top:1px solid color-mix(in srgb,var(--lgl-line) 10%,transparent); background:var(--lgl-bg); }
 .process-steps { position:relative; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(1rem,2.5vw,2rem); margin:0; padding:0; list-style:none; }
 .process-steps::before { content:""; position:absolute; top:1.5rem; left:1.5rem; right:1.5rem; height:1px; background:linear-gradient(90deg,var(--home-gold),color-mix(in srgb,var(--lgl-gold) 25%,transparent)); }
 .process-step { position:relative; }
@@ -563,8 +562,8 @@ html.lenis, html.lenis body {
  .process-step:last-child { padding-bottom:0; }
  .process-marker { margin-bottom:0; }
 }
-/* Selected Work continues the services section background (which ends on --lgl-bg-alt) */
-.home-work { position:relative; border-top:1px solid color-mix(in srgb,var(--lgl-line) 10%,transparent); background:linear-gradient(180deg,var(--lgl-bg-alt),var(--lgl-bg)); scroll-margin-top:1rem; overflow-x:clip; }
+/* Selected Work shares the plain page background; a hairline separates it from the section above */
+.home-work { position:relative; border-top:1px solid color-mix(in srgb,var(--lgl-line) 10%,transparent); background:var(--lgl-bg); scroll-margin-top:1rem; overflow-x:clip; }
 .work-heading { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr); column-gap:clamp(2rem,6vw,5rem); align-items:end; padding-bottom:2rem; border-bottom:1px solid color-mix(in srgb,var(--lgl-line) 14%,transparent); }
 .work-heading h2 { margin-bottom:0; text-wrap:balance; }
 .work-heading>p { max-width:none; margin:0 0 .4rem; padding-left:1.25rem; border-left:2px solid color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
@@ -572,10 +571,10 @@ html.lenis, html.lenis body {
 /* Three centered carousel positions; each project moves through left, center,
    and right as the single active index changes. */
 .work-carousel { padding-top:clamp(1.25rem,3vw,2.5rem); }
-.work-list { --work-pad:clamp(1.1rem,1.7vw,1.5rem); position:relative; width:135%; height:clamp(700px,54vw,780px); margin-left:-17.5%; overflow:hidden; touch-action:pan-y; }
+.work-list { --work-pad:clamp(1.1rem,1.7vw,1.5rem); position:relative; width:135%; height:clamp(720px,56vw,800px); margin-left:-17.5%; overflow:hidden; touch-action:pan-y; }
 .work-list:focus-visible { outline:1px solid var(--lgl-gold); outline-offset:-1px; }
 .work-list img { -webkit-user-drag:none; user-select:none; }
-.work-slide { position:absolute; top:50%; left:50%; width:min(48%,500px); height:clamp(250px,35vw,700px); filter:grayscale(1) brightness(.26); opacity:.9; transition:transform .56s cubic-bezier(.2,.7,.2,1),filter .48s cubic-bezier(.2,.7,.2,1),opacity .48s ease; cursor:pointer; }
+.work-slide { position:absolute; top:50%; left:50%; width:min(48%,500px); height:clamp(620px,54vw,760px); filter:grayscale(1) brightness(.26); opacity:.9; transition:transform .56s cubic-bezier(.2,.7,.2,1),filter .48s cubic-bezier(.2,.7,.2,1),opacity .48s ease; cursor:pointer; }
 .work-slide--left { z-index:1; transform:translate(calc(-50% - 43%),-50%) scale(.8); }
 .work-slide--center { z-index:2; transform:translate(-50%,-50%) scale(1.02); }
 .work-slide--right { z-index:1; transform:translate(calc(-50% + 43%),-50%) scale(.8); }
@@ -588,7 +587,8 @@ html.lenis, html.lenis body {
 .work-feature.is-active { box-shadow:0 18px 44px rgba(0,0,0,.34),0 0 34px color-mix(in srgb,var(--lgl-gold) 10%,transparent); }
 .work-feature::before { content:""; position:absolute; z-index:2; inset:0 0 auto; height:1px; background:linear-gradient(90deg,transparent,var(--lgl-gold),transparent); opacity:0; transition:opacity .45s ease; }
 /* Uniform square frame on every card; the cover is contained, never cropped */
-.work-image { aspect-ratio:1.55; min-height:0; }
+/* Wide, short media keeps the full challenge/outcome copy inside the fixed-height slide */
+.work-image { aspect-ratio:1.9; min-height:0; }
 .work-image::after { display:none; }
 /* Spare frame space takes the cover's own edge colours, so it reads as part of the artwork */
 .work-image { background:var(--work-tone,#17344A); }
@@ -602,13 +602,13 @@ html.lenis, html.lenis body {
 .work-copy>.home-eyebrow { align-self:start; padding-top:var(--work-pad); }
 .work-copy h3 { position:relative; align-self:start; margin:.55rem 0 .65rem; padding-bottom:.65rem; color:var(--home-paper); font-size:clamp(1.05rem,1.5vw,1.45rem); line-height:1.1; }
 .work-copy h3::after { content:""; position:absolute; left:var(--work-pad); bottom:0; width:2.5rem; height:1px; background:var(--home-gold); transform-origin:left; transition:transform .55s cubic-bezier(.2,.7,.2,1); }
-.work-copy .work-challenge,.work-copy .work-outcome { color:var(--lgl-muted-2); font-size:clamp(1.05rem,1.25vw,1.2rem); line-height:1.48; }
+.work-copy .work-challenge,.work-copy .work-outcome { color:var(--lgl-muted); font-size:clamp(.95rem,1.1vw,1.02rem); line-height:1.65; }
 .work-copy .work-challenge { padding-bottom:.55rem; }
 .work-copy .work-outcome { padding-bottom:var(--work-pad); }
 .work-outcome ul { display:grid; gap:.35rem; margin:0; padding:0; list-style:none; }
 .work-outcome li { position:relative; padding-left:1rem; color:var(--lgl-soft); }
 .work-outcome li::before { content:""; position:absolute; left:0; top:.68em; width:5px; height:5px; border-radius:50%; background:var(--home-gold); }
-.work-copy strong { display:block; margin:0 0 .55rem; color:var(--lgl-soft); font-size:.98rem; letter-spacing:.13em; text-transform:uppercase; }
+.work-copy strong { display:block; margin:0 0 .45rem; color:var(--lgl-soft); font-size:.7rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
 @media(hover:hover) {
  .work-feature:hover { border-color:color-mix(in srgb,var(--lgl-gold) 45%,transparent); }
  .work-feature:hover::before { opacity:1; }
@@ -658,7 +658,7 @@ html.lenis, html.lenis body {
  .home-hero { min-height:88svh; }
  .home-hero-inner { padding-block:10rem 2.5rem; }
  .home-hero h1 { font-size:clamp(2.25rem,10.2vw,3.55rem); }
- .home-hero .home-eyebrow { padding-left:.1em; font-size:clamp(.9rem,4.2vw,1.1rem); letter-spacing:.1em; }
+ .home-hero .home-eyebrow { padding-left:.1em; font-size:clamp(.78rem,3.6vw,.95rem); letter-spacing:.1em; }
  .pillar-scene { grid-template-columns:1fr; gap:1.5rem; }
  .pillar-scene:nth-child(even) { grid-template-columns:1fr; }
  .pillar-scene:nth-child(even) .pillar-copy { order:initial; }
@@ -683,7 +683,6 @@ html.lenis, html.lenis body {
  .work-list { --work-pad:1.2rem; }
  .work-image { aspect-ratio:1.45; }
  .work-copy h3 { font-size:clamp(1.1rem,5vw,1.45rem); margin:.7rem 0 .8rem; }
- .work-copy .work-challenge,.work-copy .work-outcome { font-size:clamp(1.08rem,4.2vw,1.2rem); line-height:1.48; }
  .work-arrow { width:44px; height:44px; }
  .home-button { flex:1 1 100%; }
 }

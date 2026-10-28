@@ -191,64 +191,34 @@ export interface TranslationDictionary {
   contact: {
     header: {
       eyebrow: string;
-      tagline: string;
-      titlePart1: string;
-      titleEmphasis: string;
+      /* *…* marks the sage serif-italic accent (see accentTitle) */
+      title: string;
       description: string;
     };
     sidebar: {
-      eyebrow: string;
-      title: string;
-      description: string;
+      intro: string;
+      stepsLabel: string;
+      steps: [string, string, string];
       tagline: string;
     };
     form: {
       stepTitles: [string, string, string, string];
       stepAria: string;
       stepPrefix: string;
+      optionalTag: string;
+      optionalNote: string;
+      selectPlaceholder: string;
+      /* options: localized labels keyed by the canonical stored values in lib/application-options.ts */
       fields: {
-        enterpriseName: {
-          label: string;
-          placeholder: string;
-        };
-        industry: {
-          label: string;
-          legend: string;
-          options: Record<string, string>;
-        };
-        revenue: {
-          label: string;
-          legend: string;
-          options: Record<string, string>;
-        };
-        acquisitionSpend: {
-          label: string;
-          legend: string;
-          options: Record<string, string>;
-          financialNote: string;
-        };
-        bottleneck: {
-          label: string;
-          legend: string;
-          options: Record<string, string>;
-        };
-        partnership: {
-          label: string;
-          legend: string;
-          options: Record<string, string>;
-        };
-        corporateEmail: {
-          instruction: string;
-          label: string;
-          placeholder: string;
-          hint: string;
-          error: string;
-        };
-        linkedin: {
-          label: string;
-          placeholder: string;
-          error: string;
-        };
+        contactName: { label: string; placeholder: string };
+        workEmail: { label: string; placeholder: string; hint: string; error: string };
+        companyName: { label: string; placeholder: string };
+        helpWith: { label: string; legend: string; options: Record<string, string> };
+        projectDetails: { label: string; placeholder: string; hint: string };
+        companySize: { label: string; options: Record<string, string> };
+        industry: { label: string; options: Record<string, string> };
+        budget: { label: string; options: Record<string, string> };
+        timeline: { label: string; options: Record<string, string> };
       };
       validationError: string;
       serverError: string;

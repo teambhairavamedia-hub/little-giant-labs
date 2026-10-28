@@ -21,16 +21,20 @@ export function Header() {
   const isHomePage = pathname === "/" || pathname === `/${locale}`;
   const mobileOpen = mobileOpenForPath === pathname;
 
+  /* Services is its own page (survives refresh, works from any page); Our Work is a homepage section,
+     so its link carries the home path ("/#our-work") and works from other pages too. */
+  const servicesHref = getLocalizedPath("/services", locale);
+  const ourWorkHref = `${homePath}#our-work`;
   const navItems = [
     { label: dict.nav.home, href: homePath },
-    { label: dict.nav.services, href: `${homePath === "/" ? "" : homePath}#services` },
-    { label: dict.nav.ourWork, href: `${homePath === "/" ? "" : homePath}#our-work` },
+    { label: dict.nav.services, href: servicesHref },
+    { label: dict.nav.ourWork, href: ourWorkHref },
     { label: dict.nav.aboutUs, href: getLocalizedPath("/about", locale) },
     { label: dict.nav.contact, href: getLocalizedPath("/contact", locale) },
   ];
 
   const ctaHref = getLocalizedPath("/contact", locale);
-  const activeHref = isHomePage ? activeSectionHref ?? homePath : pathname;
+  const activeHref = isHomePage ? activeSectionHref ?? homePath : pathname.replace(/\/$/, "") || "/";
 
   /* Page-colored backdrop once content scrolls beneath the fixed header (color only — no size change) */
   useEffect(() => {
@@ -52,9 +56,10 @@ export function Header() {
   useEffect(() => {
     if (!isHomePage) return;
 
+    /* While scrolling the homepage, its services section highlights the Services nav item */
     const sections = [
-      { id: "services", href: `${homePath === "/" ? "" : homePath}#services` },
-      { id: "our-work", href: `${homePath === "/" ? "" : homePath}#our-work` },
+      { id: "services", href: servicesHref },
+      { id: "our-work", href: ourWorkHref },
     ]
       .map(({ id, href }) => ({ href, element: document.getElementById(id) }))
       .filter((section): section is { href: string; element: HTMLElement } => Boolean(section.element));
@@ -80,7 +85,7 @@ export function Header() {
       window.removeEventListener("scroll", updateActiveSection);
       window.removeEventListener("resize", updateActiveSection);
     };
-  }, [isHomePage, homePath]);
+  }, [isHomePage, servicesHref, ourWorkHref]);
 
   /* Theme styling values */
   const pillBorder = "var(--lgl-nav-border)";

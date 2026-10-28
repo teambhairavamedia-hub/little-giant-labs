@@ -99,24 +99,41 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const hash = window.location.hash;
-    if (hash) {
-      const target = document.querySelector(hash);
-      if (target) {
-        if (lenisRef.current) {
-          lenisRef.current.scrollTo(hash, { offset: 0, duration: 1 });
-        } else {
-          target.scrollIntoView({ behavior: "smooth" });
-        }
-        return;
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, { immediate: true });
       }
+      ScrollTrigger.refresh();
+    };
+
+    const hash = window.location.hash;
+    if (!hash) {
+      scrollToTop();
+      return;
     }
 
-    window.scrollTo(0, 0);
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
-    }
-    ScrollTrigger.refresh();
+    // Cross-page hash links (e.g. /about → /#our-work): wait for the new page to lay out, then
+    // re-measure Lenis so it doesn't clamp to the previous (shorter) page's height.
+    let frame = 0;
+    let attempts = 0;
+    const scrollToHash = () => {
+      const target = document.querySelector(hash);
+      if (!target) {
+        if (attempts++ < 30) frame = requestAnimationFrame(scrollToHash);
+        else scrollToTop();
+        return;
+      }
+      const lenis = lenisRef.current;
+      if (lenis) {
+        lenis.resize();
+        lenis.scrollTo(target as HTMLElement, { offset: 0, duration: 1 });
+      } else {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+    frame = requestAnimationFrame(scrollToHash);
+    return () => cancelAnimationFrame(frame);
   }, [pathname]);
 
   return <>{children}</>;

@@ -190,7 +190,7 @@ export function HomeRedesign() {
 
       <section className="home-why" data-section-theme="dark" aria-labelledby="why-title">
         <div className="home-shell">
-          <div className="home-section-head why-head">
+          <div className="home-section-head home-split-head">
             <p className="home-eyebrow">{why.eyebrow}</p>
             <h2 id="why-title">
               {why.titlePart1}
@@ -249,7 +249,7 @@ export function HomeRedesign() {
 
       <section className="home-final" data-section-theme="dark" aria-labelledby="final-title">
         <div className="home-shell">
-          <div className="final-card lgl-brand-card">
+          <div className="final-card">
             <div className="home-section-head">
               <h2 id="final-title">{finalCta.title}</h2>
               <p>{finalCta.text}</p>

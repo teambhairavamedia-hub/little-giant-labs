@@ -68,9 +68,9 @@ export function decryptVerificationToken(payloadBytea: string, keyValue = proces
 }
 
 export function fingerprintApplication(application: ValidatedApplication): string {
-  const canonical = [application.legal_name, application.industry_vertical, application.ttm_revenue,
-    application.monthly_ad_spend, application.growth_bottleneck, application.partnership_readiness,
-    application.decision_maker_email, application.decision_maker_linkedin];
+  const canonical = [application.contact_name, application.decision_maker_email, application.legal_name,
+    application.help_with, application.project_details, application.company_size,
+    application.industry_vertical, application.budget_range, application.timeline];
   return `\\x${createHash("sha256").update(JSON.stringify(canonical), "utf8").digest("hex")}`;
 }
 
@@ -79,14 +79,15 @@ export function buildCreateApplicationWithEmailJobArgs(
   metadata: InitialVerificationJobMetadata,
 ) {
   return {
-    p_legal_name: application.legal_name,
-    p_industry_vertical: application.industry_vertical,
-    p_ttm_revenue: application.ttm_revenue,
-    p_monthly_ad_spend: application.monthly_ad_spend,
-    p_growth_bottleneck: application.growth_bottleneck,
-    p_partnership_readiness: application.partnership_readiness,
+    p_contact_name: application.contact_name,
     p_decision_maker_email: application.decision_maker_email,
-    p_decision_maker_linkedin: application.decision_maker_linkedin,
+    p_legal_name: application.legal_name,
+    p_help_with: application.help_with,
+    p_project_details: application.project_details,
+    p_company_size: application.company_size,
+    p_industry_vertical: application.industry_vertical,
+    p_budget_range: application.budget_range,
+    p_timeline: application.timeline,
     p_token_hash: metadata.tokenHashBytea,
     p_token_expires_at: metadata.tokenExpiresAt,
     p_encrypted_token_payload: metadata.encryptedTokenPayloadBytea,
