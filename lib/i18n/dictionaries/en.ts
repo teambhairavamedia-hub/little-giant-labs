@@ -141,60 +141,8 @@ export const en: TranslationDictionary = {
       description:
         "Little Giant Labs sits at the intersection of high-retention cinematic storytelling and performance marketing, scaling brands that refuse to be ignored.",
     },
-    leadership: {
-      eyebrow: "Our Leadership",
-      pointOfView: "01 / THE POINT OF VIEW",
-      titlePart1: "Storytelling ",
-      titleItalic: "with conviction",
-      intro:
-        "Rajesh Waghchaware founded Little Giant Labs on a simple premise: in a digital landscape flooded with media spend and generic assets, only the most calculated, cinematic campaigns command true attention.",
-      quote: "“Little Giant Labs represents bold ideas and focused execution. We channel that focus into the brands we scale.”",
-      quoteAuthor: "Rajesh Waghchaware",
-      visionTab: "vision",
-      philosophyTab: "philosophy",
-      tabs: {
-        vision: {
-          title: "To Build Digital Movements",
-          body: "To create a world where brand storytelling is not just ads, but cinematic experiences that build deep-seated loyalty and community. Rajesh believes attention is the ultimate modern currency, and we must treat it with absolute respect by crafting high-value creative content.",
-        },
-        philosophy: {
-          title: "Performance is Creative Validation",
-          body: "An ad shouldn't just look pretty; it must convert. By bridging the gap between high-end cinema cameras and analytics dashboards, we turn eyeballs into enterprise value. Data tells us what works; creativity tells us why it connects.",
-        },
-      },
-      founderRole: "Founder & Creative Director",
-      founderName: "Rajesh Waghchaware",
-      founderBio:
-        "Directing creative strategies, growth analytics pipelines, and cinematic production for high-growth brands globally.",
-      founderAlt: "Rajesh Waghchaware, Founder and Creative Director",
-    },
-    timeline: {
-      eyebrow: "Our Journey",
-      titlePart1: "Evolution in",
-      titleItalic: "milestones",
-      milestones: [
-        {
-          year: "2021",
-          title: "The Inception",
-          desc: "Little Giant Labs was founded in Mumbai by Rajesh Waghchaware with a simple belief: video content should be cinematic and tell stories that matter. Started with just a camera and a vision.",
-        },
-        {
-          year: "2023",
-          title: "Creative Meets Performance",
-          desc: "We realized that beautiful creative must drive business results. Integrated digital ads operations, data analytics, and performance funnels. Scaled our first major e-commerce client to 5x ROAS.",
-        },
-        {
-          year: "2024",
-          title: "AI-Powered Systems",
-          desc: "Pioneered AI-driven post-production workflows and CRM automation loops. We started helping clients run automated follow-ups and AI customer retention systems, making marketing fully autonomous.",
-        },
-        {
-          year: "2026",
-          title: "Global Compound Growth",
-          desc: "Expanded into international markets. Today, Little Giant Labs serves 10+ brands globally, generating over 120M+ views annually, and engineering digital scale for industry leaders.",
-        },
-      ],
-    },
+
+
     capabilities: {
       eyebrow: "Our Capabilities",
       titlePart1: "How we scale",
