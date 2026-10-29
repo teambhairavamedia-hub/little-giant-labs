@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { DocumentIcon, HandshakeIcon, SearchIcon } from "@/components/ui/Icons";
+import { CompassIcon, DocumentIcon, HandshakeIcon, PenToolIcon, SearchIcon, TrendIcon } from "@/components/ui/Icons";
 import { accentTitle } from "@/components/ui/accentTitle";
 import { useI18n } from "@/lib/i18n/context";
 
@@ -38,32 +39,22 @@ function NextSteps({ label, steps }: { label: string; steps: readonly string[] }
   );
 }
 
-/* Contour field with a rising growth line */
+const topicIcons = [CompassIcon, PenToolIcon, TrendIcon];
+
+/* Hero artwork: a business person working glowing gears under a rising arrow (decorative; the headline carries the meaning) */
 function ContactHeroVisual() {
   return (
-    <svg
-      viewBox="0 0 400 400"
-      className="pointer-events-none -ml-3 mt-6 h-40 w-40 shrink-0 sm:h-48 sm:w-48 lg:mt-0 lg:h-[clamp(240px,22vw,320px)] lg:w-[clamp(240px,22vw,320px)]"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <g fill="none" stroke="currentColor" strokeWidth="1" className="text-lgl-line/15">
-        <circle cx="200" cy="200" r="190" strokeDasharray="2 8" />
-        <circle cx="200" cy="200" r="150" />
-        <circle cx="200" cy="200" r="110" />
-        <circle cx="200" cy="200" r="70" />
-      </g>
-      <path
-        d="M90,250 C150,250 170,150 230,150 S300,110 320,90"
-        fill="none"
-        stroke="#C5A059"
-        strokeWidth="2"
-        strokeLinecap="round"
+    <figure className="contact-visual" aria-hidden="true">
+      <Image
+        src="/media/contact/contact-growth.jpg"
+        alt=""
+        width={1200}
+        height={628}
+        priority
+        sizes="(max-width: 600px) 92vw, 520px"
+        className="h-full w-full object-cover"
       />
-      <circle cx="320" cy="90" r="6" fill="#C5A059" />
-      <circle cx="90" cy="250" r="4" className="fill-lgl-sage" />
-      <circle cx="230" cy="150" r="4" className="fill-lgl-sage" />
-    </svg>
+    </figure>
   );
 }
 
@@ -72,16 +63,30 @@ export function ContactPageView() {
 
   return (
     <main className="min-h-screen bg-lgl-bg text-lgl-fg">
-      <section className="relative overflow-hidden border-b border-lgl-line/20 bg-lgl-bg px-6 pb-16 pt-28 md:px-8 md:pb-20 md:pt-36 xl:pt-40">
-        <Container className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-12">
+      <section className="contact-hero relative overflow-hidden border-b border-lgl-line/20 px-6 pb-16 pt-28 md:px-8 md:pb-24 md:pt-36 xl:pt-40">
+        <Container className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
           <div>
             <p className="home-eyebrow" style={{ marginBottom: "1.5rem" }}>{dict.contact.header.eyebrow}</p>
-            <h1 className="max-w-4xl text-balance font-display text-5xl leading-[.98] tracking-[-.055em] text-lgl-fg sm:text-6xl md:text-7xl">
+            <h1 className="max-w-3xl text-balance font-display text-5xl leading-[.98] tracking-[-.055em] text-lgl-fg sm:text-6xl md:text-7xl">
               {accentTitle(dict.contact.header.title)}
             </h1>
-            <p className="mt-8 max-w-xl text-sm leading-relaxed text-lgl-soft md:text-base">
+            <p className="mt-8 max-w-xl border-l-2 border-lgl-gold/55 pl-5 text-base leading-relaxed text-lgl-soft md:text-lg">
               {dict.contact.header.description}
             </p>
+            {/* What we can talk about: the brand's three disciplines (the localized footer slogan) */}
+            <ul className="mt-9 flex flex-wrap gap-3">
+              {dict.footer.slogan.split(/\s*·\s*/).map((topic, index) => {
+                const TopicIcon = topicIcons[index % topicIcons.length];
+                return (
+                  <li key={topic} className="contact-topic">
+                    <span className="lgl-icon-badge h-8 w-8">
+                      <TopicIcon size={15} />
+                    </span>
+                    {topic}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
           <ContactHeroVisual />
         </Container>
