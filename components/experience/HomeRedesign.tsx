@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { experienceConfig } from "@/lib/experience";
 import { WorkCarousel } from "@/components/experience/WorkCarousel";
 import {
@@ -14,18 +14,22 @@ import {
   CompassIcon,
   FilmIcon,
   LayersIcon,
+  LoopIcon,
   MusicIcon,
   PenToolIcon,
   ShieldIcon,
+  SparkIcon,
   TargetIcon,
   TrendIcon,
 } from "@/components/ui/Icons";
+import { stripStop } from "@/components/ui/accentTitle";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
 import { servicePillars } from "@/lib/service-pillars";
 
 const whyIcons = [TargetIcon, LayersIcon, CompassIcon, ChartIcon];
 const techIcons = [CloudIcon, ChipIcon, ShieldIcon, BuildingIcon];
+const closingIcons = [SparkIcon, LoopIcon, TargetIcon];
 
 const projectMeta = [
   {
@@ -66,6 +70,30 @@ export function HomeRedesign() {
     Icon: projectMeta[idx]?.Icon || FilmIcon,
   }));
 
+  // Draw the process line once the steps scroll into view (the class is added only after JS runs,
+  // so without JS the steps simply show)
+  const processRef = useRef<HTMLOListElement>(null);
+  useEffect(() => {
+    const steps = processRef.current;
+    if (!steps) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      steps.classList.add("is-drawn");
+      return;
+    }
+    steps.classList.add("will-draw");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          steps.classList.add("is-drawn");
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(steps);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="home-redesign">
       <section className="home-hero" data-section-theme="dark" aria-labelledby="home-title">
@@ -73,14 +101,14 @@ export function HomeRedesign() {
           <p className="home-eyebrow">{heroDict.eyebrow}</p>
           <h1 id="home-title">
             {heroDict.titlePart1}
-            <em>{heroDict.titleEmphasis}</em>
-            {heroDict.titlePart2}
+            <em>{heroDict.titlePart2 ? heroDict.titleEmphasis : stripStop(heroDict.titleEmphasis)}</em>
+            {stripStop(heroDict.titlePart2)}
           </h1>
           <p className="home-intro home-tagline">{heroDict.tagline}</p>
           <p className="home-intro home-hero-intro">{heroDict.intro}</p>
           <div className="home-actions">
             <Link className="home-button home-button-primary" href={contactHref}>
-              {heroDict.discussProject} <span aria-hidden="true">↗</span>
+              {heroDict.discussProject}
             </Link>
             <a className="home-button home-button-secondary" href="#our-work">
               {heroDict.exploreWork}
@@ -95,7 +123,7 @@ export function HomeRedesign() {
             <p className="home-eyebrow">{whyUs.eyebrow}</p>
             <h2 id="why-us-title">
               {whyUs.titlePart1}
-              <em>{whyUs.titleEmphasis}</em>
+              <em>{stripStop(whyUs.titleEmphasis)}</em>
             </h2>
             <p>{whyUs.text}</p>
           </div>
@@ -108,7 +136,7 @@ export function HomeRedesign() {
             <p className="home-eyebrow">{whatWeDo.eyebrow}</p>
             <h2 id="pillars-title">
               {whatWeDo.titlePart1}
-              <em>{whatWeDo.titleEmphasis}</em>
+              <em>{stripStop(whatWeDo.titleEmphasis)}</em>
             </h2>
             <p>{whatWeDo.subheading}</p>
           </div>
@@ -129,7 +157,7 @@ export function HomeRedesign() {
                   </figure>
                   <div className="offer-copy">
                     <span className="offer-number">{String(index + 1).padStart(2, "0")}</span>
-                    <h3>{item.title}</h3>
+                    <h3>{stripStop(item.title)}</h3>
                     <p>{item.description}</p>
                     <Link className="offer-link" href={`${servicesHref}#${pillar.slug}`}>
                       {whatWeDo.exploreLabel} <span aria-hidden="true">→</span>
@@ -141,7 +169,7 @@ export function HomeRedesign() {
           </ol>
           <div className="offer-cta">
             <div>
-              <h3>{whatWeDo.ctaTitle}</h3>
+              <h3>{stripStop(whatWeDo.ctaTitle)}</h3>
               <p>{whatWeDo.ctaText}</p>
             </div>
             {/* Same golden pill and label as the header's "Book a Consultation" */}
@@ -158,7 +186,7 @@ export function HomeRedesign() {
             <p className="home-eyebrow">{tech.eyebrow}</p>
             <h2 id="tech-title">
               {tech.titlePart1}
-              <em>{tech.titleEmphasis}</em>
+              <em>{stripStop(tech.titleEmphasis)}</em>
             </h2>
             <div className="tech-copy">
               {tech.paragraphs.map((paragraph) => (
@@ -170,11 +198,11 @@ export function HomeRedesign() {
             {tech.items.map((item, index) => {
               const SectorIcon = techIcons[index % techIcons.length];
               return (
-                <li className="tech-item" key={item.title}>
+                <li className="tech-item" key={item.title} data-index={String(index + 1).padStart(2, "0")}>
                   <span className="tech-icon">
                     <SectorIcon size={20} />
                   </span>
-                  <h3>{item.title}</h3>
+                  <h3>{stripStop(item.title)}</h3>
                   <p>{item.description}</p>
                 </li>
               );
@@ -196,7 +224,7 @@ export function HomeRedesign() {
               <p className="home-eyebrow">{workDict.eyebrow}</p>
               <h2 id="work-title">
                 {workDict.titlePart1}
-                <em>{workDict.titleEmphasis}</em>
+                <em>{stripStop(workDict.titleEmphasis)}</em>
               </h2>
             </div>
             <p>{workDict.subheading}</p>
@@ -215,7 +243,7 @@ export function HomeRedesign() {
                 <div className="work-copy">
                   <p className="home-eyebrow">
                     <project.Icon className="work-icon" size={16} />
-                    {project.category}
+                    {project.category.replace(/\s*\/\s*/g, " · ")}
                   </p>
                   <h3>{project.client}</h3>
                   <p className="work-challenge">
@@ -249,7 +277,7 @@ export function HomeRedesign() {
             <p className="home-eyebrow">{why.eyebrow}</p>
             <h2 id="why-title">
               {why.titlePart1}
-              <em>{why.titleEmphasis}</em>
+              <em>{stripStop(why.titleEmphasis)}</em>
             </h2>
             <p>{why.intro}</p>
           </div>
@@ -267,21 +295,29 @@ export function HomeRedesign() {
                       {String(index + 1).padStart(2, "0")}
                     </span>
                   </div>
-                  <h3>{point.title}</h3>
+                  <h3>{stripStop(point.title)}</h3>
                   <p>{point.description}</p>
                 </li>
               );
             })}
           </ol>
-          {/* Closing line: three phrases, the last one as the serif accent, then the primary CTA */}
+          {/* Closing line: three equal tiles, each an icon badge above its phrase, then the primary CTA */}
           <div className="why-closing">
-            <p>
-              {why.closing.map((phrase, index) =>
-                index === why.closing.length - 1 ? <em key={phrase}>{phrase}</em> : <span key={phrase}>{phrase}</span>,
-              )}
-            </p>
+            <ul className="why-closing-list">
+              {why.closing.map((phrase, index) => {
+                const ClosingIcon = closingIcons[index % closingIcons.length];
+                return (
+                  <li key={phrase}>
+                    <span className="why-closing-icon">
+                      <ClosingIcon size={22} />
+                    </span>
+                    <span className="why-closing-text">{stripStop(phrase)}</span>
+                  </li>
+                );
+              })}
+            </ul>
             <Link className="home-button home-button-primary" href={contactHref}>
-              {heroDict.discussProject} <span aria-hidden="true">↗</span>
+              {heroDict.discussProject}
             </Link>
           </div>
         </div>
@@ -289,23 +325,25 @@ export function HomeRedesign() {
 
       <section className="home-process" data-section-theme="dark" aria-labelledby="process-title">
         <div className="home-shell">
-          <div className="home-section-head">
+          {/* Heading beside its intro, like the other homepage sections */}
+          <div className="home-section-head home-split-head">
             <p className="home-eyebrow">{process.eyebrow}</p>
             <h2 id="process-title">
               {process.titlePart1}
-              <em>{process.titleEmphasis}</em>
+              <em>{stripStop(process.titleEmphasis)}</em>
             </h2>
             <p>{process.intro}</p>
           </div>
           {/* Four steps: a row on desktop, a vertical timeline on mobile */}
-          <ol className="process-steps">
+          <ol className="process-steps" ref={processRef}>
+            <li className="process-runner" aria-hidden="true" />
             {process.steps.map((step, index) => (
-              <li className="process-step" key={step.title}>
+              <li className="process-step" key={step.title} style={{ "--step": index } as CSSProperties}>
                 <span className="process-marker" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3>{step.title}</h3>
+                  <h3>{stripStop(step.title)}</h3>
                   <p>{step.description}</p>
                 </div>
               </li>
@@ -318,12 +356,12 @@ export function HomeRedesign() {
         <div className="home-shell">
           <div className="final-card">
             <div className="home-section-head">
-              <h2 id="final-title">{finalCta.title}</h2>
+              <h2 id="final-title">{stripStop(finalCta.title)}</h2>
               <p>{finalCta.text}</p>
             </div>
             <div className="home-actions">
               <Link className="home-button home-button-primary" href={contactHref}>
-                {finalCta.button} <span aria-hidden="true">↗</span>
+                {finalCta.button}
               </Link>
             </div>
           </div>

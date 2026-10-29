@@ -514,13 +514,8 @@ export const en: TranslationDictionary = {
       tagline: "Brand Strategy · Creative · Digital Growth",
     },
     form: {
-      stepTitles: [
-        "About you",
-        "Your project",
-        "About your company",
-        "Budget & timeline",
-      ],
-      stepAria: "Step {step} of 4",
+      stepTitles: ["About you", "Your challenge", "Timeline"],
+      stepAria: "Step {step} of 3",
       stepPrefix: "Step",
       optionalTag: "Optional",
       optionalNote: "Optional — share only what you're comfortable with.",
@@ -540,8 +535,19 @@ export const en: TranslationDictionary = {
           label: "Company or brand name",
           placeholder: "Your company or brand",
         },
+        role: {
+          label: "Your role",
+          options: {
+            "Founder / Owner": "Founder / Owner",
+            "Executive / Leadership": "Executive / Leadership",
+            "Marketing / Brand": "Marketing / Brand",
+            "People / Talent": "People / Talent",
+            "Product / Operations": "Product / Operations",
+            "Other": "Other",
+          },
+        },
         helpWith: {
-          label: "What do you need help with?",
+          label: "What would you like help with?",
           legend: "What you need help with",
           options: {
             "Brand strategy & positioning": "Brand strategy & positioning",
@@ -552,46 +558,12 @@ export const en: TranslationDictionary = {
           },
         },
         projectDetails: {
-          label: "Tell us a little about your project",
+          label: "Tell us a little about your challenge",
           placeholder: "What are you trying to achieve, and what's getting in the way?",
           hint: "Up to 2,000 characters.",
         },
-        companySize: {
-          label: "Company size",
-          options: {
-            "1–10 people": "1–10 people",
-            "11–50 people": "11–50 people",
-            "51–200 people": "51–200 people",
-            "201–1,000 people": "201–1,000 people",
-            "1,000+ people": "1,000+ people",
-          },
-        },
-        industry: {
-          label: "Industry",
-          options: {
-            "Technology & SaaS": "Technology & SaaS",
-            "Financial services & fintech": "Financial services & fintech",
-            "Consumer, retail & D2C": "Consumer, retail & D2C",
-            "Media, entertainment & music": "Media, entertainment & music",
-            "Real estate & infrastructure": "Real estate & infrastructure",
-            "Professional & B2B services": "Professional & B2B services",
-            "Healthcare & life sciences": "Healthcare & life sciences",
-            "Education": "Education",
-            "Other": "Other",
-          },
-        },
-        budget: {
-          label: "Budget range",
-          options: {
-            "Under $5,000": "Under $5,000",
-            "$5,000 – $15,000": "$5,000 – $15,000",
-            "$15,000 – $50,000": "$15,000 – $50,000",
-            "$50,000+": "$50,000+",
-            "Not sure yet": "Not sure yet",
-          },
-        },
         timeline: {
-          label: "Desired timeline",
+          label: "Approximate timeline",
           options: {
             "As soon as possible": "As soon as possible",
             "Within 1–3 months": "Within 1–3 months",

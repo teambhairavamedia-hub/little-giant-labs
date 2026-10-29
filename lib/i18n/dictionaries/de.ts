@@ -514,13 +514,8 @@ export const de: TranslationDictionary = {
       tagline: "Markenstrategie · Kreation · Digitales Wachstum",
     },
     form: {
-      stepTitles: [
-        "Über Sie",
-        "Ihr Projekt",
-        "Über Ihr Unternehmen",
-        "Budget & Zeitplan",
-      ],
-      stepAria: "Schritt {step} von 4",
+      stepTitles: ["Über Sie", "Ihre Herausforderung", "Zeitplan"],
+      stepAria: "Schritt {step} von 3",
       stepPrefix: "Schritt",
       optionalTag: "Optional",
       optionalNote: "Optional – teilen Sie nur, was Sie möchten.",
@@ -540,8 +535,19 @@ export const de: TranslationDictionary = {
           label: "Unternehmens- oder Markenname",
           placeholder: "Ihr Unternehmen oder Ihre Marke",
         },
+        role: {
+          label: "Ihre Rolle",
+          options: {
+            "Founder / Owner": "Gründer/in oder Inhaber/in",
+            "Executive / Leadership": "Geschäftsführung oder Leitung",
+            "Marketing / Brand": "Marketing oder Marke",
+            "People / Talent": "Personal oder Talent",
+            "Product / Operations": "Produkt oder Betrieb",
+            "Other": "Sonstiges",
+          },
+        },
         helpWith: {
-          label: "Wobei brauchen Sie Unterstützung?",
+          label: "Wobei wünschen Sie sich Unterstützung?",
           legend: "Gewünschte Unterstützung",
           options: {
             "Brand strategy & positioning": "Markenstrategie & Positionierung",
@@ -552,46 +558,12 @@ export const de: TranslationDictionary = {
           },
         },
         projectDetails: {
-          label: "Erzählen Sie uns ein wenig über Ihr Projekt",
+          label: "Erzählen Sie uns etwas über Ihre Herausforderung",
           placeholder: "Was möchten Sie erreichen – und was steht Ihnen dabei im Weg?",
           hint: "Bis zu 2.000 Zeichen.",
         },
-        companySize: {
-          label: "Unternehmensgröße",
-          options: {
-            "1–10 people": "1–10 Personen",
-            "11–50 people": "11–50 Personen",
-            "51–200 people": "51–200 Personen",
-            "201–1,000 people": "201–1.000 Personen",
-            "1,000+ people": "1.000+ Personen",
-          },
-        },
-        industry: {
-          label: "Branche",
-          options: {
-            "Technology & SaaS": "Technologie & SaaS",
-            "Financial services & fintech": "Finanzdienstleistungen & Fintech",
-            "Consumer, retail & D2C": "Konsumgüter, Handel & D2C",
-            "Media, entertainment & music": "Medien, Entertainment & Musik",
-            "Real estate & infrastructure": "Immobilien & Infrastruktur",
-            "Professional & B2B services": "Professionelle & B2B-Dienstleistungen",
-            "Healthcare & life sciences": "Gesundheit & Life Sciences",
-            "Education": "Bildung",
-            "Other": "Sonstiges",
-          },
-        },
-        budget: {
-          label: "Budgetrahmen",
-          options: {
-            "Under $5,000": "Unter 5.000 $",
-            "$5,000 – $15,000": "5.000 – 15.000 $",
-            "$15,000 – $50,000": "15.000 – 50.000 $",
-            "$50,000+": "50.000 $+",
-            "Not sure yet": "Noch unklar",
-          },
-        },
         timeline: {
-          label: "Gewünschter Zeitplan",
+          label: "Ungefährer Zeitrahmen",
           options: {
             "As soon as possible": "So bald wie möglich",
             "Within 1–3 months": "Innerhalb von 1–3 Monaten",

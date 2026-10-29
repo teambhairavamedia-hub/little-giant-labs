@@ -8,7 +8,7 @@ import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { accentTitle } from "@/components/ui/accentTitle";
-import { CheckIcon } from "@/components/ui/Icons";
+import { CheckIcon, CompassIcon } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
 import { servicePillars } from "@/lib/service-pillars";
@@ -37,27 +37,34 @@ export function ServicesPageView() {
         style={{ background: "var(--lgl-bg)" }}
       >
         <Container className="py-12 md:py-20">
-          <div className="max-w-3xl">
-            <p className="label-eyebrow flex items-center gap-3 text-lgl-gold">
-              <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-lgl-gold to-lgl-gold/0" />
-              {intro.eyebrow}
-            </p>
-            <h1 className={`mt-5 ${headingClass}`} style={headingFont}>
-              {accentTitle(page.heading)}
-            </h1>
-            <blockquote className="mt-6 max-w-2xl border-l-2 border-lgl-gold/55 pl-5">
-              <p
-                className="text-lg italic leading-[1.6] text-lgl-fg/85 md:text-xl"
-                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-              >
-                {page.quote}
+          {/* Title and pull quote on the left, intro beside them on a gold rule (as on the homepage) */}
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
+            <div>
+              <p className="home-eyebrow">
+                {intro.eyebrow}
               </p>
-            </blockquote>
-            <p className="mt-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{page.intro}</p>
+              <h1 className={`mt-5 ${headingClass}`} style={headingFont}>
+                {accentTitle(page.heading)}
+              </h1>
+              <blockquote className="mt-6 max-w-2xl">
+                <p
+                  className="text-lg italic leading-[1.6] text-lgl-fg/85 md:text-xl"
+                  style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                >
+                  {page.quote}
+                </p>
+              </blockquote>
+            </div>
+            <p className="border-l-2 border-lgl-gold/55 pl-5 text-base leading-[1.8] text-lgl-fg/75 md:text-lg lg:mb-1">
+              {page.intro}
+            </p>
           </div>
-          {/* Approach statement, before the jump links to the four pillars */}
-          <Card className="relative mt-10 max-w-4xl overflow-hidden p-6 md:p-8">
+          {/* Approach statement, before the jump links to the pillars */}
+          <Card className="group relative mt-10 flex flex-col gap-5 overflow-hidden p-6 sm:flex-row sm:items-center md:mt-14 md:gap-7 md:p-8">
             <span aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-lgl-gold via-lgl-gold/40 to-lgl-gold/0" />
+            <span className="lgl-icon-badge h-12 w-12">
+              <CompassIcon size={22} />
+            </span>
             <p className="text-base leading-[1.8] text-lgl-fg md:text-lg">{page.approach}</p>
           </Card>
           <nav aria-label={page.jumpLabel} className="mt-10 flex flex-wrap gap-3">
@@ -82,15 +89,14 @@ export function ServicesPageView() {
         return (
           <Section
             key={pillar.slug}
-            id={pillar.slug}
             theme="light"
-            className="scroll-mt-28 border-b border-lgl-fg/10 py-16 md:py-24"
+            className="border-b border-lgl-fg/10 py-16 md:py-24"
             style={{ background: index % 2 === 0 ? "var(--lgl-section)" : "var(--lgl-bg)" }}
           >
             <Container>
               <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-2 lg:gap-16">
                 <div className={index % 2 === 1 ? "lg:order-2" : undefined}>
-                  <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-3xl border border-lgl-fg/10 bg-lgl-fg/5 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.45)] lg:sticky lg:top-36">
+                  <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-3xl border border-lgl-fg/10 bg-lgl-fg/5 lg:sticky lg:top-36">
                     <Image
                       src={pillar.image}
                       alt={dict.home.whatWeDo.items[index]?.alt ?? item.label}
@@ -104,10 +110,11 @@ export function ServicesPageView() {
                   </figure>
                 </div>
 
-                <div>
-                  <p className="label-eyebrow flex items-center gap-3 text-lgl-gold">
-                    <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-lgl-gold to-lgl-gold/0" />
-                    {number} / {item.label}
+                {/* Link target: jump links and homepage links land on this heading, just below the fixed header */}
+                <div id={pillar.slug} className="scroll-mt-32">
+                  <p className="home-eyebrow">
+                    <b className="font-bold">{number}</b>
+                    {item.label}
                   </p>
                   <h2 className={`mt-5 ${headingClass}`} style={headingFont}>
                     {accentTitle(item.title)}
@@ -167,8 +174,7 @@ export function ServicesPageView() {
       >
         <Container>
           <div className="max-w-3xl">
-            <p className="label-eyebrow flex items-center gap-3 text-lgl-gold">
-              <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-lgl-gold to-lgl-gold/0" />
+            <p className="home-eyebrow">
               {capabilities.eyebrow}
             </p>
             <h2 className={`mt-5 ${headingClass}`} style={headingFont}>

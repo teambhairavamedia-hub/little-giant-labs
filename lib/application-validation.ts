@@ -15,9 +15,7 @@ export type ApplicationInput = {
   legal_name: string;
   help_with: string;
   project_details: string;
-  company_size?: string;
-  industry_vertical?: string;
-  budget_range?: string;
+  contact_role?: string;
   timeline?: string;
 };
 
@@ -27,9 +25,7 @@ export type ValidatedApplication = {
   legal_name: string;
   help_with: string;
   project_details: string;
-  company_size: string | null;
-  industry_vertical: string | null;
-  budget_range: string | null;
+  contact_role: string | null;
   timeline: string | null;
   qualification_status: "pending_review";
 };
@@ -75,7 +71,7 @@ export async function validateApplication(body: unknown): Promise<ValidatedAppli
 
   // Optional answers: missing or blank → null; anything else must be a listed option.
   const optional: Record<(typeof optionalOptionFields)[number], string | null> = {
-    company_size: null, industry_vertical: null, budget_range: null, timeline: null,
+    contact_role: null, timeline: null,
   };
   for (const field of optionalOptionFields) {
     const raw = input[field];

@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { CheckIcon, ChipIcon, DiamondIcon, FilmIcon, HandshakeIcon, TrendIcon } from "@/components/ui/Icons";
+import { stripStop } from "@/components/ui/accentTitle";
 import { useI18n } from "@/lib/i18n/context";
 
 const serviceIcons = [DiamondIcon, FilmIcon, TrendIcon, HandshakeIcon, ChipIcon];
@@ -49,7 +50,7 @@ export function ServiceGrid() {
           >
             <div className="grid content-start">
               <div className="flex items-center justify-between">
-                <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-theme bg-[color-mix(in_srgb,var(--lgl-gold)_10%,transparent)] text-lgl-gold transition-colors duration-300 group-hover:border-[color-mix(in_srgb,var(--lgl-gold)_55%,transparent)] md:h-14 md:w-14">
+                <span className="lgl-icon-badge h-12 w-12 md:h-14 md:w-14">
                   <IconComponent size={24} />
                 </span>
                 <span className="text-sm font-semibold tracking-[0.08em] text-theme-subtle">
@@ -61,7 +62,7 @@ export function ServiceGrid() {
                 className="mt-6 text-xl md:text-2xl font-bold tracking-tight text-[var(--theme-fg)]"
                 style={{ fontFamily: "var(--font-manrope), sans-serif" }}
               >
-                {service.title}
+                {stripStop(service.title)}
               </h3>
 
               {service.tagline && (

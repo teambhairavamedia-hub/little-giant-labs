@@ -97,75 +97,19 @@ test("all dictionaries exist and have matching top-level sections", () => {
   }
 });
 
-test("form options map contains all canonical keys in every language", () => {
-  const canonicalIndustries = [
-    "Enterprise Banking & FinTech",
-    "Heavy Infrastructure & Real Estate",
-    "Premium Consumer Goods (D2C)",
-    "Venture-Backed Technology",
-    "High-Ticket B2B Services",
-  ];
-
-  const canonicalRevenues = [
-    "Under $1 Million",
-    "$1M – $5 Million",
-    "$5M – $20 Million",
-    "$20 Million+",
-  ];
-
-  const canonicalSpends = [
-    "Under $10,000 / month",
-    "$10,000 – $50,000 / month",
-    "$50,000 – $150,000 / month",
-    "$150,000+ / month",
-  ];
-
-  const canonicalBottlenecks = [
-    "Ad platform algorithmic fatigue & dropping ROAS",
-    "Inability to produce high-retention visual media at scale",
-    "Lack of advanced attribution models and data tracking",
-    "Sub-optimal customer lifetime value (LTV) and backend CRM systems",
-  ];
-
-  const canonicalPartnerships = [
-    "We are looking for a cheap, hands-off execution vendor",
-    "We are prepared to invest premium capital for institutional scale and long-term partnership",
-  ];
-
+test("consultation role, help and timeline options are translated in every locale", () => {
+  const roles = ["Founder / Owner", "Executive / Leadership", "Marketing / Brand", "People / Talent", "Product / Operations", "Other"];
+  const help = ["Brand strategy & positioning", "Creative & content", "Digital marketing & growth", "Employer brand & talent communication", "Not sure yet / help me decide"];
+  const timelines = ["As soon as possible", "Within 1–3 months", "Within 3–6 months", "Flexible / not decided"];
   for (const loc of locales) {
     const dict = getDictionary(loc);
     const formFields = dict.contact.form.fields;
-
-    for (const ind of canonicalIndustries) {
-      assert.ok(
-        formFields.industry.options[ind],
-        `Language ${loc} missing translation for industry: ${ind}`
-      );
-    }
-    for (const rev of canonicalRevenues) {
-      assert.ok(
-        formFields.revenue.options[rev],
-        `Language ${loc} missing translation for revenue: ${rev}`
-      );
-    }
-    for (const spend of canonicalSpends) {
-      assert.ok(
-        formFields.acquisitionSpend.options[spend],
-        `Language ${loc} missing translation for spend: ${spend}`
-      );
-    }
-    for (const b of canonicalBottlenecks) {
-      assert.ok(
-        formFields.bottleneck.options[b],
-        `Language ${loc} missing translation for bottleneck: ${b}`
-      );
-    }
-    for (const p of canonicalPartnerships) {
-      assert.ok(
-        formFields.partnership.options[p],
-        `Language ${loc} missing translation for partnership: ${p}`
-      );
-    }
+    for (const option of roles) assert.ok(formFields.role.options[option], `Language ${loc} missing role: ${option}`);
+    for (const option of help) assert.ok(formFields.helpWith.options[option], `Language ${loc} missing help: ${option}`);
+    for (const option of timelines) assert.ok(formFields.timeline.options[option], `Language ${loc} missing timeline: ${option}`);
+    assert.equal(formFields.timeline.label, loc === "en" ? "Approximate timeline" : formFields.timeline.label);
+    assert.equal(formFields.projectDetails.label.length > 0, true);
+    assert.deepEqual(formFields ? Object.keys(formFields) : [], ["contactName", "workEmail", "companyName", "role", "helpWith", "projectDetails", "timeline"]);
   }
 });
 

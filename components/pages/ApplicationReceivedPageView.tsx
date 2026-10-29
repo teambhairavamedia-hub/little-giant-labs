@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
+import { stripStop } from "@/components/ui/accentTitle";
 
 export function ApplicationReceivedPageView() {
   const { dict, locale } = useI18n();
@@ -25,13 +26,11 @@ export function ApplicationReceivedPageView() {
               strokeLinejoin="round"
             />
           </svg>
-          <p className="text-[11px] font-semibold uppercase tracking-[.28em] text-lgl-gold">
-            {dict.applicationReceived.eyebrow}
-          </p>
+          <p className="home-eyebrow">{dict.applicationReceived.eyebrow}</p>
           <h1 className="mt-7 font-display text-5xl leading-[1.02] tracking-[-.055em] sm:text-7xl">
             {dict.applicationReceived.headlinePart1}
             <br />
-            <span className="text-lgl-sage">{dict.applicationReceived.headlineEmphasis}</span>
+            <span className="text-lgl-sage">{stripStop(dict.applicationReceived.headlineEmphasis)}</span>
           </h1>
           <p className="mt-8 max-w-2xl text-base leading-relaxed text-lgl-soft">
             {dict.applicationReceived.body1}

@@ -514,13 +514,8 @@ export const es: TranslationDictionary = {
       tagline: "Estrategia de marca · Creatividad · Crecimiento digital",
     },
     form: {
-      stepTitles: [
-        "Sobre usted",
-        "Su proyecto",
-        "Sobre su empresa",
-        "Presupuesto y plazos",
-      ],
-      stepAria: "Paso {step} de 4",
+      stepTitles: ["Sobre usted", "Su desafío", "Plazos"],
+      stepAria: "Paso {step} de 3",
       stepPrefix: "Paso",
       optionalTag: "Opcional",
       optionalNote: "Opcional: comparta solo lo que quiera.",
@@ -540,8 +535,19 @@ export const es: TranslationDictionary = {
           label: "Nombre de la empresa o marca",
           placeholder: "Su empresa o marca",
         },
+        role: {
+          label: "Su cargo",
+          options: {
+            "Founder / Owner": "Fundador/a o propietario/a",
+            "Executive / Leadership": "Dirección o liderazgo",
+            "Marketing / Brand": "Marketing o marca",
+            "People / Talent": "Personas o talento",
+            "Product / Operations": "Producto u operaciones",
+            "Other": "Otro",
+          },
+        },
         helpWith: {
-          label: "¿En qué necesita ayuda?",
+          label: "¿Con qué le gustaría recibir ayuda?",
           legend: "Ayuda que necesita",
           options: {
             "Brand strategy & positioning": "Estrategia y posicionamiento de marca",
@@ -552,46 +558,12 @@ export const es: TranslationDictionary = {
           },
         },
         projectDetails: {
-          label: "Cuéntenos un poco sobre su proyecto",
+          label: "Cuéntenos un poco sobre su desafío",
           placeholder: "¿Qué quiere lograr y qué se lo está impidiendo?",
           hint: "Hasta 2.000 caracteres.",
         },
-        companySize: {
-          label: "Tamaño de la empresa",
-          options: {
-            "1–10 people": "1–10 personas",
-            "11–50 people": "11–50 personas",
-            "51–200 people": "51–200 personas",
-            "201–1,000 people": "201–1.000 personas",
-            "1,000+ people": "Más de 1.000 personas",
-          },
-        },
-        industry: {
-          label: "Sector",
-          options: {
-            "Technology & SaaS": "Tecnología y SaaS",
-            "Financial services & fintech": "Servicios financieros y fintech",
-            "Consumer, retail & D2C": "Consumo, retail y D2C",
-            "Media, entertainment & music": "Medios, entretenimiento y música",
-            "Real estate & infrastructure": "Inmobiliario e infraestructuras",
-            "Professional & B2B services": "Servicios profesionales y B2B",
-            "Healthcare & life sciences": "Salud y ciencias de la vida",
-            "Education": "Educación",
-            "Other": "Otro",
-          },
-        },
-        budget: {
-          label: "Rango de presupuesto",
-          options: {
-            "Under $5,000": "Menos de 5.000 $",
-            "$5,000 – $15,000": "5.000 – 15.000 $",
-            "$15,000 – $50,000": "15.000 – 50.000 $",
-            "$50,000+": "Más de 50.000 $",
-            "Not sure yet": "Aún no lo sé",
-          },
-        },
         timeline: {
-          label: "Plazo deseado",
+          label: "Plazo aproximado",
           options: {
             "As soon as possible": "Lo antes posible",
             "Within 1–3 months": "En 1–3 meses",

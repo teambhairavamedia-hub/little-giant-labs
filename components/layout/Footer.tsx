@@ -54,58 +54,24 @@ export function Footer() {
       className="relative overflow-hidden border-t border-lgl-fg/5"
       style={{ background: "var(--lgl-bg)", color: "var(--lgl-fg)" }}
     >
-      <div className="mx-auto max-w-[1400px] px-6 pt-24 pb-8 md:px-10 lg:px-14 [&_.label-eyebrow]:text-[0.6875rem]">
-        {/* Massive Hero CTA */}
-        <div className="mb-24">
-          <Link
-            href={contactHref}
-            className="group inline-flex flex-col items-start gap-4 text-left"
-          >
-            <p className="label-eyebrow text-lgl-fg/70 tracking-[0.28em]">
-              {dict.footer.ctaEyebrow}
-            </p>
-            <h2
-              className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.04em] text-lgl-fg transition-colors duration-500 group-hover:text-lgl-fg/80"
-              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-            >
-              {dict.footer.ctaHeading1}
-              <br />
-              {dict.footer.ctaHeading2}
-              <span className="inline-block ml-4 translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-4 group-hover:-translate-y-2">
-                →
-              </span>
-            </h2>
-          </Link>
-        </div>
-
-        {/* Separator line */}
-        <div className="h-[1px] w-full bg-lgl-fg/5 mb-12" />
-
+      <div className="mx-auto max-w-[1400px] px-6 pt-16 pb-8 md:px-10 md:pt-20 lg:px-14 [&_.label-eyebrow]:text-[0.6875rem]">
         {/* Links & Info Columns */}
         <div className="grid grid-cols-2 gap-12 md:grid-cols-3 md:gap-8 xl:grid-cols-5 items-start mb-28">
-          {/* Col 1: Brand statement card — gold rule draws in, then the tagline rises in word by word */}
+          {/* Col 1: Brand statement card — the tagline rises in word by word, closed by a quote mark */}
           <motion.div
-            className="relative col-span-2 overflow-hidden w-full max-w-lg rounded-3xl border border-lgl-gold/25 p-6 sm:p-7 md:col-span-3 xl:col-span-2 xl:mr-10"
+            className="relative col-span-2 overflow-hidden w-full max-w-lg rounded-3xl border border-lgl-gold/25 p-6 pb-10 sm:p-7 sm:pb-11 md:col-span-3 xl:col-span-2 xl:mr-10"
             initial={reduceMotion ? false : "hidden"}
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
           >
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute right-5 top-4 select-none text-[4.5rem] leading-[0.75] text-lgl-gold/20 sm:right-6 sm:text-[5rem]"
+              className="pointer-events-none absolute bottom-0 right-5 select-none text-[4.5rem] leading-[0.75] text-lgl-gold/25 sm:right-6 sm:text-[5rem]"
               style={{ fontFamily: "Georgia, serif" }}
             >
-              &ldquo;
+              &rdquo;
             </span>
-            <div className="relative mb-4 flex items-center gap-3">
-              <motion.span
-                aria-hidden="true"
-                className="block h-0.5 w-10 origin-left rounded-full bg-gradient-to-r from-lgl-gold to-lgl-gold/0"
-                variants={{ hidden: { scaleX: 0 }, visible: { scaleX: 1 } }}
-                transition={{ duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }}
-              />
-              <span className="label-eyebrow text-lgl-gold">{siteConfig.name}</span>
-            </div>
+            <p className="home-eyebrow relative" style={{ marginBottom: "1rem" }}>{siteConfig.name}</p>
             <motion.p
               className="relative max-w-[34ch] text-[1.0625rem] font-semibold leading-[1.4] tracking-[-0.02em] text-lgl-fg sm:text-[1.1875rem] xl:text-[1.25rem]"
               style={{ fontFamily: "var(--font-manrope), sans-serif" }}

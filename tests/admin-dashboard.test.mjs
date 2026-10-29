@@ -20,7 +20,7 @@ test("applications endpoint protects access and selects only dashboard columns",
   const route = await read("../app/api/admin/applications/route.ts");
   assert.ok(route.indexOf("getAdminSession") < route.indexOf("createSupabaseServerClient"));
   assert.match(route, /if \(!\(await getAdminSession\(\)\)\) return fail\("Authentication is required\.", 401\)/);
-  assert.match(route, /id, legal_name, contact_name, help_with, budget_range, qualification_status, submitted_at, decision_maker_email/);
+  assert.match(route, /id, legal_name, contact_name, help_with, qualification_status, submitted_at, decision_maker_email/);
   assert.match(route, /\.order\("submitted_at", \{ ascending: false \}\)\.order\("id", \{ ascending: false \}\)/);
   assert.match(route, /PAGE_SIZE_DEFAULT = 25/);
   assert.match(route, /PAGE_SIZE_MAX = 100/);
@@ -37,7 +37,7 @@ test("application detail endpoint protects and scopes a read to a validated appl
   assert.match(route, /\.eq\("id", id\)/);
   assert.match(route, /\.maybeSingle\(\)/);
   assert.match(route, /Application not found\.", 404/);
-  assert.match(route, /id, contact_name, decision_maker_email, legal_name, help_with, project_details, company_size, industry_vertical, budget_range, timeline, /);
+  assert.match(route, /id, contact_name, contact_role, decision_maker_email, legal_name, help_with, project_details, timeline, company_size, industry_vertical, budget_range/);
   // Legacy partnership-application answers stay readable for older rows
   assert.match(route, /ttm_revenue, monthly_ad_spend, growth_bottleneck, partnership_readiness, decision_maker_linkedin, qualification_status, rejection_reasons/);
   assert.match(route, /Cache-Control.*no-store/);
@@ -45,7 +45,9 @@ test("application detail endpoint protects and scopes a read to a validated appl
 
 test("dashboard offers a keyboard accessible detail panel and renders every stored answer safely", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
-  for (const label of ["Name", "Work email", "Company or brand name", "What they need help with", "About the project", "Company size", "Industry", "Budget range", "Desired timeline"]) assert.ok(dashboard.includes(`label="${label}"`) || dashboard.includes(`>${label}</dt>`), label);
+  for (const label of ["Name", "Work email", "Company or brand name", "What they need help with", "About the project", "Your role", "Desired timeline"]) assert.ok(dashboard.includes(`label="${label}"`) || dashboard.includes(`>${label}</dt>`), label);
+  assert.doesNotMatch(dashboard, /label="Company size"|label="Industry"|label="Budget range"/);
+  for (const label of ["Earlier company size", "Earlier application industry", "Earlier budget range"]) assert.ok(dashboard.includes(label));
   for (const label of ["Earlier application answers", "Trailing twelve-month revenue", "Monthly paid acquisition spend", "Strategic bottleneck", "Expectations regarding the engagement", "Decision-maker LinkedIn profile"]) assert.ok(dashboard.includes(label), label);
   assert.match(dashboard, /hasLegacyAnswers &&/);
   assert.match(dashboard, /role="dialog" aria-modal="true"/);
