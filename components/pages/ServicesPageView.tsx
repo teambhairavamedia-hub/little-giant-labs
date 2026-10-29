@@ -4,6 +4,7 @@ import { type CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
+import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { accentTitle } from "@/components/ui/accentTitle";
@@ -23,6 +24,7 @@ const headingClass =
 export function ServicesPageView() {
   const { dict, locale } = useI18n();
   const page = dict.servicesPage;
+  const { capabilities } = page;
   const intro = dict.home.whatWeDo;
   const contactHref = getLocalizedPath("/contact", locale);
 
@@ -43,8 +45,21 @@ export function ServicesPageView() {
             <h1 className={`mt-5 ${headingClass}`} style={headingFont}>
               {accentTitle(page.heading)}
             </h1>
-            <p className="mt-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{intro.subheading}</p>
+            <blockquote className="mt-6 max-w-2xl border-l-2 border-lgl-gold/55 pl-5">
+              <p
+                className="text-lg italic leading-[1.6] text-lgl-fg/85 md:text-xl"
+                style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+              >
+                {page.quote}
+              </p>
+            </blockquote>
+            <p className="mt-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{page.intro}</p>
           </div>
+          {/* Approach statement, before the jump links to the four pillars */}
+          <Card className="relative mt-10 max-w-4xl overflow-hidden p-6 md:p-8">
+            <span aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-lgl-gold via-lgl-gold/40 to-lgl-gold/0" />
+            <p className="text-base leading-[1.8] text-lgl-fg md:text-lg">{page.approach}</p>
+          </Card>
           <nav aria-label={page.jumpLabel} className="mt-10 flex flex-wrap gap-3">
             {page.items.map((item, index) => (
               <a
@@ -82,6 +97,8 @@ export function ServicesPageView() {
                       width={640}
                       height={800}
                       sizes="(max-width: 1024px) 92vw, 540px"
+                      // The optimizer rejects SVG; serve the local illustration as-is
+                      unoptimized={pillar.image.endsWith(".svg")}
                       className="h-full w-full object-cover"
                     />
                   </figure>
@@ -95,7 +112,11 @@ export function ServicesPageView() {
                   <h2 className={`mt-5 ${headingClass}`} style={headingFont}>
                     {accentTitle(item.title)}
                   </h2>
-                  <p className="mt-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">{item.intro}</p>
+                  <div className="mt-6 space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+                    {item.intro.split("\n\n").map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
 
                   <h3 className="mt-10 text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
                     {page.helpLabel}
@@ -109,16 +130,22 @@ export function ServicesPageView() {
                     ))}
                   </ul>
 
-                  <div className="mt-10 grid gap-5 md:grid-cols-2">
-                    <Card className="p-6 md:p-7">
-                      <p className="label-eyebrow text-lgl-gold">{page.outcomeLabel}</p>
-                      <p className="mt-3 text-[0.9375rem] leading-relaxed text-lgl-fg/80">{item.outcome}</p>
-                    </Card>
-                    <Card className="p-6 md:p-7">
-                      <p className="label-eyebrow text-lgl-gold">{page.fitLabel}</p>
-                      <p className="mt-3 text-[0.9375rem] leading-relaxed text-lgl-fg/80">{item.fit}</p>
-                    </Card>
-                  </div>
+                  {(item.outcome || item.fit) && (
+                    <div className="mt-10 grid gap-5 md:grid-cols-2">
+                      {item.outcome && (
+                        <Card className="p-6 md:p-7">
+                          <p className="label-eyebrow text-lgl-gold">{page.outcomeLabel}</p>
+                          <p className="mt-3 text-[0.9375rem] leading-relaxed text-lgl-fg/80">{item.outcome}</p>
+                        </Card>
+                      )}
+                      {item.fit && (
+                        <Card className="p-6 md:p-7">
+                          <p className="label-eyebrow text-lgl-gold">{page.fitLabel}</p>
+                          <p className="mt-3 text-[0.9375rem] leading-relaxed text-lgl-fg/80">{item.fit}</p>
+                        </Card>
+                      )}
+                    </div>
+                  )}
 
                   <Link href={contactHref} className={`lgl-gold-cta ${pillBase} mt-10 hover:opacity-85`} style={pillFont}>
                     {item.cta}
@@ -130,6 +157,34 @@ export function ServicesPageView() {
           </Section>
         );
       })}
+
+      {/* ── Capabilities overview (moved from the About page) ── */}
+      <Section
+        id="capabilities"
+        theme="light"
+        className="scroll-mt-28 py-16 md:py-24"
+        style={{ background: page.items.length % 2 === 0 ? "var(--lgl-section)" : "var(--lgl-bg)" }}
+      >
+        <Container>
+          <div className="max-w-3xl">
+            <p className="label-eyebrow flex items-center gap-3 text-lgl-gold">
+              <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-lgl-gold to-lgl-gold/0" />
+              {capabilities.eyebrow}
+            </p>
+            <h2 className={`mt-5 ${headingClass}`} style={headingFont}>
+              {accentTitle(capabilities.lead)}
+            </h2>
+          </div>
+          <div className="mt-8 max-w-4xl space-y-5 text-base leading-[1.8] text-lgl-fg/75">
+            {capabilities.paragraphs.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+          <div className="mt-12 md:mt-16">
+            <ServiceGrid />
+          </div>
+        </Container>
+      </Section>
     </main>
   );
 }

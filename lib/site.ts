@@ -26,7 +26,7 @@ export const siteConfig = {
     { label: "Contact", href: "/contact" },
   ],
   cta: {
-    label: "Book a Consultation",
+    label: "Discuss Your Business Challenge",
     href: "/contact",
   },
 };

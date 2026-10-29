@@ -108,12 +108,12 @@ export function Header() {
         }`}
       >
         <div className="mx-4 mt-0 w-[calc(100%-2rem)]" style={{ maxWidth: 1400 }}>
-          <div className="lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-2 sm:px-6 md:gap-6 md:px-8 md:py-3 min-[1280px]:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] min-[1280px]:gap-6 min-[1280px]:px-10">
+          <div className="lgl-header-pill grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-2 sm:px-6 md:gap-6 md:px-8 md:py-3 min-[1280px]:grid-cols-[minmax(max-content,1fr)_auto_minmax(max-content,1fr)] xl:gap-4 xl:px-6 2xl:gap-6 2xl:px-10">
             {/* Logo — left side; inset ~2cm further on desktop */}
             <Link
               href={homePath}
               aria-label="Little Giant Labs home"
-              className="group col-start-1 row-start-1 flex w-max shrink-0 items-center justify-self-start transition-opacity hover:opacity-75 xl:ml-29"
+              className="group col-start-1 row-start-1 flex w-max shrink-0 items-center justify-self-start transition-opacity hover:opacity-75 2xl:ml-29"
             >
               <Image
                 src="/lgl-logo-horizontal.png"
@@ -137,7 +137,7 @@ export function Header() {
             </Link>
 
             {/* Desktop nav — center, nudged ~0.5cm left */}
-            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:row-start-1 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1.5 min-[1280px]:whitespace-nowrap xl:-translate-x-5">
+            <nav className="hidden min-[1280px]:col-start-2 min-[1280px]:row-start-1 min-[1280px]:flex min-[1280px]:items-center min-[1280px]:justify-self-center min-[1280px]:gap-1.5 min-[1280px]:whitespace-nowrap 2xl:-translate-x-5">
               {navItems.map((item) => {
                 const isActive = activeHref === item.href;
                 return (
@@ -145,7 +145,7 @@ export function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setActiveSectionHref(item.href.includes("#") ? item.href : null)}
-                    className="localized-ui-text relative rounded-full transition-all duration-200"
+                    className="localized-ui-text lgl-header-nav-link relative rounded-full transition-all duration-200"
                     style={{
                       fontFamily: "var(--font-dm-sans), sans-serif",
                       fontSize: "0.8125rem",
@@ -170,7 +170,7 @@ export function Header() {
             </nav>
 
             {/* Right side: theme toggle + CTA + language selector + hamburger */}
-            <div className="col-start-2 row-start-1 flex shrink-0 items-center gap-2.5 justify-self-end sm:gap-3 min-[1280px]:col-start-3 min-[1280px]:gap-4">
+            <div className="col-start-2 row-start-1 flex shrink-0 items-center gap-2.5 justify-self-end sm:gap-3 min-[1280px]:col-start-3 2xl:gap-4">
               <ThemeToggle />
 
               {/* CTA pill button — desktop */}
@@ -181,7 +181,7 @@ export function Header() {
                   fontFamily: "var(--font-dm-sans), sans-serif",
                   fontSize: "0.625rem",
                   fontWeight: 600,
-                  letterSpacing: "0.15em",
+                  letterSpacing: "0.1em",
                   textTransform: "uppercase",
                 }}
                 onMouseEnter={(e) => {

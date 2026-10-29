@@ -47,6 +47,12 @@ export interface TranslationDictionary {
       chooseService: string;
       carouselControls: string;
     };
+    whyUs: {
+      eyebrow: string;
+      titlePart1: string;
+      titleEmphasis: string;
+      text: string;
+    };
     whatWeDo: {
       eyebrow: string;
       titlePart1: string;
@@ -61,15 +67,29 @@ export interface TranslationDictionary {
       ctaTitle: string;
       ctaText: string;
     };
+    tech: {
+      eyebrow: string;
+      titlePart1: string;
+      titleEmphasis: string;
+      paragraphs: string[];
+      items: Array<{
+        title: string;
+        description: string;
+      }>;
+      cta: string;
+    };
     why: {
       eyebrow: string;
       titlePart1: string;
       titleEmphasis: string;
       intro: string;
+      pointsHeading: string;
       points: Array<{
         title: string;
         description: string;
       }>;
+      /* Closing line, one short phrase per item */
+      closing: string[];
     };
     process: {
       eyebrow: string;
@@ -127,24 +147,10 @@ export interface TranslationDictionary {
       mission: string;
       beliefLabel: string;
       belief: string;
-    };
-    capabilities: {
-      eyebrow: string;
-      titlePart1: string;
-      titleItalic: string;
-      deliverablesBadge: string;
-      startProject: string;
-      lead: string;
-      paragraphs: string[];
-      capabilitiesLabel: string;
-      outcomeLabel: string;
-      services: Array<{
-        title: string;
-        description: string;
-        deliverables: string[];
-        tagline?: string;
-        outcome?: string;
-      }>;
+      /* Philosophy heading and paragraph shown under the mission & belief cards */
+      philosophyLabel: string;
+      philosophyTitle: string;
+      approach: string;
     };
     approach: {
       eyebrow: string;
@@ -174,17 +180,43 @@ export interface TranslationDictionary {
   servicesPage: {
     /* Page H1; text between *…* renders as the sage serif-italic accent */
     heading: string;
+    /* Italic pull quote under the H1 */
+    quote: string;
+    /* Approach statement between the intro paragraph and the service jump links */
+    approach: string;
+    /* Hero paragraph under the pull quote */
+    intro: string;
     jumpLabel: string;
     helpLabel: string;
     outcomeLabel: string;
     fitLabel: string;
+    /* Capability cards (moved from the About page), rendered by ServiceGrid */
+    capabilities: {
+      eyebrow: string;
+      titlePart1: string;
+      titleItalic: string;
+      deliverablesBadge: string;
+      startProject: string;
+      lead: string;
+      paragraphs: string[];
+      capabilitiesLabel: string;
+      outcomeLabel: string;
+      services: Array<{
+        title: string;
+        description: string;
+        deliverables: string[];
+        tagline?: string;
+        outcome?: string;
+      }>;
+    };
     items: Array<{
       label: string;
       title: string;
+      /* Paragraphs separated by a blank line */
       intro: string;
       help: string[];
-      outcome: string;
-      fit: string;
+      outcome?: string;
+      fit?: string;
       cta: string;
     }>;
   };

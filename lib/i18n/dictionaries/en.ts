@@ -9,7 +9,7 @@ export const en: TranslationDictionary = {
     ourWork: "Our Work",
     aboutUs: "About Us",
     contact: "Contact",
-    cta: "Book a Consultation",
+    cta: "Discuss Your Business Challenge",
     language: "Language",
     selectLanguage: "Select language",
     toggleMenu: "Toggle menu",
@@ -65,6 +65,12 @@ export const en: TranslationDictionary = {
       chooseService: "Choose a service",
       carouselControls: "Service carousel controls",
     },
+    whyUs: {
+      eyebrow: "Why us",
+      titlePart1: "A different way to solve ",
+      titleEmphasis: "business challenges.",
+      text: "We start with the business challenge, connect strategy with creative execution, tailor the solution to your needs and define success beyond the deliverables.",
+    },
     whatWeDo: {
       eyebrow: "What we do",
       titlePart1: "Build the brand. Tell the story. ",
@@ -96,29 +102,59 @@ export const en: TranslationDictionary = {
       ctaTitle: "Have a specific business challenge?",
       ctaText: "Let's identify the right combination of strategy, creative and execution for your needs.",
     },
-    why: {
-      eyebrow: "Why Little Giant Labs",
-      titlePart1: "Strategy first. Creative by design. ",
-      titleEmphasis: "Execution with purpose.",
-      intro: "We believe the strongest brand and marketing work begins with understanding the business—not choosing a channel, producing content or launching a campaign before the problem is clear.",
-      points: [
+    tech: {
+      eyebrow: "For complex ideas and ambitious businesses",
+      titlePart1: "Built for complex ideas. ",
+      titleEmphasis: "Designed to make them matter.",
+      paragraphs: [
+        "From SaaS platforms and AI-powered products to cybersecurity solutions and enterprise technology, we help businesses translate complex capabilities into clear value propositions, compelling stories and meaningful customer experiences.",
+        "We connect business strategy, product understanding and creative execution to help brands communicate not just what their technology does, but why it matters.",
+      ],
+      items: [
         {
-          title: "We start with the business challenge.",
-          description: "We align brand communication with business goals, audience needs and market realities.",
+          title: "SaaS & Cloud",
+          description: "Clarify product value, differentiation and market positioning.",
         },
         {
-          title: "We connect strategy with execution.",
-          description: "Positioning, storytelling, creative and digital activation work together instead of operating as disconnected activities.",
+          title: "AI & Emerging Tech",
+          description: "Explain innovation, use cases and real-world business relevance.",
         },
         {
-          title: "We adapt to the challenge.",
-          description: "From an early-stage brand to an established enterprise, we shape the engagement around the problem, audience and desired outcome.",
+          title: "Cybersecurity",
+          description: "Translate technical capabilities into risk, resilience and trust narratives.",
         },
         {
-          title: "We look beyond the deliverable.",
-          description: "We define what success should look like and use relevant evidence to assess the work.",
+          title: "B2B & Enterprise",
+          description: "Build messaging for complex buyers, multiple stakeholders and longer sales cycles.",
         },
       ],
+      cta: "Explore Our Technology Capabilities",
+    },
+    why: {
+      eyebrow: "Why Little Giant Labs",
+      titlePart1: "More than a creative agency. ",
+      titleEmphasis: "A partner in making your business matter.",
+      intro: "Little Giant Labs brings business thinking, brand strategy, creative storytelling and digital execution together, helping you move from understanding what makes your business valuable to communicating that value in ways people understand, remember and act on.",
+      pointsHeading: "Why work with us?",
+      points: [
+        {
+          title: "We solve the problem before creating the output.",
+          description: "We start by understanding your business objectives, audience, market and challenges. That gives the work a clear purpose before time and budget are committed to execution.",
+        },
+        {
+          title: "Strategy and execution work together.",
+          description: "Positioning, messaging, creative and digital activation are connected—not treated as separate tasks. The result is a more coherent brand experience across the touchpoints that matter.",
+        },
+        {
+          title: "The solution fits your challenge.",
+          description: "Whether you're building a new brand, repositioning an established business or launching a campaign, we shape the engagement around your goals rather than forcing every brief into the same template.",
+        },
+        {
+          title: "We focus on impact, not just deliverables.",
+          description: "We define what the work needs to achieve, identify meaningful ways to evaluate it and use the results to inform what comes next.",
+        },
+      ],
+      closing: ["Clearer thinking.", "More connected execution.", "Work with a purpose."],
     },
     process: {
       eyebrow: "A simple, repeatable process",
@@ -147,7 +183,7 @@ export const en: TranslationDictionary = {
     finalCta: {
       title: "Have a business challenge worth solving?",
       text: "Whether you're building a new brand, sharpening your market position or planning your next campaign, let's start with what you want to achieve.",
-      button: "Let's Talk About Your Project",
+      button: "Discuss Your Business Challenge",
     },
     work: {
       eyebrow: "Selected work",
@@ -241,9 +277,72 @@ export const en: TranslationDictionary = {
       mission: "To help businesses clarify their value, build distinctive brands and turn meaningful stories into market impact.",
       beliefLabel: "What we believe",
       belief: "The best brand communication doesn't just get noticed. It makes people understand, connect and remember.",
+      philosophyLabel: "Our philosophy",
+      philosophyTitle: "Business understanding first, then *strategy, creative and execution.*",
+      approach: "We believe meaningful work begins with understanding the problem, not jumping to a solution. By connecting business strategy with creative thinking and purposeful execution, we shape every engagement around the challenge at hand—and focus on creating lasting value beyond the work we deliver.",
     },
 
-
+    approach: {
+      eyebrow: "How we work",
+      title: "From business challenge to *purposeful execution.*",
+      paragraphs: [
+        "Every engagement starts with understanding what you need to achieve. We then shape the strategy, develop the creative and activate the work in a way that fits your goals.",
+      ],
+      steps: [
+        {
+          title: "Understand",
+          description: "We learn about your business, audience, objectives and current challenges.",
+        },
+        {
+          title: "Position",
+          description: "We establish the strategic direction, core message and approach.",
+        },
+        {
+          title: "Create",
+          description: "We develop the creative, content and campaign assets needed to bring the strategy to life.",
+        },
+        {
+          title: "Activate & Learn",
+          description: "We put the work into action, review the relevant results and identify opportunities to improve.",
+        },
+      ],
+    },
+    engagement: {
+      eyebrow: "Engagement options",
+      title: "The right expertise for *the stage you're at.*",
+      description: "Whether you need strategic clarity, creative execution or support for a larger campaign, we shape our engagement around your objectives and requirements.",
+      options: [
+        {
+          title: "For startups and emerging brands",
+          description: "Establish your positioning, clarify your story and build the foundations for consistent brand communication.",
+        },
+        {
+          title: "For growing businesses",
+          description: "Strengthen your market differentiation, align your marketing activity and create a more coherent customer-facing brand.",
+        },
+        {
+          title: "For established enterprises",
+          description: "Support defined brand, campaign or communication initiatives with a focused strategy and coordinated execution.",
+        },
+      ],
+    },
+    cta: {
+      title: "Let’s solve *the right problem first.*",
+      paragraphs: [
+        "Tell us what you’re trying to achieve. We’ll start with your business challenge and explore where strategy, creative and digital execution can make a difference.",
+      ],
+      button: "Discuss Your Business Challenge",
+    },
+  },
+  servicesPage: {
+    heading: "Good marketing starts with a *clear business strategy.*",
+    quote: "“We don't start by selling a list of services. We start by understanding the outcome you need, then bring together the right mix of strategy, creative and execution to get there.”",
+    approach: "We start by understanding the business challenge and the outcome you want to achieve. Then we bring together the right mix of strategy, creativity and digital execution to build a solution tailored to your needs—with success measured by the impact it creates, not just the deliverables we produce.",
+    intro: "Whether you need to clarify your positioning, build a distinctive brand, create compelling content or activate a digital growth programme, the work is shaped around your business objectives.",
+    jumpLabel: "Jump to a service",
+    helpLabel: "What we can help with",
+    outcomeLabel: "The outcome",
+    fitLabel: "A good fit if…",
     capabilities: {
       eyebrow: "Services",
       titlePart1: "Services",
@@ -301,66 +400,21 @@ export const en: TranslationDictionary = {
             "Employee stories and talent communication",
           ],
         },
-      ],
-    },
-    approach: {
-      eyebrow: "How we work",
-      title: "From business challenge to *purposeful execution.*",
-      paragraphs: [
-        "Every engagement starts with understanding what you need to achieve. We then shape the strategy, develop the creative and activate the work in a way that fits your goals.",
-      ],
-      steps: [
         {
-          title: "Understand",
-          description: "We learn about your business, audience, objectives and current challenges.",
-        },
-        {
-          title: "Position",
-          description: "We establish the strategic direction, core message and approach.",
-        },
-        {
-          title: "Create",
-          description: "We develop the creative, content and campaign assets needed to bring the strategy to life.",
-        },
-        {
-          title: "Activate & Learn",
-          description: "We put the work into action, review the relevant results and identify opportunities to improve.",
+          title: "Technology & Product Marketing",
+          description: "Great technology doesn't automatically translate into clear market value. We help technology businesses connect product capabilities with customer needs through positioning, messaging, launch communication and digital experiences.",
+          deliverables: [
+            "SaaS and AI product positioning and messaging",
+            "Product launches and go-to-market communication",
+            "Cybersecurity, cloud and enterprise technology storytelling",
+            "Website messaging and product-page content",
+            "Executive thought leadership and technical content",
+            "B2B campaign creative and sales enablement assets",
+            "Customer stories and case-study development",
+          ],
         },
       ],
     },
-    engagement: {
-      eyebrow: "Engagement options",
-      title: "The right expertise for *the stage you're at.*",
-      description: "Whether you need strategic clarity, creative execution or support for a larger campaign, we shape our engagement around your objectives and requirements.",
-      options: [
-        {
-          title: "For startups and emerging brands",
-          description: "Establish your positioning, clarify your story and build the foundations for consistent brand communication.",
-        },
-        {
-          title: "For growing businesses",
-          description: "Strengthen your market differentiation, align your marketing activity and create a more coherent customer-facing brand.",
-        },
-        {
-          title: "For established enterprises",
-          description: "Support defined brand, campaign or communication initiatives with a focused strategy and coordinated execution.",
-        },
-      ],
-    },
-    cta: {
-      title: "Let’s solve *the right problem first.*",
-      paragraphs: [
-        "Tell us what you’re trying to achieve. We’ll start with your business challenge and explore where strategy, creative and digital execution can make a difference.",
-      ],
-      button: "Discuss Your Business Challenge",
-    },
-  },
-  servicesPage: {
-    heading: "Good marketing starts with a *clear business strategy.*",
-    jumpLabel: "Jump to a service",
-    helpLabel: "What we can help with",
-    outcomeLabel: "The outcome",
-    fitLabel: "A good fit if…",
     items: [
       {
         label: "Brand Strategy",
@@ -376,7 +430,7 @@ export const en: TranslationDictionary = {
         ],
         outcome: "A clearer brand direction, stronger messaging and a shared understanding of how your business should be positioned and communicated.",
         fit: "You are launching a business, entering a new market, evolving your brand or struggling to explain why customers should choose you.",
-        cta: "Discuss Your Brand Strategy",
+        cta: "Discuss Your Business Challenge",
       },
       {
         label: "Creative & Content",
@@ -392,7 +446,7 @@ export const en: TranslationDictionary = {
         ],
         outcome: "A more coherent brand experience, more distinctive communication and creative assets built around a clear message.",
         fit: "Your brand looks inconsistent, your message lacks distinction or your campaigns need a clearer creative idea.",
-        cta: "Discuss a Creative Project",
+        cta: "Discuss Your Business Challenge",
       },
       {
         label: "Digital Growth",
@@ -408,7 +462,7 @@ export const en: TranslationDictionary = {
         ],
         outcome: "More focused campaigns, better alignment between message and audience, and clearer insight into what is working and where to improve.",
         fit: "Your digital activity lacks a coherent strategy, campaigns are disconnected or you need a clearer way to evaluate marketing effectiveness.",
-        cta: "Discuss Your Digital Strategy",
+        cta: "Discuss Your Business Challenge",
       },
       {
         label: "Employer Brand",
@@ -424,7 +478,22 @@ export const en: TranslationDictionary = {
         ],
         outcome: "A clearer employer narrative and more consistent communication with the people your organisation wants to attract.",
         fit: "You are scaling your team, launching a recruitment campaign or need to communicate your culture and employee proposition more effectively.",
-        cta: "Discuss Employer Branding",
+        cta: "Discuss Your Business Challenge",
+      },
+      {
+        label: "Technology & Product Marketing",
+        title: "Great technology doesn't automatically translate into *clear market value.*",
+        intro: "Buyers need to understand the problem a product solves, why its approach matters and why they should trust it.\n\nWe help technology businesses connect product capabilities with customer needs through positioning, messaging, launch communication and digital experiences designed for the audiences that influence buying decisions.",
+        help: [
+          "SaaS and AI product positioning and messaging",
+          "Product launches and go-to-market communication",
+          "Cybersecurity, cloud and enterprise technology storytelling",
+          "Website messaging and product-page content",
+          "Executive thought leadership and technical content",
+          "B2B campaign creative and sales enablement assets",
+          "Customer stories and case-study development",
+        ],
+        cta: "Discuss Your Business Challenge",
       },
     ],
   },
@@ -632,7 +701,7 @@ export const en: TranslationDictionary = {
     about: {
       title: "About Us",
       description:
-        "Learn about our vision, leadership, and how Little Giant Labs scales enterprise brands through cinematic media and performance architecture.",
+        "Learn how Little Giant Labs connects business thinking, brand strategy, creative storytelling and digital execution to help businesses communicate their value.",
     },
     contact: {
       title: "Partnership Application",
@@ -641,7 +710,7 @@ export const en: TranslationDictionary = {
     },
     work: {
       title: "Selected Work",
-      description: "Explore our portfolio of high-impact creative campaigns and performance growth systems.",
+      description: "Explore selected brand, creative and digital work by Little Giant Labs, shaped around clear business challenges and outcomes.",
     },
     applicationReceived: {
       title: "Application Received",
