@@ -1,14 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckIcon, DiamondIcon, FilmIcon, HandshakeIcon, TrendIcon } from "@/components/ui/Icons";
+import { CheckIcon, ChipIcon, DiamondIcon, FilmIcon, HandshakeIcon, TrendIcon } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 
-const serviceIcons = [DiamondIcon, FilmIcon, TrendIcon, HandshakeIcon];
+const serviceIcons = [DiamondIcon, FilmIcon, TrendIcon, HandshakeIcon, ChipIcon];
 
 export function ServiceGrid() {
   const { dict } = useI18n();
-  const { services, capabilitiesLabel, outcomeLabel } = dict.about.capabilities;
+  const { services, capabilitiesLabel, outcomeLabel } = dict.servicesPage.capabilities;
 
   const containerVariants = {
     hidden: {},
@@ -38,11 +38,13 @@ export function ServiceGrid() {
     >
       {services.map((service, index) => {
         const IconComponent = serviceIcons[index % serviceIcons.length];
+        // An odd last card spans both columns so the two-column grid has no gap
+        const spanFull = index === services.length - 1 && services.length % 2 === 1;
         return (
           <motion.div
             key={service.title}
             variants={cardVariants}
-            className="group flex h-full flex-col rounded-3xl border border-theme bg-theme-card p-6 md:p-8 transition-all duration-300 hover:border-theme-hover shadow-[0_4px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.05)]"
+            className={`${spanFull ? "md:col-span-2 " : ""}group flex h-full flex-col rounded-3xl border border-theme bg-theme-card p-6 md:p-8 transition-all duration-300 hover:border-theme-hover shadow-[0_4px_30px_rgba(0,0,0,0.02)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.05)]`}
             style={{ willChange: "transform, opacity" }}
           >
             <div className="grid content-start">
@@ -75,7 +77,7 @@ export function ServiceGrid() {
               <p className="mt-7 text-xs font-semibold uppercase tracking-[0.1em] text-theme-subtle">
                 {capabilitiesLabel}
               </p>
-              <ul className="mt-3 space-y-2.5">
+              <ul className={spanFull ? "mt-3 grid gap-2.5 md:grid-cols-2 md:gap-x-8" : "mt-3 space-y-2.5"}>
                 {service.deliverables.map((item) => (
                   <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-theme-muted/90">
                     <CheckIcon size={14} strokeWidth={2} className="shrink-0 text-lgl-gold" />

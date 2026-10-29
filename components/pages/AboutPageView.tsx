@@ -4,7 +4,6 @@ import { type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
-import { ServiceGrid } from "@/components/services/ServiceGrid";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { accentTitle } from "@/components/ui/accentTitle";
@@ -114,8 +113,9 @@ function SectionHeading({
 export function AboutPageView() {
   const { dict, locale } = useI18n();
   const reduceMotion = useReducedMotion();
-  const { header, story, purpose, capabilities, approach, engagement, cta } = dict.about;
+  const { header, story, purpose, approach, engagement, cta } = dict.about;
   const contactHref = getLocalizedPath("/contact", locale);
+  const servicesHref = getLocalizedPath("/services", locale);
 
 
   /* Scroll-reveal for content blocks; disabled entirely for reduced-motion users */
@@ -161,10 +161,10 @@ export function AboutPageView() {
             >
               {header.description}
             </h1>
-            <a href="#services" className={`lgl-gold-cta ${pillBase} mt-9 hover:opacity-85`} style={pillFont}>
+            <Link href={servicesHref} className={`lgl-gold-cta ${pillBase} mt-9 hover:opacity-85`} style={pillFont}>
               {header.secondaryCta}
-              <span aria-hidden="true">↓</span>
-            </a>
+              <span aria-hidden="true">→</span>
+            </Link>
           </motion.div>
         </Container>
       </Section>
@@ -214,34 +214,17 @@ export function AboutPageView() {
               </Card>
             </motion.div>
           </div>
-        </Container>
-      </Section>
-
-      {/* ── Services ─────────────────────────────────────────────── */}
-      <Section
-        id="services"
-        theme="light"
-        className="scroll-mt-28 border-y border-lgl-fg/10 py-16 md:py-24"
-        style={{ background: "var(--lgl-section)" }}
-      >
-        <Container>
-          <motion.div {...reveal()}>
-            <SectionHeading eyebrow={capabilities.eyebrow} title={accentTitle(capabilities.lead)} />
-            {/* Intro paragraphs stacked in one column, with a gap between them */}
-            <div className="mt-8 max-w-4xl space-y-5 text-base leading-[1.8] text-lgl-fg/75">
-              {capabilities.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
+          {/* Philosophy: follows the belief statement, ahead of the process */}
+          <motion.div {...reveal(0.15)} className="mx-auto mt-14 flex max-w-3xl flex-col items-center text-center md:mt-20">
+            <SectionHeading eyebrow={purpose.philosophyLabel} title={accentTitle(purpose.philosophyTitle)} align="center" />
+            <span aria-hidden="true" className="mt-8 h-0.5 w-16 rounded-full bg-gradient-to-r from-lgl-gold/0 via-lgl-gold to-lgl-gold/0" />
+            <p className="mt-8 text-lg leading-[1.7] text-lgl-fg md:text-xl">{purpose.approach}</p>
           </motion.div>
-          <div className="mt-12 md:mt-16">
-            <ServiceGrid />
-          </div>
         </Container>
       </Section>
 
       {/* ── How we work ──────────────────────────────────────────── */}
-      <Section theme="light" className="py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
+      <Section theme="light" className="border-t border-lgl-fg/10 py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
         <Container>
           {/* Centred: heading, lead paragraph, gold divider, supporting paragraphs */}
           <motion.div {...reveal()} className="mx-auto flex max-w-3xl flex-col items-center text-center">

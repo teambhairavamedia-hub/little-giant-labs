@@ -9,7 +9,7 @@ export const es: TranslationDictionary = {
     ourWork: "Nuestro Trabajo",
     aboutUs: "Sobre Nosotros",
     contact: "Contacto",
-    cta: "Reservar Consulta",
+    cta: "Hablemos de su Reto de Negocio",
     language: "Idioma",
     selectLanguage: "Seleccionar idioma",
     toggleMenu: "Alternar menú",
@@ -65,6 +65,12 @@ export const es: TranslationDictionary = {
       chooseService: "Elegir un servicio",
       carouselControls: "Controles del carrusel de servicios",
     },
+    whyUs: {
+      eyebrow: "Por qué nosotros",
+      titlePart1: "Una forma diferente de resolver ",
+      titleEmphasis: "los retos de negocio.",
+      text: "Empezamos por el reto de negocio, conectamos la estrategia con la ejecución creativa, adaptamos la solución a sus necesidades y definimos el éxito más allá de los entregables.",
+    },
     whatWeDo: {
       eyebrow: "Lo que hacemos",
       titlePart1: "Construir la marca. Contar la historia. ",
@@ -96,29 +102,59 @@ export const es: TranslationDictionary = {
       ctaTitle: "¿Tiene un reto de negocio concreto?",
       ctaText: "Identifiquemos la combinación adecuada de estrategia, creatividad y ejecución para sus necesidades.",
     },
-    why: {
-      eyebrow: "Por qué Little Giant Labs",
-      titlePart1: "Primero la estrategia. Creatividad con intención. ",
-      titleEmphasis: "Ejecución con propósito.",
-      intro: "Creemos que el trabajo de marca y marketing más sólido empieza por entender el negocio, no por elegir un canal, producir contenido o lanzar una campaña antes de que el problema esté claro.",
-      points: [
+    tech: {
+      eyebrow: "Para ideas complejas y empresas ambiciosas",
+      titlePart1: "Pensado para ideas complejas. ",
+      titleEmphasis: "Diseñado para que importen.",
+      paragraphs: [
+        "Desde plataformas SaaS y productos impulsados por IA hasta soluciones de ciberseguridad y tecnología empresarial, ayudamos a las empresas a traducir capacidades complejas en propuestas de valor claras, historias convincentes y experiencias de cliente significativas.",
+        "Conectamos estrategia de negocio, comprensión del producto y ejecución creativa para que las marcas comuniquen no solo lo que hace su tecnología, sino por qué importa.",
+      ],
+      items: [
         {
-          title: "Empezamos por el reto de negocio.",
-          description: "Alineamos la comunicación de marca con los objetivos de negocio, las necesidades del público y la realidad del mercado.",
+          title: "SaaS y Cloud",
+          description: "Aclarar el valor del producto, la diferenciación y el posicionamiento en el mercado.",
         },
         {
-          title: "Conectamos estrategia y ejecución.",
-          description: "El posicionamiento, el storytelling, la creatividad y la activación digital funcionan juntos en lugar de operar como actividades desconectadas.",
+          title: "IA y tecnologías emergentes",
+          description: "Explicar la innovación, los casos de uso y la relevancia real para el negocio.",
         },
         {
-          title: "Nos adaptamos al reto.",
-          description: "Desde una marca en fase inicial hasta una empresa consolidada, diseñamos la colaboración en torno al problema, el público y el resultado deseado.",
+          title: "Ciberseguridad",
+          description: "Traducir capacidades técnicas en relatos de riesgo, resiliencia y confianza.",
         },
         {
-          title: "Miramos más allá del entregable.",
-          description: "Definimos cómo debería ser el éxito y utilizamos evidencias relevantes para evaluar el trabajo.",
+          title: "B2B y Enterprise",
+          description: "Crear mensajes para compradores complejos, múltiples interlocutores y ciclos de venta más largos.",
         },
       ],
+      cta: "Explore Nuestras Capacidades Tecnológicas",
+    },
+    why: {
+      eyebrow: "Por qué Little Giant Labs",
+      titlePart1: "Más que una agencia creativa. ",
+      titleEmphasis: "Un socio para que su negocio importe.",
+      intro: "Little Giant Labs une visión de negocio, estrategia de marca, storytelling creativo y ejecución digital para ayudarle a pasar de entender qué hace valioso a su negocio a comunicar ese valor de forma que las personas lo entiendan, lo recuerden y actúen.",
+      pointsHeading: "¿Por qué trabajar con nosotros?",
+      points: [
+        {
+          title: "Resolvemos el problema antes de crear el resultado.",
+          description: "Empezamos por entender sus objetivos de negocio, su audiencia, su mercado y sus retos. Así el trabajo tiene un propósito claro antes de comprometer tiempo y presupuesto en la ejecución.",
+        },
+        {
+          title: "La estrategia y la ejecución trabajan juntas.",
+          description: "El posicionamiento, los mensajes, la creatividad y la activación digital están conectados, en lugar de tratarse como tareas separadas. El resultado es una experiencia de marca más coherente en los puntos de contacto que importan.",
+        },
+        {
+          title: "La solución se adapta a su reto.",
+          description: "Ya sea que esté creando una nueva marca, reposicionando un negocio consolidado o lanzando una campaña, diseñamos la colaboración en torno a sus objetivos en lugar de forzar cada encargo en la misma plantilla.",
+        },
+        {
+          title: "Nos centramos en el impacto, no solo en los entregables.",
+          description: "Definimos lo que el trabajo debe lograr, identificamos formas significativas de evaluarlo y usamos los resultados para orientar los siguientes pasos.",
+        },
+      ],
+      closing: ["Pensamiento más claro.", "Ejecución más conectada.", "Trabajo con propósito."],
     },
     process: {
       eyebrow: "Un proceso simple y repetible",
@@ -147,7 +183,7 @@ export const es: TranslationDictionary = {
     finalCta: {
       title: "¿Tiene un reto de negocio que merece resolverse?",
       text: "Tanto si está creando una nueva marca como afinando su posición en el mercado o planificando su próxima campaña, empecemos por lo que quiere lograr.",
-      button: "Hablemos de su Proyecto",
+      button: "Hablemos de su Reto de Negocio",
     },
     work: {
       eyebrow: "Trabajo seleccionado",
@@ -241,9 +277,72 @@ export const es: TranslationDictionary = {
       mission: "Ayudar a las empresas a aclarar su valor, construir marcas distintivas y convertir historias con significado en impacto en el mercado.",
       beliefLabel: "En qué creemos",
       belief: "La mejor comunicación de marca no solo se hace notar. Hace que las personas entiendan, conecten y recuerden.",
+      philosophyLabel: "Nuestra filosofía",
+      philosophyTitle: "Primero entender el negocio; después, *estrategia, creatividad y ejecución.*",
+      approach: "Creemos que el trabajo significativo empieza por entender el problema, no por saltar a una solución. Al conectar la estrategia de negocio con el pensamiento creativo y una ejecución con propósito, diseñamos cada colaboración en torno al reto concreto y nos centramos en crear un valor duradero más allá del trabajo que entregamos.",
     },
 
-
+    approach: {
+      eyebrow: "Cómo trabajamos",
+      title: "Del reto de negocio a una *ejecución con propósito.*",
+      paragraphs: [
+        "Cada colaboración empieza por entender lo que necesitas lograr. Después damos forma a la estrategia, desarrollamos la creatividad y activamos el trabajo de la manera que mejor se ajuste a tus objetivos.",
+      ],
+      steps: [
+        {
+          title: "Entender",
+          description: "Conocemos tu negocio, tu público, tus objetivos y tus retos actuales.",
+        },
+        {
+          title: "Posicionar",
+          description: "Establecemos la dirección estratégica, el mensaje central y el enfoque.",
+        },
+        {
+          title: "Crear",
+          description: "Desarrollamos la creatividad, el contenido y las piezas de campaña necesarias para dar vida a la estrategia.",
+        },
+        {
+          title: "Activar y aprender",
+          description: "Ponemos el trabajo en marcha, revisamos los resultados relevantes e identificamos oportunidades de mejora.",
+        },
+      ],
+    },
+    engagement: {
+      eyebrow: "Formas de colaboración",
+      title: "La experiencia adecuada para *la etapa en la que estás.*",
+      description: "Tanto si necesitas claridad estratégica como ejecución creativa o apoyo para una campaña más amplia, adaptamos la colaboración a tus objetivos y necesidades.",
+      options: [
+        {
+          title: "Para startups y marcas emergentes",
+          description: "Define tu posicionamiento, aclara tu historia y construye las bases de una comunicación de marca coherente.",
+        },
+        {
+          title: "Para empresas en crecimiento",
+          description: "Refuerza tu diferenciación en el mercado, alinea tu actividad de marketing y crea una marca más coherente de cara al cliente.",
+        },
+        {
+          title: "Para grandes empresas consolidadas",
+          description: "Apoyo en iniciativas definidas de marca, campaña o comunicación con una estrategia enfocada y una ejecución coordinada.",
+        },
+      ],
+    },
+    cta: {
+      title: "Resolvamos primero *el problema correcto.*",
+      paragraphs: [
+        "Cuéntanos qué quieres lograr. Empezaremos por tu reto de negocio y exploraremos dónde la estrategia, la creatividad y la ejecución digital pueden marcar la diferencia.",
+      ],
+      button: "Hablemos de su Reto de Negocio",
+    },
+  },
+  servicesPage: {
+    heading: "El buen marketing empieza con una *estrategia de negocio clara.*",
+    quote: "“No empezamos vendiendo una lista de servicios. Empezamos por entender el resultado que necesita y luego reunimos la combinación adecuada de estrategia, creatividad y ejecución para lograrlo.”",
+    approach: "Empezamos por entender el reto de negocio y el resultado que quiere lograr. Después reunimos la combinación adecuada de estrategia, creatividad y ejecución digital para construir una solución adaptada a sus necesidades, midiendo el éxito por el impacto que genera y no solo por los entregables que producimos.",
+    intro: "Ya sea que necesite aclarar su posicionamiento, construir una marca distintiva, crear contenido convincente o activar un programa de crecimiento digital, el trabajo se adapta a sus objetivos de negocio.",
+    jumpLabel: "Ir a un servicio",
+    helpLabel: "En qué podemos ayudarle",
+    outcomeLabel: "El resultado",
+    fitLabel: "Encaja bien si…",
     capabilities: {
       eyebrow: "Nuestras Capacidades",
       titlePart1: "Cómo escalamos",
@@ -301,66 +400,21 @@ export const es: TranslationDictionary = {
             "Historias de empleados y comunicación de talento",
           ],
         },
-      ],
-    },
-    approach: {
-      eyebrow: "Cómo trabajamos",
-      title: "Del reto de negocio a una *ejecución con propósito.*",
-      paragraphs: [
-        "Cada colaboración empieza por entender lo que necesitas lograr. Después damos forma a la estrategia, desarrollamos la creatividad y activamos el trabajo de la manera que mejor se ajuste a tus objetivos.",
-      ],
-      steps: [
         {
-          title: "Entender",
-          description: "Conocemos tu negocio, tu público, tus objetivos y tus retos actuales.",
-        },
-        {
-          title: "Posicionar",
-          description: "Establecemos la dirección estratégica, el mensaje central y el enfoque.",
-        },
-        {
-          title: "Crear",
-          description: "Desarrollamos la creatividad, el contenido y las piezas de campaña necesarias para dar vida a la estrategia.",
-        },
-        {
-          title: "Activar y aprender",
-          description: "Ponemos el trabajo en marcha, revisamos los resultados relevantes e identificamos oportunidades de mejora.",
+          title: "Marketing Tecnológico y de Producto",
+          description: "La gran tecnología no se traduce automáticamente en un valor de mercado claro. Ayudamos a las empresas tecnológicas a conectar las capacidades de sus productos con las necesidades de los clientes mediante posicionamiento, mensajes, comunicación de lanzamiento y experiencias digitales.",
+          deliverables: [
+            "Posicionamiento y mensajes para productos SaaS e IA",
+            "Lanzamientos de producto y comunicación go-to-market",
+            "Storytelling de ciberseguridad, cloud y tecnología empresarial",
+            "Mensajes del sitio web y contenido para páginas de producto",
+            "Liderazgo de pensamiento ejecutivo y contenido técnico",
+            "Creatividad para campañas B2B y materiales de apoyo a ventas",
+            "Historias de clientes y desarrollo de casos de éxito",
+          ],
         },
       ],
     },
-    engagement: {
-      eyebrow: "Formas de colaboración",
-      title: "La experiencia adecuada para *la etapa en la que estás.*",
-      description: "Tanto si necesitas claridad estratégica como ejecución creativa o apoyo para una campaña más amplia, adaptamos la colaboración a tus objetivos y necesidades.",
-      options: [
-        {
-          title: "Para startups y marcas emergentes",
-          description: "Define tu posicionamiento, aclara tu historia y construye las bases de una comunicación de marca coherente.",
-        },
-        {
-          title: "Para empresas en crecimiento",
-          description: "Refuerza tu diferenciación en el mercado, alinea tu actividad de marketing y crea una marca más coherente de cara al cliente.",
-        },
-        {
-          title: "Para grandes empresas consolidadas",
-          description: "Apoyo en iniciativas definidas de marca, campaña o comunicación con una estrategia enfocada y una ejecución coordinada.",
-        },
-      ],
-    },
-    cta: {
-      title: "Resolvamos primero *el problema correcto.*",
-      paragraphs: [
-        "Cuéntanos qué quieres lograr. Empezaremos por tu reto de negocio y exploraremos dónde la estrategia, la creatividad y la ejecución digital pueden marcar la diferencia.",
-      ],
-      button: "Hablemos de tu reto de negocio",
-    },
-  },
-  servicesPage: {
-    heading: "El buen marketing empieza con una *estrategia de negocio clara.*",
-    jumpLabel: "Ir a un servicio",
-    helpLabel: "En qué podemos ayudarle",
-    outcomeLabel: "El resultado",
-    fitLabel: "Encaja bien si…",
     items: [
       {
         label: "Estrategia de marca",
@@ -376,7 +430,7 @@ export const es: TranslationDictionary = {
         ],
         outcome: "Una dirección de marca más clara, mensajes más sólidos y una visión compartida de cómo debe posicionarse y comunicarse su empresa.",
         fit: "Está lanzando una empresa, entrando en un nuevo mercado, evolucionando su marca o le cuesta explicar por qué los clientes deberían elegirle.",
-        cta: "Hablemos de su Estrategia de Marca",
+        cta: "Hablemos de su Reto de Negocio",
       },
       {
         label: "Creatividad y contenido",
@@ -392,7 +446,7 @@ export const es: TranslationDictionary = {
         ],
         outcome: "Una experiencia de marca más coherente, una comunicación más distintiva y piezas creativas construidas en torno a un mensaje claro.",
         fit: "Su marca se ve incoherente, su mensaje no se distingue o sus campañas necesitan una idea creativa más clara.",
-        cta: "Hablemos de un Proyecto Creativo",
+        cta: "Hablemos de su Reto de Negocio",
       },
       {
         label: "Crecimiento digital",
@@ -408,7 +462,7 @@ export const es: TranslationDictionary = {
         ],
         outcome: "Campañas más enfocadas, mejor alineación entre mensaje y público, y una visión más clara de lo que funciona y dónde mejorar.",
         fit: "Su actividad digital carece de una estrategia coherente, sus campañas están desconectadas o necesita una forma más clara de evaluar la eficacia de su marketing.",
-        cta: "Hablemos de su Estrategia Digital",
+        cta: "Hablemos de su Reto de Negocio",
       },
       {
         label: "Marca empleadora",
@@ -424,7 +478,22 @@ export const es: TranslationDictionary = {
         ],
         outcome: "Una narrativa como empleador más clara y una comunicación más coherente con las personas que su organización quiere atraer.",
         fit: "Está ampliando su equipo, lanzando una campaña de reclutamiento o necesita comunicar su cultura y su propuesta al empleado de forma más eficaz.",
-        cta: "Hablemos de Marca Empleadora",
+        cta: "Hablemos de su Reto de Negocio",
+      },
+      {
+        label: "Marketing Tecnológico y de Producto",
+        title: "La gran tecnología no se traduce automáticamente en *un valor de mercado claro.*",
+        intro: "Los compradores necesitan entender qué problema resuelve un producto, por qué importa su enfoque y por qué deberían confiar en él.\n\nAyudamos a las empresas tecnológicas a conectar las capacidades de sus productos con las necesidades de los clientes mediante posicionamiento, mensajes, comunicación de lanzamiento y experiencias digitales diseñadas para las audiencias que influyen en las decisiones de compra.",
+        help: [
+          "Posicionamiento y mensajes para productos SaaS e IA",
+          "Lanzamientos de producto y comunicación go-to-market",
+          "Storytelling de ciberseguridad, cloud y tecnología empresarial",
+          "Mensajes del sitio web y contenido para páginas de producto",
+          "Liderazgo de pensamiento ejecutivo y contenido técnico",
+          "Creatividad para campañas B2B y materiales de apoyo a ventas",
+          "Historias de clientes y desarrollo de casos de éxito",
+        ],
+        cta: "Hablemos de su Reto de Negocio",
       },
     ],
   },
@@ -608,7 +677,7 @@ export const es: TranslationDictionary = {
     about: {
       title: "Sobre Nosotros",
       description:
-        "Conozca nuestra visión, liderazgo y cómo Little Giant Labs impulsa marcas corporativas mediante medios cinematográficos y arquitectura de rendimiento.",
+        "Descubra cómo Little Giant Labs conecta visión de negocio, estrategia de marca, storytelling creativo y ejecución digital para ayudar a las empresas a comunicar su valor.",
     },
     contact: {
       title: "Solicitud de Colaboración",
@@ -617,7 +686,7 @@ export const es: TranslationDictionary = {
     },
     work: {
       title: "Trabajos Seleccionados",
-      description: "Explore nuestro portafolio de campañas creativas de alto impacto y sistemas de aceleración digital.",
+      description: "Explore una selección de trabajos de marca, creatividad y digital de Little Giant Labs, diseñados en torno a retos y resultados de negocio claros.",
     },
     applicationReceived: {
       title: "Solicitud Recibida",

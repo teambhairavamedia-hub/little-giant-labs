@@ -31,6 +31,9 @@ export const CompassIcon = (p: IconProps) => <Icon {...p}><circle cx="12" cy="12
 export const CameraIcon = (p: IconProps) => <Icon {...p}><rect x="2.5" y="6.5" width="13" height="11" rx="2" /><path d="m15.5 10.5 6-3.5v10l-6-3.5" /></Icon>;
 export const ChartIcon = (p: IconProps) => <Icon {...p}><path d="M3 20h18" /><path d="M6 16v-4M11 16V8M16 16v-6" /><path d="m5 9 5-4 4 3 6-5" /></Icon>;
 export const ChipIcon = (p: IconProps) => <Icon {...p}><rect x="6" y="6" width="12" height="12" rx="2" /><path d="M10 10h4v4h-4zM9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" /></Icon>;
+export const CloudIcon = (p: IconProps) => <Icon {...p}><path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 17.8 8.6 4.7 4.7 0 0 1 17.5 18H7Z" /></Icon>;
+export const ShieldIcon = (p: IconProps) => <Icon {...p}><path d="M12 3 5 6v5.5c0 4.3 2.9 8 7 9.5 4.1-1.5 7-5.2 7-9.5V6l-7-3Z" /><path d="m9 12 2 2 4-4" /></Icon>;
+export const BuildingIcon = (p: IconProps) => <Icon {...p}><path d="M4 21V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v16" /><path d="M15 10h3a2 2 0 0 1 2 2v9" /><path d="M3 21h18M8 7h3M8 11h3M8 15h3" /></Icon>;
 export const GlobeIcon = (p: IconProps) => <Icon {...p}><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z" /></Icon>;
 export const FilmIcon = (p: IconProps) => <Icon {...p}><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M7 3v18M17 3v18M3 8h4M3 12h4M3 16h4M17 8h4M17 12h4M17 16h4" /></Icon>;
 export const PenToolIcon = (p: IconProps) => <Icon {...p}><path d="m12 19 7-7 3 3-7 7-3-3Z" /><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5Z" /><path d="m2 2 7.6 7.6" /><circle cx="11" cy="11" r="2" /></Icon>;
