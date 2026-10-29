@@ -514,13 +514,8 @@ export const hi: TranslationDictionary = {
       tagline: "ब्रांड रणनीति · क्रिएटिव · डिजिटल ग्रोथ",
     },
     form: {
-      stepTitles: [
-        "आपके बारे में",
-        "आपका प्रोजेक्ट",
-        "आपकी कंपनी के बारे में",
-        "बजट और समय-सीमा",
-      ],
-      stepAria: "चरण {step} / 4",
+      stepTitles: ["आपके बारे में", "आपकी चुनौती", "समय-सीमा"],
+      stepAria: "चरण {step} / 3",
       stepPrefix: "चरण",
       optionalTag: "वैकल्पिक",
       optionalNote: "वैकल्पिक — केवल वही साझा करें जो आप चाहें।",
@@ -540,8 +535,19 @@ export const hi: TranslationDictionary = {
           label: "कंपनी या ब्रांड का नाम",
           placeholder: "आपकी कंपनी या ब्रांड",
         },
+        role: {
+          label: "आपकी भूमिका",
+          options: {
+            "Founder / Owner": "संस्थापक / मालिक",
+            "Executive / Leadership": "कार्यकारी / नेतृत्व",
+            "Marketing / Brand": "मार्केटिंग / ब्रांड",
+            "People / Talent": "पीपल / टैलेंट",
+            "Product / Operations": "प्रोडक्ट / ऑपरेशंस",
+            "Other": "अन्य",
+          },
+        },
         helpWith: {
-          label: "आपको किस चीज़ में मदद चाहिए?",
+          label: "आप किस काम में मदद चाहते हैं?",
           legend: "आवश्यक सहायता",
           options: {
             "Brand strategy & positioning": "ब्रांड रणनीति और पोज़िशनिंग",
@@ -552,46 +558,12 @@ export const hi: TranslationDictionary = {
           },
         },
         projectDetails: {
-          label: "हमें अपने प्रोजेक्ट के बारे में थोड़ा बताएँ",
+          label: "अपनी चुनौती के बारे में थोड़ा बताएँ",
           placeholder: "आप क्या हासिल करना चाहते हैं, और रास्ते में क्या बाधा है?",
           hint: "अधिकतम 2,000 अक्षर।",
         },
-        companySize: {
-          label: "कंपनी का आकार",
-          options: {
-            "1–10 people": "1–10 लोग",
-            "11–50 people": "11–50 लोग",
-            "51–200 people": "51–200 लोग",
-            "201–1,000 people": "201–1,000 लोग",
-            "1,000+ people": "1,000+ लोग",
-          },
-        },
-        industry: {
-          label: "उद्योग",
-          options: {
-            "Technology & SaaS": "टेक्नोलॉजी और SaaS",
-            "Financial services & fintech": "वित्तीय सेवाएँ और फ़िनटेक",
-            "Consumer, retail & D2C": "कंज़्यूमर, रिटेल और D2C",
-            "Media, entertainment & music": "मीडिया, मनोरंजन और संगीत",
-            "Real estate & infrastructure": "रियल एस्टेट और इन्फ्रास्ट्रक्चर",
-            "Professional & B2B services": "प्रोफ़ेशनल और B2B सेवाएँ",
-            "Healthcare & life sciences": "हेल्थकेयर और लाइफ़ साइंसेज़",
-            "Education": "शिक्षा",
-            "Other": "अन्य",
-          },
-        },
-        budget: {
-          label: "बजट सीमा",
-          options: {
-            "Under $5,000": "$5,000 से कम",
-            "$5,000 – $15,000": "$5,000 – $15,000",
-            "$15,000 – $50,000": "$15,000 – $50,000",
-            "$50,000+": "$50,000+",
-            "Not sure yet": "अभी तय नहीं",
-          },
-        },
         timeline: {
-          label: "अपेक्षित समय-सीमा",
+          label: "अनुमानित समय-सीमा",
           options: {
             "As soon as possible": "जितनी जल्दी हो सके",
             "Within 1–3 months": "1–3 महीनों के भीतर",

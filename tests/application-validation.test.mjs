@@ -28,18 +28,16 @@ test("valid enquiry is pending review, trimmed and normalized", async () => {
   assert.equal(result.project_details, "We are launching a new product line and need positioning.");
 });
 
-test("company size, industry, budget and timeline are optional and stored as null when skipped", async () => {
-  for (const blanks of [{}, { company_size: "", industry_vertical: "  ", budget_range: null, timeline: "" }]) {
+test("role and timeline are optional and stored as null when skipped", async () => {
+  for (const blanks of [{}, { contact_role: "  ", timeline: "" }, { contact_role: null, timeline: null }]) {
     const result = await validateApplication({ ...validInput(), ...blanks });
-    for (const field of ["company_size", "industry_vertical", "budget_range", "timeline"]) assert.equal(result[field], null, field);
+    for (const field of ["contact_role", "timeline"]) assert.equal(result[field], null, field);
   }
   const answered = await validateApplication({
     ...validInput(),
-    company_size: "11–50 people", industry_vertical: " Technology & SaaS ", budget_range: "$5,000 – $15,000", timeline: "Within 1–3 months",
+    contact_role: " Marketing / Brand ", timeline: "Within 1–3 months",
   });
-  assert.equal(answered.company_size, "11–50 people");
-  assert.equal(answered.industry_vertical, "Technology & SaaS");
-  assert.equal(answered.budget_range, "$5,000 – $15,000");
+  assert.equal(answered.contact_role, "Marketing / Brand");
   assert.equal(answered.timeline, "Within 1–3 months");
 });
 
@@ -70,8 +68,8 @@ test("text answers are trimmed and limited to the database lengths", async () =>
 
 test("invalid answers and missing required fields are rejected", async () => {
   await assert.rejects(validateApplication({ ...validInput(), help_with: "Something else" }), ValidationError);
-  await assert.rejects(validateApplication({ ...validInput(), industry_vertical: "Bogus" }), ValidationError);
-  await assert.rejects(validateApplication({ ...validInput(), budget_range: 5000 }), ValidationError);
+  await assert.rejects(validateApplication({ ...validInput(), contact_role: "Chief Everything" }), ValidationError);
+  await assert.rejects(validateApplication({ ...validInput(), timeline: "Next year" }), ValidationError);
   for (const field of ["contact_name", "decision_maker_email", "legal_name", "help_with", "project_details"]) {
     const missing = validInput();
     delete missing[field];
@@ -176,13 +174,16 @@ test("successful endpoint saves the enquiry for administrator review with skippe
   const saved = [];
   const response = await handleApplicationSubmission(new Request("https://site.test/api/applications", {
     method: "POST", headers: { ...idempotencyHeaders, origin: "https://site.test" },
-    body: JSON.stringify({ ...validInput(), budget_range: "Not sure yet", timeline: "" }),
+    body: JSON.stringify({ ...validInput(), contact_role: "Founder / Owner", timeline: "" }),
   }), async (application) => { saved.push(application); });
   assert.equal(response.status, 201);
   assert.equal(saved.length, 1);
   assert.equal(saved[0].qualification_status, "pending_review");
-  assert.equal(saved[0].budget_range, "Not sure yet");
+  assert.equal(saved[0].contact_role, "Founder / Owner");
   assert.equal(saved[0].timeline, null);
+  assert.equal("company_size" in saved[0], false);
+  assert.equal("industry_vertical" in saved[0], false);
+  assert.equal("budget_range" in saved[0], false);
   assert.equal("rejection_reasons" in saved[0], false);
 });
 

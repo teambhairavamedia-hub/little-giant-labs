@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { normalizeContactEmail, normalizeLinkedInProfileUrl } from "@/lib/admin-contact-links";
 
 type Application = {
-  id: string; legal_name: string; contact_name: string | null; help_with: string | null; budget_range: string | null;
+  id: string; legal_name: string; contact_name: string | null; help_with: string | null;
   qualification_status: "qualified" | "rejected" | "pending_review"; submitted_at: string; decision_maker_email: string;
 };
 type DashboardData = {
@@ -18,7 +18,8 @@ type DashboardData = {
 };
 /* Enquiry fields (contact form v2) plus legacy partnership-application answers kept on older rows */
 type ApplicationDetail = Application & {
-  project_details: string | null; company_size: string | null; industry_vertical: string | null; timeline: string | null;
+  contact_role: string | null; project_details: string | null; company_size: string | null; industry_vertical: string | null;
+  budget_range: string | null; timeline: string | null;
   ttm_revenue: string | null; monthly_ad_spend: string | null; growth_bottleneck: string | null;
   partnership_readiness: string | null; decision_maker_linkedin: string | null; rejection_reasons: unknown;
 };
@@ -104,11 +105,11 @@ export function AdminDashboard() {
           {loading && <p className="px-6 py-2 text-xs text-[#6b6b6b]" role="status">Loading applications…</p>}
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1180px] border-collapse text-left text-sm">
-              <thead><tr className="bg-[#f7f7f6] text-xs text-[#6b6b6b]"><th scope="col" className="px-5 py-3 font-medium sm:px-7">Company or brand</th><th scope="col" className="px-4 py-3 font-medium">Contact</th><th scope="col" className="px-4 py-3 font-medium">Needs help with</th><th scope="col" className="px-4 py-3 font-medium">Budget</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (IST)</th></tr></thead>
+              <thead><tr className="bg-[#f7f7f6] text-xs text-[#6b6b6b]"><th scope="col" className="px-5 py-3 font-medium sm:px-7">Company or brand</th><th scope="col" className="px-4 py-3 font-medium">Contact</th><th scope="col" className="px-4 py-3 font-medium">Needs help with</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (IST)</th></tr></thead>
               <tbody>{data.applications.map((application) => {
                 const email = normalizeContactEmail(application.decision_maker_email);
                 return <tr key={application.id} className="border-t border-[#eeeeec] align-top">
-                <td className="px-5 py-4 font-medium sm:px-7"><button type="button" onClick={(event) => openDetail(application, event.currentTarget)} className="text-left underline decoration-[#800000]/30 underline-offset-4 hover:text-[#800000] hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{application.legal_name}<span className="sr-only"> — View application</span></button></td><td className="px-4 py-4">{application.contact_name ?? "—"}</td><td className="px-4 py-4">{application.help_with ?? "—"}</td><td className="px-4 py-4">{application.budget_range ?? "—"}</td>
+                <td className="px-5 py-4 font-medium sm:px-7"><button type="button" onClick={(event) => openDetail(application, event.currentTarget)} className="text-left underline decoration-[#800000]/30 underline-offset-4 hover:text-[#800000] hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{application.legal_name}<span className="sr-only"> — View application</span></button></td><td className="px-4 py-4">{application.contact_name ?? "—"}</td><td className="px-4 py-4">{application.help_with ?? "—"}</td>
                 <td className="px-4 py-4 text-center"><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${application.qualification_status === "qualified" ? "bg-emerald-50 text-emerald-800" : application.qualification_status === "rejected" ? "bg-amber-50 text-amber-900" : "bg-sky-50 text-sky-900"}`}>{application.qualification_status === "pending_review" ? "Pending review" : application.qualification_status === "qualified" ? "Qualified" : "Rejected"}</span></td>
                 <td className="max-w-44 px-4 py-4">{email ? <a href={`mailto:${email.split("@").map(encodeURIComponent).join("@")}`} title={email} aria-label={`Email applicant at ${email}`} className="block max-w-44 truncate text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{email}</a> : <span className="text-[#6b6b6b]" aria-label="Email unavailable">—</span>}</td>
                 <td className="whitespace-nowrap px-5 py-4 text-[#6b6b6b] sm:px-7"><time dateTime={application.submitted_at}>{dateFormat.format(new Date(application.submitted_at))}</time></td>
@@ -172,7 +173,7 @@ function ApplicationDetailPanel({ id, onClose }: { id: string; onClose: () => vo
   const linkedin = normalizeLinkedInProfileUrl(application?.decision_maker_linkedin);
   const reasons = Array.isArray(application?.rejection_reasons) ? application.rejection_reasons : [];
   const answer = (value: unknown) => typeof value === "string" && value.trim() ? value : "—";
-  const hasLegacyAnswers = Boolean(application && [application.ttm_revenue, application.monthly_ad_spend, application.growth_bottleneck, application.partnership_readiness, application.decision_maker_linkedin]
+  const hasLegacyAnswers = Boolean(application && [application.company_size, application.industry_vertical, application.budget_range, application.ttm_revenue, application.monthly_ad_spend, application.growth_bottleneck, application.partnership_readiness, application.decision_maker_linkedin]
     .some((value) => typeof value === "string" && value.trim()));
 
   return <div className="fixed inset-0 z-[100] bg-black/45" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
@@ -193,14 +194,15 @@ function ApplicationDetailPanel({ id, onClose }: { id: string; onClose: () => vo
             <DetailField label="Company or brand name" value={answer(application.legal_name)} />
             <DetailField label="What they need help with" value={answer(application.help_with)} />
             <DetailField label="About the project" value={answer(application.project_details)} />
-            <DetailField label="Company size" value={answer(application.company_size)} />
-            <DetailField label="Industry" value={answer(application.industry_vertical)} />
-            <DetailField label="Budget range" value={answer(application.budget_range)} />
+            <DetailField label="Your role" value={answer(application.contact_role)} />
             <DetailField label="Desired timeline" value={answer(application.timeline)} />
           </dl>
           {hasLegacyAnswers && <section aria-labelledby="legacy-heading">
             <h3 id="legacy-heading" className="mb-3 text-sm font-semibold text-[#6b6b6b]">Earlier application answers</h3>
             <dl className="divide-y divide-[#eeeeec] rounded-xl border border-[#e8e8e6] px-4 sm:px-5">
+              <DetailField label="Earlier company size" value={answer(application.company_size)} />
+              <DetailField label="Earlier application industry" value={answer(application.industry_vertical)} />
+              <DetailField label="Earlier budget range" value={answer(application.budget_range)} />
               <DetailField label="Trailing twelve-month revenue" value={answer(application.ttm_revenue)} />
               <DetailField label="Monthly paid acquisition spend" value={answer(application.monthly_ad_spend)} />
               <DetailField label="Strategic bottleneck" value={answer(application.growth_bottleneck)} />

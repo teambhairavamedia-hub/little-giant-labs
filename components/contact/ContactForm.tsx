@@ -11,11 +11,9 @@ type Enquiry = {
   contactName: string;
   workEmail: string;
   companyName: string;
+  role: string;
   helpWith: string;
   projectDetails: string;
-  companySize: string;
-  industry: string;
-  budget: string;
   timeline: string;
 };
 
@@ -23,15 +21,13 @@ const empty: Enquiry = {
   contactName: "",
   workEmail: "",
   companyName: "",
+  role: "",
   helpWith: "",
   projectDetails: "",
-  companySize: "",
-  industry: "",
-  budget: "",
   timeline: "",
 };
 
-const LAST_STEP = 3;
+const LAST_STEP = 2;
 
 const inputClass =
   "mt-3 w-full border-0 border-b border-lgl-sage bg-transparent px-0 py-3 text-base text-lgl-fg placeholder:text-lgl-muted outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
@@ -101,7 +97,7 @@ export function ContactForm() {
     };
   }, [values.workEmail]);
 
-  // Steps 1–2 hold the required answers; steps 3–4 are optional context.
+  // The first two steps contain required answers; the final step is optional context.
   const stepValid = () => {
     if (step === 0) {
       const email = values.workEmail.trim().toLowerCase();
@@ -151,11 +147,9 @@ export function ContactForm() {
           contact_name: values.contactName,
           decision_maker_email: values.workEmail,
           legal_name: values.companyName,
+          contact_role: values.role,
           help_with: values.helpWith,
           project_details: values.projectDetails,
-          company_size: values.companySize,
-          industry_vertical: values.industry,
-          budget_range: values.budget,
           timeline: values.timeline,
         }),
       });
@@ -211,10 +205,10 @@ export function ContactForm() {
       aria-busy={busy}
     >
       <ol
-        className="mb-10 grid grid-cols-4 gap-2"
+        className="mb-10 grid grid-cols-3 gap-2"
         aria-label={formDict.stepAria.replace("{step}", String(step + 1))}
       >
-        {[0, 1, 2, 3].map((item) => (
+        {[0, 1, 2].map((item) => (
           <li
             key={item}
             aria-current={item === step ? "step" : undefined}
@@ -305,6 +299,7 @@ export function ContactForm() {
 
         {step === 1 && (
           <div className="space-y-10">
+            {optionalSelect("role", formDict.fields.role.label, applicationOptions.contact_role, formDict.fields.role.options)}
             <fieldset className="space-y-3">
               <legend className="mb-4 text-sm text-lgl-fg">
                 {formDict.fields.helpWith.label} <span className="text-lgl-gold">*</span>
@@ -348,15 +343,6 @@ export function ContactForm() {
         {step === 2 && (
           <div className="space-y-10">
             <p className="text-sm leading-relaxed text-lgl-soft">{formDict.optionalNote}</p>
-            {optionalSelect("companySize", formDict.fields.companySize.label, applicationOptions.company_size, formDict.fields.companySize.options)}
-            {optionalSelect("industry", formDict.fields.industry.label, applicationOptions.industry_vertical, formDict.fields.industry.options)}
-          </div>
-        )}
-
-        {step === 3 && (
-          <div className="space-y-10">
-            <p className="text-sm leading-relaxed text-lgl-soft">{formDict.optionalNote}</p>
-            {optionalSelect("budget", formDict.fields.budget.label, applicationOptions.budget_range, formDict.fields.budget.options)}
             {optionalSelect("timeline", formDict.fields.timeline.label, applicationOptions.timeline, formDict.fields.timeline.options)}
           </div>
         )}

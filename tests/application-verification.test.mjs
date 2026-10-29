@@ -6,6 +6,7 @@ import {
   buildCreateApplicationWithEmailJobArgs,
   createInitialVerificationJobMetadata,
   decryptVerificationToken,
+  fingerprintApplication,
 } from "../lib/application-verification.ts";
 import {
   handleApplicationSubmission,
@@ -17,11 +18,9 @@ const validatedApplication = {
   contact_name: "Asha Rao",
   decision_maker_email: "ceo@example.org",
   legal_name: "Example Corporation",
+  contact_role: null,
   help_with: "Creative & content",
   project_details: "Refresh our campaign creative for the next launch.",
-  company_size: "51–200 people",
-  industry_vertical: null,
-  budget_range: "$15,000 – $50,000",
   timeline: null,
   qualification_status: "pending_review",
 };
@@ -61,11 +60,9 @@ test("RPC arguments map validated fields and serialize SHA-256 as PostgreSQL byt
     p_contact_name: validatedApplication.contact_name,
     p_decision_maker_email: validatedApplication.decision_maker_email,
     p_legal_name: validatedApplication.legal_name,
+    p_contact_role: null,
     p_help_with: validatedApplication.help_with,
     p_project_details: validatedApplication.project_details,
-    p_company_size: validatedApplication.company_size,
-    p_industry_vertical: null,
-    p_budget_range: validatedApplication.budget_range,
     p_timeline: null,
     p_token_hash: fixedMetadata.tokenHashBytea,
     p_token_expires_at: fixedMetadata.tokenExpiresAt,
@@ -78,6 +75,21 @@ test("RPC arguments map validated fields and serialize SHA-256 as PostgreSQL byt
   assert.match(args.p_encrypted_token_payload, /^\\x(?:[0-9a-f]{2})+$/i);
   assert.match(args.p_request_fingerprint, /^\\x[0-9a-f]{64}$/);
   assert.doesNotMatch(JSON.stringify(args), /plaintext-token/);
+});
+
+test("fingerprint uses the documented seven-field order including normalized optional nulls", () => {
+  const canonical = ["Asha Rao", "ceo@example.org", "Example Corporation", null, "Creative & content", "Refresh our campaign creative for the next launch.", null];
+  const expected = `\\x${createHash("sha256").update(JSON.stringify(canonical), "utf8").digest("hex")}`;
+  assert.equal(fingerprintApplication(validatedApplication), expected);
+});
+
+test("browser form submits exactly the seven agreed fields", async () => {
+  const source = await readFile(new URL("../components/contact/ContactForm.tsx", import.meta.url), "utf8");
+  const submission = source.slice(source.indexOf('fetch("/api/applications"'));
+  const payload = submission.match(/body: JSON\.stringify\(\{([\s\S]*?)\}\),/i)?.[1] ?? "";
+  const keys = [...payload.matchAll(/\b([a-z_]+): values\./g)].map((match) => match[1]);
+  assert.deepEqual(keys, ["contact_name", "decision_maker_email", "legal_name", "contact_role", "help_with", "project_details", "timeline"]);
+  for (const removed of ["company_size", "industry_vertical", "budget_range"]) assert.doesNotMatch(payload, new RegExp(`\\b${removed}\\b`));
 });
 
 test("RPC failure returns a generic response and redacts generated values from diagnostics", async () => {

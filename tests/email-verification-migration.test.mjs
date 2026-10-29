@@ -19,6 +19,10 @@ const enquiryMigration = await readFile(
   new URL("../supabase/migrations/202610290001_contact_enquiry_fields.sql", import.meta.url),
   "utf8",
 );
+const finalEnquiryMigration = await readFile(
+  new URL("../supabase/migrations/202610300001_contact_role_and_simplified_enquiry_rpc.sql", import.meta.url),
+  "utf8",
+);
 
 test("migration adds verification state without verifying historical applications or generating their jobs", () => {
   assert.match(migration, /add column email_verified_at timestamptz\s*,\s*add column email_verification_generation integer not null default 1/i);
@@ -93,15 +97,14 @@ test("forward migration fingerprints requests and serializes same-key retries at
   assert.match(idempotencyMigration, /p_idempotency_key is null or pg_catalog\.length\(pg_catalog\.btrim\(p_idempotency_key\)\) = 0/i);
 });
 
-test("final RPC signature (enquiry migration) matches all 14 named arguments in the application call", async () => {
+test("final RPC signature (forward migration) matches all 12 named arguments in the application call", async () => {
   const route = await readFile(new URL("../app/api/applications/route.ts", import.meta.url), "utf8");
   const helper = await readFile(new URL("../lib/application-verification.ts", import.meta.url), "utf8");
-  const signature = enquiryMigration.match(/create function public\.create_application_with_email_job\(([\s\S]*?)\)\s*returns table/i)?.[1] ?? "";
+  const signature = finalEnquiryMigration.match(/create function public\.create_application_with_email_job\(([\s\S]*?)\)\s*returns table/i)?.[1] ?? "";
   const args = [...signature.matchAll(/\b(p_[a-z_]+)\s+(text|bytea|timestamptz)\b/gi)].map((match) => [match[1], match[2].toLowerCase()]);
   const expected = [
     ["p_contact_name", "text"], ["p_decision_maker_email", "text"], ["p_legal_name", "text"],
-    ["p_help_with", "text"], ["p_project_details", "text"], ["p_company_size", "text"],
-    ["p_industry_vertical", "text"], ["p_budget_range", "text"], ["p_timeline", "text"],
+    ["p_contact_role", "text"], ["p_help_with", "text"], ["p_project_details", "text"], ["p_timeline", "text"],
     ["p_token_hash", "bytea"], ["p_token_expires_at", "timestamptz"], ["p_encrypted_token_payload", "bytea"],
     ["p_idempotency_key", "text"], ["p_request_fingerprint", "bytea"],
   ];
@@ -109,7 +112,20 @@ test("final RPC signature (enquiry migration) matches all 14 named arguments in 
   for (const [name] of expected) assert.match(helper, new RegExp(`${name}:`));
   assert.match(route, /buildCreateApplicationWithEmailJobArgs\(application, metadata\)/);
   assert.match(enquiryMigration, /returns table \(application_id uuid, email_job_id uuid, generation integer, job_status text\)/i);
-  assert.match(enquiryMigration, /drop function public\.create_application_with_email_job\(\s*text, text, text, text, text, text, text, text, bytea, timestamptz, bytea, text, bytea\s*\)/i);
+  assert.match(finalEnquiryMigration, /drop function public\.create_application_with_email_job\(\s*text, text, text, text, text, text, text, text, text,\s*bytea, timestamptz, bytea, text, bytea\s*\)/i);
+});
+
+test("final RPC stores only the seven consultation fields and keeps verification infrastructure", () => {
+  const rpc = finalEnquiryMigration.slice(finalEnquiryMigration.indexOf("create function public.create_application_with_email_job"));
+  assert.match(finalEnquiryMigration, /add column contact_role text[\s\S]*'Founder \/ Owner'[\s\S]*'Other'/i);
+  assert.match(rpc, /p_contact_name is null[\s\S]*p_decision_maker_email is null[\s\S]*p_legal_name is null[\s\S]*p_help_with is null[\s\S]*p_project_details is null/i);
+  assert.match(rpc, /nullif\(pg_catalog\.btrim\(p_contact_role\), ''\)/i);
+  assert.match(rpc, /nullif\(pg_catalog\.btrim\(p_timeline\), ''\)/i);
+  assert.match(rpc, /insert into public\.growth_applications[\s\S]*insert into public\.email_jobs/i);
+  assert.doesNotMatch(rpc.slice(rpc.indexOf("insert into public.growth_applications"), rpc.indexOf("returning id, email_verification_generation")), /company_size|industry_vertical|budget_range/i);
+  assert.match(rpc, /pg_advisory_xact_lock[\s\S]*v_fingerprint is distinct from p_request_fingerprint[\s\S]*errcode = 'LGL01'/i);
+  assert.match(rpc, /revoke all on function[\s\S]*from public, anon, authenticated/i);
+  assert.match(rpc, /grant execute on function[\s\S]*to service_role/i);
 });
 
 test("enquiry migration keeps legacy rows valid and restricts new answers to the shared option lists", () => {
@@ -119,10 +135,8 @@ test("enquiry migration keeps legacy rows valid and restricts new answers to the
   for (const column of ["contact_name", "help_with", "project_details", "company_size", "budget_range", "timeline"]) {
     assert.match(enquiryMigration, new RegExp(`add column ${column} text`, "i"));
   }
-  // Every option the form can send is allowed by the database (and legacy industries stay allowed).
-  for (const options of Object.values(applicationOptions)) {
-    for (const option of options) assert.ok(enquiryMigration.includes(`'${option}'`), option);
-  }
+  // Help and timeline existed in this migration; later role support is forward-only.
+  for (const option of [...applicationOptions.help_with, ...applicationOptions.timeline]) assert.ok(enquiryMigration.includes(`'${option}'`), option);
   for (const legacy of ["Enterprise Banking & FinTech", "High-Ticket B2B Services"]) assert.ok(enquiryMigration.includes(`'${legacy}'`), legacy);
   assert.match(enquiryMigration, /char_length\(contact_name\) between 1 and 120/i);
   assert.match(enquiryMigration, /char_length\(project_details\) between 1 and 2000/i);

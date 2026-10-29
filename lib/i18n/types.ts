@@ -234,7 +234,7 @@ export interface TranslationDictionary {
       tagline: string;
     };
     form: {
-      stepTitles: [string, string, string, string];
+      stepTitles: [string, string, string];
       stepAria: string;
       stepPrefix: string;
       optionalTag: string;
@@ -245,11 +245,9 @@ export interface TranslationDictionary {
         contactName: { label: string; placeholder: string };
         workEmail: { label: string; placeholder: string; hint: string; error: string };
         companyName: { label: string; placeholder: string };
+        role: { label: string; options: Record<string, string> };
         helpWith: { label: string; legend: string; options: Record<string, string> };
         projectDetails: { label: string; placeholder: string; hint: string };
-        companySize: { label: string; options: Record<string, string> };
-        industry: { label: string; options: Record<string, string> };
-        budget: { label: string; options: Record<string, string> };
         timeline: { label: string; options: Record<string, string> };
       };
       validationError: string;

@@ -21,7 +21,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
   try {
     const { data, error } = await createSupabaseServerClient()
       .from("growth_applications")
-      .select("id, contact_name, decision_maker_email, legal_name, help_with, project_details, company_size, industry_vertical, budget_range, timeline, ttm_revenue, monthly_ad_spend, growth_bottleneck, partnership_readiness, decision_maker_linkedin, qualification_status, rejection_reasons, submitted_at")
+      .select("id, contact_name, contact_role, decision_maker_email, legal_name, help_with, project_details, timeline, company_size, industry_vertical, budget_range, ttm_revenue, monthly_ad_spend, growth_bottleneck, partnership_readiness, decision_maker_linkedin, qualification_status, rejection_reasons, submitted_at")
       .eq("id", id)
       .maybeSingle();
 
