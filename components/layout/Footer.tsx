@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/site";
 import { Section } from "@/components/ui/Section";
 import { ClockIcon, InstagramIcon, LinkedInIcon, MailIcon, PinIcon, XIcon } from "@/components/ui/Icons";
@@ -11,7 +10,6 @@ import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
 
 export function Footer() {
-  const pathname = usePathname();
   const { dict, locale } = useI18n();
   const [localTime, setLocalTime] = useState("");
   const reduceMotion = useReducedMotion();
@@ -23,7 +21,6 @@ export function Footer() {
 
   const contactHref = getLocalizedPath("/contact", locale);
   const homePath = getLocalizedPath("/", locale);
-  const isContactPage = pathname === "/contact" || pathname === `/${locale}/contact`;
 
   const navItems = [
     { label: dict.nav.home, href: homePath },
@@ -59,29 +56,27 @@ export function Footer() {
     >
       <div className="mx-auto max-w-[1400px] px-6 pt-24 pb-8 md:px-10 lg:px-14 [&_.label-eyebrow]:text-[0.6875rem]">
         {/* Massive Hero CTA */}
-        {!isContactPage && (
-          <div className="mb-24">
-            <Link
-              href={contactHref}
-              className="group inline-flex flex-col items-start gap-4 text-left"
+        <div className="mb-24">
+          <Link
+            href={contactHref}
+            className="group inline-flex flex-col items-start gap-4 text-left"
+          >
+            <p className="label-eyebrow text-lgl-fg/70 tracking-[0.28em]">
+              {dict.footer.ctaEyebrow}
+            </p>
+            <h2
+              className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.04em] text-lgl-fg transition-colors duration-500 group-hover:text-lgl-fg/80"
+              style={{ fontFamily: "var(--font-manrope), sans-serif" }}
             >
-              <p className="label-eyebrow text-lgl-fg/70 tracking-[0.28em]">
-                {dict.footer.ctaEyebrow}
-              </p>
-              <h2
-                className="text-[clamp(2.5rem,7vw,5.5rem)] font-bold leading-[0.9] tracking-[-0.04em] text-lgl-fg transition-colors duration-500 group-hover:text-lgl-fg/80"
-                style={{ fontFamily: "var(--font-manrope), sans-serif" }}
-              >
-                {dict.footer.ctaHeading1}
-                <br />
-                {dict.footer.ctaHeading2}
-                <span className="inline-block ml-4 translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-4 group-hover:-translate-y-2">
-                  →
-                </span>
-              </h2>
-            </Link>
-          </div>
-        )}
+              {dict.footer.ctaHeading1}
+              <br />
+              {dict.footer.ctaHeading2}
+              <span className="inline-block ml-4 translate-x-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-4 group-hover:-translate-y-2">
+                →
+              </span>
+            </h2>
+          </Link>
+        </div>
 
         {/* Separator line */}
         <div className="h-[1px] w-full bg-lgl-fg/5 mb-12" />

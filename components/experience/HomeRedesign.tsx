@@ -6,13 +6,17 @@ import type { CSSProperties } from "react";
 import { experienceConfig } from "@/lib/experience";
 import { WorkCarousel } from "@/components/experience/WorkCarousel";
 import {
+  BuildingIcon,
   ChartIcon,
+  ChipIcon,
   ClapperIcon,
+  CloudIcon,
   CompassIcon,
   FilmIcon,
   LayersIcon,
   MusicIcon,
   PenToolIcon,
+  ShieldIcon,
   TargetIcon,
   TrendIcon,
 } from "@/components/ui/Icons";
@@ -21,6 +25,7 @@ import { getLocalizedPath } from "@/lib/i18n/config";
 import { servicePillars } from "@/lib/service-pillars";
 
 const whyIcons = [TargetIcon, LayersIcon, CompassIcon, ChartIcon];
+const techIcons = [CloudIcon, ChipIcon, ShieldIcon, BuildingIcon];
 
 const projectMeta = [
   {
@@ -48,7 +53,7 @@ const projectMeta = [
 export function HomeRedesign() {
   const { dict, locale } = useI18n();
   const heroDict = dict.home.hero;
-  const { whatWeDo, why, process, finalCta } = dict.home;
+  const { whyUs, whatWeDo, tech, why, process, finalCta } = dict.home;
   const workDict = dict.home.work;
 
   const contactHref = getLocalizedPath("/contact", locale);
@@ -80,6 +85,19 @@ export function HomeRedesign() {
             <a className="home-button home-button-secondary" href="#our-work">
               {heroDict.exploreWork}
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-why-us" data-section-theme="dark" aria-labelledby="why-us-title">
+        <div className="home-shell">
+          <div className="home-section-head home-split-head">
+            <p className="home-eyebrow">{whyUs.eyebrow}</p>
+            <h2 id="why-us-title">
+              {whyUs.titlePart1}
+              <em>{whyUs.titleEmphasis}</em>
+            </h2>
+            <p>{whyUs.text}</p>
           </div>
         </div>
       </section>
@@ -129,6 +147,43 @@ export function HomeRedesign() {
             {/* Same golden pill and label as the header's "Book a Consultation" */}
             <Link className="localized-ui-text lgl-gold-cta offer-cta-button" href={contactHref}>
               {dict.nav.cta} <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section id="technology" className="home-tech" data-section-theme="dark" aria-labelledby="tech-title">
+        <div className="home-shell">
+          <div className="home-section-head home-split-head">
+            <p className="home-eyebrow">{tech.eyebrow}</p>
+            <h2 id="tech-title">
+              {tech.titlePart1}
+              <em>{tech.titleEmphasis}</em>
+            </h2>
+            <div className="tech-copy">
+              {tech.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+          <ul className="tech-grid">
+            {tech.items.map((item, index) => {
+              const SectorIcon = techIcons[index % techIcons.length];
+              return (
+                <li className="tech-item" key={item.title}>
+                  <span className="tech-icon">
+                    <SectorIcon size={20} />
+                  </span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </li>
+              );
+            })}
+          </ul>
+          {/* Opens the Technology & Product Marketing pillar on the Services page */}
+          <div className="tech-actions">
+            <Link className="home-button home-button-secondary" href={`${servicesHref}#technology-product`}>
+              {tech.cta} <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>
@@ -198,6 +253,7 @@ export function HomeRedesign() {
             </h2>
             <p>{why.intro}</p>
           </div>
+          <h3 className="why-points-heading">{why.pointsHeading}</h3>
           <ol className="why-grid">
             {why.points.map((point, index) => {
               const PointIcon = whyIcons[index % whyIcons.length];
@@ -217,6 +273,17 @@ export function HomeRedesign() {
               );
             })}
           </ol>
+          {/* Closing line: three phrases, the last one as the serif accent, then the primary CTA */}
+          <div className="why-closing">
+            <p>
+              {why.closing.map((phrase, index) =>
+                index === why.closing.length - 1 ? <em key={phrase}>{phrase}</em> : <span key={phrase}>{phrase}</span>,
+              )}
+            </p>
+            <Link className="home-button home-button-primary" href={contactHref}>
+              {heroDict.discussProject} <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
         </div>
       </section>
 

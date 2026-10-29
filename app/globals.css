@@ -371,16 +371,10 @@ html.lenis, html.lenis body {
   display: none;
 }
 
-/* Keep the About service cards on a shared track height at wider breakpoints. */
+/* Service capability cards (Services page): cards in the same row share a height; each row sizes to its
+   content so the full-width fifth card has no empty space. */
 .about-service-grid {
-  grid-auto-rows: 1fr;
   align-items: stretch;
-}
-
-@media (max-width: 639px) {
-  .about-service-grid {
-    grid-auto-rows: auto;
-  }
 }
 
 /* ── AboutSnap responsive grid ── */
@@ -391,6 +385,11 @@ html.lenis, html.lenis body {
   .about-services-grid {
     grid-template-columns: 1fr !important;
   }
+}
+
+/* 1280–1535px: tighter header nav links so the longer localized CTA and language selector fit (inline styles need !important) */
+@media (min-width:1280px) and (max-width:1535px) {
+ .lgl-header-nav-link { letter-spacing:.08em !important; padding-inline:.5rem !important; }
 }
 
 /* Metallic gold call-to-action (header "Book Strategy Call"), matches .home-button-primary */
@@ -427,6 +426,9 @@ html.lenis, html.lenis body {
 .home-button-secondary:hover { filter:brightness(1.12); border-color:var(--home-gold); }
 .home-index { display:flex; align-items:center; gap:.7rem; margin-top:clamp(3.2rem,10vh,7rem); color:var(--lgl-faint); font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; }
 .home-index i { width:3rem; height:1px; background:color-mix(in srgb,var(--lgl-line) 20%,transparent); }
+/* Why us: short statement band between the hero and the pillars */
+.home-why-us { padding-block:clamp(3.5rem,7vw,6rem); border-bottom:1px solid color-mix(in srgb,var(--lgl-line) 8%,transparent); }
+.home-why-us .home-section-head { margin-bottom:0; }
 .home-pillars,.home-work { padding-block:clamp(5rem,10vw,9rem); }
 .home-pillars { padding-top:clamp(3rem,6vw,5rem); }
 .home-pillars { background:var(--lgl-bg); }
@@ -511,9 +513,26 @@ html.lenis, html.lenis body {
 .offer-cta-button:hover { opacity:.85; }
 .offer-cta p { max-width:560px; margin:0; color:var(--lgl-muted); font-size:clamp(1.05rem,1.4vw,1.2rem); line-height:1.7; }
 
+/* Built for complex ideas: technology statement, four sector tiles, link to the Technology pillar */
+.home-tech { padding-block:clamp(5rem,10vw,9rem); border-top:1px solid color-mix(in srgb,var(--lgl-line) 10%,transparent); background:var(--lgl-bg); }
+.tech-copy { display:grid; gap:1rem; margin:0 0 .4rem; padding-left:1.25rem; border-left:2px solid color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
+.tech-copy p { margin:0; color:var(--lgl-soft); font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.7; }
+.tech-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(.9rem,1.8vw,1.35rem); margin:0; padding:0; list-style:none; }
+.tech-item { display:flex; flex-direction:column; padding:clamp(1.4rem,2.4vw,2rem); border:1px solid color-mix(in srgb,var(--lgl-line) 16%,transparent); border-radius:1.25rem; transition:border-color .3s ease,box-shadow .3s ease; }
+.tech-icon { display:flex; align-items:center; justify-content:center; width:2.75rem; height:2.75rem; margin-bottom:1.5rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 40%,transparent); border-radius:50%; background:color-mix(in srgb,var(--lgl-gold) 10%,transparent); color:var(--home-gold); }
+.tech-item h3 { margin:0 0 .75rem; color:var(--home-paper); font-size:clamp(1.05rem,1.5vw,1.35rem); line-height:1.15; }
+.tech-item p { margin:0; color:var(--lgl-muted); font-size:clamp(.95rem,1.1vw,1.02rem); line-height:1.65; }
+.tech-actions { display:flex; margin-top:clamp(2rem,4vw,3rem); }
+
 /* Why Little Giant Labs: statement above a staggered row of numbered cards */
 .home-why,.home-process,.home-final { padding-block:clamp(5rem,10vw,9rem); }
 .home-why { background:var(--lgl-bg); }
+.why-points-heading { display:flex; align-items:center; gap:1rem; margin:0 0 clamp(1.25rem,2.5vw,1.75rem); color:var(--home-paper); font-size:clamp(1.15rem,1.8vw,1.5rem); letter-spacing:-.02em; }
+.why-points-heading::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,color-mix(in srgb,var(--lgl-gold) 45%,transparent),transparent); }
+.why-closing { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1.5rem 2.5rem; margin-top:clamp(2.5rem,5vw,4rem); padding:clamp(1.75rem,3.5vw,2.75rem) clamp(1.5rem,3.5vw,3rem); border:1px solid color-mix(in srgb,var(--lgl-gold) 25%,transparent); border-radius:1.5rem; }
+.why-closing p { display:flex; flex-wrap:wrap; align-items:baseline; gap:.35rem .9rem; margin:0; color:var(--home-paper); font-size:clamp(1.3rem,2.4vw,2rem); font-weight:700; line-height:1.2; letter-spacing:-.03em; }
+.why-closing p span::after { content:"·"; margin-left:.9rem; color:var(--home-gold); }
+.why-closing em { color:var(--home-sage); font-family:Georgia,serif; font-weight:400; }
 .why-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(.9rem,1.8vw,1.35rem); margin:0; padding:0; list-style:none; }
 .why-card { position:relative; overflow:hidden; display:flex; flex-direction:column; padding:clamp(1.4rem,2.4vw,2rem); border:1px solid color-mix(in srgb,var(--lgl-line) 16%,transparent); border-radius:1.25rem; background:linear-gradient(160deg,color-mix(in srgb,var(--lgl-fg) 5%,transparent),color-mix(in srgb,var(--lgl-fg) 1%,transparent)); transition:border-color .3s ease,transform .3s ease,box-shadow .3s ease; }
 .why-card::before { content:""; position:absolute; top:0; left:0; width:100%; height:2px; background:linear-gradient(90deg,var(--home-gold),transparent); transform:scaleX(.25); transform-origin:left; transition:transform .5s cubic-bezier(.22,1,.36,1); }
@@ -545,16 +564,21 @@ html.lenis, html.lenis body {
  .offer-card:hover .offer-link span { transform:translateX(4px); }
  .why-card:hover { border-color:color-mix(in srgb,var(--lgl-gold) 45%,transparent); box-shadow:0 22px 50px -30px color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
  .why-card:hover::before { transform:scaleX(1); }
+ .tech-item:hover { border-color:color-mix(in srgb,var(--lgl-gold) 45%,transparent); box-shadow:0 22px 50px -30px color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
 }
 @media(max-width:1000px) {
  .offer-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
  .home-split-head { grid-template-columns:minmax(0,1fr); }
- .home-split-head>p:last-child { margin-top:1.25rem; }
- .why-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .home-split-head>p:last-child,.home-split-head>.tech-copy { margin-top:1.25rem; }
+ .why-grid,.tech-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media(max-width:700px) {
  .offer-grid { grid-template-columns:minmax(0,1fr); }
- .why-grid { grid-template-columns:minmax(0,1fr); }
+ .why-grid,.tech-grid { grid-template-columns:minmax(0,1fr); }
+ .tech-actions .home-button { flex:1 1 100%; }
+ /* Why closing line: phrases stack one per line, so drop the separators */
+ .why-closing p { flex-direction:column; }
+ .why-closing p span::after { content:none; }
  .process-steps { grid-template-columns:minmax(0,1fr); gap:0; }
  .process-steps::before { display:none; }
  .process-step { display:grid; grid-template-columns:3rem minmax(0,1fr); gap:1.1rem; padding-bottom:2rem; }
@@ -714,7 +738,7 @@ html.lenis, html.lenis body {
    animations simply show the content; reduced-motion users get no movement. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .home-section-head, .pillar-scene, .work-heading, .work-carousel, .offer-card, .why-card, .process-step, .final-card {
+    .home-section-head, .pillar-scene, .work-heading, .work-carousel, .offer-card, .why-card, .tech-item, .process-step, .final-card {
       animation: home-reveal linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 35%;
