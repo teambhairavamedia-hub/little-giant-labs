@@ -392,6 +392,16 @@ html.lenis, html.lenis body {
  .lgl-header-nav-link { letter-spacing:.08em !important; padding-inline:.5rem !important; }
 }
 
+/* Contact hero: soft green and gold glows, topic chips, and the framed growth photo */
+.contact-hero { background:radial-gradient(55% 70% at 85% 30%,color-mix(in srgb,var(--lgl-sage-strong) 14%,transparent),transparent 70%),radial-gradient(50% 60% at 5% 100%,color-mix(in srgb,var(--lgl-gold) 10%,transparent),transparent 70%),var(--lgl-bg); }
+.contact-topic { display:inline-flex; align-items:center; gap:.6rem; padding:.4rem 1rem .4rem .4rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 30%,transparent); border-radius:999px; background:color-mix(in srgb,var(--lgl-fg) 3%,transparent); color:var(--lgl-fg); font-size:.8rem; font-weight:600; letter-spacing:.04em; }
+.contact-visual { position:relative; width:100%; max-width:520px; aspect-ratio:1200/628; justify-self:end; margin:0; overflow:hidden; border:1px solid color-mix(in srgb,var(--lgl-gold) 40%,transparent); border-radius:1.5rem; background:#0B1220; }
+.contact-visual img { transition:transform .8s cubic-bezier(.2,.7,.2,1); }
+.contact-visual:hover img { transform:scale(1.04); }
+/* Below 1024px the photo sits under the text, centred, at the same fixed maximum size */
+@media (max-width:1023px) { .contact-visual { justify-self:center; } }
+
+
 /* Metallic gold call-to-action (header "Book Strategy Call"), matches .home-button-primary */
 .lgl-gold-cta { color:#0B1B2B; border:1px solid #F3DC9A; background:linear-gradient(135deg,#9C7634 0%,#E4C47A 30%,#FFF0C2 48%,#D2AC5E 66%,#9A7330 100%); box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 4px rgba(90,62,20,.3),0 4px 16px rgba(197,160,89,.25); text-shadow:0 1px 0 rgba(255,244,214,.45); }
 
