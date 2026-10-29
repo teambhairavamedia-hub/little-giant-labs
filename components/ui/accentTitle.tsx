@@ -6,11 +6,18 @@ const accent = (text: string, key?: string) => (
   </span>
 );
 
+/* Headings end without a full stop (Latin "." or Devanagari "।"), including one just inside a closing *…* accent,
+   and use a short spaced hyphen instead of an em dash ("different—and" → "different - and"). */
+export function stripStop(title: string): string {
+  return title.replace(/[.।](\*?)\s*$/, "$1").replace(/\s*—\s*/g, " - ");
+}
+
 /* Two-tone headings ("Driven by *conviction*"): the accent takes the sage serif-italic style.
-   - Text wrapped in *…* is the accent ("From business challenge to *purposeful execution.*").
+   - Text wrapped in *…* is the accent ("From business challenge to *purposeful execution*").
    - Otherwise a two-sentence title accents its second sentence (split on the first "." or "।" + space).
-   - Anything else renders unchanged. */
-export function accentTitle(title: string): ReactNode {
+   - Anything else renders unchanged. The trailing full stop is always dropped. */
+export function accentTitle(rawTitle: string): ReactNode {
+  const title = stripStop(rawTitle);
   const marked = /^([\s\S]*?)\*([\s\S]+?)\*([\s\S]*)$/.exec(title);
   if (marked) {
     return (

@@ -11,7 +11,7 @@ function NextSteps({ label, steps }: { label: string; steps: readonly string[] }
   const icons = [DocumentIcon, SearchIcon, HandshakeIcon];
   return (
     <div className="mt-10">
-      <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-lgl-gold">{label}</p>
+      <p className="home-eyebrow">{label}</p>
       <ol className="mt-6 space-y-0">
         {steps.map((step, i) => {
           const StepIcon = icons[i % icons.length];
@@ -29,10 +29,7 @@ function NextSteps({ label, steps }: { label: string; steps: readonly string[] }
               >
                 <StepIcon size={20} />
               </span>
-              <p className="pt-3 text-sm leading-relaxed text-lgl-fg/85">
-                <span className="mr-1.5 font-semibold text-lgl-gold">{i + 1}.</span>
-                {step}
-              </p>
+              <p className="flex min-h-12 items-center text-sm leading-relaxed text-lgl-fg/85">{step}</p>
             </li>
           );
         })}
@@ -78,9 +75,7 @@ export function ContactPageView() {
       <section className="relative overflow-hidden border-b border-lgl-line/20 bg-lgl-bg px-6 pb-16 pt-28 md:px-8 md:pb-20 md:pt-36 xl:pt-40">
         <Container className="relative flex flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-12">
           <div>
-            <p className="mb-6 text-[11px] font-semibold uppercase tracking-[.28em] text-lgl-gold">
-              {dict.contact.header.eyebrow}
-            </p>
+            <p className="home-eyebrow" style={{ marginBottom: "1.5rem" }}>{dict.contact.header.eyebrow}</p>
             <h1 className="max-w-4xl text-balance font-display text-5xl leading-[.98] tracking-[-.055em] text-lgl-fg sm:text-6xl md:text-7xl">
               {accentTitle(dict.contact.header.title)}
             </h1>

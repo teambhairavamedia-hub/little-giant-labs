@@ -10,18 +10,12 @@ import { accentTitle } from "@/components/ui/accentTitle";
 import {
   ChartIcon,
   CompassIcon,
-  GlobeIcon,
   LayersIcon,
-  MailIcon,
-  PenToolIcon,
-  SearchIcon,
   SparkIcon,
 } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
-import { siteConfig } from "@/lib/site";
 
-const stepIcons = [SearchIcon, CompassIcon, PenToolIcon, GlobeIcon];
 const stageIcons = [SparkIcon, ChartIcon, LayersIcon];
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
@@ -31,6 +25,8 @@ const pillBase =
   "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[0.75rem] font-semibold uppercase tracking-[0.18em] transition-all duration-300";
 const pillFont: CSSProperties = { fontFamily: "var(--font-dm-sans), sans-serif" };
 const headingFont: CSSProperties = { fontFamily: "var(--font-manrope), sans-serif" };
+/* Green icon badge shared with the rest of the site (.lgl-icon-badge); it fills when its `group` card is hovered */
+const greenBadge = "lgl-icon-badge";
 
 /* Header illustration */
 function AboutHeaderVisual() {
@@ -79,7 +75,7 @@ function AboutHeaderVisual() {
   );
 }
 
-/* Gold-rule eyebrow + section title */
+/* Section label (homepage eyebrow style) + section title */
 function SectionHeading({
   eyebrow,
   title,
@@ -94,10 +90,7 @@ function SectionHeading({
   const centered = align === "center";
   return (
     <div className={`${centered ? "mx-auto text-center" : ""} max-w-3xl ${className}`}>
-      <p className={`label-eyebrow flex items-center gap-3 text-lgl-gold ${centered ? "justify-center" : ""}`}>
-        <span aria-hidden="true" className="h-px w-8 bg-gradient-to-r from-lgl-gold to-lgl-gold/0" />
-        {eyebrow}
-      </p>
+      <p className={`home-eyebrow ${centered ? "justify-center" : ""}`}>{eyebrow}</p>
       {title && (
         <h2
           className="mt-5 text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-bold leading-[1.04] tracking-[-0.04em] text-lgl-fg"
@@ -176,14 +169,24 @@ export function AboutPageView() {
         style={{ background: "var(--lgl-section)", color: "var(--lgl-fg)" }}
       >
         <Container>
-          <motion.div {...reveal()} className="mx-auto max-w-4xl">
-            <SectionHeading eyebrow={story.eyebrow} />
-            <div className="mt-8 space-y-6 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
-              {story.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+          <div className="mx-auto max-w-4xl">
+            <motion.div {...reveal()}>
+              <SectionHeading eyebrow={story.eyebrow} />
+              <p
+                className="mt-6 text-[clamp(1.35rem,2.4vw,1.9rem)] font-semibold leading-[1.45] tracking-[-0.025em] text-lgl-fg"
+                style={headingFont}
+              >
+                {story.paragraphs[0]}
+              </p>
+            </motion.div>
+            <div className="mt-8 space-y-6 text-base leading-[1.85] text-lgl-fg/75 md:text-lg">
+              {story.paragraphs.slice(1).map((paragraph, index) => (
+                <motion.p key={paragraph} {...reveal(0.1 + index * 0.08)}>
+                  {paragraph}
+                </motion.p>
               ))}
             </div>
-          </motion.div>
+          </div>
         </Container>
       </Section>
 
@@ -193,7 +196,7 @@ export function AboutPageView() {
           <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
             <motion.div {...reveal()}>
               <Card className="group flex h-full flex-col p-8 transition-all duration-300 hover:border-lgl-gold/40 md:p-10 motion-safe:hover:-translate-y-1">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-lgl-gold/35 bg-lgl-gold/10 text-lgl-gold">
+                <span className={`${greenBadge} h-12 w-12`}>
                   <CompassIcon size={22} />
                 </span>
                 <p className="label-eyebrow mt-7 text-lgl-gold">{purpose.missionLabel}</p>
@@ -204,7 +207,7 @@ export function AboutPageView() {
             </motion.div>
             <motion.div {...reveal(0.1)}>
               <Card className="group flex h-full flex-col p-8 transition-all duration-300 hover:border-lgl-gold/40 md:p-10 motion-safe:hover:-translate-y-1">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-lgl-gold/35 bg-lgl-gold/10 text-lgl-gold">
+                <span className={`${greenBadge} h-12 w-12`}>
                   <SparkIcon size={22} />
                 </span>
                 <p className="label-eyebrow mt-7 text-lgl-gold">{purpose.beliefLabel}</p>
@@ -217,7 +220,6 @@ export function AboutPageView() {
           {/* Philosophy: follows the belief statement, ahead of the process */}
           <motion.div {...reveal(0.15)} className="mx-auto mt-14 flex max-w-3xl flex-col items-center text-center md:mt-20">
             <SectionHeading eyebrow={purpose.philosophyLabel} title={accentTitle(purpose.philosophyTitle)} align="center" />
-            <span aria-hidden="true" className="mt-8 h-0.5 w-16 rounded-full bg-gradient-to-r from-lgl-gold/0 via-lgl-gold to-lgl-gold/0" />
             <p className="mt-8 text-lg leading-[1.7] text-lgl-fg md:text-xl">{purpose.approach}</p>
           </motion.div>
         </Container>
@@ -226,50 +228,18 @@ export function AboutPageView() {
       {/* ── How we work ──────────────────────────────────────────── */}
       <Section theme="light" className="border-t border-lgl-fg/10 py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
         <Container>
-          {/* Centred: heading, lead paragraph, gold divider, supporting paragraphs */}
+          {/* Centred: heading, lead paragraph, supporting paragraphs */}
           <motion.div {...reveal()} className="mx-auto flex max-w-3xl flex-col items-center text-center">
             <SectionHeading eyebrow={approach.eyebrow} title={accentTitle(approach.title)} align="center" />
             <p className="mt-8 text-lg leading-[1.7] text-lgl-fg md:text-xl">{approach.paragraphs[0]}</p>
             {approach.paragraphs.length > 1 && (
-              <>
-                <span aria-hidden="true" className="mt-8 h-0.5 w-16 rounded-full bg-gradient-to-r from-lgl-gold/0 via-lgl-gold to-lgl-gold/0" />
-                <div className="mt-8 max-w-2xl space-y-4 text-base leading-[1.8] text-lgl-fg/70">
-                  {approach.paragraphs.slice(1).map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
-              </>
+              <div className="mt-6 max-w-2xl space-y-4 text-base leading-[1.8] text-lgl-fg/70">
+                {approach.paragraphs.slice(1).map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
             )}
           </motion.div>
-
-          {/* Understand → position → create → activate & learn */}
-          <ol className="relative mt-12 grid gap-5 sm:grid-cols-2 md:mt-16 lg:grid-cols-4 lg:gap-6">
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-[12%] top-[2.75rem] hidden h-px bg-gradient-to-r from-lgl-gold/0 via-lgl-gold/45 to-lgl-gold/0 lg:block"
-            />
-            {approach.steps.map((step, index) => {
-              const StepIcon = stepIcons[index % stepIcons.length];
-              return (
-                <motion.li key={step.title} {...reveal(index * 0.08)} className="relative">
-                  <Card className="flex h-full flex-col p-7 transition-all duration-300 hover:border-lgl-gold/40 motion-safe:hover:-translate-y-1">
-                    <div className="flex items-center justify-between">
-                      <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-lgl-gold/40 bg-lgl-bg text-lgl-gold">
-                        <StepIcon size={20} />
-                      </span>
-                      <span className="text-sm font-semibold tracking-[0.12em] text-lgl-fg/45">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3 className="mt-6 text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
-                      {step.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-lgl-fg/70">{step.description}</p>
-                  </Card>
-                </motion.li>
-              );
-            })}
-          </ol>
         </Container>
       </Section>
 
@@ -289,9 +259,9 @@ export function AboutPageView() {
               const StageIcon = stageIcons[index % stageIcons.length];
               return (
                 <motion.div key={option.title} {...reveal(index * 0.08)}>
-                  <Card className="relative flex h-full flex-col overflow-hidden p-8 transition-all duration-300 hover:border-lgl-gold/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.06)] motion-safe:hover:-translate-y-1">
+                  <Card className="group relative flex h-full flex-col overflow-hidden p-8 transition-all duration-300 hover:border-lgl-gold/40 motion-safe:hover:-translate-y-1">
                     <span aria-hidden="true" className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-lgl-gold via-lgl-gold/40 to-lgl-gold/0" />
-                    <span className="flex h-11 w-11 items-center justify-center rounded-full border border-lgl-gold/40 bg-lgl-gold/10 text-lgl-gold">
+                    <span className={`${greenBadge} h-11 w-11`}>
                       <StageIcon size={20} />
                     </span>
                     <h3 className="mt-6 text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
@@ -311,36 +281,23 @@ export function AboutPageView() {
         <Container>
           <motion.div
             {...reveal()}
-            className="lgl-brand-card relative overflow-hidden rounded-[2rem] border border-lgl-gold/25 px-7 py-10 md:px-14 md:py-14"
+            className="lgl-brand-card relative flex flex-col items-center overflow-hidden rounded-[2rem] border border-lgl-gold/25 px-7 py-10 text-center md:px-14 md:py-14"
           >
-            <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-14">
-              <div>
-                <h2
-                  className="max-w-2xl text-balance text-[clamp(1.75rem,3.6vw,2.75rem)] font-bold leading-[1.08] tracking-[-0.04em] text-lgl-fg"
-                  style={headingFont}
-                >
-                  {accentTitle(cta.title)}
-                </h2>
-                <div className="mt-5 max-w-2xl space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
-                  {cta.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-              <div className="flex flex-col items-start gap-4">
-                <Link href={contactHref} className={`lgl-gold-cta ${pillBase} hover:opacity-85`} style={pillFont}>
-                  {cta.button}
-                  <span aria-hidden="true">→</span>
-                </Link>
-                <a
-                  href={`mailto:${siteConfig.email}`}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-lgl-fg/70 transition-colors hover:text-lgl-gold"
-                >
-                  <MailIcon size={15} className="text-lgl-gold" />
-                  {siteConfig.email}
-                </a>
-              </div>
+            <h2
+              className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-bold leading-[1.08] tracking-[-0.04em] text-lgl-fg lg:whitespace-nowrap"
+              style={headingFont}
+            >
+              {accentTitle(cta.title)}
+            </h2>
+            <div className="mx-auto mt-5 max-w-3xl space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+              {cta.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
+            <Link href={contactHref} className={`lgl-gold-cta ${pillBase} mt-8 hover:opacity-85`} style={pillFont}>
+              {cta.button}
+              <span aria-hidden="true">→</span>
+            </Link>
           </motion.div>
         </Container>
       </Section>
