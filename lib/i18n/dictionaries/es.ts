@@ -90,7 +90,7 @@ export const es: TranslationDictionary = {
         {
           title: "Marketing Digital y Crecimiento",
           description: "Llegue al público adecuado mediante campañas digitales con propósito, contenido y activación de canales.",
-          alt: "Flecha verde que asciende por tramos sobre un mapamundi tenue",
+          alt: "Mano que señala gráficos de ventas en la pantalla de un portátil",
         },
         {
           title: "Marca Empleadora y Comunicación de Talento",

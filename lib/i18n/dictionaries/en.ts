@@ -90,7 +90,7 @@ export const en: TranslationDictionary = {
         {
           title: "Digital Marketing & Growth",
           description: "Reach the right audiences through purposeful digital campaigns, content and channel activation.",
-          alt: "Green arrow rising in steps across a faint world map",
+          alt: "Hand pointing at sales charts on a laptop screen",
         },
         {
           title: "Employer Brand & Talent Communication",

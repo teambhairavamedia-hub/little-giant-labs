@@ -5,7 +5,8 @@ export const servicePillars = [
   { slug: "brand-strategy", image: "/media/home/brand-strategy.png", width: 1600, height: 1111, focus: "center" },
   // Keeps the "Ideas" bubble and the tablet in frame
   { slug: "creative-content", image: "/media/home/creative-content.png", width: 1600, height: 1446, focus: "center top" },
-  { slug: "digital-growth", image: "/media/home/digital-growth-arrow.png", width: 1254, height: 1254, focus: "center" },
+  // Keeps the sales charts and the pointing hand in frame
+  { slug: "digital-growth", image: "/media/home/digital-growth-sales.png", width: 1600, height: 1066, focus: "20% center" },
   { slug: "employer-brand", image: "/media/home/employer-brand-team.png", width: 1600, height: 1066, focus: "center" },
   // Keeps the pointing hand and the "Product" heading in frame
   { slug: "technology-product", image: "/media/home/technology-product.png", width: 1600, height: 986, focus: "45% center" },
