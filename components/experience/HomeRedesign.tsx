@@ -57,7 +57,7 @@ const projectMeta = [
 export function HomeRedesign() {
   const { dict, locale } = useI18n();
   const heroDict = dict.home.hero;
-  const { whyUs, whatWeDo, tech, why, process, finalCta } = dict.home;
+  const { whatWeDo, tech, why, process, finalCta } = dict.home;
   const workDict = dict.home.work;
 
   const contactHref = getLocalizedPath("/contact", locale);
@@ -117,15 +117,54 @@ export function HomeRedesign() {
         </div>
       </section>
 
-      <section className="home-why-us" data-section-theme="dark" aria-labelledby="why-us-title">
+      <section className="home-why" data-section-theme="dark" aria-labelledby="why-title">
         <div className="home-shell">
           <div className="home-section-head home-split-head">
-            <p className="home-eyebrow">{whyUs.eyebrow}</p>
-            <h2 id="why-us-title">
-              {whyUs.titlePart1}
-              <em>{stripStop(whyUs.titleEmphasis)}</em>
+            <p className="home-eyebrow">{why.eyebrow}</p>
+            <h2 id="why-title">
+              {why.titlePart1}
+              <em>{stripStop(why.titleEmphasis)}</em>
             </h2>
-            <p>{whyUs.text}</p>
+            <p>{why.intro}</p>
+          </div>
+          <h3 className="why-points-heading">{why.pointsHeading}</h3>
+          <ol className="why-grid">
+            {why.points.map((point, index) => {
+              const PointIcon = whyIcons[index % whyIcons.length];
+              return (
+                <li className="why-card" key={point.title}>
+                  <div className="why-card-top">
+                    <span className="why-icon">
+                      <PointIcon size={20} />
+                    </span>
+                    <span className="why-index" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <h3>{stripStop(point.title)}</h3>
+                  <p>{point.description}</p>
+                </li>
+              );
+            })}
+          </ol>
+          {/* Closing line: three equal tiles, each an icon badge above its phrase, then the primary CTA */}
+          <div className="why-closing">
+            <ul className="why-closing-list">
+              {why.closing.map((phrase, index) => {
+                const ClosingIcon = closingIcons[index % closingIcons.length];
+                return (
+                  <li key={phrase}>
+                    <span className="why-closing-icon">
+                      <ClosingIcon size={22} />
+                    </span>
+                    <span className="why-closing-text">{stripStop(phrase)}</span>
+                  </li>
+                );
+              })}
+            </ul>
+            <Link className="home-button home-button-primary" href={contactHref}>
+              {heroDict.discussProject}
+            </Link>
           </div>
         </div>
       </section>
@@ -140,7 +179,7 @@ export function HomeRedesign() {
             </h2>
             <p>{whatWeDo.subheading}</p>
           </div>
-          {/* Four pillar cards: a row on desktop, stacked on mobile; each opens its Services page section */}
+          {/* Five pillar cards: three then two on desktop, stacked on mobile; each opens its Services page section */}
           <ol className="offer-grid">
             {whatWeDo.items.map((item, index) => {
               const pillar = servicePillars[index];
@@ -152,7 +191,7 @@ export function HomeRedesign() {
                       alt={item.alt}
                       width={pillar.width}
                       height={pillar.height}
-                      sizes="(max-width: 700px) 92vw, (max-width: 1000px) 46vw, 270px"
+                      sizes="(max-width: 700px) 92vw, (max-width: 1000px) 46vw, 450px"
                       style={{ objectPosition: pillar.focus }}
                     />
                   </figure>
@@ -211,7 +250,7 @@ export function HomeRedesign() {
           </ul>
           {/* Opens the Technology & Product Marketing pillar on the Services page */}
           <div className="tech-actions">
-            <Link className="home-button home-button-secondary" href={`${servicesHref}#technology-product`}>
+            <Link className="home-button home-button-primary" href={`${servicesHref}#technology-product`}>
               {tech.cta} <span aria-hidden="true">→</span>
             </Link>
           </div>
@@ -239,6 +278,7 @@ export function HomeRedesign() {
                 style={{ "--work-tone": project.tone } as CSSProperties}
               >
                 <figure className="work-image">
+                  <img className="work-image-fill" src={project.image} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />
                   <img src={project.image} alt={project.alt} loading="lazy" decoding="async" draggable={false} />
                 </figure>
                 <div className="work-copy">
@@ -246,7 +286,11 @@ export function HomeRedesign() {
                     <project.Icon className="work-icon" size={16} />
                     {project.category.replace(/\s*\/\s*/g, " · ")}
                   </p>
-                  <h3>{project.client}</h3>
+                  <h3>
+                    {/* "Client: project" reads as the client in bold, the project on the line below */}
+                    <b className="work-client">{project.client.split(": ")[0]}{project.client.includes(": ") && ":"}</b>
+                    {project.client.includes(": ") && <span className="work-project">{project.client.split(": ").slice(1).join(": ")}</span>}
+                  </h3>
                   <p className="work-challenge">
                     <strong>
                       <TargetIcon size={13} />
@@ -269,58 +313,6 @@ export function HomeRedesign() {
               </article>
             ))}
           </WorkCarousel>
-        </div>
-      </section>
-
-      <section className="home-why" data-section-theme="dark" aria-labelledby="why-title">
-        <div className="home-shell">
-          <div className="home-section-head home-split-head">
-            <p className="home-eyebrow">{why.eyebrow}</p>
-            <h2 id="why-title">
-              {why.titlePart1}
-              <em>{stripStop(why.titleEmphasis)}</em>
-            </h2>
-            <p>{why.intro}</p>
-          </div>
-          <h3 className="why-points-heading">{why.pointsHeading}</h3>
-          <ol className="why-grid">
-            {why.points.map((point, index) => {
-              const PointIcon = whyIcons[index % whyIcons.length];
-              return (
-                <li className="why-card" key={point.title}>
-                  <div className="why-card-top">
-                    <span className="why-icon">
-                      <PointIcon size={20} />
-                    </span>
-                    <span className="why-index" aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <h3>{stripStop(point.title)}</h3>
-                  <p>{point.description}</p>
-                </li>
-              );
-            })}
-          </ol>
-          {/* Closing line: three equal tiles, each an icon badge above its phrase, then the primary CTA */}
-          <div className="why-closing">
-            <ul className="why-closing-list">
-              {why.closing.map((phrase, index) => {
-                const ClosingIcon = closingIcons[index % closingIcons.length];
-                return (
-                  <li key={phrase}>
-                    <span className="why-closing-icon">
-                      <ClosingIcon size={22} />
-                    </span>
-                    <span className="why-closing-text">{stripStop(phrase)}</span>
-                  </li>
-                );
-              })}
-            </ul>
-            <Link className="home-button home-button-primary" href={contactHref}>
-              {heroDict.discussProject}
-            </Link>
-          </div>
         </div>
       </section>
 

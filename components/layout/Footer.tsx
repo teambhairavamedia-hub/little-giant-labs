@@ -56,7 +56,7 @@ export function Footer() {
     >
       <div className="mx-auto max-w-[1400px] px-6 pt-16 pb-8 md:px-10 md:pt-20 lg:px-14 [&_.label-eyebrow]:text-[0.6875rem]">
         {/* Links & Info Columns */}
-        <div className="grid grid-cols-2 gap-12 md:grid-cols-3 md:gap-8 xl:grid-cols-5 items-start mb-28">
+        <div className="grid grid-cols-2 gap-12 md:grid-cols-3 md:gap-8 xl:grid-cols-5 items-start mb-14 md:mb-16">
           {/* Col 1: Brand statement card — the tagline rises in word by word, closed by a quote mark */}
           <motion.div
             className="relative col-span-2 overflow-hidden w-full max-w-lg rounded-3xl border border-lgl-gold/25 p-6 pb-10 sm:p-7 sm:pb-11 md:col-span-3 xl:col-span-2 xl:mr-10"
@@ -121,7 +121,7 @@ export function Footer() {
               {dict.footer.connectHeading}
             </p>
             <a
-              href={`mailto:${siteConfig.email ?? "hello@bhairavamedia.com"}`}
+              href={`mailto:${siteConfig.email}`}
               className="inline-flex min-h-8 items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/75 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
@@ -195,11 +195,11 @@ export function Footer() {
         </div>
 
         {/* Bottom copyright & compliance */}
-        <div className="relative pt-8 border-t border-lgl-fg/5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between z-10">
-          <p className="label-eyebrow text-lgl-fg/70">
+        <div className="relative pt-8 border-t border-lgl-fg/5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between z-10">
+          <p className="footer-legal">
             © {new Date().getFullYear()} {dict.footer.copyright}
           </p>
-          <p className="label-eyebrow text-lgl-fg/70">
+          <p className="footer-legal">
             {dict.footer.slogan}
           </p>
         </div>

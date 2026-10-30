@@ -95,7 +95,12 @@ export const de: TranslationDictionary = {
         {
           title: "Employer Brand & Talent-Kommunikation",
           description: "Helfen Sie Organisationen, ihre Kultur auszudrücken, ihr Arbeitgeberversprechen zu kommunizieren und die Menschen zu erreichen, die sie brauchen.",
-          alt: "Fünf Kollegen besprechen kreative Entwürfe an einem Studiotisch",
+          alt: "Acht lächelnde Kollegen zeigen gemeinsam den Daumen nach oben in einem Büro mit Glaswänden",
+        },
+        {
+          title: "Technologie- & Produktmarketing",
+          description: "Verbinden Sie Produktfähigkeiten mit Kundenbedürfnissen und machen Sie komplexe Technologie zu klarem Marktwert.",
+          alt: "Hand zeigt auf leuchtende Sechseck-Symbole neben dem Wort Product",
         },
       ],
       exploreLabel: "Leistung entdecken",

@@ -369,7 +369,7 @@ export function ContactForm() {
             key="continue"
             type="button"
             onClick={goNext}
-            className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-lgl-gold-hover focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059] cursor-pointer"
+            className="lgl-gold-cta min-h-12 rounded-full px-7 text-xs font-bold uppercase tracking-[.18em] transition-opacity hover:opacity-85 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059] cursor-pointer"
           >
             {formDict.continue}
           </button>
@@ -378,7 +378,7 @@ export function ContactForm() {
             key="submit"
             type="submit"
             disabled={busy}
-            className="min-h-12 bg-[#C5A059] px-7 text-xs font-bold uppercase tracking-[.18em] text-[#0B1B2B] transition-colors hover:bg-lgl-gold-hover focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059] disabled:cursor-wait disabled:bg-[#8BA898] cursor-pointer"
+            className="lgl-gold-cta min-h-12 rounded-full px-7 text-xs font-bold uppercase tracking-[.18em] transition-opacity hover:opacity-85 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[#C5A059] disabled:cursor-wait disabled:bg-[#8BA898] cursor-pointer"
           >
             {busy ? formDict.submitting : formDict.submit}
           </button>

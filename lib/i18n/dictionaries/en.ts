@@ -95,7 +95,12 @@ export const en: TranslationDictionary = {
         {
           title: "Employer Brand & Talent Communication",
           description: "Help organisations express their culture, communicate their employee value proposition and connect with the people they need.",
-          alt: "Five colleagues reviewing creative layouts around a studio table",
+          alt: "Eight smiling colleagues giving a thumbs-up together in a glass-walled office",
+        },
+        {
+          title: "Technology & Product Marketing",
+          description: "Connect product capabilities with customer needs and turn complex technology into clear market value.",
+          alt: "Hand pointing at glowing hexagon icons beside the word Product",
         },
       ],
       exploreLabel: "Explore service",

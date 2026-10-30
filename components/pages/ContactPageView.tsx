@@ -64,7 +64,7 @@ export function ContactPageView() {
 
   return (
     <main className="min-h-screen bg-lgl-bg text-lgl-fg">
-      <section className="contact-hero relative overflow-hidden border-b border-lgl-line/20 px-6 pb-16 pt-28 md:px-8 md:pb-24 md:pt-36 xl:pt-40">
+      <section className="contact-hero relative overflow-hidden border-b border-lgl-line/20 px-6 pb-12 pt-28 md:px-8 md:pb-18 md:pt-36 xl:pt-40">
         <Container className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
           <div>
             <p className="home-eyebrow" style={{ marginBottom: "1.5rem" }}>{dict.contact.header.eyebrow}</p>
@@ -93,7 +93,7 @@ export function ContactPageView() {
         </Container>
       </section>
 
-      <section className="bg-lgl-bg px-6 py-14 md:px-8 md:pb-12 md:pt-20">
+      <section className="bg-lgl-bg px-6 py-12 md:px-8 md:py-18">
         <Container>
           <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
             <aside className="lg:sticky lg:top-12 lg:self-start">

@@ -5,7 +5,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { LanguageSelector } from "@/components/layout/LanguageSelector";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
 
@@ -169,7 +168,7 @@ export function Header() {
               })}
             </nav>
 
-            {/* Right side: theme toggle + CTA + language selector + hamburger */}
+            {/* Right side: theme toggle + CTA + hamburger */}
             <div className="col-start-2 row-start-1 flex shrink-0 items-center gap-2.5 justify-self-end sm:gap-3 min-[1280px]:col-start-3 2xl:gap-4">
               <ThemeToggle />
 
@@ -193,11 +192,6 @@ export function Header() {
               >
                 {dict.nav.cta}
               </Link>
-
-              {/* Language Selector: immediately after CTA button */}
-              <div className="hidden sm:inline-flex">
-                <LanguageSelector variant="header" />
-              </div>
 
               {/* Hamburger — mobile/tablet */}
               <button
@@ -300,9 +294,6 @@ export function Header() {
                   {dict.nav.cta}
                 </Link>
               </div>
-
-              {/* Language Selector in mobile navigation */}
-              <LanguageSelector variant="mobile" />
             </div>
           </div>
         </div>
