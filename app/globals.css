@@ -392,14 +392,12 @@ html.lenis, html.lenis body {
  .lgl-header-nav-link { letter-spacing:.08em !important; padding-inline:.5rem !important; }
 }
 
-/* Contact hero: soft green and gold glows, topic chips, and the framed growth photo */
+/* Contact hero: soft green and gold glows, topic chips, and the transparent target artwork */
 .contact-hero { background:radial-gradient(55% 70% at 85% 30%,color-mix(in srgb,var(--lgl-sage-strong) 14%,transparent),transparent 70%),radial-gradient(50% 60% at 5% 100%,color-mix(in srgb,var(--lgl-gold) 10%,transparent),transparent 70%),var(--lgl-bg); }
 .contact-topic { display:inline-flex; align-items:center; gap:.6rem; padding:.4rem 1rem .4rem .4rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 30%,transparent); border-radius:999px; background:color-mix(in srgb,var(--lgl-fg) 3%,transparent); color:var(--lgl-fg); font-size:.8rem; font-weight:600; letter-spacing:.04em; }
-.contact-visual { position:relative; width:100%; max-width:520px; aspect-ratio:1200/628; justify-self:end; margin:0; overflow:hidden; border:1px solid color-mix(in srgb,var(--lgl-gold) 40%,transparent); border-radius:1.5rem; background:#0B1220; }
-.contact-visual img { transition:transform .8s cubic-bezier(.2,.7,.2,1); }
-.contact-visual:hover img { transform:scale(1.04); }
-/* Below 1024px the photo sits under the text, centred, at the same fixed maximum size */
-@media (max-width:1023px) { .contact-visual { justify-self:center; } }
+.contact-visual { position:relative; width:100%; max-width:400px; aspect-ratio:1433/1259; justify-self:center; margin:0; }
+/* Below 1024px it sits centred under the text, smaller so the form stays close */
+@media (max-width:1023px) { .contact-visual { max-width:280px; } }
 
 
 /* Metallic gold call-to-action (header "Book Strategy Call"), matches .home-button-primary */
@@ -744,8 +742,14 @@ html.lenis, html.lenis body {
  .work-arrow { width:44px; height:44px; }
  .home-button { flex:1 1 100%; }
 }
+/* Phones: button labels stay on one line (inline styles and pill utilities need !important) */
+@media(max-width:480px) {
+ .lgl-gold-cta,.home-button { gap:.5rem; padding-inline:.9rem !important; font-size:clamp(.625rem,2.9vw,.72rem) !important; letter-spacing:.05em !important; white-space:nowrap; }
+}
 @media(max-width:359px) {
  .lgl-header-pill { padding-right:.5rem !important; padding-left:.5rem !important; }
+ /* Very narrow phones: this long secondary label may take two lines rather than overflow */
+ .tech-actions .home-button { min-width:0; max-width:100%; white-space:normal; text-align:center; }
 }
 @media(min-width:701px) {
  .work-image { aspect-ratio:auto; height:clamp(240px,23vw,310px); }

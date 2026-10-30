@@ -150,9 +150,10 @@ export function HomeRedesign() {
                     <Image
                       src={pillar.image}
                       alt={item.alt}
-                      width={640}
-                      height={800}
+                      width={pillar.width}
+                      height={pillar.height}
                       sizes="(max-width: 700px) 92vw, (max-width: 1000px) 46vw, 270px"
+                      style={{ objectPosition: pillar.focus }}
                     />
                   </figure>
                   <div className="offer-copy">

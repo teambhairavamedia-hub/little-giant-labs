@@ -80,22 +80,22 @@ export const es: TranslationDictionary = {
         {
           title: "Estrategia y Posicionamiento de Marca",
           description: "Defina qué hace diferente a su empresa, a quién sirve y por qué las personas deberían elegirla.",
-          alt: "Mano colocando notas en un tablero de planificación de estrategia de marca",
+          alt: "Persona en un escritorio con un cuaderno que traza una estrategia de los problemas a las soluciones",
         },
         {
           title: "Estudio Creativo y de Contenidos",
           description: "Convierta su estrategia en historias convincentes y piezas creativas que hagan su marca reconocible y relevante.",
-          alt: "Muestras de color y paletas de diseño sobre la mesa de un estudio creativo",
+          alt: "Persona sostiene una tableta con el dibujo de una bombilla, rodeada de burbujas dibujadas de ideas, lluvia de ideas y visión",
         },
         {
           title: "Marketing Digital y Crecimiento",
           description: "Llegue al público adecuado mediante campañas digitales con propósito, contenido y activación de canales.",
-          alt: "Portátil con un panel de analítica de marketing digital",
+          alt: "Flecha verde que asciende por tramos sobre un mapamundi tenue",
         },
         {
           title: "Marca Empleadora y Comunicación de Talento",
           description: "Ayude a las organizaciones a expresar su cultura, comunicar su propuesta de valor al empleado y conectar con las personas que necesitan.",
-          alt: "Colegas celebrando juntos en una oficina luminosa",
+          alt: "Cinco colegas revisan diseños creativos alrededor de una mesa de estudio",
         },
       ],
       exploreLabel: "Explorar servicio",

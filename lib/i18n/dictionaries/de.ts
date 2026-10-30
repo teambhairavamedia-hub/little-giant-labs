@@ -80,22 +80,22 @@ export const de: TranslationDictionary = {
         {
           title: "Markenstrategie & Positionierung",
           description: "Definieren Sie, was Ihr Unternehmen unterscheidet, wem es dient und warum Menschen sich dafür entscheiden sollten.",
-          alt: "Hand, die Notizen an einer Markenstrategie-Planungstafel befestigt",
+          alt: "Person am Schreibtisch mit einem Notizbuch, das eine Strategie von Problemen zu Lösungen skizziert",
         },
         {
           title: "Kreativ- & Content-Studio",
           description: "Verwandeln Sie Ihre Strategie in überzeugende Geschichten und kreative Assets, die Ihre Marke wiedererkennbar und relevant machen.",
-          alt: "Farbmuster und Designpaletten auf einem Kreativstudio-Tisch",
+          alt: "Person hält ein Tablet mit einer skizzierten Glühbirne hoch, umgeben von gezeichneten Sprechblasen zu Ideen, Brainstorming und Vision",
         },
         {
           title: "Digitales Marketing & Wachstum",
           description: "Erreichen Sie die richtigen Zielgruppen durch zielgerichtete digitale Kampagnen, Inhalte und Kanalaktivierung.",
-          alt: "Laptop mit einem Analyse-Dashboard für digitales Marketing",
+          alt: "Grüner Pfeil, der über einer dezenten Weltkarte stufenweise ansteigt",
         },
         {
           title: "Employer Brand & Talent-Kommunikation",
           description: "Helfen Sie Organisationen, ihre Kultur auszudrücken, ihr Arbeitgeberversprechen zu kommunizieren und die Menschen zu erreichen, die sie brauchen.",
-          alt: "Kollegen, die in einem hellen Büro gemeinsam feiern",
+          alt: "Fünf Kollegen besprechen kreative Entwürfe an einem Studiotisch",
         },
       ],
       exploreLabel: "Leistung entdecken",
