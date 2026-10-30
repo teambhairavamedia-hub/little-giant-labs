@@ -90,7 +90,7 @@ export const de: TranslationDictionary = {
         {
           title: "Digitales Marketing & Wachstum",
           description: "Erreichen Sie die richtigen Zielgruppen durch zielgerichtete digitale Kampagnen, Inhalte und Kanalaktivierung.",
-          alt: "Grüner Pfeil, der über einer dezenten Weltkarte stufenweise ansteigt",
+          alt: "Hand zeigt auf Verkaufsdiagramme auf einem Laptop-Bildschirm",
         },
         {
           title: "Employer Brand & Talent-Kommunikation",

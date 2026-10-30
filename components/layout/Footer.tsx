@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/lib/site";
@@ -21,6 +21,14 @@ export function Footer() {
 
   const contactHref = getLocalizedPath("/contact", locale);
   const homePath = getLocalizedPath("/", locale);
+
+  // Phones and tablets follow the mailto: link into their mail app. Desktops often have no mail app set up,
+  // so they open a Gmail message in a new tab instead.
+  const openEmail = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    event.preventDefault();
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${siteConfig.email}`, "_blank", "noopener,noreferrer");
+  };
 
   const navItems = [
     { label: dict.nav.home, href: homePath },
@@ -121,9 +129,8 @@ export function Footer() {
               {dict.footer.connectHeading}
             </p>
             <a
-              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteConfig.email)}`}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`mailto:${siteConfig.email}`}
+              onClick={openEmail}
               className="inline-flex min-h-8 items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/75 transition-colors hover:text-lgl-fg"
               style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
             >
