@@ -1,34 +1,19 @@
 import type { Metadata } from "next";
-import { Manrope, DM_Sans, Noto_Sans_Devanagari } from "next/font/google";
+import { preload } from "react-dom";
 import { PublicChrome } from "@/components/layout/PublicChrome";
 import { siteConfig } from "@/lib/site";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { themeInitScript } from "@/lib/theme";
+import "./fonts.css";
 import "./globals.css";
 
-// Manrope — geometric editorial face with a closed, double-storey lowercase g
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-// DM Sans — clean geometric body copy
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
-});
-
-// Noto Sans Devanagari provides correctly shaped glyphs and matras for Hindi and Marathi.
-const notoSansDevanagari = Noto_Sans_Devanagari({
-  variable: "--font-noto-sans-devanagari",
-  subsets: ["devanagari", "latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
+// Fonts are self-hosted (app/fonts.css). These are the faces every page needs straight away.
+const preloadedFonts = [
+  "/fonts/dm-sans-latin.woff2",
+  "/fonts/manrope-latin.woff2",
+  "/fonts/noto-sans-devanagari-devanagari.woff2",
+  "/fonts/noto-sans-devanagari-latin.woff2",
+];
 
 export const metadata: Metadata = {
   title: {
@@ -61,12 +46,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  preloadedFonts.forEach((href) => preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" }));
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={`${manrope.variable} ${dmSans.variable} ${notoSansDevanagari.variable} antialiased`}>
+      <body className="antialiased">
         <SmoothScroll>
           <PublicChrome>{children}</PublicChrome>
         </SmoothScroll>
