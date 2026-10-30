@@ -80,22 +80,22 @@ export const en: TranslationDictionary = {
         {
           title: "Brand Strategy & Positioning",
           description: "Define what makes your business different, who it serves and why people should choose it.",
-          alt: "Hand pinning notes to a brand strategy planning board",
+          alt: "Person at a desk with a notebook page mapping a strategy from problems to solutions",
         },
         {
           title: "Creative & Content Studio",
           description: "Turn your strategy into compelling stories and creative assets that make your brand recognisable and relevant.",
-          alt: "Colour swatches and design palettes on a creative studio desk",
+          alt: "Person holding up a tablet with a light bulb sketch, surrounded by hand-drawn ideas, brainstorm and vision bubbles",
         },
         {
           title: "Digital Marketing & Growth",
           description: "Reach the right audiences through purposeful digital campaigns, content and channel activation.",
-          alt: "Laptop showing a digital marketing analytics dashboard",
+          alt: "Green arrow rising in steps across a faint world map",
         },
         {
           title: "Employer Brand & Talent Communication",
           description: "Help organisations express their culture, communicate their employee value proposition and connect with the people they need.",
-          alt: "Colleagues celebrating together in a bright office",
+          alt: "Five colleagues reviewing creative layouts around a studio table",
         },
       ],
       exploreLabel: "Explore service",

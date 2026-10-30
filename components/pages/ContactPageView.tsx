@@ -41,18 +41,19 @@ function NextSteps({ label, steps }: { label: string; steps: readonly string[] }
 
 const topicIcons = [CompassIcon, PenToolIcon, TrendIcon];
 
-/* Hero artwork: a business person working glowing gears under a rising arrow (decorative; the headline carries the meaning) */
+/* Hero artwork: a dart on target (decorative; the headline carries the meaning). Transparent PNG, so it sits on
+   the page in both themes. */
 function ContactHeroVisual() {
   return (
     <figure className="contact-visual" aria-hidden="true">
       <Image
-        src="/media/contact/contact-growth.jpg"
+        src="/media/contact/contact-dart.png"
         alt=""
-        width={1200}
-        height={628}
+        width={1433}
+        height={1259}
         priority
-        sizes="(max-width: 600px) 92vw, 520px"
-        className="h-full w-full object-cover"
+        sizes="(max-width: 1023px) 280px, 400px"
+        className="h-full w-full object-contain"
       />
     </figure>
   );

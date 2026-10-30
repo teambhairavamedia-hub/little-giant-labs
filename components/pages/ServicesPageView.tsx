@@ -100,11 +100,10 @@ export function ServicesPageView() {
                     <Image
                       src={pillar.image}
                       alt={dict.home.whatWeDo.items[index]?.alt ?? item.label}
-                      width={640}
-                      height={800}
+                      width={pillar.width}
+                      height={pillar.height}
                       sizes="(max-width: 1024px) 92vw, 540px"
-                      // The optimizer rejects SVG; serve the local illustration as-is
-                      unoptimized={pillar.image.endsWith(".svg")}
+                      style={{ objectPosition: pillar.focus }}
                       className="h-full w-full object-cover"
                     />
                   </figure>
