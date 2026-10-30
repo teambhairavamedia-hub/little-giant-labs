@@ -130,7 +130,7 @@ export function AboutPageView() {
         className="relative overflow-hidden border-b border-lgl-fg/10 pt-28 md:pt-32 xl:pt-40"
         style={{ background: "var(--lgl-bg)" }}
       >
-        <Container className="relative py-16 md:py-24">
+        <Container className="relative pb-12 md:pb-18">
           <motion.div
             aria-hidden="true"
             className="pointer-events-none absolute left-1/2 top-1/2 h-[clamp(280px,42vw,520px)] w-[clamp(280px,42vw,520px)] -translate-x-1/2 -translate-y-1/2 opacity-20"
@@ -165,7 +165,7 @@ export function AboutPageView() {
       {/* ── Our story ────────────────────────────────────────────── */}
       <Section
         theme="light"
-        className="border-b border-lgl-fg/10 py-16 md:py-24"
+        className="border-b border-lgl-fg/10 py-12 md:py-18"
         style={{ background: "var(--lgl-section)", color: "var(--lgl-fg)" }}
       >
         <Container>
@@ -191,7 +191,7 @@ export function AboutPageView() {
       </Section>
 
       {/* ── Mission & belief ─────────────────────────────────────── */}
-      <Section theme="light" className="py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
+      <Section theme="light" className="py-12 md:py-18" style={{ background: "var(--lgl-bg)" }}>
         <Container>
           <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
             <motion.div {...reveal()}>
@@ -226,7 +226,7 @@ export function AboutPageView() {
       </Section>
 
       {/* ── How we work ──────────────────────────────────────────── */}
-      <Section theme="light" className="border-t border-lgl-fg/10 py-16 md:py-24" style={{ background: "var(--lgl-bg)" }}>
+      <Section theme="light" className="border-t border-lgl-fg/10 py-12 md:py-18" style={{ background: "var(--lgl-bg)" }}>
         <Container>
           {/* Centred: heading, lead paragraph, supporting paragraphs */}
           <motion.div {...reveal()} className="mx-auto flex max-w-3xl flex-col items-center text-center">
@@ -246,7 +246,7 @@ export function AboutPageView() {
       {/* ── Engagement options ───────────────────────────────────── */}
       <Section
         theme="light"
-        className="border-y border-lgl-fg/10 py-16 md:py-24"
+        className="border-y border-lgl-fg/10 py-12 md:py-18"
         style={{ background: "var(--lgl-section)" }}
       >
         <Container>
@@ -277,7 +277,7 @@ export function AboutPageView() {
       </Section>
 
       {/* ── Closing CTA ──────────────────────────────────────────── */}
-      <Section theme="light" className="pb-20 pt-16 md:pb-28 md:pt-24" style={{ background: "var(--lgl-bg)" }}>
+      <Section theme="light" className="py-12 md:py-18" style={{ background: "var(--lgl-bg)" }}>
         <Container>
           <motion.div
             {...reveal()}

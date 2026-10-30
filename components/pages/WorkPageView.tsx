@@ -5,7 +5,7 @@ import type { TranslationDictionary } from "@/lib/i18n/types";
 export function WorkPageView({ dict }: { dict: TranslationDictionary }) {
   const copy = dict.workPage;
   return (
-    <main className="section-light min-h-screen px-5 pb-20 pt-32 sm:px-8 md:pb-28 md:pt-40">
+    <main className="section-light min-h-screen px-5 pb-12 pt-32 sm:px-8 md:pb-18 md:pt-40">
       <div className="mx-auto max-w-7xl">
         <header className="mb-10 max-w-3xl md:mb-14">
           <p className="home-eyebrow" style={{ marginBottom: "1.25rem" }}>{copy.eyebrow}</p>

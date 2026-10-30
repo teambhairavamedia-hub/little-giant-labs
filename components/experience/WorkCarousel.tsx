@@ -79,15 +79,8 @@ export function WorkCarousel({ children }: { children: ReactNode }) {
           );
         })}
       </div>
-      <div className="work-controls">
-        <div className="work-progress" role="group" aria-label={copy.chooseProject}>
-          {projectIds.map((id, index) => <button key={id} type="button" className={`work-progress-step${index === activeIndex ? " is-active" : ""}`} aria-label={copy.showProject.replace("{current}", String(index + 1)).replace("{count}", String(count))} aria-current={index === activeIndex ? "step" : undefined} onClick={() => select(id)} />)}
-        </div>
-        <div className="work-arrows">
-          <button type="button" className="work-arrow cursor-pointer" onClick={() => step(-1)} aria-label={copy.previousProject}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg></button>
-          <button type="button" className="work-arrow cursor-pointer" onClick={() => step(1)} aria-label={copy.nextProject}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
-        </div>
-      </div>
+      <button type="button" className="work-arrow work-arrow--prev cursor-pointer" onClick={() => step(-1)} aria-label={copy.previousProject}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg></button>
+      <button type="button" className="work-arrow work-arrow--next cursor-pointer" onClick={() => step(1)} aria-label={copy.nextProject}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg></button>
       <span className="sr-only" aria-live="polite">{copy.projectAnnouncement.replace("{current}", String(activeIndex + 1)).replace("{count}", String(count))}</span>
     </div>
   );

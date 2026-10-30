@@ -3,7 +3,7 @@ export const siteConfig = {
   tagline: "Turn Attention Into Revenue.",
   description:
     "A modern media and marketing company dedicated to building powerful brand presence through innovative content, digital marketing, and AI-powered solutions.",
-  email: "hello@bhairavamedia.com",
+  email: "Hello@Littlegiantlabs.in",
   address: {
     building: "Delta Square",
     lines: [

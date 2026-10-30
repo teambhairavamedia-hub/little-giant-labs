@@ -36,7 +36,7 @@ export function ServicesPageView() {
         className="border-b border-lgl-fg/10 pt-28 md:pt-32 xl:pt-40"
         style={{ background: "var(--lgl-bg)" }}
       >
-        <Container className="py-12 md:py-20">
+        <Container className="pb-12 md:pb-18">
           {/* Title and pull quote on the left, intro beside them on a gold rule (as on the homepage) */}
           <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
             <div>
@@ -90,7 +90,7 @@ export function ServicesPageView() {
           <Section
             key={pillar.slug}
             theme="light"
-            className="border-b border-lgl-fg/10 py-16 md:py-24"
+            className="border-b border-lgl-fg/10 py-12 md:py-18"
             style={{ background: index % 2 === 0 ? "var(--lgl-section)" : "var(--lgl-bg)" }}
           >
             <Container>
@@ -168,7 +168,7 @@ export function ServicesPageView() {
       <Section
         id="capabilities"
         theme="light"
-        className="scroll-mt-28 py-16 md:py-24"
+        className="scroll-mt-28 py-12 md:py-18"
         style={{ background: page.items.length % 2 === 0 ? "var(--lgl-section)" : "var(--lgl-bg)" }}
       >
         <Container>
@@ -180,7 +180,7 @@ export function ServicesPageView() {
               {accentTitle(capabilities.lead)}
             </h2>
           </div>
-          <div className="mt-8 max-w-4xl space-y-5 text-base leading-[1.8] text-lgl-fg/75">
+          <div className="mt-8 space-y-5 text-base leading-[1.8] text-lgl-fg/75">
             {capabilities.paragraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}

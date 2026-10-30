@@ -95,7 +95,12 @@ export const es: TranslationDictionary = {
         {
           title: "Marca Empleadora y Comunicación de Talento",
           description: "Ayude a las organizaciones a expresar su cultura, comunicar su propuesta de valor al empleado y conectar con las personas que necesitan.",
-          alt: "Cinco colegas revisan diseños creativos alrededor de una mesa de estudio",
+          alt: "Ocho colegas sonrientes levantan el pulgar juntos en una oficina con paredes de cristal",
+        },
+        {
+          title: "Marketing Tecnológico y de Producto",
+          description: "Conecte las capacidades del producto con las necesidades del cliente y convierta la tecnología compleja en un valor de mercado claro.",
+          alt: "Mano que señala iconos hexagonales luminosos junto a la palabra Product",
         },
       ],
       exploreLabel: "Explorar servicio",
