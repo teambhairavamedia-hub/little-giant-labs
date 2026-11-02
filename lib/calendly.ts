@@ -1,7 +1,7 @@
 import { type ColorTheme } from "./theme.ts";
 
 export const CALENDLY_BASE_URL =
-  "https://calendly.com/hello-littlegiantlabs/brand-strategy-discussion-meeting-clone";
+  "https://calendly.com/hello-littlegiantlabs/brand-strategy-discussion-meeting";
 
 export const CALENDLY_THEME_CONFIG: Record<
   ColorTheme,

@@ -12,9 +12,9 @@ export function ApplicationReceivedPageView() {
   const homePath = getLocalizedPath("/", locale);
 
   return (
-    <main className="flex min-h-[80vh] items-center bg-lgl-bg pt-32 pb-20 md:pt-40 md:pb-28 text-lgl-fg">
+    <main className="flex min-h-[80vh] items-center bg-lgl-bg pt-32 pb-20 md:pt-40 md:pb-28 text-lgl-fg overflow-x-clip">
       <Container className="w-full">
-        <div className="mx-auto max-w-4xl w-full">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-12 xl:gap-16 w-full">
           <div className="border-l border-[#C5A059] py-4 pl-7 sm:pl-12">
             <svg viewBox="0 0 96 96" className="mb-8 h-20 w-20" aria-hidden="true" focusable="false">
               <circle cx="48" cy="48" r="46" fill="none" stroke="#C5A059" strokeOpacity=".3" strokeDasharray="2 6" />
@@ -40,14 +40,7 @@ export function ApplicationReceivedPageView() {
             <p className="mt-5 max-w-2xl text-sm leading-relaxed text-lgl-soft">
               {dict.applicationReceived.body2}
             </p>
-          </div>
-
-          <div className="mt-12 w-full sm:mt-16">
-            <CalendlyWidget />
-          </div>
-
-          <div className="mt-12 pl-7 sm:pl-12">
-            <p className="text-[11px] font-semibold uppercase tracking-[.24em] text-lgl-gold">
+            <p className="mt-12 text-[11px] font-semibold uppercase tracking-[.24em] text-lgl-gold">
               {dict.applicationReceived.tagline}
             </p>
             <Link
@@ -56,6 +49,10 @@ export function ApplicationReceivedPageView() {
             >
               {dict.applicationReceived.returnHome}
             </Link>
+          </div>
+
+          <div className="w-full">
+            <CalendlyWidget />
           </div>
         </div>
       </Container>
