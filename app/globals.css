@@ -368,11 +368,6 @@ html.lenis, html.lenis body {
   background: var(--lgl-gold);
 }
 
-.calendly-inline-widget,
-.calendly-inline-widget iframe {
-  color-scheme: light !important;
-}
-
 .calendly-inline-widget iframe {
   width: 100% !important;
   height: 100% !important;

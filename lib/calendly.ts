@@ -22,6 +22,7 @@ export const CALENDLY_THEME_CONFIG: Record<
 export function buildCalendlyUrl(theme: ColorTheme): string {
   const params = CALENDLY_THEME_CONFIG[theme] ?? CALENDLY_THEME_CONFIG.light;
   const searchParams = new URLSearchParams({
+    hide_gdpr_banner: "1",
     background_color: params.background_color,
     text_color: params.text_color,
     primary_color: params.primary_color,

@@ -127,7 +127,7 @@ export function CalendlyWidget() {
   }, [url, scriptLoaded]);
 
   return (
-    <div className="w-full max-w-2xl mx-auto overflow-x-clip">
+    <div className="w-full max-w-xl mx-auto overflow-x-clip">
       <Script
         id="calendly-widget-script"
         src="https://assets.calendly.com/assets/external/widget.js"
@@ -149,7 +149,6 @@ export function CalendlyWidget() {
             minWidth: "320px",
             height: widgetHeight,
             width: "100%",
-            colorScheme: "light",
           }}
         />
       </div>
