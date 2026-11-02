@@ -15,12 +15,15 @@ import {
 
 export { CALENDLY_BASE_URL, CALENDLY_THEME_CONFIG, buildCalendlyUrl };
 
+export const CALENDLY_INITIAL_HEIGHT = "850px";
+
 declare global {
   interface Window {
     Calendly?: {
       initInlineWidget: (options: {
         url: string;
         parentElement: HTMLElement;
+        resize?: boolean;
       }) => void;
     };
   }
@@ -34,6 +37,7 @@ export function CalendlyWidget() {
   );
   const containerRef = useRef<HTMLDivElement>(null);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [widgetHeight, setWidgetHeight] = useState<string>(CALENDLY_INITIAL_HEIGHT);
   const lastUrlRef = useRef<string | null>(null);
 
   const url = buildCalendlyUrl(theme);
@@ -43,6 +47,31 @@ export function CalendlyWidget() {
     if (typeof window !== "undefined" && window.Calendly) {
       setScriptLoaded(true);
     }
+  }, []);
+
+  // Listen to Calendly's postMessage events for dynamic height adjustments
+  useEffect(() => {
+    const handleMessage = (e: MessageEvent) => {
+      if (typeof e.origin === "string" && !e.origin.includes("calendly.com")) {
+        return;
+      }
+      if (
+        e.data &&
+        typeof e.data === "object" &&
+        e.data.event === "calendly.page_height" &&
+        e.data.payload?.height
+      ) {
+        const height = Number(e.data.payload.height);
+        if (!isNaN(height) && height > 0) {
+          setWidgetHeight(`${height}px`);
+        }
+      }
+    };
+
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
   }, []);
 
   useEffect(() => {
@@ -58,6 +87,7 @@ export function CalendlyWidget() {
         window.Calendly.initInlineWidget({
           url,
           parentElement: container,
+          resize: true,
         });
         lastUrlRef.current = url;
         return true;
@@ -90,7 +120,7 @@ export function CalendlyWidget() {
   }, [url, scriptLoaded]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto overflow-x-clip">
       <Script
         id="calendly-widget-script"
         src="https://assets.calendly.com/assets/external/widget.js"
@@ -101,9 +131,10 @@ export function CalendlyWidget() {
       />
       <div
         ref={containerRef}
-        className="calendly-inline-widget w-full"
+        className="calendly-inline-widget w-full transition-[height] duration-200"
         data-url={url}
-        style={{ minWidth: "320px", height: "700px", width: "100%" }}
+        data-resize="true"
+        style={{ minWidth: "320px", height: widgetHeight, width: "100%" }}
       />
     </div>
   );

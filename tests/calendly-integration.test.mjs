@@ -47,7 +47,7 @@ test("Calendly light theme URL contains exact required hex parameters", () => {
   assert.equal(parsed.searchParams.get("primary_color"), "85611f");
 });
 
-test("CalendlyWidget component source implements deduplication, Next Script, and cleanup", () => {
+test("CalendlyWidget component source implements auto-resize, dynamic height, deduplication, and cleanup", () => {
   const widgetSource = fs.readFileSync(
     path.join(projectRoot, "components/contact/CalendlyWidget.tsx"),
     "utf8"
@@ -74,6 +74,18 @@ test("CalendlyWidget component source implements deduplication, Next Script, and
     "Component must initialize widget via window.Calendly.initInlineWidget"
   );
   assert.ok(
+    widgetSource.includes("resize: true"),
+    "Component must pass resize: true to Calendly.initInlineWidget"
+  );
+  assert.ok(
+    widgetSource.includes('data-resize="true"'),
+    "Widget container must have data-resize='true'"
+  );
+  assert.ok(
+    widgetSource.includes("calendly.page_height"),
+    "Component must listen for calendly.page_height postMessage events"
+  );
+  assert.ok(
     widgetSource.includes('innerHTML = ""'),
     "Component must clear innerHTML to prevent duplicate widget instances"
   );
@@ -86,8 +98,8 @@ test("CalendlyWidget component source implements deduplication, Next Script, and
     "Widget must specify 320px minimum width"
   );
   assert.ok(
-    widgetSource.includes('height: "700px"'),
-    "Widget must specify 700px height"
+    widgetSource.includes('height: widgetHeight'),
+    "Widget must dynamically apply widgetHeight"
   );
 });
 
