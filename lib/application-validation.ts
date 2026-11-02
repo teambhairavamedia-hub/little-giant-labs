@@ -6,6 +6,7 @@ import {
   optionalOptionFields,
   requiredOptionFields,
 } from "./application-options.ts";
+import { parseE164 } from "./phone.ts";
 
 export { applicationOptions } from "./application-options.ts";
 
@@ -17,6 +18,7 @@ export type ApplicationInput = {
   project_details: string;
   contact_role?: string;
   timeline?: string;
+  contact_phone?: string;
 };
 
 export type ValidatedApplication = {
@@ -27,6 +29,7 @@ export type ValidatedApplication = {
   project_details: string;
   contact_role: string | null;
   timeline: string | null;
+  contact_phone: string | null;
   qualification_status: "pending_review";
 };
 
@@ -36,10 +39,10 @@ export class ValidationError extends Error {
 
 const requiredTextFields = ["contact_name", "decision_maker_email", "legal_name", "project_details", ...requiredOptionFields] as const;
 
-export async function normalizeCorporateEmail(value: string): Promise<string> {
+export async function normalizeEmail(value: string): Promise<string> {
   const email = value.trim().toLowerCase();
   if (email.length > 254 || !isEmailFormatValid(email)) {
-    throw new ValidationError("Enter a valid work email address.");
+    throw new ValidationError("Enter a valid email address.");
   }
   const outcome = await checkEmailEligibility(email);
   if (outcome !== "eligible") throw new EmailEligibilityError(outcome);
@@ -82,7 +85,16 @@ export async function validateApplication(body: unknown): Promise<ValidatedAppli
     optional[field] = raw.trim();
   }
 
-  const decision_maker_email = await normalizeCorporateEmail(input.decision_maker_email as string);
+  // Optional phone / WhatsApp number: the form sends it in E.164 ("+919876543210"); blank → null.
+  let contact_phone: string | null = null;
+  const rawPhone = input.contact_phone;
+  if (rawPhone !== undefined && rawPhone !== null && !(typeof rawPhone === "string" && !rawPhone.trim())) {
+    const compact = typeof rawPhone === "string" ? rawPhone.replace(/[\s\-().]/g, "") : "";
+    if (!parseE164(compact)) throw new ValidationError("Enter a valid phone number, including the country code.");
+    contact_phone = compact;
+  }
+
+  const decision_maker_email = await normalizeEmail(input.decision_maker_email as string);
 
   return {
     contact_name,
@@ -91,6 +103,7 @@ export async function validateApplication(body: unknown): Promise<ValidatedAppli
     help_with,
     project_details,
     ...optional,
+    contact_phone,
     qualification_status: "pending_review",
   };
 }

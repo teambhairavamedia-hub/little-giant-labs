@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { normalizeContactEmail, normalizeLinkedInProfileUrl } from "../lib/admin-contact-links.ts";
+import { normalizeContactEmail, normalizeContactPhone, normalizeLinkedInProfileUrl } from "../lib/admin-contact-links.ts";
 
 const read = (path) => readFile(new URL(path, import.meta.url), "utf8");
 
@@ -20,7 +20,7 @@ test("applications endpoint protects access and selects only dashboard columns",
   const route = await read("../app/api/admin/applications/route.ts");
   assert.ok(route.indexOf("getAdminSession") < route.indexOf("createSupabaseServerClient"));
   assert.match(route, /if \(!\(await getAdminSession\(\)\)\) return fail\("Authentication is required\.", 401\)/);
-  assert.match(route, /id, legal_name, contact_name, help_with, qualification_status, submitted_at, decision_maker_email/);
+  assert.match(route, /id, legal_name, contact_name, help_with, qualification_status, submitted_at, decision_maker_email, contact_phone/);
   assert.match(route, /\.order\("submitted_at", \{ ascending: false \}\)\.order\("id", \{ ascending: false \}\)/);
   assert.match(route, /PAGE_SIZE_DEFAULT = 25/);
   assert.match(route, /PAGE_SIZE_MAX = 100/);
@@ -37,7 +37,7 @@ test("application detail endpoint protects and scopes a read to a validated appl
   assert.match(route, /\.eq\("id", id\)/);
   assert.match(route, /\.maybeSingle\(\)/);
   assert.match(route, /Application not found\.", 404/);
-  assert.match(route, /id, contact_name, contact_role, decision_maker_email, legal_name, help_with, project_details, timeline, company_size, industry_vertical, budget_range/);
+  assert.match(route, /id, contact_name, contact_role, decision_maker_email, contact_phone, legal_name, help_with, project_details, timeline, company_size, industry_vertical, budget_range/);
   // Legacy partnership-application answers stay readable for older rows
   assert.match(route, /ttm_revenue, monthly_ad_spend, growth_bottleneck, partnership_readiness, decision_maker_linkedin, qualification_status, rejection_reasons/);
   assert.match(route, /Cache-Control.*no-store/);
@@ -95,5 +95,13 @@ test("contact values accept valid inputs and reject malformed or unsafe values",
   assert.equal(normalizeContactEmail(" person+tag@example.co.uk "), "person+tag@example.co.uk");
   for (const invalid of ["", "not-an-email", "person@example", "person@@example.com", ".person@example.com", "per..son@example.com", "person@example.com\r\nBcc:x@example.com", `${"a".repeat(250)}@example.com`, null]) {
     assert.equal(normalizeContactEmail(invalid), null, String(invalid));
+  }
+});
+
+test("phone numbers are linked only when they are valid E.164 numbers", () => {
+  assert.equal(normalizeContactPhone(" +919876543210 "), "+919876543210");
+  assert.equal(normalizeContactPhone("+14155552671"), "+14155552671");
+  for (const invalid of [null, undefined, "", "9876543210", "+91 98765", "+0123456789", "javascript:alert(1)", "+91987654321x"]) {
+    assert.equal(normalizeContactPhone(invalid), null, String(invalid));
   }
 });

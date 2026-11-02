@@ -109,7 +109,9 @@ test("consultation role, help and timeline options are translated in every local
     for (const option of timelines) assert.ok(formFields.timeline.options[option], `Language ${loc} missing timeline: ${option}`);
     assert.equal(formFields.timeline.label, loc === "en" ? "Approximate timeline" : formFields.timeline.label);
     assert.equal(formFields.projectDetails.label.length > 0, true);
-    assert.deepEqual(formFields ? Object.keys(formFields) : [], ["contactName", "workEmail", "companyName", "role", "helpWith", "projectDetails", "timeline"]);
+    assert.deepEqual(formFields ? Object.keys(formFields).filter((key) => key !== "phone") : [], ["contactName", "workEmail", "companyName", "role", "helpWith", "projectDetails", "timeline"]);
+    // The phone field is English only for now; other languages fall back to the English text
+    if (loc === "en") assert.ok(formFields.phone?.label);
   }
 });
 

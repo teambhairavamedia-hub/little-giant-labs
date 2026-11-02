@@ -531,10 +531,17 @@ export const en: TranslationDictionary = {
           placeholder: "First and last name",
         },
         workEmail: {
-          label: "Work email",
+          label: "Email",
           placeholder: "name@company.com",
-          hint: "Use your work email. Personal addresses such as Gmail and Yahoo are not accepted.",
-          error: "Enter a valid work email address.",
+          hint: "We'll reply to this address. Personal addresses such as Gmail are welcome.",
+          error: "Enter a valid email address.",
+        },
+        phone: {
+          label: "Phone / WhatsApp number",
+          countryLabel: "Country code",
+          placeholder: "98765 43210",
+          hint: "So we can also reply on WhatsApp if that suits you.",
+          error: "Enter a valid phone number for the selected country code.",
         },
         companyName: {
           label: "Company or brand name",

@@ -64,11 +64,11 @@ export function ContactPageView() {
 
   return (
     <main className="min-h-screen bg-lgl-bg text-lgl-fg">
-      <section className="contact-hero relative overflow-hidden border-b border-lgl-line/20 px-6 pb-12 pt-28 md:px-8 md:pb-18 md:pt-36 xl:pt-40">
-        <Container className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14">
+      <section className="contact-hero relative overflow-hidden border-b border-lgl-line/20 pb-12 pt-28 md:pb-18 md:pt-36 xl:pt-40">
+        <Container className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-14">
           <div>
             <p className="home-eyebrow" style={{ marginBottom: "1.5rem" }}>{dict.contact.header.eyebrow}</p>
-            <h1 className="max-w-3xl text-balance font-display text-5xl leading-[.98] tracking-[-.055em] text-lgl-fg sm:text-6xl md:text-7xl">
+            <h1 className="font-display text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] tracking-[-.045em] text-lgl-fg">
               {accentTitle(dict.contact.header.title)}
             </h1>
             <p className="mt-8 max-w-xl border-l-2 border-lgl-gold/55 pl-5 text-base leading-relaxed text-lgl-soft md:text-lg">
@@ -93,9 +93,9 @@ export function ContactPageView() {
         </Container>
       </section>
 
-      <section className="bg-lgl-bg px-6 py-12 md:px-8 md:py-18">
+      <section className="bg-lgl-bg py-12 md:py-18">
         <Container>
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
+          <div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
             <aside className="lg:sticky lg:top-12 lg:self-start">
               <p className="max-w-sm text-base leading-relaxed text-lgl-soft">{dict.contact.sidebar.intro}</p>
               <NextSteps label={dict.contact.sidebar.stepsLabel} steps={dict.contact.sidebar.steps} />

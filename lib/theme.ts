@@ -8,7 +8,8 @@ export const sectionThemeClass: Record<SectionTheme, string> = {
 /* ── Site colour theme (light / dark toggle) ── */
 export type ColorTheme = "dark" | "light";
 
-export const DEFAULT_COLOR_THEME: ColorTheme = "light";
+// Dark unless the visitor has chosen light with the toggle (saved in localStorage)
+export const DEFAULT_COLOR_THEME: ColorTheme = "dark";
 export const THEME_STORAGE_KEY = "lgl-theme";
 
 /* Runs in <head> before first paint so the saved theme never flashes. */

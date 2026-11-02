@@ -2,11 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { normalizeContactEmail, normalizeLinkedInProfileUrl } from "@/lib/admin-contact-links";
+import { normalizeContactEmail, normalizeContactPhone, normalizeLinkedInProfileUrl } from "@/lib/admin-contact-links";
 
 type Application = {
   id: string; legal_name: string; contact_name: string | null; help_with: string | null;
   qualification_status: "qualified" | "rejected" | "pending_review"; submitted_at: string; decision_maker_email: string;
+  contact_phone: string | null;
 };
 type DashboardData = {
   applications: Application[];
@@ -105,13 +106,15 @@ export function AdminDashboard() {
           {loading && <p className="px-6 py-2 text-xs text-[#6b6b6b]" role="status">Loading applications…</p>}
           <div className="overflow-x-auto">
             <table className="w-full min-w-[1180px] border-collapse text-left text-sm">
-              <thead><tr className="bg-[#f7f7f6] text-xs text-[#6b6b6b]"><th scope="col" className="px-5 py-3 font-medium sm:px-7">Company or brand</th><th scope="col" className="px-4 py-3 font-medium">Contact</th><th scope="col" className="px-4 py-3 font-medium">Needs help with</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (IST)</th></tr></thead>
+              <thead><tr className="bg-[#f7f7f6] text-xs text-[#6b6b6b]"><th scope="col" className="px-5 py-3 font-medium sm:px-7">Company or brand</th><th scope="col" className="px-4 py-3 font-medium">Contact</th><th scope="col" className="px-4 py-3 font-medium">Needs help with</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-4 py-3 font-medium">Phone / WhatsApp</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (IST)</th></tr></thead>
               <tbody>{data.applications.map((application) => {
                 const email = normalizeContactEmail(application.decision_maker_email);
+                const phone = normalizeContactPhone(application.contact_phone);
                 return <tr key={application.id} className="border-t border-[#eeeeec] align-top">
                 <td className="px-5 py-4 font-medium sm:px-7"><button type="button" onClick={(event) => openDetail(application, event.currentTarget)} className="text-left underline decoration-[#800000]/30 underline-offset-4 hover:text-[#800000] hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{application.legal_name}<span className="sr-only"> — View application</span></button></td><td className="px-4 py-4">{application.contact_name ?? "—"}</td><td className="px-4 py-4">{application.help_with ?? "—"}</td>
                 <td className="px-4 py-4 text-center"><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${application.qualification_status === "qualified" ? "bg-emerald-50 text-emerald-800" : application.qualification_status === "rejected" ? "bg-amber-50 text-amber-900" : "bg-sky-50 text-sky-900"}`}>{application.qualification_status === "pending_review" ? "Pending review" : application.qualification_status === "qualified" ? "Qualified" : "Rejected"}</span></td>
                 <td className="max-w-44 px-4 py-4">{email ? <a href={`mailto:${email.split("@").map(encodeURIComponent).join("@")}`} title={email} aria-label={`Email applicant at ${email}`} className="block max-w-44 truncate text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{email}</a> : <span className="text-[#6b6b6b]" aria-label="Email unavailable">—</span>}</td>
+                <td className="whitespace-nowrap px-4 py-4">{phone ? <a href={`https://wa.me/${phone.slice(1)}`} target="_blank" rel="noopener noreferrer" aria-label={`Message applicant on WhatsApp at ${phone}`} className="text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{phone}</a> : <span className="text-[#6b6b6b]" aria-label="Phone not given">—</span>}</td>
                 <td className="whitespace-nowrap px-5 py-4 text-[#6b6b6b] sm:px-7"><time dateTime={application.submitted_at}>{dateFormat.format(new Date(application.submitted_at))}</time></td>
               </tr>;
               })}</tbody>
@@ -170,6 +173,7 @@ function ApplicationDetailPanel({ id, onClose }: { id: string; onClose: () => vo
   }, [load, onClose]);
 
   const email = normalizeContactEmail(application?.decision_maker_email);
+  const phone = normalizeContactPhone(application?.contact_phone);
   const linkedin = normalizeLinkedInProfileUrl(application?.decision_maker_linkedin);
   const reasons = Array.isArray(application?.rejection_reasons) ? application.rejection_reasons : [];
   const answer = (value: unknown) => typeof value === "string" && value.trim() ? value : "—";
@@ -191,6 +195,7 @@ function ApplicationDetailPanel({ id, onClose }: { id: string; onClose: () => vo
           <dl className="divide-y divide-[#eeeeec] rounded-xl border border-[#e8e8e6] px-4 sm:px-5">
             <DetailField label="Name" value={answer(application.contact_name)} />
             <div className="py-4"><dt className="text-xs font-semibold uppercase tracking-wide text-[#6b6b6b]">Work email</dt><dd className="mt-2 break-words text-sm leading-relaxed">{email ? <a className="text-[#800000] underline underline-offset-4" href={`mailto:${email.split("@").map(encodeURIComponent).join("@")}`}>{email}</a> : "—"}</dd></div>
+            <div className="py-4"><dt className="text-xs font-semibold uppercase tracking-wide text-[#6b6b6b]">Phone / WhatsApp</dt><dd className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm leading-relaxed">{phone ? <><span>{phone}</span><a className="text-[#800000] underline underline-offset-4" href={`tel:${phone}`}>Call</a><a className="text-[#800000] underline underline-offset-4" href={`https://wa.me/${phone.slice(1)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a></> : "—"}</dd></div>
             <DetailField label="Company or brand name" value={answer(application.legal_name)} />
             <DetailField label="What they need help with" value={answer(application.help_with)} />
             <DetailField label="About the project" value={answer(application.project_details)} />
