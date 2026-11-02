@@ -36,15 +36,15 @@ const empty: Enquiry = {
 const LAST_STEP = 2;
 
 const inputClass =
-  "mt-3 w-full border-0 border-b border-lgl-sage bg-transparent px-0 py-3 text-base text-lgl-fg placeholder:text-lgl-muted outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
+  "mt-2 w-full border-0 border-b border-lgl-sage bg-transparent px-0 py-2.5 text-base text-lgl-fg placeholder:text-lgl-muted outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
 const textareaClass =
-  "mt-3 block min-h-36 w-full resize-y border border-lgl-line/40 bg-transparent px-4 py-3 text-base leading-relaxed text-lgl-fg placeholder:text-lgl-muted outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
+  "mt-2 block min-h-24 w-full resize-y border border-lgl-line/40 bg-transparent px-4 py-3 text-base leading-relaxed text-lgl-fg placeholder:text-lgl-muted outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
 const selectClass =
-  "mt-3 w-full cursor-pointer border-0 border-b border-lgl-sage bg-lgl-bg px-0 py-3 text-base text-lgl-fg outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
+  "mt-2 w-full cursor-pointer border-0 border-b border-lgl-sage bg-lgl-bg px-0 py-2.5 text-base text-lgl-fg outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
 const countrySelectClass =
-  "mt-3 w-32 shrink-0 cursor-pointer border-0 border-b border-lgl-sage bg-lgl-bg px-0 py-3 text-base text-lgl-fg outline-none transition-colors focus:border-[#C5A059] focus:ring-0 sm:w-44";
+  "mt-2 w-32 shrink-0 cursor-pointer border-0 border-b border-lgl-sage bg-lgl-bg px-0 py-2.5 text-base text-lgl-fg outline-none transition-colors focus:border-[#C5A059] focus:ring-0 sm:w-44";
 const choiceClass =
-  "flex min-h-14 cursor-pointer items-center gap-4 border border-lgl-line/40 px-4 py-3 text-sm leading-relaxed text-lgl-soft transition-colors hover:border-lgl-sage has-[:checked]:border-[#C5A059] has-[:checked]:bg-[#004B3A] has-[:checked]:text-[#F8F6F0] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#C5A059]";
+  "flex min-h-10 cursor-pointer items-center gap-3 border border-lgl-line/40 px-3.5 py-2 text-sm leading-relaxed text-lgl-soft transition-colors hover:border-lgl-sage has-[:checked]:border-[#C5A059] has-[:checked]:bg-[#004B3A] has-[:checked]:text-[#F8F6F0] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#C5A059]";
 
 export function ContactForm() {
   const router = useRouter();
@@ -215,11 +215,11 @@ export function ContactForm() {
     <form
       onSubmit={submit}
       noValidate
-      className="border border-lgl-line/30 bg-lgl-bg p-6 sm:p-10 lg:p-12"
+      className="border border-lgl-line/30 bg-lgl-bg p-6 sm:p-8 lg:px-10 lg:py-7"
       aria-busy={busy}
     >
       <ol
-        className="mb-10 grid grid-cols-3 gap-2"
+        className="mb-5 grid grid-cols-3 gap-2"
         aria-label={formDict.stepAria.replace("{step}", String(step + 1))}
       >
         {[0, 1, 2].map((item) => (
@@ -243,17 +243,17 @@ export function ContactForm() {
         ))}
       </ol>
 
-      <div className="min-h-[430px]">
+      <div className="min-h-[360px]">
         <h2
           ref={headingRef}
           tabIndex={-1}
-          className="mb-9 max-w-2xl font-display text-3xl leading-tight tracking-[-.04em] text-lgl-fg outline-none sm:text-4xl"
+          className="mb-5 max-w-2xl font-display text-2xl leading-tight tracking-[-.04em] text-lgl-fg outline-none sm:text-3xl"
         >
           {formDict.stepTitles[step]}
         </h2>
 
         {step === 0 && (
-          <div className="space-y-10">
+          <div className="grid gap-6 sm:grid-cols-2 sm:gap-x-6">
             <label className="block text-sm text-lgl-fg">
               {formDict.fields.contactName.label} <span className="text-lgl-gold">*</span>
               <input
@@ -295,7 +295,7 @@ export function ContactForm() {
               </span>
             </label>
             {/* Optional phone / WhatsApp number: country code (India by default) beside the number */}
-            <div className="text-sm text-lgl-fg">
+            <div className="text-sm text-lgl-fg sm:col-span-2">
               <label htmlFor="contact-phone">{phoneText.label}</label>
               {optionalTag}
               <div className="flex items-end gap-4">
@@ -335,7 +335,7 @@ export function ContactForm() {
                 </span>
               )}
             </div>
-            <label className="block text-sm text-lgl-fg">
+            <label className="block text-sm text-lgl-fg sm:col-span-2">
               {formDict.fields.companyName.label} <span className="text-lgl-gold">*</span>
               <input
                 className={inputClass}
@@ -351,12 +351,13 @@ export function ContactForm() {
         )}
 
         {step === 1 && (
-          <div className="space-y-10">
-            {optionalSelect("role", formDict.fields.role.label, applicationOptions.contact_role, formDict.fields.role.options)}
-            <fieldset className="space-y-3">
-              <legend className="mb-4 text-sm text-lgl-fg">
+          <div className="space-y-5">
+            <fieldset>
+              <legend className="mb-2 text-sm text-lgl-fg">
                 {formDict.fields.helpWith.label} <span className="text-lgl-gold">*</span>
               </legend>
+              {/* Two columns from tablet up, so the step fits on one screen */}
+              <div className="grid gap-2 sm:grid-cols-2">
               {applicationOptions.help_with.map((option) => (
                 <label className={choiceClass} key={option}>
                   <input
@@ -370,13 +371,14 @@ export function ContactForm() {
                   <span>{formDict.fields.helpWith.options[option] || option}</span>
                 </label>
               ))}
+              </div>
             </fieldset>
             <label className="block text-sm text-lgl-fg">
               {formDict.fields.projectDetails.label} <span className="text-lgl-gold">*</span>
               <textarea
                 className={textareaClass}
                 required
-                rows={5}
+                rows={3}
                 maxLength={APPLICATION_LIMITS.projectDetails}
                 placeholder={formDict.fields.projectDetails.placeholder}
                 value={values.projectDetails}
@@ -394,9 +396,13 @@ export function ContactForm() {
         )}
 
         {step === 2 && (
-          <div className="space-y-10">
+          <div className="space-y-6">
             <p className="text-sm leading-relaxed text-lgl-soft">{formDict.optionalNote}</p>
-            {optionalSelect("timeline", formDict.fields.timeline.label, applicationOptions.timeline, formDict.fields.timeline.options)}
+            {/* Both optional: role and timeline side by side from tablet up */}
+            <div className="grid gap-6 sm:grid-cols-2">
+              {optionalSelect("role", formDict.fields.role.label, applicationOptions.contact_role, formDict.fields.role.options)}
+              {optionalSelect("timeline", formDict.fields.timeline.label, applicationOptions.timeline, formDict.fields.timeline.options)}
+            </div>
           </div>
         )}
       </div>
@@ -407,7 +413,7 @@ export function ContactForm() {
         </p>
       )}
 
-      <div className="flex flex-col-reverse gap-4 border-t border-lgl-line/30 pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-5 flex flex-col-reverse gap-4 border-t border-lgl-line/30 pt-4 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="button"
           onClick={() => changeStep(Math.max(0, step - 1))}

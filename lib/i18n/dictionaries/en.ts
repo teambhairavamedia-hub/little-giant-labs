@@ -423,7 +423,7 @@ export const en: TranslationDictionary = {
     items: [
       {
         label: "Brand Strategy",
-        title: "Know what makes you different—and *make it matter.*",
+        title: "Know what makes you different *and make it matter.*",
         intro: "When a business cannot clearly articulate its value, even great products and services can struggle to stand out. We help you define your positioning, sharpen your story and create a foundation for consistent brand communication.",
         help: [
           "Brand discovery and strategic assessment",
@@ -519,7 +519,7 @@ export const en: TranslationDictionary = {
       tagline: "Brand Strategy · Creative · Digital Growth",
     },
     form: {
-      stepTitles: ["About you", "Your challenge", "Timeline"],
+      stepTitles: ["About you", "Your challenge", "A few more details"],
       stepAria: "Step {step} of 3",
       stepPrefix: "Step",
       optionalTag: "Optional",
