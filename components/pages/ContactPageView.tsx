@@ -52,7 +52,7 @@ function ContactHeroVisual() {
         width={1433}
         height={1259}
         priority
-        sizes="(max-width: 1023px) 280px, 400px"
+        sizes="(max-width: 1023px) 160px, 300px"
         className="h-full w-full object-contain"
       />
     </figure>
@@ -64,18 +64,18 @@ export function ContactPageView() {
 
   return (
     <main className="min-h-screen bg-lgl-bg text-lgl-fg">
-      <section className="contact-hero relative overflow-hidden border-b border-lgl-line/20 pb-12 pt-28 md:pb-18 md:pt-36 xl:pt-40">
-        <Container className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-14">
+      <section className="contact-hero relative overflow-hidden border-b border-lgl-line/20 pb-8 pt-28 md:pb-10 md:pt-34">
+        <Container className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-14">
           <div>
-            <p className="home-eyebrow" style={{ marginBottom: "1.5rem" }}>{dict.contact.header.eyebrow}</p>
+            <p className="home-eyebrow" style={{ marginBottom: "1rem" }}>{dict.contact.header.eyebrow}</p>
             <h1 className="font-display text-[clamp(1.75rem,3.4vw,2.75rem)] leading-[1.08] tracking-[-.045em] text-lgl-fg">
               {accentTitle(dict.contact.header.title)}
             </h1>
-            <p className="mt-8 max-w-xl border-l-2 border-lgl-gold/55 pl-5 text-base leading-relaxed text-lgl-soft md:text-lg">
+            <p className="mt-5 max-w-xl border-l-2 border-lgl-gold/55 pl-5 text-base leading-relaxed text-lgl-soft md:text-lg">
               {dict.contact.header.description}
             </p>
             {/* What we can talk about: the brand's three disciplines (the localized footer slogan) */}
-            <ul className="mt-9 flex flex-wrap gap-3">
+            <ul className="mt-6 flex flex-wrap gap-3">
               {dict.footer.slogan.split(/\s*·\s*/).map((topic, index) => {
                 const TopicIcon = topicIcons[index % topicIcons.length];
                 return (
@@ -93,10 +93,10 @@ export function ContactPageView() {
         </Container>
       </section>
 
-      <section className="bg-lgl-bg py-12 md:py-18">
+      <section className="bg-lgl-bg pb-12 pt-6 md:pb-18 md:pt-8">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
-            <aside className="lg:sticky lg:top-12 lg:self-start">
+            <aside className="order-2 lg:order-none lg:sticky lg:top-12 lg:self-start">
               <p className="max-w-sm text-base leading-relaxed text-lgl-soft">{dict.contact.sidebar.intro}</p>
               <NextSteps label={dict.contact.sidebar.stepsLabel} steps={dict.contact.sidebar.steps} />
               <div className="mt-10 border-t border-lgl-line/30 pt-5 text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-soft">

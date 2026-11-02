@@ -93,7 +93,7 @@ function SectionHeading({
       <p className={`home-eyebrow ${centered ? "justify-center" : ""}`}>{eyebrow}</p>
       {title && (
         <h2
-          className="mt-5 text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-bold leading-[1.04] tracking-[-0.04em] text-lgl-fg"
+          className="mt-5 text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-normal leading-[1.04] tracking-[-0.04em] text-lgl-fg"
           style={headingFont}
         >
           {title}
@@ -199,7 +199,7 @@ export function AboutPageView() {
                 <span className={`${greenBadge} h-12 w-12`}>
                   <CompassIcon size={22} />
                 </span>
-                <p className="label-eyebrow mt-7 text-lgl-gold">{purpose.missionLabel}</p>
+                <p className="home-eyebrow" style={{ marginTop: "1.75rem" }}>{purpose.missionLabel}</p>
                 <p className="mt-4 text-lg leading-[1.7] text-lgl-fg md:text-xl">
                   {purpose.mission}
                 </p>
@@ -210,7 +210,7 @@ export function AboutPageView() {
                 <span className={`${greenBadge} h-12 w-12`}>
                   <SparkIcon size={22} />
                 </span>
-                <p className="label-eyebrow mt-7 text-lgl-gold">{purpose.beliefLabel}</p>
+                <p className="home-eyebrow" style={{ marginTop: "1.75rem" }}>{purpose.beliefLabel}</p>
                 <p className="mt-4 text-lg leading-[1.7] text-lgl-fg md:text-xl">
                   {purpose.belief}
                 </p>
@@ -284,7 +284,7 @@ export function AboutPageView() {
             className="lgl-brand-card relative flex flex-col items-center overflow-hidden rounded-[2rem] border border-lgl-gold/25 px-7 py-10 text-center md:px-14 md:py-14"
           >
             <h2
-              className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-bold leading-[1.08] tracking-[-0.04em] text-lgl-fg lg:whitespace-nowrap"
+              className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-normal leading-[1.08] tracking-[-0.04em] text-lgl-fg lg:whitespace-nowrap"
               style={headingFont}
             >
               {accentTitle(cta.title)}

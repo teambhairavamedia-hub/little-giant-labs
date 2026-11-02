@@ -62,7 +62,7 @@ export function Footer() {
       className="relative overflow-hidden border-t border-lgl-fg/5"
       style={{ background: "var(--lgl-bg)", color: "var(--lgl-fg)" }}
     >
-      <div className="home-shell pt-16 pb-8 md:pt-20 [&_.label-eyebrow]:text-[0.6875rem]">
+      <div className="home-shell pt-16 pb-24 md:pt-20 md:pb-8 [&_.label-eyebrow]:text-[0.6875rem]">
         {/* Links & Info Columns */}
         <div className="grid grid-cols-2 gap-12 md:grid-cols-3 md:gap-8 xl:grid-cols-5 items-start mb-14 md:mb-16">
           {/* Col 1: Brand statement card — the tagline rises in word by word, closed by a quote mark */}

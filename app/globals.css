@@ -446,6 +446,7 @@ html.lenis, html.lenis body {
 .wa-chat { position:fixed; z-index:40; right:max(1rem,env(safe-area-inset-right)); bottom:max(1rem,env(safe-area-inset-bottom)); display:block; width:60px; height:60px; transition:transform .2s ease; }
 .wa-chat:hover { transform:scale(1.07); }
 .wa-chat:focus-visible { border-radius:50%; outline:2px solid var(--lgl-gold); outline-offset:3px; }
+@media (min-width:768px) { .wa-chat { right:max(1.5rem,env(safe-area-inset-right)); bottom:max(1.5rem,env(safe-area-inset-bottom)); } }
 @media (prefers-reduced-motion:reduce) { .wa-chat { transition:none; } }
 
 /* Footer copyright and slogan: readable wrapped lines, centred on phones and tablets, one row from desktop up */
@@ -458,10 +459,10 @@ html.lenis, html.lenis body {
 /* Contact hero: soft green and gold glows, topic chips, and the transparent target artwork */
 .contact-hero { background:radial-gradient(55% 70% at 85% 30%,color-mix(in srgb,var(--lgl-sage-strong) 14%,transparent),transparent 70%),radial-gradient(50% 60% at 5% 100%,color-mix(in srgb,var(--lgl-gold) 10%,transparent),transparent 70%),var(--lgl-bg); }
 .contact-topic { display:inline-flex; align-items:center; gap:.6rem; padding:.4rem 1rem .4rem .4rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 30%,transparent); border-radius:999px; background:color-mix(in srgb,var(--lgl-fg) 3%,transparent); color:var(--lgl-fg); font-size:.8rem; font-weight:600; letter-spacing:.04em; }
-.contact-visual { position:relative; width:100%; max-width:400px; aspect-ratio:1433/1259; justify-self:center; margin:clamp(1.5rem,5vw,4.5rem) 0 0; transform:rotate(8deg); }
+.contact-visual { position:relative; width:100%; max-width:300px; aspect-ratio:1433/1259; justify-self:center; margin:0; transform:rotate(8deg); }
 /* Below 1024px it sits centred under the text, smaller so the form stays close */
-@media (max-width:1023px) { .contact-visual { max-width:280px; } }
-@media (min-width:1024px) { .contact-visual { transform:translate(clamp(1.5rem,4vw,4rem),1.5rem) rotate(8deg); } }
+@media (max-width:1023px) { .contact-visual { max-width:160px; } }
+@media (min-width:1024px) { .contact-visual { transform:translateX(clamp(1.5rem,4vw,4rem)) rotate(8deg); } }
 
 
 /* Metallic gold call-to-action (header "Book Strategy Call"), matches .home-button-primary */
@@ -482,6 +483,8 @@ html.lenis, html.lenis body {
 .home-hero h1 em,.home-section-head h2 em,.work-heading h2 em { color:var(--home-sage); font-style:normal; }
 /* Section headings: the white part on one line, the green part on the next */
 .home-section-head h2 em,.work-heading h2 em { display:block; }
+/* The green line of a heading always starts with a capital ("Meaningful impact", "Clear business strategy") */
+.home-section-head h2 em::first-letter,.work-heading h2 em::first-letter,.heading-accent::first-letter { text-transform:uppercase; }
 /* Tagline reuses .home-intro typography; this only adds spacing below it */
 .home-hero .home-tagline { margin-bottom:1rem; }
 /* Supporting intro under the tagline: one step smaller */

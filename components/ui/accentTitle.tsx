@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 const accent = (text: ReactNode, key?: string) => (
-  <span key={key} className="block text-lgl-sage">
+  <span key={key} className="heading-accent block text-lgl-sage">
     {text}
   </span>
 );
