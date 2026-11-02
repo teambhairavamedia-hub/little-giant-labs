@@ -184,6 +184,7 @@ Planning only; no phase is marked complete based on plans.
 - Firebase sign-in settings, verified admin accounts, service-account permissions, and project alignment are not verified.
 - Public submission abuse controls such as rate limiting/CAPTCHA were not found in the inspected handler; decide whether and how to address in a security-hardening task.
 - Favicon/app icons (browser tab, Google results, home screen): the square logo mark, enlarged on white with slightly thickened strokes so it reads at small sizes: `favicon.ico` (16/32/48), `lgl-icon-48.png`, `lgl-icon-96.png`, `lgl-apple-icon.png` (180) and `lgl-icon-192/512.png` (web manifest). Google refreshes search-result icons only when it recrawls the homepage.
+- Search engines: `app/robots.ts` serves `/robots.txt` (crawl the public site; `/admin` and `/api/` disallowed) and `app/sitemap.ts` serves `/sitemap.xml` with the five public English pages, using `siteConfig.url` (`https://www.littlegiantlabs.in`). Translated pages are left out of the sitemap while the language selector is hidden.
 
 ## 9. Maintenance Instructions
 

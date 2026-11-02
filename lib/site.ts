@@ -1,5 +1,7 @@
 export const siteConfig = {
   name: "Little Giant Labs",
+  // Public address used for absolute links in robots.txt and the sitemap
+  url: "https://www.littlegiantlabs.in",
   tagline: "Turn Attention Into Revenue.",
   description:
     "A modern media and marketing company dedicated to building powerful brand presence through innovative content, digital marketing, and AI-powered solutions.",
