@@ -2,7 +2,6 @@ import { EmailDatasetInitializationError, type EmailEligibilityOutcome } from ".
 
 type DomainDatasets = {
   isDisposableEmail(email: string): boolean;
-  isFreeEmail(email: string): boolean;
 };
 
 /**
@@ -28,33 +27,24 @@ export function createEmailDomainEligibilityChecker(
       throw new EmailDatasetInitializationError();
     }
 
-    // A temporary provider is the more specific policy outcome if lists overlap.
-    if (datasets.isDisposableEmail(email)) return "disposable";
-    if (datasets.isFreeEmail(email)) return "free";
-    return "eligible";
+    // Personal providers (Gmail, Yahoo, Outlook…) are welcome; only temporary inboxes are refused.
+    return datasets.isDisposableEmail(email) ? "disposable" : "eligible";
   };
 }
 
 async function loadPackagedDatasets(): Promise<DomainDatasets> {
-  const [disposableApi, disposableDomainList, freeApi, freeDomainList] = await Promise.all([
+  const [disposableApi, disposableDomainList] = await Promise.all([
     import("@visulima/disposable-email-domains"),
     import("@visulima/disposable-email-domains/domains"),
-    import("@visulima/free-email-domains"),
-    import("@visulima/free-email-domains/domains", { with: { type: "json" } }),
   ]);
 
   disposableApi.setDomains(disposableDomainList.default);
-  // The package ships JSON as its default export; its declaration uses export=.
-  freeApi.setDomains((freeDomainList as unknown as { default: string[] }).default);
 
-  if (!disposableApi.isListLoaded() || !freeApi.isListLoaded()) {
+  if (!disposableApi.isListLoaded()) {
     throw new Error("A domain dataset was not registered.");
   }
 
-  return {
-    isDisposableEmail: disposableApi.isDisposableEmail,
-    isFreeEmail: freeApi.isFreeEmail,
-  };
+  return { isDisposableEmail: disposableApi.isDisposableEmail };
 }
 
 export const checkEmailEligibility = createEmailDomainEligibilityChecker(loadPackagedDatasets);

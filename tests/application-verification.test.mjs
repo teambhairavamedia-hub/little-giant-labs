@@ -22,6 +22,7 @@ const validatedApplication = {
   help_with: "Creative & content",
   project_details: "Refresh our campaign creative for the next launch.",
   timeline: null,
+  contact_phone: null,
   qualification_status: "pending_review",
 };
 
@@ -64,6 +65,7 @@ test("RPC arguments map validated fields and serialize SHA-256 as PostgreSQL byt
     p_help_with: validatedApplication.help_with,
     p_project_details: validatedApplication.project_details,
     p_timeline: null,
+    p_contact_phone: null,
     p_token_hash: fixedMetadata.tokenHashBytea,
     p_token_expires_at: fixedMetadata.tokenExpiresAt,
     p_encrypted_token_payload: fixedMetadata.encryptedTokenPayloadBytea,
@@ -77,18 +79,20 @@ test("RPC arguments map validated fields and serialize SHA-256 as PostgreSQL byt
   assert.doesNotMatch(JSON.stringify(args), /plaintext-token/);
 });
 
-test("fingerprint uses the documented seven-field order including normalized optional nulls", () => {
-  const canonical = ["Asha Rao", "ceo@example.org", "Example Corporation", null, "Creative & content", "Refresh our campaign creative for the next launch.", null];
+test("fingerprint uses the documented eight-field order including normalized optional nulls", () => {
+  const canonical = ["Asha Rao", "ceo@example.org", "Example Corporation", null, "Creative & content", "Refresh our campaign creative for the next launch.", null, null];
   const expected = `\\x${createHash("sha256").update(JSON.stringify(canonical), "utf8").digest("hex")}`;
   assert.equal(fingerprintApplication(validatedApplication), expected);
+  // A different phone number is a different request
+  assert.notEqual(fingerprintApplication({ ...validatedApplication, contact_phone: "+919876543210" }), expected);
 });
 
-test("browser form submits exactly the seven agreed fields", async () => {
+test("browser form submits exactly the eight agreed fields", async () => {
   const source = await readFile(new URL("../components/contact/ContactForm.tsx", import.meta.url), "utf8");
   const submission = source.slice(source.indexOf('fetch("/api/applications"'));
   const payload = submission.match(/body: JSON\.stringify\(\{([\s\S]*?)\}\),/i)?.[1] ?? "";
   const keys = [...payload.matchAll(/\b([a-z_]+): values\./g)].map((match) => match[1]);
-  assert.deepEqual(keys, ["contact_name", "decision_maker_email", "legal_name", "contact_role", "help_with", "project_details", "timeline"]);
+  assert.deepEqual(keys, ["contact_name", "decision_maker_email", "contact_phone", "legal_name", "contact_role", "help_with", "project_details", "timeline"]);
   for (const removed of ["company_size", "industry_vertical", "budget_range"]) assert.doesNotMatch(payload, new RegExp(`\\b${removed}\\b`));
 });
 

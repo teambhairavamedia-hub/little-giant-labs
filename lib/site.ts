@@ -4,6 +4,12 @@ export const siteConfig = {
   description:
     "A modern media and marketing company dedicated to building powerful brand presence through innovative content, digital marketing, and AI-powered solutions.",
   email: "Hello@Littlegiantlabs.in",
+  // WhatsApp click-to-chat: `number` is the full international number without "+" or spaces, as wa.me expects
+  whatsapp: {
+    number: "919185160056",
+    display: "+91 91851 60056",
+    message: "Hi Little Giant Labs, I'd like to discuss a business challenge.",
+  },
   address: {
     building: "Delta Square",
     lines: [

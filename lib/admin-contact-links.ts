@@ -1,3 +1,5 @@
+import { parseE164 } from "./phone.ts";
+
 const EMAIL_PATTERN = /^[A-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?(?:\.[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?)+$/i;
 const LINKEDIN_PROFILE_PATH = /^\/in\/[A-Za-z0-9_.-]+\/?$/;
 
@@ -23,4 +25,11 @@ export function normalizeLinkedInProfileUrl(value: unknown): string | null {
   } catch {
     return null;
   }
+}
+
+// Enquiry phone numbers are stored in E.164 ("+919876543210"); anything else is shown as text, never linked.
+export function normalizeContactPhone(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const phone = value.trim();
+  return parseE164(phone) ? phone : null;
 }

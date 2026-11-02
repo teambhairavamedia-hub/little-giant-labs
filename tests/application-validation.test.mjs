@@ -81,12 +81,10 @@ test("invalid answers and missing required fields are rejected", async () => {
   await assert.rejects(validateApplication("application"), ValidationError);
 });
 
-test("free email providers, including subdomains, are rejected with the business-email message", async () => {
-  for (const email of ["a@gmail.com", "a@mail.yahoo.com", "a@yahoo.co.uk", "a@outlook.com"]) {
-    await assert.rejects(
-      validateApplication({ ...validInput(), decision_maker_email: email }),
-      (error) => error instanceof EmailEligibilityError && error.outcome === "free" && error.message === EMAIL_ELIGIBILITY_MESSAGES.free,
-    );
+test("personal email providers are accepted and normalized", async () => {
+  for (const email of ["a@gmail.com", "a@mail.yahoo.com", "a@yahoo.co.uk", "a@outlook.com", "a@hotmail.com", "a@icloud.com", "A@Rediffmail.com"]) {
+    const result = await validateApplication({ ...validInput(), decision_maker_email: ` ${email} ` });
+    assert.equal(result.decision_maker_email, email.toLowerCase());
   }
 });
 
@@ -102,12 +100,12 @@ test("valid custom-domain email proceeds and is normalized", async () => {
   assert.equal(result.decision_maker_email, "ceo@example.org");
 });
 
-test("disposable detection takes precedence when both detectors match", async () => {
+test("the checker refuses only disposable inboxes", async () => {
   const checker = createEmailDomainEligibilityChecker(async () => ({
-    isDisposableEmail: () => true,
-    isFreeEmail: () => true,
+    isDisposableEmail: (email) => email.endsWith("@temp.example"),
   }));
-  assert.equal(await checker("person@example.org"), "disposable");
+  assert.equal(await checker("person@temp.example"), "disposable");
+  assert.equal(await checker("person@gmail.com"), "eligible");
 });
 
 test("email syntax validation still rejects malformed addresses before checking providers", async () => {
@@ -122,21 +120,22 @@ test("email syntax validation still rejects malformed addresses before checking 
 test("client and endpoint use the same eligibility outcomes and user-facing messages", async () => {
   const source = await readFile(new URL("../components/contact/ContactForm.tsx", import.meta.url), "utf8");
   assert.match(source, /EMAIL_ELIGIBILITY_MESSAGES\.disposable/);
-  assert.match(source, /EMAIL_ELIGIBILITY_MESSAGES\.free/);
+  assert.doesNotMatch(source, /EMAIL_ELIGIBILITY_MESSAGES\.free/);
   for (const [email, outcome, message] of [
     ["person@mailinator.com", "disposable", EMAIL_ELIGIBILITY_MESSAGES.disposable],
-    ["person@gmail.com", "free", EMAIL_ELIGIBILITY_MESSAGES.free],
+    ["person@gmail.com", "eligible", undefined],
+    ["person@yahoo.com", "eligible", undefined],
   ]) {
     const response = await checkEmailRequest(new Request("https://site.test/api/applications/email-eligibility", {
       method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email }),
     }));
     assert.equal(response.status, 200);
-    assert.deepEqual(await response.json(), { outcome, message });
+    assert.deepEqual(await response.json(), message ? { outcome, message } : { outcome });
   }
 });
 
 test("submission responses expose stable, distinct eligibility codes and exact user messages", async () => {
-  for (const [outcome, code] of [["disposable", "DISPOSABLE_EMAIL"], ["free", "FREE_EMAIL_PROVIDER"]]) {
+  for (const [outcome, code] of [["disposable", "DISPOSABLE_EMAIL"]]) {
     const response = await handleApplicationSubmission(new Request("https://site.test/api/applications", {
       method: "POST", headers: idempotencyHeaders, body: JSON.stringify(validInput()),
     }), async () => {}, async () => { throw new EmailEligibilityError(outcome); });
@@ -224,4 +223,16 @@ test("database diagnostics preserve safe metadata and redact submitted values", 
     assert.match(loggedMetadata.message, /\[REDACTED\]/);
     assert.doesNotMatch(JSON.stringify(loggedMetadata), /CEO@Example\.com|Example Corporation/);
   } finally { console.error = originalError; }
+});
+
+test("phone number is optional, stored in E.164 form, and rejected when invalid", async () => {
+  for (const blank of [undefined, null, "", "   "]) {
+    const result = await validateApplication({ ...validInput(), contact_phone: blank });
+    assert.equal(result.contact_phone, null);
+  }
+  assert.equal((await validateApplication({ ...validInput(), contact_phone: "+91 98765-43210" })).contact_phone, "+919876543210");
+  assert.equal((await validateApplication({ ...validInput(), contact_phone: "+44 20 7946 0958" })).contact_phone, "+442079460958");
+  for (const invalid of ["9876543210", "+91 98765", "+9198765432100", "+999 1234567", "phone", 919876543210]) {
+    await assert.rejects(validateApplication({ ...validInput(), contact_phone: invalid }), ValidationError, String(invalid));
+  }
 });

@@ -22,7 +22,7 @@ import {
   TargetIcon,
   TrendIcon,
 } from "@/components/ui/Icons";
-import { stripStop } from "@/components/ui/accentTitle";
+import { headingText, stripStop } from "@/components/ui/accentTitle";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
 import { servicePillars } from "@/lib/service-pillars";
@@ -122,8 +122,8 @@ export function HomeRedesign() {
           <div className="home-section-head home-split-head">
             <p className="home-eyebrow">{why.eyebrow}</p>
             <h2 id="why-title">
-              {why.titlePart1}
-              <em>{stripStop(why.titleEmphasis)}</em>
+              {headingText(why.titlePart1)}
+              <em>{headingText(why.titleEmphasis)}</em>
             </h2>
             <p>{why.intro}</p>
           </div>
@@ -174,8 +174,8 @@ export function HomeRedesign() {
           <div className="home-section-head home-split-head">
             <p className="home-eyebrow">{whatWeDo.eyebrow}</p>
             <h2 id="pillars-title">
-              {whatWeDo.titlePart1}
-              <em>{stripStop(whatWeDo.titleEmphasis)}</em>
+              {headingText(whatWeDo.titlePart1)}
+              <em>{headingText(whatWeDo.titleEmphasis)}</em>
             </h2>
             <p>{whatWeDo.subheading}</p>
           </div>
@@ -225,8 +225,8 @@ export function HomeRedesign() {
           <div className="home-section-head home-split-head">
             <p className="home-eyebrow">{tech.eyebrow}</p>
             <h2 id="tech-title">
-              {tech.titlePart1}
-              <em>{stripStop(tech.titleEmphasis)}</em>
+              {headingText(tech.titlePart1)}
+              <em>{headingText(tech.titleEmphasis)}</em>
             </h2>
             <div className="tech-copy">
               {tech.paragraphs.map((paragraph) => (
@@ -263,8 +263,8 @@ export function HomeRedesign() {
             <div>
               <p className="home-eyebrow">{workDict.eyebrow}</p>
               <h2 id="work-title">
-                {workDict.titlePart1}
-                <em>{stripStop(workDict.titleEmphasis)}</em>
+                {headingText(workDict.titlePart1)}
+                <em>{headingText(workDict.titleEmphasis)}</em>
               </h2>
             </div>
             <p>{workDict.subheading}</p>
@@ -322,8 +322,8 @@ export function HomeRedesign() {
           <div className="home-section-head home-split-head">
             <p className="home-eyebrow">{process.eyebrow}</p>
             <h2 id="process-title">
-              {process.titlePart1}
-              <em>{stripStop(process.titleEmphasis)}</em>
+              {headingText(process.titlePart1)}
+              <em>{headingText(process.titleEmphasis)}</em>
             </h2>
             <p>{process.intro}</p>
           </div>

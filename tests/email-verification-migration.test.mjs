@@ -19,6 +19,10 @@ const enquiryMigration = await readFile(
   new URL("../supabase/migrations/202610290001_contact_enquiry_fields.sql", import.meta.url),
   "utf8",
 );
+const phoneMigration = await readFile(
+  new URL("../supabase/migrations/202611020001_contact_phone.sql", import.meta.url),
+  "utf8",
+);
 const finalEnquiryMigration = await readFile(
   new URL("../supabase/migrations/202610300001_contact_role_and_simplified_enquiry_rpc.sql", import.meta.url),
   "utf8",
@@ -163,4 +167,23 @@ test("final migration documentation no longer describes duplicate-key uniqueness
   assert.match(migration, /Migration 003 replaces this initial RPC/i);
   assert.match(idempotencyMigration, /matching-retry/i);
   assert.match(idempotencyMigration, /mismatched-payload/i);
+});
+
+test("phone migration adds an E.164 column and a 13-argument RPC that matches the application call", async () => {
+  const { buildCreateApplicationWithEmailJobArgs } = await import("../lib/application-verification.ts");
+  const signature = phoneMigration.match(/create function public\.create_application_with_email_job\(([\s\S]*?)\)\s*returns table/i)?.[1] ?? "";
+  const names = [...signature.matchAll(/\b(p_[a-z_]+)\s+(?:text|bytea|timestamptz)\b/gi)].map((match) => match[1]);
+  const callNames = Object.keys(buildCreateApplicationWithEmailJobArgs(
+    { contact_name: "a", decision_maker_email: "a@b.co", legal_name: "a", contact_role: null, help_with: "a", project_details: "a", timeline: null, contact_phone: null },
+    { tokenHashBytea: "", tokenExpiresAt: "", encryptedTokenPayloadBytea: "", idempotencyKey: "", requestFingerprintBytea: "" },
+  ));
+  assert.equal(names.length, 13);
+  assert.deepEqual([...names].sort(), [...callNames].sort());
+  assert.match(phoneMigration, /add column contact_phone text\s+check \(contact_phone is null or contact_phone ~ '\^\\\+\[1-9\]\[0-9\]\{6,14\}\$'\)/i);
+  assert.match(phoneMigration, /insert into public\.growth_applications \([\s\S]*contact_phone[\s\S]*nullif\(pg_catalog\.btrim\(p_contact_phone\), ''\)/i);
+  // The previous 12-argument RPC stays, so the deployed site keeps working until the new code ships
+  assert.doesNotMatch(phoneMigration, /drop function/i);
+  assert.match(phoneMigration, /pg_advisory_xact_lock[\s\S]*v_fingerprint is distinct from p_request_fingerprint[\s\S]*errcode = 'LGL01'/i);
+  assert.match(phoneMigration, /revoke all on function[\s\S]*text, text, text, text, text, text, text, text, bytea, timestamptz, bytea, text, bytea[\s\S]*from public, anon, authenticated/i);
+  assert.match(phoneMigration, /grant execute on function[\s\S]*to service_role/i);
 });

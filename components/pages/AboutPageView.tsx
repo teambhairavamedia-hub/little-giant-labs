@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
-import { accentTitle } from "@/components/ui/accentTitle";
+import { accentTitle, headingText } from "@/components/ui/accentTitle";
 import {
   ChartIcon,
   CompassIcon,
@@ -89,7 +89,7 @@ function SectionHeading({
 }) {
   const centered = align === "center";
   return (
-    <div className={`${centered ? "mx-auto text-center" : ""} max-w-3xl ${className}`}>
+    <div className={`${centered ? "mx-auto text-center" : ""} ${className}`}>
       <p className={`home-eyebrow ${centered ? "justify-center" : ""}`}>{eyebrow}</p>
       {title && (
         <h2
@@ -152,7 +152,7 @@ export function AboutPageView() {
               className="mt-7 max-w-[20ch] text-balance bg-[linear-gradient(100deg,var(--lgl-fg)_30%,var(--lgl-gold)_100%)] bg-clip-text pb-1 pr-[0.08em] text-[1.875rem] font-normal italic leading-[1.2] tracking-[-0.015em] text-transparent [box-decoration-break:clone] sm:text-[2.375rem] md:text-[2.875rem] lg:text-[3.375rem]"
               style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
             >
-              {header.description}
+              {headingText(header.description)}
             </h1>
             <Link href={servicesHref} className={`lgl-gold-cta ${pillBase} mt-9 hover:opacity-85`} style={pillFont}>
               {header.secondaryCta}
@@ -218,9 +218,9 @@ export function AboutPageView() {
             </motion.div>
           </div>
           {/* Philosophy: follows the belief statement, ahead of the process */}
-          <motion.div {...reveal(0.15)} className="mx-auto mt-14 flex max-w-3xl flex-col items-center text-center md:mt-20">
+          <motion.div {...reveal(0.15)} className="mx-auto mt-14 flex max-w-5xl flex-col items-center text-center md:mt-20">
             <SectionHeading eyebrow={purpose.philosophyLabel} title={accentTitle(purpose.philosophyTitle)} align="center" />
-            <p className="mt-8 text-lg leading-[1.7] text-lgl-fg md:text-xl">{purpose.approach}</p>
+            <p className="mt-8 max-w-3xl text-lg leading-[1.7] text-lgl-fg md:text-xl">{purpose.approach}</p>
           </motion.div>
         </Container>
       </Section>

@@ -4,12 +4,16 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 import { EMAIL_ELIGIBILITY_MESSAGES, isEmailFormatValid, type EmailEligibilityOutcome } from "@/lib/email-eligibility";
 import { APPLICATION_LIMITS, applicationOptions } from "@/lib/application-options";
+import { DEFAULT_PHONE_COUNTRY, PHONE_COUNTRIES, toE164 } from "@/lib/phone";
 
 type Enquiry = {
   contactName: string;
   workEmail: string;
+  phoneCountry: string;
+  phone: string;
   companyName: string;
   role: string;
   helpWith: string;
@@ -20,6 +24,8 @@ type Enquiry = {
 const empty: Enquiry = {
   contactName: "",
   workEmail: "",
+  phoneCountry: DEFAULT_PHONE_COUNTRY,
+  phone: "",
   companyName: "",
   role: "",
   helpWith: "",
@@ -35,6 +41,8 @@ const textareaClass =
   "mt-3 block min-h-36 w-full resize-y border border-lgl-line/40 bg-transparent px-4 py-3 text-base leading-relaxed text-lgl-fg placeholder:text-lgl-muted outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
 const selectClass =
   "mt-3 w-full cursor-pointer border-0 border-b border-lgl-sage bg-lgl-bg px-0 py-3 text-base text-lgl-fg outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
+const countrySelectClass =
+  "mt-3 w-32 shrink-0 cursor-pointer border-0 border-b border-lgl-sage bg-lgl-bg px-0 py-3 text-base text-lgl-fg outline-none transition-colors focus:border-[#C5A059] focus:ring-0 sm:w-44";
 const choiceClass =
   "flex min-h-14 cursor-pointer items-center gap-4 border border-lgl-line/40 px-4 py-3 text-sm leading-relaxed text-lgl-soft transition-colors hover:border-lgl-sage has-[:checked]:border-[#C5A059] has-[:checked]:bg-[#004B3A] has-[:checked]:text-[#F8F6F0] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#C5A059]";
 
@@ -81,7 +89,7 @@ export function ContactForm() {
         });
         if (!response.ok) throw new Error("Email eligibility could not be checked.");
         const result = await response.json() as { outcome?: EmailEligibilityOutcome | "invalid" };
-        if (["eligible", "disposable", "free", "invalid"].includes(result.outcome ?? "")) {
+        if (["eligible", "disposable", "invalid"].includes(result.outcome ?? "")) {
           setEmailCheck({ email, outcome: result.outcome as EmailEligibilityOutcome | "invalid" });
         } else {
           setEmailCheck({ email, outcome: "unavailable" });
@@ -97,15 +105,18 @@ export function ContactForm() {
     };
   }, [values.workEmail]);
 
+  // The phone number is optional; when given it must be a valid number for the chosen country code.
+  const phoneE164 = values.phone.trim() ? toE164(values.phoneCountry, values.phone) : "";
+  const phoneValid = phoneE164 !== null;
+
   // The first two steps contain required answers; the final step is optional context.
   const stepValid = () => {
     if (step === 0) {
       const email = values.workEmail.trim().toLowerCase();
-      const recognizedIneligible = emailCheck.email === email &&
-        (emailCheck.outcome === "disposable" || emailCheck.outcome === "free");
+      const recognizedIneligible = emailCheck.email === email && emailCheck.outcome === "disposable";
       return filled("contactName", APPLICATION_LIMITS.contactName) &&
         filled("companyName", APPLICATION_LIMITS.companyName) &&
-        email.length <= 254 && isEmailFormatValid(email) && !recognizedIneligible;
+        email.length <= 254 && isEmailFormatValid(email) && !recognizedIneligible && phoneValid;
     }
     if (step === 1) return values.helpWith !== "" && filled("projectDetails", APPLICATION_LIMITS.projectDetails);
     return true;
@@ -146,6 +157,7 @@ export function ContactForm() {
         body: JSON.stringify({
           contact_name: values.contactName,
           decision_maker_email: values.workEmail,
+          contact_phone: values.phone.trim() ? phoneE164 ?? "" : "",
           legal_name: values.companyName,
           contact_role: values.role,
           help_with: values.helpWith,
@@ -174,6 +186,8 @@ export function ContactForm() {
   }
 
   const formDict = dict.contact.form;
+  // The phone field's text is English only for now
+  const phoneText = formDict.fields.phone ?? getDictionary("en").contact.form.fields.phone!;
   const optionalTag = <span className="ml-2 text-xs text-lgl-soft">({formDict.optionalTag})</span>;
 
   /* Optional single-choice answer as a native select; the empty option means "not answered". */
@@ -275,13 +289,52 @@ export function ContactForm() {
               <span id="email-eligibility-status" className="mt-2 block text-xs text-lgl-gold" role="status" aria-live="polite">
                 {emailCheck.email === values.workEmail.trim().toLowerCase() && emailCheck.outcome === "disposable"
                   ? EMAIL_ELIGIBILITY_MESSAGES.disposable
-                  : emailCheck.email === values.workEmail.trim().toLowerCase() && emailCheck.outcome === "free"
-                    ? EMAIL_ELIGIBILITY_MESSAGES.free
-                    : emailCheck.email === values.workEmail.trim().toLowerCase() && emailCheck.outcome === "checking"
-                      ? "Checking email eligibility…"
-                      : ""}
+                  : emailCheck.email === values.workEmail.trim().toLowerCase() && emailCheck.outcome === "checking"
+                    ? "Checking email eligibility…"
+                    : ""}
               </span>
             </label>
+            {/* Optional phone / WhatsApp number: country code (India by default) beside the number */}
+            <div className="text-sm text-lgl-fg">
+              <label htmlFor="contact-phone">{phoneText.label}</label>
+              {optionalTag}
+              <div className="flex items-end gap-4">
+                <select
+                  className={countrySelectClass}
+                  aria-label={phoneText.countryLabel}
+                  autoComplete="tel-country-code"
+                  value={values.phoneCountry}
+                  onChange={(e) => set("phoneCountry", e.target.value)}
+                >
+                  {PHONE_COUNTRIES.map((country) => (
+                    <option key={country.iso} value={country.iso}>
+                      +{country.dial} {country.name}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  id="contact-phone"
+                  className={inputClass}
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel-national"
+                  maxLength={24}
+                  placeholder={phoneText.placeholder}
+                  value={values.phone}
+                  onChange={(e) => set("phone", e.target.value)}
+                  aria-describedby="phone-hint"
+                  aria-invalid={!phoneValid}
+                />
+              </div>
+              <span id="phone-hint" className="mt-2 block text-xs text-lgl-soft">
+                {phoneText.hint}
+              </span>
+              {!phoneValid && (
+                <span className="mt-2 block text-xs text-lgl-gold" role="status">
+                  {phoneText.error}
+                </span>
+              )}
+            </div>
             <label className="block text-sm text-lgl-fg">
               {formDict.fields.companyName.label} <span className="text-lgl-gold">*</span>
               <input

@@ -442,6 +442,12 @@ html.lenis, html.lenis body {
  .lgl-header-nav-link { letter-spacing:.08em !important; padding-inline:.5rem !important; }
 }
 
+/* Floating WhatsApp chat: the official logo, bottom right */
+.wa-chat { position:fixed; z-index:40; right:max(1rem,env(safe-area-inset-right)); bottom:max(1rem,env(safe-area-inset-bottom)); display:block; width:60px; height:60px; transition:transform .2s ease; }
+.wa-chat:hover { transform:scale(1.07); }
+.wa-chat:focus-visible { border-radius:50%; outline:2px solid var(--lgl-gold); outline-offset:3px; }
+@media (prefers-reduced-motion:reduce) { .wa-chat { transition:none; } }
+
 /* Footer copyright and slogan: readable wrapped lines, centred on phones and tablets, one row from desktop up */
 .footer-legal { color:color-mix(in srgb,var(--lgl-fg) 70%,transparent); font-family:var(--font-dm-sans),sans-serif; font-size:.75rem; font-weight:500; line-height:1.6; letter-spacing:.04em; text-align:center; text-wrap:balance; }
 @media (min-width:1024px) { .footer-legal { font-size:.6875rem; letter-spacing:.18em; line-height:1.4; text-transform:uppercase; text-align:left; } }
@@ -473,7 +479,9 @@ html.lenis, html.lenis body {
 .home-eyebrow span { display:block; width:1px; height:1rem; background:var(--home-gold); }
 .home-hero .home-eyebrow { width:fit-content; max-width:100%; margin:0 auto; padding-left:.16em; font-family:var(--font-manrope),sans-serif; font-size:clamp(.95rem,1.8vw,1.6rem); font-weight:800; line-height:1.2; letter-spacing:.16em; text-wrap:balance; background:linear-gradient(100deg,transparent 30%,rgba(255,246,214,.55) 46%,transparent 62%),linear-gradient(180deg,#F4DC9A 0%,#E2BC69 38%,#A87A2E 52%,#C99B48 70%,#EED08A 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .home-hero h1 { max-width:1120px; margin:1.25rem auto 1.5rem; color:var(--home-paper); font-size:clamp(2.5rem,4.8vw,4.7rem); line-height:1.04; letter-spacing:-.045em; text-wrap:balance; }
-.home-hero h1 em,.home-section-head h2 em,.work-heading h2 em { color:var(--home-sage); font-family:Georgia,serif; font-weight:400; }
+.home-hero h1 em,.home-section-head h2 em,.work-heading h2 em { color:var(--home-sage); font-style:normal; }
+/* Section headings: the white part on one line, the green part on the next */
+.home-section-head h2 em,.work-heading h2 em { display:block; }
 /* Tagline reuses .home-intro typography; this only adds spacing below it */
 .home-hero .home-tagline { margin-bottom:1rem; }
 /* Supporting intro under the tagline: one step smaller */
@@ -496,7 +504,7 @@ html.lenis, html.lenis body {
 .home-pillars,.home-work { padding-block:var(--home-space); }
 .home-pillars { background:var(--lgl-bg); }
 .home-section-head { max-width:660px; margin-bottom:var(--home-head-space); }
-.home-section-head h2,.work-heading h2 { margin:1rem 0; font-size:clamp(2.6rem,6vw,5rem); line-height:1; }
+.home-section-head h2,.work-heading h2 { margin:1rem 0; font-size:clamp(1.75rem,4.2vw,3.25rem); line-height:1.08; }
 .home-section-head>p:last-child,.work-heading>p { max-width:500px; color:var(--lgl-muted-2); font-size:clamp(1.05rem,1.4vw,1.2rem); line-height:1.7; }
 .home-section-head h2 em { color:var(--lgl-sage-strong); }
 .home-section-head>p:last-child { color:var(--lgl-soft); font-size:clamp(1.1rem,1.6vw,1.3rem); }
@@ -551,10 +559,10 @@ html.lenis, html.lenis body {
 .home-transition span { width:2.6rem; height:1px; background:var(--home-gold); }
 
 /* What we do: heading beside its intro, then four pillar cards (type values mirror .why-card) */
-.home-split-head { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr); column-gap:clamp(2rem,6vw,5rem); align-items:end; max-width:none; }
+.home-split-head { display:grid; grid-template-columns:minmax(0,1fr); max-width:none; }
 .home-split-head .home-eyebrow { grid-column:1 / -1; }
 .home-split-head h2 { margin-bottom:0; text-wrap:balance; }
-.home-split-head>p:last-child { margin:0 0 .4rem; padding-left:1.25rem; border-left:2px solid color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
+.home-split-head>p:last-child { max-width:none; margin:1.25rem 0 0; padding-left:1.25rem; border-left:2px solid color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
 .offer-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:clamp(1rem,2vw,1.5rem); margin:0; padding:0; list-style:none; }
 /* Three cards, then the last two centred beneath them */
 .offer-card { grid-column:span 2; }
@@ -582,7 +590,7 @@ html.lenis, html.lenis body {
 
 /* Built for complex ideas: technology statement, four sector tiles, link to the Technology pillar */
 .home-tech { padding-block:var(--home-space); border-top:1px solid color-mix(in srgb,var(--lgl-line) 10%,transparent); background:var(--lgl-bg); }
-.tech-copy { display:grid; gap:1rem; margin:0 0 .4rem; padding-left:1.25rem; border-left:2px solid color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
+.tech-copy { display:grid; gap:1rem; margin:1.25rem 0 0; padding-left:1.25rem; border-left:2px solid color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
 .tech-copy p { margin:0; color:var(--lgl-soft); font-size:clamp(1rem,1.3vw,1.12rem); line-height:1.7; }
 .tech-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(.9rem,1.8vw,1.35rem); margin:0; padding:0; list-style:none; }
 .tech-item { position:relative; overflow:hidden; display:flex; flex-direction:column; padding:clamp(1.5rem,2.6vw,2.1rem); border:1px solid color-mix(in srgb,var(--lgl-gold) 22%,transparent); border-radius:1.25rem; background:linear-gradient(165deg,color-mix(in srgb,var(--lgl-sage-strong) 9%,transparent),transparent 60%); transition:border-color .3s ease,transform .4s cubic-bezier(.2,.7,.2,1); }
@@ -665,8 +673,6 @@ html.lenis, html.lenis body {
  .offer-grid { grid-template-columns:repeat(4,minmax(0,1fr)); }
  .offer-card:nth-child(4) { grid-column:span 2; }
  .offer-card:nth-child(5) { grid-column:2 / span 2; }
- .home-split-head { grid-template-columns:minmax(0,1fr); }
- .home-split-head>p:last-child,.home-split-head>.tech-copy { margin-top:1.25rem; }
  .why-grid,.tech-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media(max-width:700px) {
@@ -689,9 +695,9 @@ html.lenis, html.lenis body {
 }
 /* Selected Work shares the plain page background; a hairline separates it from the section above */
 .home-work { position:relative; border-top:1px solid color-mix(in srgb,var(--lgl-line) 10%,transparent); background:var(--lgl-bg); scroll-margin-top:1rem; overflow-x:clip; }
-.work-heading { margin-bottom:0; display:grid; grid-template-columns:minmax(0,1.45fr) minmax(0,1fr); column-gap:clamp(2rem,6vw,5rem); align-items:end; padding-bottom:2rem; border-bottom:1px solid color-mix(in srgb,var(--lgl-line) 14%,transparent); }
+.work-heading { margin-bottom:0; display:block; padding-bottom:2rem; border-bottom:1px solid color-mix(in srgb,var(--lgl-line) 14%,transparent); }
 .work-heading h2 { margin-bottom:0; text-wrap:balance; }
-.work-heading>p { max-width:none; margin:0 0 .4rem; padding-left:1.25rem; border-left:2px solid color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
+.work-heading>p { max-width:none; margin:1.25rem 0 0; padding-left:1.25rem; border-left:2px solid color-mix(in srgb,var(--lgl-gold) 55%,transparent); }
 /* Three centered carousel positions; each project moves through left, center,
    and right as the single active index changes. */
 .work-carousel { position:relative; padding-top:clamp(1.25rem,3vw,2.5rem); }
@@ -799,8 +805,6 @@ html.lenis, html.lenis body {
  .service-video-copy>p:last-child { font-size:.88rem; }
  .service-video-controls { display:flex; align-items:center; justify-content:center; gap:1.25rem; margin-top:1.25rem; }
  .service-video-controls .work-arrow { width:40px; height:40px; }
- .work-heading { display:block; }
- .work-heading>p { margin-top:1.2rem; }
  .work-list { width:calc(100% + 2rem); height:730px; margin-left:-1rem; }
  .work-slide { width:82%; height:700px; }
  .work-slide--left { transform:translate(calc(-50% - 95%),-50%) scale(.82); }
@@ -820,7 +824,6 @@ html.lenis, html.lenis body {
  .lgl-gold-cta,.home-button { gap:.5rem; padding-inline:.9rem !important; font-size:clamp(.625rem,2.9vw,.72rem) !important; letter-spacing:.05em !important; white-space:nowrap; }
 }
 @media(max-width:359px) {
- .lgl-header-pill { padding-right:.5rem !important; padding-left:.5rem !important; }
  /* Very narrow phones: this long secondary label may take two lines rather than overflow */
  .tech-actions .home-button { min-width:0; max-width:100%; white-space:normal; text-align:center; }
 }
@@ -837,7 +840,7 @@ html.lenis, html.lenis body {
 .lgl-brand-card { background:radial-gradient(120% 110% at 0% 0%,color-mix(in srgb,var(--lgl-gold) 16%,transparent) 0%,transparent 55%),linear-gradient(160deg,color-mix(in srgb,var(--lgl-fg) 5%,transparent),color-mix(in srgb,var(--lgl-fg) 1%,transparent)); box-shadow:inset 0 1px 0 color-mix(in srgb,var(--lgl-gold) 28%,transparent),0 24px 60px -30px color-mix(in srgb,var(--lgl-gold) 35%,transparent); }
 /* Footer tagline accent word: same metallic gold as the hero eyebrow */
 /* Footer tagline accent: the sage-green serif accent used by headings */
-.lgl-tagline-accent { padding-right:.08em; color:var(--lgl-sage-strong); }
+.lgl-tagline-accent { color:var(--lgl-sage-strong); }
 :root[data-theme="light"] .home-hero .home-eyebrow { background:linear-gradient(100deg,transparent 30%,rgba(255,240,200,.6) 46%,transparent 62%),linear-gradient(180deg,#B8892F 0%,#9A6F22 40%,#6E4C12 55%,#8C6420 72%,#B98C34 100%); -webkit-background-clip:text; background-clip:text; }
 :root[data-theme="light"] .home-button-primary { box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 4px rgba(90,62,20,.3),0 6px 18px rgba(133,97,31,.22); }
 :root[data-theme="light"] .home-button-secondary { box-shadow:inset 0 1px 0 rgba(160,255,215,.3),inset 0 -2px 4px rgba(0,20,15,.45),0 6px 18px rgba(0,75,58,.2); }

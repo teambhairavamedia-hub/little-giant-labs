@@ -18,6 +18,8 @@ const pillBase =
   "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-[0.75rem] font-semibold uppercase tracking-[0.18em] transition-all duration-300";
 const pillFont: CSSProperties = { fontFamily: "var(--font-dm-sans), sans-serif" };
 const headingFont: CSSProperties = { fontFamily: "var(--font-manrope), sans-serif" };
+const pillarHeadingClass =
+  "text-[clamp(1.75rem,3.4vw,2.5rem)] font-bold leading-[1.08] tracking-[-0.04em] text-lgl-fg";
 const headingClass =
   "text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-bold leading-[1.04] tracking-[-0.04em] text-lgl-fg";
 
@@ -37,8 +39,8 @@ export function ServicesPageView() {
         style={{ background: "var(--lgl-bg)" }}
       >
         <Container className="pb-12 md:pb-18">
-          {/* Title and pull quote on the left, intro beside them on a gold rule (as on the homepage) */}
-          <div className="grid grid-cols-[minmax(0,1fr)] gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:items-end lg:gap-16">
+          {/* Title and pull quote, then the intro on a gold rule (as on the homepage) */}
+          <div className="grid grid-cols-[minmax(0,1fr)] gap-8">
             <div>
               <p className="home-eyebrow">
                 {intro.eyebrow}
@@ -46,7 +48,7 @@ export function ServicesPageView() {
               <h1 className={`mt-5 ${headingClass}`} style={headingFont}>
                 {accentTitle(page.heading)}
               </h1>
-              <blockquote className="mt-6 max-w-2xl">
+              <blockquote className="mt-6">
                 <p
                   className="text-lg italic leading-[1.6] text-lgl-fg/85 md:text-xl"
                   style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
@@ -55,7 +57,7 @@ export function ServicesPageView() {
                 </p>
               </blockquote>
             </div>
-            <p className="border-l-2 border-lgl-gold/55 pl-5 text-base leading-[1.8] text-lgl-fg/75 md:text-lg lg:mb-1">
+            <p className="border-l-2 border-lgl-gold/55 pl-5 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
               {page.intro}
             </p>
           </div>
@@ -94,7 +96,17 @@ export function ServicesPageView() {
             style={{ background: index % 2 === 0 ? "var(--lgl-section)" : "var(--lgl-bg)" }}
           >
             <Container>
-              <div className="grid grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-2 lg:gap-16">
+              {/* Link target: jump links and homepage links land on this heading, just below the fixed header */}
+              <div id={pillar.slug} className="scroll-mt-32">
+                <p className="home-eyebrow">
+                  <b className="font-bold">{number}</b>
+                  {item.label}
+                </p>
+                <h2 className={`mt-5 ${pillarHeadingClass}`} style={headingFont}>
+                  {accentTitle(item.title)}
+                </h2>
+              </div>
+              <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-10 md:mt-10 lg:grid-cols-2 lg:gap-16">
                 <div className={index % 2 === 1 ? "lg:order-2" : undefined}>
                   <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-3xl border border-lgl-fg/10 bg-lgl-fg/5 lg:sticky lg:top-36">
                     <Image
@@ -109,16 +121,8 @@ export function ServicesPageView() {
                   </figure>
                 </div>
 
-                {/* Link target: jump links and homepage links land on this heading, just below the fixed header */}
-                <div id={pillar.slug} className="scroll-mt-32">
-                  <p className="home-eyebrow">
-                    <b className="font-bold">{number}</b>
-                    {item.label}
-                  </p>
-                  <h2 className={`mt-5 ${headingClass}`} style={headingFont}>
-                    {accentTitle(item.title)}
-                  </h2>
-                  <div className="mt-6 space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+                <div>
+                  <div className="space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
                     {item.intro.split("\n\n").map((paragraph) => (
                       <p key={paragraph}>{paragraph}</p>
                     ))}

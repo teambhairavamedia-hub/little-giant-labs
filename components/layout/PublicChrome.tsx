@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { I18nProvider } from "@/lib/i18n/context";
 import type { ReactNode } from "react";
 
@@ -14,6 +15,7 @@ export function PublicChrome({ children }: { children: ReactNode }) {
       <Header />
       {children}
       <Footer />
+      <WhatsAppButton />
     </I18nProvider>
   );
 }
