@@ -327,6 +327,33 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+/* ── Calendly square embed container & theme isolation ── */
+.calendly-square-frame {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--lgl-track) transparent;
+}
+
+.calendly-square-frame::-webkit-scrollbar {
+  width: 6px;
+}
+
+.calendly-square-frame::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.calendly-square-frame::-webkit-scrollbar-thumb {
+  background: var(--lgl-track);
+  border-radius: 9999px;
+}
+
+.calendly-inline-widget,
+.calendly-inline-widget iframe {
+  color-scheme: light !important;
+}
+
 /* ── Noomo-style hover underline link ── */
 .link-underline {
   position: relative;

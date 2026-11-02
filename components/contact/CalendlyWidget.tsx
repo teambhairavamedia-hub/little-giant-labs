@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Script from "next/script";
 import {
   DEFAULT_COLOR_THEME,
+  type ColorTheme,
   getColorTheme,
   subscribeColorTheme,
 } from "@/lib/theme";
@@ -40,7 +41,13 @@ export function CalendlyWidget() {
   const [widgetHeight, setWidgetHeight] = useState<string>(CALENDLY_INITIAL_HEIGHT);
   const lastUrlRef = useRef<string | null>(null);
 
-  const url = buildCalendlyUrl(theme);
+  // Preserve the initial URL session across theme toggles so switching themes
+  // does not destroy or reload the active Calendly iframe and reset user progress.
+  const initialThemeRef = useRef<ColorTheme | null>(null);
+  if (!initialThemeRef.current && typeof window !== "undefined") {
+    initialThemeRef.current = getColorTheme();
+  }
+  const url = buildCalendlyUrl(initialThemeRef.current ?? theme);
 
   // If window.Calendly is already on the page (e.g. client-side navigation), record script as loaded
   useEffect(() => {
@@ -130,12 +137,23 @@ export function CalendlyWidget() {
         }}
       />
       <div
-        ref={containerRef}
-        className="calendly-inline-widget w-full transition-[height] duration-200"
-        data-url={url}
-        data-resize="true"
-        style={{ minWidth: "320px", height: widgetHeight, width: "100%" }}
-      />
+        className="calendly-square-frame relative w-full aspect-square overflow-y-auto overflow-x-hidden rounded-2xl border border-lgl-line/20 bg-lgl-bg shadow-sm transition-colors duration-200"
+        data-theme={theme}
+      >
+        <div
+          ref={containerRef}
+          className="calendly-inline-widget w-full transition-[height] duration-200"
+          data-url={url}
+          data-resize="true"
+          style={{
+            minWidth: "320px",
+            height: widgetHeight,
+            minHeight: "100%",
+            width: "100%",
+            colorScheme: "light",
+          }}
+        />
+      </div>
     </div>
   );
 }
