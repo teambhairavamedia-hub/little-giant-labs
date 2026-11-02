@@ -19,7 +19,9 @@ const pillBase =
 const pillFont: CSSProperties = { fontFamily: "var(--font-dm-sans), sans-serif" };
 const headingFont: CSSProperties = { fontFamily: "var(--font-manrope), sans-serif" };
 const pillarHeadingClass =
-  "text-[clamp(1.75rem,3.4vw,2.5rem)] font-normal leading-[1.08] tracking-[-0.04em] text-lgl-fg";
+  "text-[clamp(1.75rem,3.4vw,2.5rem)] font-normal tracking-[-0.04em] text-lgl-fg";
+// Set inline: the global h1–h6 rule (line-height: 1) would override a utility class
+const pillarHeadingStyle: CSSProperties = { ...headingFont, lineHeight: 1.2 };
 const headingClass =
   "text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-normal leading-[1.04] tracking-[-0.04em] text-lgl-fg";
 
@@ -102,7 +104,7 @@ export function ServicesPageView() {
                   <b className="font-bold">{number}</b>
                   {item.label}
                 </p>
-                <h2 className={`mt-5 ${pillarHeadingClass}`} style={headingFont}>
+                <h2 className={`mt-5 ${pillarHeadingClass}`} style={pillarHeadingStyle}>
                   {accentTitle(item.title)}
                 </h2>
               </div>
@@ -180,7 +182,7 @@ export function ServicesPageView() {
             <p className="home-eyebrow">
               {capabilities.eyebrow}
             </p>
-            <h2 className={`mt-5 ${pillarHeadingClass}`} style={headingFont}>
+            <h2 className={`mt-5 ${pillarHeadingClass}`} style={pillarHeadingStyle}>
               {accentTitle(capabilities.lead)}
             </h2>
           </div>

@@ -183,7 +183,7 @@ Planning only; no phase is marked complete based on plans.
 - Vercel deployment existence, environment variable values/scopes, and production behavior are not verified.
 - Firebase sign-in settings, verified admin accounts, service-account permissions, and project alignment are not verified.
 - Public submission abuse controls such as rate limiting/CAPTCHA were not found in the inspected handler; decide whether and how to address in a security-hardening task.
-- Favicon/app icons: `favicon.ico` (16/32/48) plus `lgl-icon-48.png`, `lgl-icon-96.png`, `lgl-apple-icon.png` (180) and `lgl-icon-192/512.png` (web manifest) show the square logo mark enlarged on white with slightly thickened strokes, so it reads in browser tabs and Google's round search-result frame. The files were renamed from the older `favicon-96x96.png` / `apple-touch-icon.png` / `web-app-manifest-*` names so caches treat them as new; Google refreshes search-result icons only when it recrawls the homepage.
+- Favicon/app icons (browser tab, Google results, home screen): the square logo mark, enlarged on white with slightly thickened strokes so it reads at small sizes: `favicon.ico` (16/32/48), `lgl-icon-48.png`, `lgl-icon-96.png`, `lgl-apple-icon.png` (180) and `lgl-icon-192/512.png` (web manifest). Google refreshes search-result icons only when it recrawls the homepage.
 
 ## 9. Maintenance Instructions
 

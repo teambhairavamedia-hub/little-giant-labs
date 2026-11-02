@@ -456,8 +456,8 @@ html.lenis, html.lenis body {
 /* Body copy is justified on every public page and device. Labels, centred sections, short checklist items and list items holding their own headings are left out. */
 .locale-root main :is(p,blockquote,li:not(.flex,:has(h2,h3,h4,p))):not(.home-eyebrow,.label-eyebrow,.contact-topic,.text-center,.text-center *,.home-hero *,.final-card *,.why-closing-list *,.loop-steps *,.loop-caption,.work-outcome *) { text-align:justify; hyphens:auto; hyphenate-limit-chars:10 4 4; }
 
-/* Contact hero: soft green and gold glows, topic chips, and the transparent target artwork */
-.contact-hero { background:radial-gradient(55% 70% at 85% 30%,color-mix(in srgb,var(--lgl-sage-strong) 14%,transparent),transparent 70%),radial-gradient(50% 60% at 5% 100%,color-mix(in srgb,var(--lgl-gold) 10%,transparent),transparent 70%),var(--lgl-bg); }
+/* Contact hero: the page background (no glows, so it matches the rest of the page), topic chips, and the target artwork */
+.contact-hero { background:var(--lgl-bg); }
 .contact-topic { display:inline-flex; align-items:center; gap:.6rem; padding:.4rem 1rem .4rem .4rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 30%,transparent); border-radius:999px; background:color-mix(in srgb,var(--lgl-fg) 3%,transparent); color:var(--lgl-fg); font-size:.8rem; font-weight:600; letter-spacing:.04em; }
 .contact-visual { position:relative; width:100%; max-width:300px; aspect-ratio:1433/1259; justify-self:center; margin:0; transform:rotate(8deg); }
 /* Below 1024px it sits centred under the text, smaller so the form stays close */
