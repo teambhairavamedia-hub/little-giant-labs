@@ -7,13 +7,9 @@ import {
   getColorTheme,
   subscribeColorTheme,
 } from "@/lib/theme";
-import {
-  CALENDLY_BASE_URL,
-  CALENDLY_THEME_CONFIG,
-  buildCalendlyUrl,
-} from "@/lib/calendly";
+import { CALENDLY_BASE_URL, buildCalendlyUrl } from "@/lib/calendly";
 
-export { CALENDLY_BASE_URL, CALENDLY_THEME_CONFIG, buildCalendlyUrl };
+export { CALENDLY_BASE_URL, buildCalendlyUrl };
 
 export const CALENDLY_INITIAL_HEIGHT = "850px";
 
@@ -40,7 +36,15 @@ export function CalendlyWidget() {
   const [widgetHeight, setWidgetHeight] = useState<string>(CALENDLY_INITIAL_HEIGHT);
   const lastUrlRef = useRef<string | null>(null);
 
-  const url = buildCalendlyUrl(theme);
+  // Tracks whether the user has advanced past the date/time picker into the
+  // booking form. Once true, reinitializing the widget would erase their
+  // selected slot and form entries, so we skip reinits until the session ends.
+  const hasProgressRef = useRef(false);
+
+  // The Calendly URL uses a single fixed palette, so it never changes when the
+  // website theme changes. The iframe is therefore never recreated on a theme
+  // toggle, preserving the user's selected date, time, and booking progress.
+  const url = buildCalendlyUrl();
 
   // If window.Calendly is already on the page (e.g. client-side navigation), record script as loaded
   useEffect(() => {
@@ -49,22 +53,31 @@ export function CalendlyWidget() {
     }
   }, []);
 
-  // Listen to Calendly's postMessage events for dynamic height adjustments
+  // Listen to Calendly's postMessage events for dynamic height adjustments and
+  // booking-progress tracking.
   useEffect(() => {
     const handleMessage = (e: MessageEvent) => {
       if (typeof e.origin === "string" && !e.origin.includes("calendly.com")) {
         return;
       }
-      if (
-        e.data &&
-        typeof e.data === "object" &&
-        e.data.event === "calendly.page_height" &&
-        e.data.payload?.height
-      ) {
+      if (!e.data || typeof e.data !== "object") return;
+
+      if (e.data.event === "calendly.page_height" && e.data.payload?.height) {
         const height = Number(e.data.payload.height);
         if (!isNaN(height) && height > 0) {
           setWidgetHeight(`${height}px`);
         }
+      }
+
+      // The user selected a date/time and advanced to the booking form.
+      // Lock reinits from this point to preserve their in-progress session.
+      if (e.data.event === "calendly.date_and_time_selected") {
+        hasProgressRef.current = true;
+      }
+
+      // Booking completed — safe to reinitialize for a fresh session.
+      if (e.data.event === "calendly.event_scheduled") {
+        hasProgressRef.current = false;
       }
     };
 
@@ -80,7 +93,13 @@ export function CalendlyWidget() {
 
     const tryInit = (): boolean => {
       if (typeof window !== "undefined" && window.Calendly) {
+        // Already showing the correct iframe — nothing to do.
         if (lastUrlRef.current === url && container.querySelector("iframe")) {
+          return true;
+        }
+        // URL changed but the user is mid-booking. Preserve the session rather
+        // than reload the iframe and erase their progress.
+        if (hasProgressRef.current && container.querySelector("iframe")) {
           return true;
         }
         container.innerHTML = "";
@@ -120,7 +139,7 @@ export function CalendlyWidget() {
   }, [url, scriptLoaded]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto overflow-x-clip">
+    <div className="w-full max-w-xl mx-auto overflow-x-clip">
       <Script
         id="calendly-widget-script"
         src="https://assets.calendly.com/assets/external/widget.js"
@@ -130,12 +149,21 @@ export function CalendlyWidget() {
         }}
       />
       <div
-        ref={containerRef}
-        className="calendly-inline-widget w-full transition-[height] duration-200"
-        data-url={url}
-        data-resize="true"
-        style={{ minWidth: "320px", height: widgetHeight, width: "100%" }}
-      />
+        className="calendly-frame relative w-full overflow-x-hidden rounded-2xl border border-lgl-line/20 bg-lgl-bg shadow-sm transition-colors duration-200"
+        data-theme={theme}
+      >
+        <div
+          ref={containerRef}
+          className="calendly-inline-widget w-full transition-[height] duration-200"
+          data-url={url}
+          data-resize="true"
+          style={{
+            minWidth: "320px",
+            height: widgetHeight,
+            width: "100%",
+          }}
+        />
+      </div>
     </div>
   );
 }

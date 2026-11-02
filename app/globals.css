@@ -327,6 +327,54 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+/* ── Calendly square embed container & theme isolation ── */
+.application-received-container {
+  max-width: 1480px !important;
+}
+
+/* Scrollbar thumb/track colours per theme */
+:root {
+  --calendly-scrollbar-track: rgba(255, 255, 255, 0.05);
+  --calendly-scrollbar-thumb: rgba(197, 160, 89, 0.45);
+}
+:root[data-theme="light"] {
+  --calendly-scrollbar-track: rgba(197, 160, 89, 0.08);
+  --calendly-scrollbar-thumb: rgba(133, 97, 31, 0.40);
+}
+
+.calendly-frame {
+  width: 100%;
+  max-width: 100%;
+  /* No fixed aspect-ratio — height follows widgetHeight driven by Calendly postMessage */
+  scrollbar-width: thin;
+  scrollbar-color: var(--calendly-scrollbar-thumb) var(--calendly-scrollbar-track);
+}
+
+.calendly-frame::-webkit-scrollbar {
+  width: 5px;
+}
+
+.calendly-frame::-webkit-scrollbar-track {
+  background: var(--calendly-scrollbar-track);
+  border-radius: 9999px;
+}
+
+.calendly-frame::-webkit-scrollbar-thumb {
+  background: var(--calendly-scrollbar-thumb);
+  border-radius: 9999px;
+}
+
+.calendly-frame::-webkit-scrollbar-thumb:hover {
+  background: var(--lgl-gold);
+}
+
+.calendly-inline-widget iframe {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  border: 0 !important;
+}
+
 /* ── Noomo-style hover underline link ── */
 .link-underline {
   position: relative;

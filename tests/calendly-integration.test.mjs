@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import {
   CALENDLY_BASE_URL,
-  CALENDLY_THEME_CONFIG,
+  CALENDLY_PALETTE,
   buildCalendlyUrl,
 } from "../lib/calendly.ts";
 
@@ -13,38 +13,31 @@ const projectRoot = path.resolve(import.meta.dirname, "..");
 test("Calendly uses the updated booking URL", () => {
   assert.equal(
     CALENDLY_BASE_URL,
-    "https://calendly.com/hello-littlegiantlabs/brand-strategy-discussion-meeting-clone"
+    "https://calendly.com/hello-littlegiantlabs/brand-strategy-discussion-meeting"
   );
 });
 
-test("Calendly dark theme URL contains exact required hex parameters", () => {
-  assert.deepEqual(CALENDLY_THEME_CONFIG.dark, {
-    background_color: "0b1b2b",
+test("Calendly palette is a single fixed palette", () => {
+  assert.deepEqual(CALENDLY_PALETTE, {
+    background_color: "162638",
     text_color: "f8f6f0",
     primary_color: "c5a059",
   });
+});
 
-  const darkUrl = buildCalendlyUrl("dark");
-  const parsed = new URL(darkUrl);
+test("buildCalendlyUrl always generates the fixed-palette URL", () => {
+  const url = buildCalendlyUrl();
+  const parsed = new URL(url);
+
   assert.equal(parsed.origin + parsed.pathname, CALENDLY_BASE_URL);
-  assert.equal(parsed.searchParams.get("background_color"), "0b1b2b");
+  assert.equal(parsed.searchParams.get("background_color"), "162638");
   assert.equal(parsed.searchParams.get("text_color"), "f8f6f0");
   assert.equal(parsed.searchParams.get("primary_color"), "c5a059");
 });
 
-test("Calendly light theme URL contains exact required hex parameters", () => {
-  assert.deepEqual(CALENDLY_THEME_CONFIG.light, {
-    background_color: "f8f6f0",
-    text_color: "0b1b2b",
-    primary_color: "85611f",
-  });
-
-  const lightUrl = buildCalendlyUrl("light");
-  const parsed = new URL(lightUrl);
-  assert.equal(parsed.origin + parsed.pathname, CALENDLY_BASE_URL);
-  assert.equal(parsed.searchParams.get("background_color"), "f8f6f0");
-  assert.equal(parsed.searchParams.get("text_color"), "0b1b2b");
-  assert.equal(parsed.searchParams.get("primary_color"), "85611f");
+test("buildCalendlyUrl is theme-independent and deterministic", () => {
+  assert.equal(buildCalendlyUrl(), buildCalendlyUrl());
+  assert.equal(buildCalendlyUrl.length, 0);
 });
 
 test("CalendlyWidget component source implements auto-resize, dynamic height, deduplication, and cleanup", () => {
@@ -90,8 +83,8 @@ test("CalendlyWidget component source implements auto-resize, dynamic height, de
     "Component must clear innerHTML to prevent duplicate widget instances"
   );
   assert.ok(
-    widgetSource.includes("max-w-4xl"),
-    "Layout must have max-w-4xl constraint"
+    widgetSource.includes("max-w-xl"),
+    "Layout must keep its existing max-width constraint"
   );
   assert.ok(
     widgetSource.includes('minWidth: "320px"') || widgetSource.includes('min-width: 320px'),
@@ -100,6 +93,22 @@ test("CalendlyWidget component source implements auto-resize, dynamic height, de
   assert.ok(
     widgetSource.includes('height: widgetHeight'),
     "Widget must dynamically apply widgetHeight"
+  );
+  assert.ok(
+    widgetSource.includes("buildCalendlyUrl()"),
+    "Component must call buildCalendlyUrl without a theme argument"
+  );
+  assert.ok(
+    !widgetSource.includes("CALENDLY_THEME_CONFIG"),
+    "Component must not reference the obsolete CALENDLY_THEME_CONFIG"
+  );
+  assert.ok(
+    widgetSource.includes("data-theme={theme}"),
+    "Outer container must keep its theme-responsive styling"
+  );
+  assert.ok(
+    widgetSource.includes("calendly.date_and_time_selected"),
+    "Component must preserve the booking-progress safeguard"
   );
 });
 
