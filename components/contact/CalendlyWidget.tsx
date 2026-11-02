@@ -127,7 +127,7 @@ export function CalendlyWidget() {
   }, [url, scriptLoaded]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto overflow-x-clip">
+    <div className="w-full max-w-2xl mx-auto overflow-x-clip">
       <Script
         id="calendly-widget-script"
         src="https://assets.calendly.com/assets/external/widget.js"
@@ -137,7 +137,7 @@ export function CalendlyWidget() {
         }}
       />
       <div
-        className="calendly-square-frame relative w-full aspect-square overflow-y-auto overflow-x-hidden rounded-2xl border border-lgl-line/20 bg-lgl-bg shadow-sm transition-colors duration-200"
+        className="calendly-frame relative w-full overflow-x-hidden rounded-2xl border border-lgl-line/20 bg-lgl-bg shadow-sm transition-colors duration-200"
         data-theme={theme}
       >
         <div
@@ -148,7 +148,6 @@ export function CalendlyWidget() {
           style={{
             minWidth: "320px",
             height: widgetHeight,
-            minHeight: "100%",
             width: "100%",
             colorScheme: "light",
           }}

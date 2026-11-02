@@ -13,8 +13,8 @@ export function ApplicationReceivedPageView() {
 
   return (
     <main className="flex min-h-[80vh] items-center bg-lgl-bg pt-32 pb-20 md:pt-40 md:pb-28 text-lgl-fg overflow-x-clip">
-      <Container className="w-full">
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-12 xl:gap-16 w-full">
+      <Container className="w-full application-received-container max-w-none">
+        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-[minmax(0,440px)_minmax(0,560px)] xl:grid-cols-[minmax(0,480px)_minmax(0,600px)] lg:gap-12 xl:gap-16 w-full justify-center lg:justify-between">
           <div className="border-l border-[#C5A059] py-4 pl-7 sm:pl-12">
             <svg viewBox="0 0 96 96" className="mb-8 h-20 w-20" aria-hidden="true" focusable="false">
               <circle cx="48" cy="48" r="46" fill="none" stroke="#C5A059" strokeOpacity=".3" strokeDasharray="2 6" />
@@ -51,7 +51,7 @@ export function ApplicationReceivedPageView() {
             </Link>
           </div>
 
-          <div className="w-full">
+          <div className="w-full flex items-center justify-center lg:justify-end">
             <CalendlyWidget />
           </div>
         </div>
