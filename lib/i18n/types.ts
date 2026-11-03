@@ -232,6 +232,8 @@ export interface TranslationDictionary {
       stepsLabel: string;
       steps: [string, string, string];
       tagline: string;
+      /* English only for now; other languages fall back to the English text */
+      bookCall?: { title: string; text: string; button: string };
     };
     form: {
       stepTitles: [string, string, string];

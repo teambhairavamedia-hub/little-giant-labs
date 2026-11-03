@@ -62,6 +62,8 @@ export function HomeRedesign() {
 
   const contactHref = getLocalizedPath("/contact", locale);
   const servicesHref = getLocalizedPath("/services", locale);
+  // Each service has its own page in English; translated pages keep linking to the section on the Services page
+  const serviceHref = (slug: string) => (locale === "en" ? `/services/${slug}` : `${servicesHref}#${slug}`);
 
   const projects = workDict.projects.map((proj, idx) => ({
     ...proj,
@@ -199,7 +201,7 @@ export function HomeRedesign() {
                     <span className="offer-number">{String(index + 1).padStart(2, "0")}</span>
                     <h3>{stripStop(item.title)}</h3>
                     <p>{item.description}</p>
-                    <Link className="offer-link" href={`${servicesHref}#${pillar.slug}`}>
+                    <Link className="offer-link" href={serviceHref(pillar.slug)}>
                       {whatWeDo.exploreLabel} <span aria-hidden="true">→</span>
                     </Link>
                   </div>
@@ -250,7 +252,7 @@ export function HomeRedesign() {
           </ul>
           {/* Opens the Technology & Product Marketing pillar on the Services page */}
           <div className="tech-actions">
-            <Link className="home-button home-button-primary" href={`${servicesHref}#technology-product`}>
+            <Link className="home-button home-button-primary" href={serviceHref("technology-product")}>
               {tech.cta} <span aria-hidden="true">→</span>
             </Link>
           </div>

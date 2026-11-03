@@ -33,7 +33,11 @@ export function Header() {
   ];
 
   const ctaHref = getLocalizedPath("/contact", locale);
-  const activeHref = isHomePage ? activeSectionHref ?? homePath : pathname.replace(/\/$/, "") || "/";
+  // A service's own page (/services/brand-strategy) highlights Services
+  const currentPath = pathname.replace(/\/$/, "") || "/";
+  const activeHref = isHomePage
+    ? activeSectionHref ?? homePath
+    : currentPath.startsWith(`${servicesHref}/`) ? servicesHref : currentPath;
 
   /* Page-colored backdrop once content scrolls beneath the fixed header (color only — no size change) */
   useEffect(() => {

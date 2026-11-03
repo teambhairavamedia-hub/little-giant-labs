@@ -26,11 +26,10 @@ const headingClass =
   "text-balance text-[clamp(1.875rem,4.4vw,3.25rem)] font-normal leading-[1.04] tracking-[-0.04em] text-lgl-fg";
 
 export function ServicesPageView() {
-  const { dict, locale } = useI18n();
+  const { dict } = useI18n();
   const page = dict.servicesPage;
   const { capabilities } = page;
   const intro = dict.home.whatWeDo;
-  const contactHref = getLocalizedPath("/contact", locale);
 
   return (
     <main className="services-page [&_:is(h1,h2,h3)]:[overflow-wrap:break-word]">
@@ -87,88 +86,9 @@ export function ServicesPageView() {
       </Section>
 
       {/* ── One section per service; image side alternates on desktop ── */}
-      {page.items.map((item, index) => {
-        const pillar = servicePillars[index];
-        const number = String(index + 1).padStart(2, "0");
-        return (
-          <Section
-            key={pillar.slug}
-            theme="light"
-            className="border-b border-lgl-fg/10 py-12 md:py-18"
-            style={{ background: index % 2 === 0 ? "var(--lgl-section)" : "var(--lgl-bg)" }}
-          >
-            <Container>
-              {/* Link target: jump links and homepage links land on this heading, just below the fixed header */}
-              <div id={pillar.slug} className="scroll-mt-32">
-                <p className="home-eyebrow">
-                  <b className="font-bold">{number}</b>
-                  {item.label}
-                </p>
-                <h2 className={`mt-5 ${pillarHeadingClass}`} style={pillarHeadingStyle}>
-                  {accentTitle(item.title)}
-                </h2>
-              </div>
-              <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-10 md:mt-10 lg:grid-cols-2 lg:gap-16">
-                <div className={index % 2 === 1 ? "lg:order-2" : undefined}>
-                  <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-3xl border border-lgl-fg/10 bg-lgl-fg/5 lg:sticky lg:top-36">
-                    <Image
-                      src={pillar.image}
-                      alt={dict.home.whatWeDo.items[index]?.alt ?? item.label}
-                      width={pillar.width}
-                      height={pillar.height}
-                      sizes="(max-width: 1024px) 92vw, 540px"
-                      style={{ objectPosition: pillar.focus }}
-                      className="h-full w-full object-cover"
-                    />
-                  </figure>
-                </div>
-
-                <div>
-                  <div className="space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
-                    {item.intro.split("\n\n").map((paragraph) => (
-                      <p key={paragraph}>{paragraph}</p>
-                    ))}
-                  </div>
-
-                  <h3 className="mt-10 text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
-                    {page.helpLabel}
-                  </h3>
-                  <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                    {item.help.map((help) => (
-                      <li key={help} className="flex items-start gap-3 text-[0.9375rem] leading-relaxed text-lgl-fg/75">
-                        <CheckIcon size={14} strokeWidth={2} className="mt-1 shrink-0 text-lgl-gold" />
-                        {help}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {(item.outcome || item.fit) && (
-                    <div className="mt-10 grid gap-5 md:grid-cols-2">
-                      {item.outcome && (
-                        <Card className="p-6 md:p-7">
-                          <p className="label-eyebrow text-lgl-gold">{page.outcomeLabel}</p>
-                          <p className="mt-3 text-[0.9375rem] leading-relaxed text-lgl-fg/80">{item.outcome}</p>
-                        </Card>
-                      )}
-                      {item.fit && (
-                        <Card className="p-6 md:p-7">
-                          <p className="label-eyebrow text-lgl-gold">{page.fitLabel}</p>
-                          <p className="mt-3 text-[0.9375rem] leading-relaxed text-lgl-fg/80">{item.fit}</p>
-                        </Card>
-                      )}
-                    </div>
-                  )}
-
-                  <Link href={contactHref} className={`lgl-gold-cta ${pillBase} mt-10 hover:opacity-85`} style={pillFont}>
-                    {item.cta}
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </div>
-              </div>
-            </Container>
-          </Section>
-        );
-      })}
+      {page.items.map((item, index) => (
+        <ServicePillarSection key={servicePillars[index].slug} index={index} />
+      ))}
 
       {/* ── Capabilities overview (moved from the About page) ── */}
       <Section
@@ -197,5 +117,94 @@ export function ServicesPageView() {
         </Container>
       </Section>
     </main>
+  );
+}
+
+/* One service: number, heading, image, description, what we help with, outcome and fit, and a contact button.
+   Used for each section of the Services page and, as the page heading, on that service's own page. */
+export function ServicePillarSection({ index, headingLevel = "h2" }: { index: number; headingLevel?: "h1" | "h2" }) {
+  const { dict, locale } = useI18n();
+  const page = dict.servicesPage;
+  const item = page.items[index];
+  const contactHref = getLocalizedPath("/contact", locale);
+  const Heading = headingLevel;
+  const pillar = servicePillars[index];
+  const number = String(index + 1).padStart(2, "0");
+  return (
+    <Section
+      theme="light"
+      className="border-b border-lgl-fg/10 py-12 md:py-18"
+      style={{ background: index % 2 === 0 ? "var(--lgl-section)" : "var(--lgl-bg)" }}
+    >
+      <Container>
+        {/* Link target: jump links and homepage links land on this heading, just below the fixed header */}
+        <div id={pillar.slug} className="scroll-mt-32">
+          <p className="home-eyebrow">
+            <b className="font-bold">{number}</b>
+            {item.label}
+          </p>
+          <Heading className={`mt-5 ${pillarHeadingClass}`} style={pillarHeadingStyle}>
+            {accentTitle(item.title)}
+          </Heading>
+        </div>
+        <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-10 md:mt-10 lg:grid-cols-2 lg:gap-16">
+          <div className={index % 2 === 1 ? "lg:order-2" : undefined}>
+            <figure className="relative m-0 aspect-[4/3] overflow-hidden rounded-3xl border border-lgl-fg/10 bg-lgl-fg/5 lg:sticky lg:top-36">
+              <Image
+                src={pillar.image}
+                alt={dict.home.whatWeDo.items[index]?.alt ?? item.label}
+                width={pillar.width}
+                height={pillar.height}
+                sizes="(max-width: 1024px) 92vw, 540px"
+                style={{ objectPosition: pillar.focus }}
+                className="h-full w-full object-cover"
+              />
+            </figure>
+          </div>
+
+          <div>
+            <div className="space-y-4 text-base leading-[1.8] text-lgl-fg/75 md:text-lg">
+              {item.intro.split("\n\n").map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+
+            <h3 className="mt-10 text-lg font-bold tracking-tight text-lgl-fg" style={headingFont}>
+              {page.helpLabel}
+            </h3>
+            <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+              {item.help.map((help) => (
+                <li key={help} className="flex items-start gap-3 text-[0.9375rem] leading-relaxed text-lgl-fg/75">
+                  <CheckIcon size={14} strokeWidth={2} className="mt-1 shrink-0 text-lgl-gold" />
+                  {help}
+                </li>
+              ))}
+            </ul>
+
+            {(item.outcome || item.fit) && (
+              <div className="mt-10 grid gap-5 md:grid-cols-2">
+                {item.outcome && (
+                  <Card className="p-6 md:p-7">
+                    <p className="label-eyebrow text-lgl-gold">{page.outcomeLabel}</p>
+                    <p className="mt-3 text-[0.9375rem] leading-relaxed text-lgl-fg/80">{item.outcome}</p>
+                  </Card>
+                )}
+                {item.fit && (
+                  <Card className="p-6 md:p-7">
+                    <p className="label-eyebrow text-lgl-gold">{page.fitLabel}</p>
+                    <p className="mt-3 text-[0.9375rem] leading-relaxed text-lgl-fg/80">{item.fit}</p>
+                  </Card>
+                )}
+              </div>
+            )}
+
+            <Link href={contactHref} className={`lgl-gold-cta ${pillBase} mt-10 hover:opacity-85`} style={pillFont}>
+              {item.cta}
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </Container>
+    </Section>
   );
 }

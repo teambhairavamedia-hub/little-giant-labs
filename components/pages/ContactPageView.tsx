@@ -3,9 +3,11 @@
 import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { ContactForm } from "@/components/contact/ContactForm";
-import { CompassIcon, DocumentIcon, HandshakeIcon, PenToolIcon, SearchIcon, TrendIcon } from "@/components/ui/Icons";
+import { ClockIcon, CompassIcon, DocumentIcon, HandshakeIcon, PenToolIcon, SearchIcon, TrendIcon } from "@/components/ui/Icons";
 import { accentTitle } from "@/components/ui/accentTitle";
 import { useI18n } from "@/lib/i18n/context";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { CALENDLY_BASE_URL } from "@/lib/calendly";
 
 /* "What happens next": tell us → we review → we connect, as a connected vertical timeline. */
 function NextSteps({ label, steps }: { label: string; steps: readonly string[] }) {
@@ -61,6 +63,7 @@ function ContactHeroVisual() {
 
 export function ContactPageView() {
   const { dict } = useI18n();
+  const bookCall = dict.contact.sidebar.bookCall ?? getDictionary("en").contact.sidebar.bookCall!;
 
   return (
     <main className="min-h-screen bg-lgl-bg text-lgl-fg">
@@ -99,6 +102,24 @@ export function ContactPageView() {
             <aside className="order-2 lg:order-none lg:sticky lg:top-12 lg:self-start">
               <p className="max-w-sm text-base leading-relaxed text-lgl-soft">{dict.contact.sidebar.intro}</p>
               <NextSteps label={dict.contact.sidebar.stepsLabel} steps={dict.contact.sidebar.steps} />
+              {/* For visitors who would rather speak than fill in the form: the same Calendly event as after an enquiry */}
+              <div className="lgl-brand-card mt-10 flex flex-col items-center rounded-2xl border border-lgl-gold/30 px-6 py-7 text-center">
+                <span className="lgl-icon-badge h-11 w-11">
+                  <ClockIcon size={20} />
+                </span>
+                <p className="mt-4 font-display text-xl text-lgl-fg">{bookCall.title}</p>
+                <p className="mt-2 max-w-[26ch] text-sm leading-relaxed text-lgl-soft">{bookCall.text}</p>
+                {/* Same gold pill as the form's Continue button */}
+                <a
+                  className="lgl-gold-cta mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 text-xs font-bold uppercase tracking-[.18em] transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C5A059]"
+                  href={CALENDLY_BASE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {bookCall.button}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
               <div className="mt-10 border-t border-lgl-line/30 pt-5 text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-soft">
                 {dict.contact.sidebar.tagline}
               </div>
