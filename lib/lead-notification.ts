@@ -32,7 +32,8 @@ export function buildLeadEmail(application: ValidatedApplication, adminUrl: stri
     "",
     `Name: ${oneLine(application.contact_name, 200)}`,
     `Email: ${application.decision_maker_email}`,
-    `Phone / WhatsApp: ${application.contact_phone ?? "Not given"}`,
+    // Older enquiries may include a phone number; the form no longer asks for one
+    ...(application.contact_phone ? [`Phone / WhatsApp: ${application.contact_phone}`] : []),
     `Company: ${oneLine(application.legal_name, 300)}`,
     `Role: ${application.contact_role ?? "Not given"}`,
     `Help with: ${application.help_with}`,

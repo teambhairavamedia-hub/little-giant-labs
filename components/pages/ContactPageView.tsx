@@ -98,7 +98,7 @@ export function ContactPageView() {
 
       <section className="bg-lgl-bg pb-12 pt-6 md:pb-18 md:pt-8">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:gap-16">
+          <div className="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-start lg:gap-16">
             <aside className="order-2 lg:order-none lg:sticky lg:top-12 lg:self-start">
               <p className="max-w-sm text-base leading-relaxed text-lgl-soft">{dict.contact.sidebar.intro}</p>
               <NextSteps label={dict.contact.sidebar.stepsLabel} steps={dict.contact.sidebar.steps} />
