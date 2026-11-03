@@ -23,6 +23,7 @@ const validatedApplication = {
   project_details: "Refresh our campaign creative for the next launch.",
   timeline: null,
   contact_phone: null,
+  lead_source: null,
   qualification_status: "pending_review",
 };
 
@@ -66,6 +67,7 @@ test("RPC arguments map validated fields and serialize SHA-256 as PostgreSQL byt
     p_project_details: validatedApplication.project_details,
     p_timeline: null,
     p_contact_phone: null,
+    p_lead_source: null,
     p_token_hash: fixedMetadata.tokenHashBytea,
     p_token_expires_at: fixedMetadata.tokenExpiresAt,
     p_encrypted_token_payload: fixedMetadata.encryptedTokenPayloadBytea,
@@ -79,12 +81,13 @@ test("RPC arguments map validated fields and serialize SHA-256 as PostgreSQL byt
   assert.doesNotMatch(JSON.stringify(args), /plaintext-token/);
 });
 
-test("fingerprint uses the documented eight-field order including normalized optional nulls", () => {
-  const canonical = ["Asha Rao", "ceo@example.org", "Example Corporation", null, "Creative & content", "Refresh our campaign creative for the next launch.", null, null];
+test("fingerprint uses the documented nine-field order including normalized optional nulls", () => {
+  const canonical = ["Asha Rao", "ceo@example.org", "Example Corporation", null, "Creative & content", "Refresh our campaign creative for the next launch.", null, null, null];
   const expected = `\\x${createHash("sha256").update(JSON.stringify(canonical), "utf8").digest("hex")}`;
   assert.equal(fingerprintApplication(validatedApplication), expected);
   // A different phone number is a different request
   assert.notEqual(fingerprintApplication({ ...validatedApplication, contact_phone: "+919876543210" }), expected);
+  assert.notEqual(fingerprintApplication({ ...validatedApplication, lead_source: { utm_source: "linkedin" } }), expected);
 });
 
 test("browser form submits exactly the eight agreed fields", async () => {

@@ -68,10 +68,11 @@ export function decryptVerificationToken(payloadBytea: string, keyValue = proces
 }
 
 export function fingerprintApplication(application: ValidatedApplication): string {
-  // Stable form order: name, email, company, role, help category, challenge, timeline, phone.
+  // Stable form order: name, email, company, role, help category, challenge, timeline, phone, lead source
+  // (normalized, so its keys are always in LEAD_SOURCE_KEYS order).
   const canonical = [application.contact_name, application.decision_maker_email, application.legal_name,
     application.contact_role, application.help_with, application.project_details, application.timeline,
-    application.contact_phone];
+    application.contact_phone, application.lead_source];
   return `\\x${createHash("sha256").update(JSON.stringify(canonical), "utf8").digest("hex")}`;
 }
 
@@ -88,6 +89,7 @@ export function buildCreateApplicationWithEmailJobArgs(
     p_project_details: application.project_details,
     p_timeline: application.timeline,
     p_contact_phone: application.contact_phone,
+    p_lead_source: application.lead_source,
     p_token_hash: metadata.tokenHashBytea,
     p_token_expires_at: metadata.tokenExpiresAt,
     p_encrypted_token_payload: metadata.encryptedTokenPayloadBytea,

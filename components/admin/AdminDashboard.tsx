@@ -3,11 +3,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { normalizeContactEmail, normalizeContactPhone, normalizeLinkedInProfileUrl } from "@/lib/admin-contact-links";
+import { LEAD_SOURCE_KEYS, describeLeadSource, normalizeLeadSource } from "@/lib/lead-source";
 
 type Application = {
   id: string; legal_name: string; contact_name: string | null; help_with: string | null;
   qualification_status: "qualified" | "rejected" | "pending_review"; submitted_at: string; decision_maker_email: string;
   contact_phone: string | null;
+  lead_source: unknown;
 };
 type DashboardData = {
   applications: Application[];
@@ -105,8 +107,8 @@ export function AdminDashboard() {
         {data.pagination.total === 0 ? <p className="px-6 py-10 text-center text-sm text-[#6b6b6b]">No applications have been received.</p> : <>
           {loading && <p className="px-6 py-2 text-xs text-[#6b6b6b]" role="status">Loading applications…</p>}
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[1180px] border-collapse text-left text-sm">
-              <thead><tr className="bg-[#f7f7f6] text-xs text-[#6b6b6b]"><th scope="col" className="px-5 py-3 font-medium sm:px-7">Company or brand</th><th scope="col" className="px-4 py-3 font-medium">Contact</th><th scope="col" className="px-4 py-3 font-medium">Needs help with</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-4 py-3 font-medium">Phone / WhatsApp</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (IST)</th></tr></thead>
+            <table className="w-full min-w-[1320px] border-collapse text-left text-sm">
+              <thead><tr className="bg-[#f7f7f6] text-xs text-[#6b6b6b]"><th scope="col" className="px-5 py-3 font-medium sm:px-7">Company or brand</th><th scope="col" className="px-4 py-3 font-medium">Contact</th><th scope="col" className="px-4 py-3 font-medium">Needs help with</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-4 py-3 font-medium">Phone / WhatsApp</th><th scope="col" className="px-4 py-3 font-medium">Source</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (IST)</th></tr></thead>
               <tbody>{data.applications.map((application) => {
                 const email = normalizeContactEmail(application.decision_maker_email);
                 const phone = normalizeContactPhone(application.contact_phone);
@@ -115,6 +117,7 @@ export function AdminDashboard() {
                 <td className="px-4 py-4 text-center"><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${application.qualification_status === "qualified" ? "bg-emerald-50 text-emerald-800" : application.qualification_status === "rejected" ? "bg-amber-50 text-amber-900" : "bg-sky-50 text-sky-900"}`}>{application.qualification_status === "pending_review" ? "Pending review" : application.qualification_status === "qualified" ? "Qualified" : "Rejected"}</span></td>
                 <td className="max-w-44 px-4 py-4">{email ? <a href={`mailto:${email.split("@").map(encodeURIComponent).join("@")}`} title={email} aria-label={`Email applicant at ${email}`} className="block max-w-44 truncate text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{email}</a> : <span className="text-[#6b6b6b]" aria-label="Email unavailable">—</span>}</td>
                 <td className="whitespace-nowrap px-4 py-4">{phone ? <a href={`https://wa.me/${phone.slice(1)}`} target="_blank" rel="noopener noreferrer" aria-label={`Message applicant on WhatsApp at ${phone}`} className="text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{phone}</a> : <span className="text-[#6b6b6b]" aria-label="Phone not given">—</span>}</td>
+                <td className="max-w-40 truncate px-4 py-4 text-[#4a4a4a]" title={describeLeadSource(normalizeLeadSource(application.lead_source))}>{describeLeadSource(normalizeLeadSource(application.lead_source))}</td>
                 <td className="whitespace-nowrap px-5 py-4 text-[#6b6b6b] sm:px-7"><time dateTime={application.submitted_at}>{dateFormat.format(new Date(application.submitted_at))}</time></td>
               </tr>;
               })}</tbody>
@@ -174,6 +177,7 @@ function ApplicationDetailPanel({ id, onClose }: { id: string; onClose: () => vo
 
   const email = normalizeContactEmail(application?.decision_maker_email);
   const phone = normalizeContactPhone(application?.contact_phone);
+  const source = normalizeLeadSource(application?.lead_source);
   const linkedin = normalizeLinkedInProfileUrl(application?.decision_maker_linkedin);
   const reasons = Array.isArray(application?.rejection_reasons) ? application.rejection_reasons : [];
   const answer = (value: unknown) => typeof value === "string" && value.trim() ? value : "—";
@@ -201,6 +205,8 @@ function ApplicationDetailPanel({ id, onClose }: { id: string; onClose: () => vo
             <DetailField label="About the project" value={answer(application.project_details)} />
             <DetailField label="Your role" value={answer(application.contact_role)} />
             <DetailField label="Desired timeline" value={answer(application.timeline)} />
+            <DetailField label="Came from" value={describeLeadSource(source)} />
+            {source && <DetailField label="Source details" value={LEAD_SOURCE_KEYS.filter((key) => source[key]).map((key) => `${key}: ${source[key]}`).join("\n")} />}
           </dl>
           {hasLegacyAnswers && <section aria-labelledby="legacy-heading">
             <h3 id="legacy-heading" className="mb-3 text-sm font-semibold text-[#6b6b6b]">Earlier application answers</h3>

@@ -1,4 +1,5 @@
 import type { ValidatedApplication } from "./application-validation.ts";
+import { describeLeadSource } from "./lead-source.ts";
 
 /* Emails the team when a new enquiry has been saved, through Resend's HTTP API (no SDK dependency).
    Optional: without RESEND_API_KEY, LEAD_NOTIFICATION_TO and LEAD_NOTIFICATION_FROM it does nothing, and a failed
@@ -36,6 +37,7 @@ export function buildLeadEmail(application: ValidatedApplication, adminUrl: stri
     `Role: ${application.contact_role ?? "Not given"}`,
     `Help with: ${application.help_with}`,
     `Timeline: ${application.timeline ?? "Not given"}`,
+    `Came from: ${oneLine(describeLeadSource(application.lead_source), 200)}${application.lead_source?.utm_campaign ? ` (campaign: ${oneLine(application.lead_source.utm_campaign, 200)})` : ""}`,
     "",
     "Their challenge:",
     application.project_details,

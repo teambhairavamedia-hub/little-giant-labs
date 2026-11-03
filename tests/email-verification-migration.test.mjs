@@ -19,6 +19,10 @@ const enquiryMigration = await readFile(
   new URL("../supabase/migrations/202610290001_contact_enquiry_fields.sql", import.meta.url),
   "utf8",
 );
+const leadSourceMigration = await readFile(
+  new URL("../supabase/migrations/202611030001_lead_source.sql", import.meta.url),
+  "utf8",
+);
 const phoneMigration = await readFile(
   new URL("../supabase/migrations/202611020001_contact_phone.sql", import.meta.url),
   "utf8",
@@ -174,9 +178,9 @@ test("phone migration adds an E.164 column and a 13-argument RPC that matches th
   const signature = phoneMigration.match(/create function public\.create_application_with_email_job\(([\s\S]*?)\)\s*returns table/i)?.[1] ?? "";
   const names = [...signature.matchAll(/\b(p_[a-z_]+)\s+(?:text|bytea|timestamptz)\b/gi)].map((match) => match[1]);
   const callNames = Object.keys(buildCreateApplicationWithEmailJobArgs(
-    { contact_name: "a", decision_maker_email: "a@b.co", legal_name: "a", contact_role: null, help_with: "a", project_details: "a", timeline: null, contact_phone: null },
+    { contact_name: "a", decision_maker_email: "a@b.co", legal_name: "a", contact_role: null, help_with: "a", project_details: "a", timeline: null, contact_phone: null, lead_source: null },
     { tokenHashBytea: "", tokenExpiresAt: "", encryptedTokenPayloadBytea: "", idempotencyKey: "", requestFingerprintBytea: "" },
-  ));
+  )).filter((name) => name !== "p_lead_source");
   assert.equal(names.length, 13);
   assert.deepEqual([...names].sort(), [...callNames].sort());
   assert.match(phoneMigration, /add column contact_phone text\s+check \(contact_phone is null or contact_phone ~ '\^\\\+\[1-9\]\[0-9\]\{6,14\}\$'\)/i);
@@ -186,4 +190,21 @@ test("phone migration adds an E.164 column and a 13-argument RPC that matches th
   assert.match(phoneMigration, /pg_advisory_xact_lock[\s\S]*v_fingerprint is distinct from p_request_fingerprint[\s\S]*errcode = 'LGL01'/i);
   assert.match(phoneMigration, /revoke all on function[\s\S]*text, text, text, text, text, text, text, text, bytea, timestamptz, bytea, text, bytea[\s\S]*from public, anon, authenticated/i);
   assert.match(phoneMigration, /grant execute on function[\s\S]*to service_role/i);
+});
+
+test("lead source migration adds a JSON column and a 14-argument RPC that matches the application call", async () => {
+  const { buildCreateApplicationWithEmailJobArgs } = await import("../lib/application-verification.ts");
+  const signature = leadSourceMigration.match(/create function public\.create_application_with_email_job\(([\s\S]*?)\)\s*returns table/i)?.[1] ?? "";
+  const names = [...signature.matchAll(/\b(p_[a-z_]+)\s+(?:text|bytea|timestamptz|jsonb)\b/gi)].map((match) => match[1]);
+  const callNames = Object.keys(buildCreateApplicationWithEmailJobArgs(
+    { contact_name: "a", decision_maker_email: "a@b.co", legal_name: "a", contact_role: null, help_with: "a", project_details: "a", timeline: null, contact_phone: null, lead_source: null },
+    { tokenHashBytea: "", tokenExpiresAt: "", encryptedTokenPayloadBytea: "", idempotencyKey: "", requestFingerprintBytea: "" },
+  ));
+  assert.equal(names.length, 14);
+  assert.deepEqual([...names].sort(), [...callNames].sort());
+  assert.match(leadSourceMigration, /add column lead_source jsonb\s+check \(lead_source is null or \(pg_catalog\.jsonb_typeof\(lead_source\) = 'object'/i);
+  assert.match(leadSourceMigration, /contact_phone, lead_source\n[\s\S]*jsonb_typeof\(p_lead_source\) = 'object'/i);
+  assert.doesNotMatch(leadSourceMigration, /drop function/i);
+  assert.match(leadSourceMigration, /pg_advisory_xact_lock[\s\S]*v_fingerprint is distinct from p_request_fingerprint[\s\S]*errcode = 'LGL01'/i);
+  assert.match(leadSourceMigration, /revoke all on function[\s\S]*text, jsonb, bytea, timestamptz, bytea, text, bytea[\s\S]*from public, anon, authenticated/i);
 });

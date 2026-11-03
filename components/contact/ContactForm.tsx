@@ -8,6 +8,8 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { EMAIL_ELIGIBILITY_MESSAGES, isEmailFormatValid, type EmailEligibilityOutcome } from "@/lib/email-eligibility";
 import { APPLICATION_LIMITS, applicationOptions } from "@/lib/application-options";
 import { DEFAULT_PHONE_COUNTRY, PHONE_COUNTRIES, toE164 } from "@/lib/phone";
+import { readLeadSource } from "@/lib/lead-source";
+import { trackEvent } from "@/lib/analytics";
 
 type Enquiry = {
   contactName: string;
@@ -163,6 +165,8 @@ export function ContactForm() {
           help_with: values.helpWith,
           project_details: values.projectDetails,
           timeline: values.timeline,
+          // Where the visitor came from (campaign tags, referring site, landing page), if known
+          lead_source: readLeadSource(),
         }),
       });
 
@@ -171,6 +175,7 @@ export function ContactForm() {
         throw new Error(body?.error || dict.contact.form.serverError);
       }
 
+      trackEvent("generate_lead", { service: values.helpWith });
       router.push(getLocalizedPath("/application-received", locale));
       idempotencyKeyRef.current = null;
     } catch (submissionError) {

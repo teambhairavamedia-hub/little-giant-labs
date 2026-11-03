@@ -20,7 +20,7 @@ test("applications endpoint protects access and selects only dashboard columns",
   const route = await read("../app/api/admin/applications/route.ts");
   assert.ok(route.indexOf("getAdminSession") < route.indexOf("createSupabaseServerClient"));
   assert.match(route, /if \(!\(await getAdminSession\(\)\)\) return fail\("Authentication is required\.", 401\)/);
-  assert.match(route, /id, legal_name, contact_name, help_with, qualification_status, submitted_at, decision_maker_email, contact_phone/);
+  assert.match(route, /id, legal_name, contact_name, help_with, qualification_status, submitted_at, decision_maker_email, contact_phone, lead_source/);
   assert.match(route, /\.order\("submitted_at", \{ ascending: false \}\)\.order\("id", \{ ascending: false \}\)/);
   assert.match(route, /PAGE_SIZE_DEFAULT = 25/);
   assert.match(route, /PAGE_SIZE_MAX = 100/);
@@ -37,7 +37,7 @@ test("application detail endpoint protects and scopes a read to a validated appl
   assert.match(route, /\.eq\("id", id\)/);
   assert.match(route, /\.maybeSingle\(\)/);
   assert.match(route, /Application not found\.", 404/);
-  assert.match(route, /id, contact_name, contact_role, decision_maker_email, contact_phone, legal_name, help_with, project_details, timeline, company_size, industry_vertical, budget_range/);
+  assert.match(route, /id, contact_name, contact_role, decision_maker_email, contact_phone, lead_source, legal_name, help_with, project_details, timeline, company_size, industry_vertical, budget_range/);
   // Legacy partnership-application answers stay readable for older rows
   assert.match(route, /ttm_revenue, monthly_ad_spend, growth_bottleneck, partnership_readiness, decision_maker_linkedin, qualification_status, rejection_reasons/);
   assert.match(route, /Cache-Control.*no-store/);
@@ -79,7 +79,7 @@ test("qualification chart colors match status labels and the table keeps contact
   assert.match(dashboard, /label="Pending review"[^\n]*color="#0284c7" labelClass="text-sky-800"/);
   assert.match(dashboard, /target="_blank" rel="noopener noreferrer"/);
   assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
-  assert.match(dashboard, /min-w-\[1180px\]/);
+  assert.match(dashboard, /min-w-\[1320px\]/);
   assert.match(dashboard, /overflow-x-auto/);
   assert.match(dashboard, /timeZone: "Asia\/Kolkata"/);
   assert.match(dashboard, /Submitted \(IST\)/);

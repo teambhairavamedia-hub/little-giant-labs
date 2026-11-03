@@ -7,6 +7,7 @@ import {
   requiredOptionFields,
 } from "./application-options.ts";
 import { parseE164 } from "./phone.ts";
+import { normalizeLeadSource, type LeadSource } from "./lead-source.ts";
 
 export { applicationOptions } from "./application-options.ts";
 
@@ -19,6 +20,7 @@ export type ApplicationInput = {
   contact_role?: string;
   timeline?: string;
   contact_phone?: string;
+  lead_source?: LeadSource;
 };
 
 export type ValidatedApplication = {
@@ -30,6 +32,7 @@ export type ValidatedApplication = {
   contact_role: string | null;
   timeline: string | null;
   contact_phone: string | null;
+  lead_source: LeadSource | null;
   qualification_status: "pending_review";
 };
 
@@ -104,6 +107,8 @@ export async function validateApplication(body: unknown): Promise<ValidatedAppli
     project_details,
     ...optional,
     contact_phone,
+    // Optional and never rejected: unknown keys, non-strings and blanks are dropped
+    lead_source: normalizeLeadSource(input.lead_source),
     qualification_status: "pending_review",
   };
 }

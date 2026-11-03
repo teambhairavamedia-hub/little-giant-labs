@@ -517,6 +517,11 @@ export const en: TranslationDictionary = {
         "We'll connect to discuss the most appropriate next steps.",
       ],
       tagline: "Brand Strategy · Creative · Digital Growth",
+      bookCall: {
+        title: "Prefer to talk first?",
+        text: "Pick a time that suits you for a short discovery call.",
+        button: "Book a call",
+      },
     },
     form: {
       stepTitles: ["About you", "Your challenge", "A few more details"],
