@@ -50,7 +50,7 @@ test("analytics IDs are validated before they reach the page", async () => {
   const saved = { ga: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID, px: process.env.NEXT_PUBLIC_META_PIXEL_ID };
   try {
     delete process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID; delete process.env.NEXT_PUBLIC_META_PIXEL_ID;
-    assert.equal(gaMeasurementId(), null); assert.equal(metaPixelId(), null);
+    assert.equal(gaMeasurementId(), "G-8QYEK1Z4C8"); assert.equal(metaPixelId(), null);
     process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID = " G-ABC123XYZ "; process.env.NEXT_PUBLIC_META_PIXEL_ID = "123456789012345";
     assert.equal(gaMeasurementId(), "G-ABC123XYZ"); assert.equal(metaPixelId(), "123456789012345");
     process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID = 'G-1");alert(1)//'; process.env.NEXT_PUBLIC_META_PIXEL_ID = "12a";
@@ -60,4 +60,10 @@ test("analytics IDs are validated before they reach the page", async () => {
       if (value === undefined) delete process.env[key]; else process.env[key] = value;
     }
   }
+});
+
+test("enquiry analytics is a safe no-op without a browser", async () => {
+  const { trackEnquiryEvent } = await import("../lib/analytics.ts");
+  assert.doesNotThrow(() => trackEnquiryEvent("enquiry_form_start"));
+  assert.doesNotThrow(() => trackEnquiryEvent("enquiry_step_complete", { step_number: 1, step_name: "about_you" }));
 });

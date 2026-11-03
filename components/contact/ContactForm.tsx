@@ -7,7 +7,7 @@ import { getLocalizedPath } from "@/lib/i18n/config";
 import { EMAIL_ELIGIBILITY_MESSAGES, isEmailFormatValid, type EmailEligibilityOutcome } from "@/lib/email-eligibility";
 import { APPLICATION_LIMITS, applicationOptions } from "@/lib/application-options";
 import { readLeadSource } from "@/lib/lead-source";
-import { trackEvent } from "@/lib/analytics";
+import { trackEnquiryEvent, trackEvent } from "@/lib/analytics";
 
 type Enquiry = {
   contactName: string;
@@ -30,6 +30,7 @@ const empty: Enquiry = {
 };
 
 const LAST_STEP = 2;
+const STEP_NAMES = ["about_you", "your_challenge", "additional_details"] as const;
 
 const inputClass =
   "mt-2 w-full border-0 border-b border-lgl-sage bg-transparent px-0 py-2.5 text-base text-lgl-fg placeholder:text-lgl-muted outline-none transition-colors focus:border-[#C5A059] focus:ring-0";
@@ -55,8 +56,17 @@ export function ContactForm() {
   const submittingRef = useRef(false);
   const idempotencyKeyRef = useRef<string | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const startedRef = useRef(false);
+  const completedStepsRef = useRef<Set<number>>(new Set());
+
+  const trackStart = () => {
+    if (startedRef.current) return;
+    startedRef.current = true;
+    trackEnquiryEvent("enquiry_form_start");
+  };
 
   const set = (key: keyof Enquiry, value: string) => {
+    trackStart();
     if (values[key] !== value) idempotencyKeyRef.current = null;
     setValues((current) => ({ ...current, [key]: value }));
     setError("");
@@ -119,7 +129,15 @@ export function ContactForm() {
   }
 
   function goNext() {
+    trackStart();
     if (stepValid()) {
+      if (!completedStepsRef.current.has(step)) {
+        completedStepsRef.current.add(step);
+        trackEnquiryEvent("enquiry_step_complete", {
+          step_number: step + 1,
+          step_name: STEP_NAMES[step],
+        });
+      }
       changeStep(step + 1);
     } else {
       setError(dict.contact.form.validationError);
@@ -134,10 +152,14 @@ export function ContactForm() {
     }
     if (!stepValid() || submittingRef.current) return;
     submittingRef.current = true;
+    trackStart();
     const idempotencyKey = idempotencyKeyRef.current ?? `application-submission:${Array.from(crypto.getRandomValues(new Uint8Array(32)), (byte) => byte.toString(16).padStart(2, "0")).join("")}`;
     idempotencyKeyRef.current = idempotencyKey;
     setBusy(true);
     setError("");
+    trackEnquiryEvent("enquiry_submit_attempt");
+
+    let outcome: "pending" | "success" | "error" = "pending";
 
     try {
       const response = await fetch("/api/applications", {
@@ -158,14 +180,21 @@ export function ContactForm() {
       });
 
       if (!response.ok) {
+        outcome = "error";
+        trackEnquiryEvent("enquiry_submit_error", { error_type: `http_${response.status}` });
         const body = await response.json().catch(() => null);
         throw new Error(body?.error || dict.contact.form.serverError);
       }
 
+      outcome = "success";
       trackEvent("generate_lead", { service: values.helpWith });
+      trackEnquiryEvent("enquiry_submit_success");
       router.push(getLocalizedPath("/application-received", locale));
       idempotencyKeyRef.current = null;
     } catch (submissionError) {
+      if (outcome === "pending") {
+        trackEnquiryEvent("enquiry_submit_error", { error_type: "network_error" });
+      }
       setError(
         submissionError instanceof Error
           ? submissionError.message
