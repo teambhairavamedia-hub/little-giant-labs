@@ -442,6 +442,9 @@ html.lenis, html.lenis body {
  .lgl-header-nav-link { letter-spacing:.08em !important; padding-inline:.5rem !important; }
 }
 
+/* Enquiry form dropdowns: the browser's own arrows replaced by one gold chevron */
+.lgl-select { -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23C5A059' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .25rem center; background-size:12px 8px; }
+
 /* Floating WhatsApp chat: the official logo, bottom right */
 .wa-chat { position:fixed; z-index:40; right:max(1rem,env(safe-area-inset-right)); bottom:max(1rem,env(safe-area-inset-bottom)); display:block; width:60px; height:60px; transition:transform .2s ease; }
 .wa-chat:hover { transform:scale(1.07); }

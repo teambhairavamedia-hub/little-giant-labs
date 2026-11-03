@@ -246,8 +246,6 @@ export interface TranslationDictionary {
       fields: {
         contactName: { label: string; placeholder: string };
         workEmail: { label: string; placeholder: string; hint: string; error: string };
-        /* English only for now; other languages fall back to the English text */
-        phone?: { label: string; countryLabel: string; placeholder: string; hint: string; error: string };
         companyName: { label: string; placeholder: string };
         role: { label: string; options: Record<string, string> };
         helpWith: { label: string; legend: string; options: Record<string, string> };
