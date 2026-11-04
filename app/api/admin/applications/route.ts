@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/admin-session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { hasSameOrigin } from "@/lib/admin-request";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -8,6 +9,9 @@ export const dynamic = "force-dynamic";
 const PAGE_SIZE_DEFAULT = 25;
 const PAGE_SIZE_MAX = 100;
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const ALLOWED_STATUSES = ["pending_review", "qualified", "rejected"] as const;
+type AllowedStatus = (typeof ALLOWED_STATUSES)[number];
 
 const fail = (message: string, status: number) => NextResponse.json({ error: message }, {
   status,
@@ -76,3 +80,62 @@ export async function GET(request: NextRequest) {
     return fail("Application data is temporarily unavailable.", 500);
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  if (!hasSameOrigin(request)) return fail("Request origin could not be verified.", 403);
+  if (!(await getAdminSession())) return fail("Authentication is required.", 401);
+
+  const length = Number(request.headers.get("content-length") ?? 0);
+  if (length > 32_768) return fail("Request is too large.", 413);
+
+  let body: unknown;
+  try {
+    const rawBody = await request.text();
+    if (new TextEncoder().encode(rawBody).byteLength > 32_768) {
+      return fail("Request is too large.", 413);
+    }
+    body = JSON.parse(rawBody);
+  } catch {
+    return fail("Invalid request body.", 400);
+  }
+
+  if (!body || typeof body !== "object") return fail("Invalid request.", 400);
+  const { ids, status } = body as { ids?: unknown; status?: unknown };
+
+  if (typeof status !== "string" || !ALLOWED_STATUSES.includes(status as AllowedStatus)) {
+    return fail("A valid status is required ('pending_review', 'qualified', or 'rejected').", 400);
+  }
+
+  if (!Array.isArray(ids) || ids.length === 0 || ids.length > 100) {
+    return fail("A non-empty list of up to 100 application IDs is required.", 400);
+  }
+
+  const validIds: string[] = [];
+  for (const id of ids) {
+    if (typeof id !== "string" || !UUID_REGEX.test(id)) {
+      return fail("All application IDs must be valid UUIDs.", 400);
+    }
+    validIds.push(id);
+  }
+
+  try {
+    const supabase = createSupabaseServerClient();
+    const { data, error } = await supabase
+      .from("growth_applications")
+      .update({ qualification_status: status })
+      .in("id", validIds)
+      .select("id");
+
+    if (error) {
+      return fail("Application status could not be updated.", 500);
+    }
+
+    return NextResponse.json({
+      ok: true,
+      updatedCount: data?.length ?? 0,
+    }, { headers: { "Cache-Control": "no-store" } });
+  } catch {
+    return fail("Application status could not be updated.", 500);
+  }
+}
+
