@@ -105,3 +105,59 @@ test("phone numbers are linked only when they are valid E.164 numbers", () => {
     assert.equal(normalizeContactPhone(invalid), null, String(invalid));
   }
 });
+
+test("bulk status update endpoint enforces origin, authentication, and strict validation", async () => {
+  const route = await read("../app/api/admin/applications/route.ts");
+  assert.match(route, /export async function PATCH/);
+  assert.match(route, /hasSameOrigin\(request\)/);
+  assert.match(route, /Request origin could not be verified\.", 403/);
+  assert.match(route, /if \(!\(await getAdminSession\(\)\)\) return fail\("Authentication is required\.", 401\)/);
+  assert.match(route, /ALLOWED_STATUSES = \["pending_review", "qualified", "rejected"\]/);
+  assert.match(route, /A valid status is required \('pending_review', 'qualified', or 'rejected'\)\./);
+  assert.match(route, /UUID_REGEX = \/\^\[0-9a-f\]\{8\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{12\}\$\/i/);
+  assert.match(route, /A non-empty list of up to 100 application IDs is required\./);
+  assert.match(route, /\.update\(\{ qualification_status: status \}\)/);
+  assert.match(route, /\.in\("id", validIds\)/);
+  assert.match(route, /Application status could not be updated\./);
+});
+
+test("dashboard supports individual selection, select-all, bulk status updates, and confirmation", async () => {
+  const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const globalsCss = await read("../app/globals.css");
+  assert.match(dashboard, /aria-label="Select all applications on this page"/);
+  assert.match(dashboard, /aria-label=\{`Select \$\{application\.legal_name\}`\}/);
+  assert.match(dashboard, /toggleSelectAll/);
+  assert.match(dashboard, /toggleSelect\(application\.id\)/);
+  assert.match(dashboard, /Clear selection/);
+  assert.match(dashboard, /aria-label="Bulk actions"/);
+  assert.match(dashboard, /Change status to…/);
+  assert.match(dashboard, /<option value="pending_review">Pending review<\/option>/);
+  assert.match(dashboard, /<option value="qualified">Qualified<\/option>/);
+  assert.match(dashboard, /<option value="rejected">Rejected<\/option>/);
+  assert.match(dashboard, /Confirm status change/);
+  assert.match(dashboard, /method: "PATCH"/);
+  assert.match(dashboard, /status: targetStatus/);
+  // Checkbox styling: white bg with black border when unchecked, blue bg with white checkmark when checked
+  assert.match(dashboard, /admin-checkbox[^\n]*border-black[^\n]*bg-white/);
+  assert.match(dashboard, /checked:bg-blue-600/);
+  assert.match(globalsCss, /\.admin-checkbox\s*\{[^}]*border:\s*1px solid #000000;/);
+  assert.match(globalsCss, /\.admin-checkbox\s*\{[^}]*background-color:\s*#ffffff;/);
+  assert.match(globalsCss, /\.admin-checkbox:checked\s*\{[^}]*background-color:\s*#2563eb;/);
+  assert.match(globalsCss, /\.admin-checkbox:checked\s*\{[^}]*background-image:/);
+});
+
+test("drawer supports individual status management with confirmation and 'Don't ask again' persistence", async () => {
+  const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  // Interactive status dropdown in detail drawer
+  assert.match(dashboard, /id="detail-status-select"/);
+  assert.match(dashboard, /handleStatusSelect\(e\.target\.value/);
+  assert.match(dashboard, /executeStatusUpdate/);
+  // Confirmation modal in detail drawer includes company name and from/to statuses
+  assert.match(dashboard, /confirm-individual-status-title/);
+  assert.match(dashboard, /Are you sure you want to change the status of/);
+  assert.match(dashboard, /id="dont-ask-again-individual"/);
+  assert.match(dashboard, /id="bulk-dont-ask-again"/);
+  // Persistence via localStorage and toggle setting
+  assert.match(dashboard, /lgl-admin-skip-status-confirm/);
+  assert.match(dashboard, /Status confirmations:/);
+});
