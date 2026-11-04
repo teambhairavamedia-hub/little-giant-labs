@@ -20,6 +20,8 @@ export async function generateMetadata({
   return {
     title: dict.seo.applicationReceived.title,
     description: dict.seo.applicationReceived.description,
+    // Thank-you page after an enquiry: not useful in search results
+    robots: { index: false, follow: true },
     alternates: {
       canonical: locale === "en" ? "/application-received" : `/${locale}/application-received`,
       languages: {

@@ -280,8 +280,10 @@ export function HomeRedesign() {
                 style={{ "--work-tone": project.tone } as CSSProperties}
               >
                 <figure className="work-image">
-                  <img className="work-image-fill" src={project.image} alt="" aria-hidden="true" loading="lazy" decoding="async" draggable={false} />
-                  <img src={project.image} alt={project.alt} loading="lazy" decoding="async" draggable={false} />
+                  {/* Resized by next/image; the CSS sets the display size, so width/height only give the shape.
+                      The blurred backdrop needs only a tiny copy. */}
+                  <Image className="work-image-fill" src={project.image} alt="" aria-hidden="true" width={64} height={36} sizes="64px" quality={50} draggable={false} />
+                  <Image src={project.image} alt={project.alt} width={1200} height={630} sizes="(max-width: 767px) 92vw, 560px" draggable={false} />
                 </figure>
                 <div className="work-copy">
                   <p className="home-eyebrow">

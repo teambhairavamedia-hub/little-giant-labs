@@ -129,11 +129,11 @@ test("no placeholder text exists in any dictionary", () => {
   }
 });
 
-test("home SEO title is Little Giant Labs and subpage titles do not duplicate brand template", () => {
+test("home SEO title leads with Little Giant Labs and subpage titles do not duplicate brand template", () => {
   for (const loc of locales) {
     const dict = getDictionary(loc);
-    // Home title should be exactly the brand name
-    assert.equal(dict.seo.home.title, "Little Giant Labs");
+    // Home title starts with the brand name (it may add keywords after it)
+    assert.ok(dict.seo.home.title.startsWith("Little Giant Labs"), `home title in ${loc}`);
 
     // Subpage titles should not include "| Little Giant Labs" to avoid template duplication
     for (const page of ["about", "contact", "work", "applicationReceived"]) {

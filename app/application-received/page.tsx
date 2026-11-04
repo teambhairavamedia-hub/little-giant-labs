@@ -7,6 +7,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: dict.seo.applicationReceived.title,
     description: dict.seo.applicationReceived.description,
+    // Thank-you page after an enquiry: not useful in search results
+    robots: { index: false, follow: true },
     alternates: {
       canonical: "/application-received",
       languages: {

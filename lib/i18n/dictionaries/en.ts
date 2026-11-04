@@ -271,17 +271,22 @@ export const en: TranslationDictionary = {
     story: {
       eyebrow: "Our story",
       paragraphs: [
-        "Little Giant Labs is a strategic brand, creative and digital growth studio that helps businesses translate what they do into why it matters.",
-        "We work at the intersection of business understanding, brand strategy, storytelling and technology—helping companies articulate their value, differentiate their offerings and connect with the audiences that matter.",
-        "From defining a product's narrative to creating compelling campaigns and taking them to market, we bring strategy and execution together to build communication with purpose.",
-        "Our multidisciplinary perspective combines business, technology and creative thinking, allowing us to look beyond the deliverable and focus on the business challenge behind it.",
+        "Great products deserve great stories. Great stories deserve to be heard.",
+        "Little Giant Labs was born from a simple yet powerful realisation shared by its founders, Samir and Rajesh: there are countless great products and services out there that have the potential to make a real difference, yet many struggle to reach the people who need them. Often, the challenge isn't the quality of the offering, but how it is branded, positioned, communicated, and brought to the right audience.",
+        "We saw an opportunity to bridge this gap. What if we could help great ideas, products, and services find their voice, tell their stories better, and connect with the right people? And what if we could make this journey simpler, more systematic, and mutually rewarding for both producers and consumers?",
+        "That thought became the foundation of Little Giant Labs.",
+        "Samir and Rajesh, the founders and guiding force behind Little Giant Labs, bring over 50 years of combined corporate experience across startups and multinational corporations. Having evolved from hands-on engineering roles to leadership positions, they bring together a distinctive blend of technology expertise, business acumen, creative thinking, and strategic vision.",
+        "Their experience spans software engineering, enterprise product development and delivery, sales, presales, business development, branding, and marketing. They have worked across diverse industries, technologies, and business environments, delivering large-scale enterprise solutions while understanding what it takes to build, position, and grow successful businesses.",
+        "This combination of technology, creativity, and business strategy shapes the way Little Giant Labs works. We look beyond just creating brands or delivering marketing collateral. We focus on understanding the business, discovering what makes an offering valuable, crafting its story, and building meaningful connections with the audiences that matter.",
+        "Our belief is simple: Great products deserve great stories, and great stories deserve to reach the right people.",
+        "At Little Giant Labs, we aspire to create a collaborative ecosystem where businesses, creators, producers, and consumers can discover value, build meaningful relationships, and grow together.",
       ],
     },
     purpose: {
       missionLabel: "Our mission",
       mission: "To help businesses clarify their value, build distinctive brands and turn meaningful stories into market impact.",
-      beliefLabel: "What we believe",
-      belief: "The best brand communication doesn't just get noticed. It makes people understand, connect and remember.",
+      beliefLabel: "Our belief",
+      belief: "Great products deserve great stories, and great stories deserve to reach the right people.",
       philosophyLabel: "Our philosophy",
       philosophyTitle: "Business understanding first, then *strategy, creative and execution.*",
       approach: "We believe meaningful work begins with understanding the problem, not jumping to a solution. By connecting business strategy with creative thinking and purposeful execution, we shape every engagement around the challenge at hand—and focus on creating lasting value beyond the work we deliver.",
@@ -672,26 +677,27 @@ export const en: TranslationDictionary = {
   },
   seo: {
     services: {
-      title: "Little Giant Labs | Brand Strategy, Creative & Digital Marketing",
-      description: "Explore Little Giant Labs' brand strategy, creative, digital marketing and employer branding services. We help businesses clarify their value and connect with the audiences that matter.",
+      title: "Branding & Digital Marketing Services | Little Giant Labs",
+      description:
+        "Brand strategy, creative content, digital marketing, employer branding and technology services from Little Giant Labs, a marketing agency in Pune, India.",
     },
     home: {
-      title: "Little Giant Labs",
+      title: "Little Giant Labs | Branding & Digital Marketing Agency, Pune",
       description:
-        "A modern media and marketing laboratory dedicated to building powerful brand presence through innovative content, digital marketing, and AI-powered solutions.",
+        "Little Giant Labs is a Pune-based brand strategy, creative and digital marketing agency helping businesses clarify their value and turn attention into revenue.",
     },
     about: {
-      title: "About Us",
+      title: "About Our Pune Marketing Agency",
       description:
         "Learn how Little Giant Labs connects business thinking, brand strategy, creative storytelling and digital execution to help businesses communicate their value.",
     },
     contact: {
-      title: "Partnership Application",
+      title: "Contact Our Marketing Team in Pune",
       description:
-        "Apply for an institutional growth partnership. Share your enterprise objectives, metrics, and strategic roadblocks.",
+        "Contact Little Giant Labs to discuss brand strategy, creative or digital marketing for your business. Send an enquiry, book a call or message us on WhatsApp.",
     },
     work: {
-      title: "Selected Work",
+      title: "Our Work: Brand & Creative Projects",
       description: "Explore selected brand, creative and digital work by Little Giant Labs, shaped around clear business challenges and outcomes.",
     },
     applicationReceived: {

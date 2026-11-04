@@ -144,7 +144,14 @@ export function ServicePillarSection({ index, headingLevel = "h2" }: { index: nu
             {item.label}
           </p>
           <Heading className={`mt-5 ${pillarHeadingClass}`} style={pillarHeadingStyle}>
-            {accentTitle(item.title)}
+            {/* On the English Services page the heading links to the service's own page (those exist in English only) */}
+            {headingLevel === "h2" && locale === "en" ? (
+              <Link href={`/services/${pillar.slug}`} className="text-inherit no-underline">
+                {accentTitle(item.title)}
+              </Link>
+            ) : (
+              accentTitle(item.title)
+            )}
           </Heading>
         </div>
         <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-10 md:mt-10 lg:grid-cols-2 lg:gap-16">
