@@ -282,7 +282,7 @@ export function AdminDashboard() {
                     checked={allDisplayedSelected}
                     onChange={toggleSelectAll}
                     aria-label="Select all applications on this page"
-                    className="h-4 w-4 rounded border-[#d9d9d6] text-[#800000] focus:ring-[#800000] cursor-pointer"
+                    className="admin-checkbox h-4 w-4 rounded border border-black bg-white checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer"
                   />
                 </th>
                 <th scope="col" className="px-5 py-3 font-medium sm:px-7">Company or brand</th><th scope="col" className="px-4 py-3 font-medium">Contact</th><th scope="col" className="px-4 py-3 font-medium">Needs help with</th><th scope="col" className="px-4 py-3 font-medium">Status</th><th scope="col" className="px-4 py-3 font-medium">Email</th><th scope="col" className="px-4 py-3 font-medium">Phone / WhatsApp</th><th scope="col" className="px-4 py-3 font-medium">Source</th><th scope="col" className="px-5 py-3 font-medium sm:px-7">Submitted (IST)</th>
@@ -297,7 +297,7 @@ export function AdminDashboard() {
                     checked={selectedIds.has(application.id)}
                     onChange={() => toggleSelect(application.id)}
                     aria-label={`Select ${application.legal_name}`}
-                    className="h-4 w-4 rounded border-[#d9d9d6] text-[#800000] focus:ring-[#800000] cursor-pointer"
+                    className="admin-checkbox h-4 w-4 rounded border border-black bg-white checked:border-blue-600 checked:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 cursor-pointer"
                   />
                 </td>
                 <td className="px-5 py-4 font-medium sm:px-7"><button type="button" onClick={(event) => openDetail(application, event.currentTarget)} className="text-left underline decoration-[#800000]/30 underline-offset-4 hover:text-[#800000] hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{application.legal_name}<span className="sr-only"> — View application</span></button></td><td className="px-4 py-4">{application.contact_name ?? "—"}</td><td className="px-4 py-4">{application.help_with ?? "—"}</td>

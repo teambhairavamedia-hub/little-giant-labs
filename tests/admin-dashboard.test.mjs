@@ -123,6 +123,7 @@ test("bulk status update endpoint enforces origin, authentication, and strict va
 
 test("dashboard supports individual selection, select-all, bulk status updates, and confirmation", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const globalsCss = await read("../app/globals.css");
   assert.match(dashboard, /aria-label="Select all applications on this page"/);
   assert.match(dashboard, /aria-label=\{`Select \$\{application\.legal_name\}`\}/);
   assert.match(dashboard, /toggleSelectAll/);
@@ -136,4 +137,11 @@ test("dashboard supports individual selection, select-all, bulk status updates, 
   assert.match(dashboard, /Confirm status change/);
   assert.match(dashboard, /method: "PATCH"/);
   assert.match(dashboard, /status: targetStatus/);
+  // Checkbox styling: white bg with black border when unchecked, blue bg with white checkmark when checked
+  assert.match(dashboard, /admin-checkbox[^\n]*border-black[^\n]*bg-white/);
+  assert.match(dashboard, /checked:bg-blue-600/);
+  assert.match(globalsCss, /\.admin-checkbox\s*\{[^}]*border:\s*1px solid #000000;/);
+  assert.match(globalsCss, /\.admin-checkbox\s*\{[^}]*background-color:\s*#ffffff;/);
+  assert.match(globalsCss, /\.admin-checkbox:checked\s*\{[^}]*background-color:\s*#2563eb;/);
+  assert.match(globalsCss, /\.admin-checkbox:checked\s*\{[^}]*background-image:/);
 });
