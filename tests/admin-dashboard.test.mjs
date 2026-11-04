@@ -145,3 +145,19 @@ test("dashboard supports individual selection, select-all, bulk status updates, 
   assert.match(globalsCss, /\.admin-checkbox:checked\s*\{[^}]*background-color:\s*#2563eb;/);
   assert.match(globalsCss, /\.admin-checkbox:checked\s*\{[^}]*background-image:/);
 });
+
+test("drawer supports individual status management with confirmation and 'Don't ask again' persistence", async () => {
+  const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  // Interactive status dropdown in detail drawer
+  assert.match(dashboard, /id="detail-status-select"/);
+  assert.match(dashboard, /handleStatusSelect\(e\.target\.value/);
+  assert.match(dashboard, /executeStatusUpdate/);
+  // Confirmation modal in detail drawer includes company name and from/to statuses
+  assert.match(dashboard, /confirm-individual-status-title/);
+  assert.match(dashboard, /Are you sure you want to change the status of/);
+  assert.match(dashboard, /id="dont-ask-again-individual"/);
+  assert.match(dashboard, /id="bulk-dont-ask-again"/);
+  // Persistence via localStorage and toggle setting
+  assert.match(dashboard, /lgl-admin-skip-status-confirm/);
+  assert.match(dashboard, /Status confirmations:/);
+});
