@@ -1,5 +1,5 @@
 import { checkEmailEligibility } from "./email-domain-eligibility.ts";
-import { EmailEligibilityError, isEmailFormatValid } from "./email-eligibility.ts";
+import { EmailEligibilityError, isEmailFormatValid, extractEmailDomain, normalizeEmailDomain } from "./email-eligibility.ts";
 import {
   APPLICATION_LIMITS,
   applicationOptions,
@@ -10,6 +10,7 @@ import { parseE164 } from "./phone.ts";
 import { normalizeLeadSource, type LeadSource } from "./lead-source.ts";
 
 export { applicationOptions } from "./application-options.ts";
+export { extractEmailDomain, normalizeEmailDomain };
 
 export type ApplicationInput = {
   contact_name: string;
@@ -42,15 +43,17 @@ export class ValidationError extends Error {
 
 const requiredTextFields = ["contact_name", "decision_maker_email", "legal_name", "project_details", ...requiredOptionFields] as const;
 
-export async function normalizeEmail(value: string): Promise<string> {
+export async function normalizeCorporateEmail(value: string): Promise<string> {
   const email = value.trim().toLowerCase();
   if (email.length > 254 || !isEmailFormatValid(email)) {
-    throw new ValidationError("Enter a valid email address.");
+    throw new ValidationError("Enter a valid work email address.");
   }
   const outcome = await checkEmailEligibility(email);
   if (outcome !== "eligible") throw new EmailEligibilityError(outcome);
   return email;
 }
+
+export const normalizeEmail = normalizeCorporateEmail;
 
 function isOption(field: keyof typeof applicationOptions, value: string): boolean {
   return (applicationOptions[field] as readonly string[]).includes(value);
@@ -97,7 +100,7 @@ export async function validateApplication(body: unknown): Promise<ValidatedAppli
     contact_phone = compact;
   }
 
-  const decision_maker_email = await normalizeEmail(input.decision_maker_email as string);
+  const decision_maker_email = await normalizeCorporateEmail(input.decision_maker_email as string);
 
   return {
     contact_name,

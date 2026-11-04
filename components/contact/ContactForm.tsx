@@ -94,7 +94,7 @@ export function ContactForm() {
         });
         if (!response.ok) throw new Error("Email eligibility could not be checked.");
         const result = await response.json() as { outcome?: EmailEligibilityOutcome | "invalid" };
-        if (["eligible", "disposable", "invalid"].includes(result.outcome ?? "")) {
+        if (["eligible", "disposable", "free", "invalid"].includes(result.outcome ?? "")) {
           setEmailCheck({ email, outcome: result.outcome as EmailEligibilityOutcome | "invalid" });
         } else {
           setEmailCheck({ email, outcome: "unavailable" });
@@ -114,7 +114,8 @@ export function ContactForm() {
   const stepValid = () => {
     if (step === 0) {
       const email = values.workEmail.trim().toLowerCase();
-      const recognizedIneligible = emailCheck.email === email && emailCheck.outcome === "disposable";
+      const recognizedIneligible = emailCheck.email === email &&
+        (emailCheck.outcome === "disposable" || emailCheck.outcome === "free");
       return filled("contactName", APPLICATION_LIMITS.contactName) &&
         filled("companyName", APPLICATION_LIMITS.companyName) &&
         email.length <= 254 && isEmailFormatValid(email) && !recognizedIneligible;
@@ -309,9 +310,11 @@ export function ContactForm() {
               <span id="email-eligibility-status" className="mt-2 block text-xs text-lgl-gold" role="status" aria-live="polite">
                 {emailCheck.email === values.workEmail.trim().toLowerCase() && emailCheck.outcome === "disposable"
                   ? EMAIL_ELIGIBILITY_MESSAGES.disposable
-                  : emailCheck.email === values.workEmail.trim().toLowerCase() && emailCheck.outcome === "checking"
-                    ? "Checking email eligibility…"
-                    : ""}
+                  : emailCheck.email === values.workEmail.trim().toLowerCase() && emailCheck.outcome === "free"
+                    ? EMAIL_ELIGIBILITY_MESSAGES.free
+                    : emailCheck.email === values.workEmail.trim().toLowerCase() && emailCheck.outcome === "checking"
+                      ? "Checking email eligibility…"
+                      : ""}
               </span>
             </label>
             <label className="block text-sm text-lgl-fg">

@@ -59,7 +59,7 @@ export async function POST(request: Request) {
     const outcome = await checkEmailEligibility(email.trim().toLowerCase());
     return Response.json({
       outcome,
-      message: outcome === "disposable" ? EMAIL_ELIGIBILITY_MESSAGES.disposable : undefined,
+      message: outcome === "disposable" || outcome === "free" ? EMAIL_ELIGIBILITY_MESSAGES[outcome] : undefined,
     }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
     if (error instanceof EmailDatasetInitializationError) {
