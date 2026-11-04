@@ -646,17 +646,24 @@ html.lenis, html.lenis body {
 /* Wide artwork (the bridge) needs more width to read at this size */
 .about-story-icon--wide img { width:78%; height:78%; }
 .group:hover .about-story-icon { border-color:var(--lgl-gold); background:linear-gradient(145deg,#1F6B52,#0F4A38); box-shadow:inset 0 0 0 3px rgba(0,0,0,.12),inset 0 0 0 4px color-mix(in srgb,var(--lgl-gold) 30%,transparent),0 12px 26px -12px color-mix(in srgb,var(--lgl-gold) 80%,transparent); transform:translateY(-2px) scale(1.05); }
-/* Timeline: one column of badges joined by a gold line, each paragraph's first line level with its badge's centre */
-.about-story { --story-badge:2.75rem; --story-gap:1rem; list-style:none; padding-left:0; }
+/* Timeline: one column of badges joined by a gold line. Each illustration sits level with the middle of its
+   paragraph, and every paragraph has the same space after it. The line is drawn per row, from the first badge's
+   centre to the last one's; the badges are opaque so it runs behind them. */
+.about-story { --story-badge:2.75rem; --story-gap:1rem; --story-space:2.25rem; list-style:none; padding-left:0; }
 /* Phones: the text column is narrow, so justified lines would leave wide gaps */
 @media (max-width:639px) { .locale-root main .about-story p.about-story-text { text-align:left; hyphens:manual; } }
-.about-story-step { position:relative; display:grid; grid-template-columns:var(--story-badge) minmax(0,1fr); column-gap:var(--story-gap); padding-bottom:2.25rem; }
+.about-story-step { position:relative; display:grid; grid-template-columns:var(--story-badge) minmax(0,1fr); column-gap:var(--story-gap); align-items:center; padding-bottom:var(--story-space); }
 .about-story-step:last-child { padding-bottom:0; }
-.about-story-step:not(:last-child)::before { content:""; position:absolute; left:calc(var(--story-badge) / 2); top:calc(var(--story-badge) + .45rem); bottom:.45rem; width:1px; transform:translateX(-50%); background:linear-gradient(to bottom,color-mix(in srgb,var(--lgl-gold) 55%,transparent),color-mix(in srgb,var(--lgl-gold) 12%,transparent)); }
-.about-story-marker { display:flex; align-items:center; justify-content:center; height:var(--story-badge); }
-.about-story-text { margin:0; padding-top:max(0px,calc((var(--story-badge) - 1lh) / 2)); }
-.about-story-quote { color:var(--lgl-fg); font-family:var(--font-manrope),sans-serif; font-size:1.08em; font-weight:600; }
+.about-story-step::before { content:""; position:absolute; left:calc(var(--story-badge) / 2); top:0; bottom:0; width:1px; transform:translateX(-50%); background:color-mix(in srgb,var(--lgl-gold) 38%,transparent); }
+.about-story-step:first-child::before { top:calc(50% - var(--story-space) / 2); }
+.about-story-step:last-child::before { bottom:50%; }
+.about-story-marker { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; height:var(--story-badge); }
+.about-story .about-story-icon { background-color:var(--lgl-bg); }
+.about-story-text { margin:0; }
 @media (min-width:640px) { .about-story { --story-badge:3.5rem; --story-gap:1.5rem; } }
+.about-story-quote { color:var(--lgl-fg); font-family:var(--font-manrope),sans-serif; font-weight:700; }
+/* The founding statement ("That thought sparked the creation of Little Giant Labs…"): bold white, like the belief line */
+.about-story-pivot-text { color:var(--lgl-fg); font-family:var(--font-manrope),sans-serif; font-weight:700; }
 @media (prefers-reduced-motion:reduce) { .about-story-icon { transition:none; } .group:hover .about-story-icon { transform:none; } }
 .why-icon { width:2.75rem; height:2.75rem; }
 .why-index { padding:.3rem .6rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 35%,transparent); border-radius:999px; color:var(--home-gold); font-size:.66rem; font-weight:700; letter-spacing:.16em; }
