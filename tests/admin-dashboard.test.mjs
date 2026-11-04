@@ -161,3 +161,14 @@ test("drawer supports individual status management with confirmation and 'Don't 
   assert.match(dashboard, /lgl-admin-skip-status-confirm/);
   assert.match(dashboard, /Status confirmations:/);
 });
+
+test("table hyperlinks copy complete URL on click and provide a standalone copy button with feedback", async () => {
+  const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  assert.match(dashboard, /CopyableTableLink/);
+  assert.match(dashboard, /navigator\.clipboard\.writeText\(href\)/);
+  assert.match(dashboard, /e\.preventDefault\(\)/);
+  assert.match(dashboard, /e\.stopPropagation\(\)/);
+  assert.match(dashboard, /Copied!/);
+  assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
+  assert.match(dashboard, /https:\/\/wa\.me\/\$\{phone\.slice\(1\)\}/);
+});

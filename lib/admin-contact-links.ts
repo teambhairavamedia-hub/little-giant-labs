@@ -1,4 +1,7 @@
 import { parseE164 } from "./phone.ts";
+import { extractEmailDomain, normalizeEmailDomain } from "./email-eligibility.ts";
+
+export { extractEmailDomain, normalizeEmailDomain };
 
 const EMAIL_PATTERN = /^[A-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?(?:\.[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?)+$/i;
 const LINKEDIN_PROFILE_PATH = /^\/in\/[A-Za-z0-9_.-]+\/?$/;

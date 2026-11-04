@@ -340,8 +340,8 @@ export function AdminDashboard() {
                 </td>
                 <td className="px-5 py-4 font-medium sm:px-7"><button type="button" onClick={(event) => openDetail(application, event.currentTarget)} className="text-left underline decoration-[#800000]/30 underline-offset-4 hover:text-[#800000] hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{application.legal_name}<span className="sr-only"> — View application</span></button></td><td className="px-4 py-4">{application.contact_name ?? "—"}</td><td className="px-4 py-4">{application.help_with ?? "—"}</td>
                 <td className="px-4 py-4 text-center"><span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${application.qualification_status === "qualified" ? "bg-emerald-50 text-emerald-800" : application.qualification_status === "rejected" ? "bg-amber-50 text-amber-900" : "bg-sky-50 text-sky-900"}`}>{application.qualification_status === "pending_review" ? "Pending review" : application.qualification_status === "qualified" ? "Qualified" : "Rejected"}</span></td>
-                <td className="max-w-44 px-4 py-4">{email ? <a href={`mailto:${email.split("@").map(encodeURIComponent).join("@")}`} title={email} aria-label={`Email applicant at ${email}`} className="block max-w-44 truncate text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{email}</a> : <span className="text-[#6b6b6b]" aria-label="Email unavailable">—</span>}</td>
-                <td className="whitespace-nowrap px-4 py-4">{phone ? <a href={`https://wa.me/${phone.slice(1)}`} target="_blank" rel="noopener noreferrer" aria-label={`Message applicant on WhatsApp at ${phone}`} className="text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]">{phone}</a> : <span className="text-[#6b6b6b]" aria-label="Phone not given">—</span>}</td>
+                <td className="max-w-44 px-4 py-4">{email ? <CopyableTableLink href={`mailto:${email.split("@").map(encodeURIComponent).join("@")}`} text={email} title={email} ariaLabel={`Email applicant at ${email}`} className="block max-w-36 truncate text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]" /> : <span className="text-[#6b6b6b]" aria-label="Email unavailable">—</span>}</td>
+                <td className="whitespace-nowrap px-4 py-4">{phone ? <CopyableTableLink href={`https://wa.me/${phone.slice(1)}`} text={phone} target="_blank" rel="noopener noreferrer" ariaLabel={`Message applicant on WhatsApp at ${phone}`} className="text-[#800000] underline decoration-[#800000]/30 underline-offset-4 hover:decoration-[#800000] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#800000]" /> : <span className="text-[#6b6b6b]" aria-label="Phone not given">—</span>}</td>
                 <td className="max-w-40 truncate px-4 py-4 text-[#4a4a4a]" title={describeLeadSource(normalizeLeadSource(application.lead_source))}>{describeLeadSource(normalizeLeadSource(application.lead_source))}</td>
                 <td className="whitespace-nowrap px-5 py-4 text-[#6b6b6b] sm:px-7"><time dateTime={application.submitted_at}>{dateFormat.format(new Date(application.submitted_at))}</time></td>
               </tr>;
@@ -734,5 +734,98 @@ function Metric({ label, value }: { label: string; value: number }) {
 
 function Breakdown({ label, count, percent, color, labelClass }: { label: string; count: number; percent: number; color: string; labelClass: string }) {
   return <li className="flex items-center gap-3"><span className="h-3 w-3 rounded-full" style={{ backgroundColor: color }} /><span className={`text-sm font-medium ${labelClass}`}>{label}</span><span className="ml-auto text-sm font-semibold tabular-nums">{numberFormat.format(count)} <span className="font-normal text-[#6b6b6b]">({percent}%)</span></span></li>;
+}
+
+function CopyableTableLink({
+  href,
+  text,
+  ariaLabel,
+  title,
+  className,
+  target,
+  rel,
+}: {
+  href: string;
+  text: string;
+  ariaLabel: string;
+  title?: string;
+  className: string;
+  target?: string;
+  rel?: string;
+}) {
+  const [copied, setCopied] = useState(false);
+  const timerRef = useRef<number | null>(null);
+
+  const copyUrl = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(href);
+    } catch {
+      const textarea = document.createElement("textarea");
+      textarea.value = href;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
+    }
+    setCopied(true);
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => setCopied(false), 2000);
+  }, [href]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="relative inline-flex max-w-full items-center gap-1.5">
+      <a
+        href={href}
+        target={target}
+        rel={rel}
+        title={title ?? href}
+        aria-label={ariaLabel}
+        onClick={(e) => {
+          e.preventDefault();
+          void copyUrl();
+        }}
+        className={className}
+      >
+        {text}
+      </a>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          void copyUrl();
+        }}
+        aria-label={copied ? "Copied URL to clipboard" : `Copy link for ${text}`}
+        title={copied ? "Copied!" : "Copy link"}
+        className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded p-1 text-[#6b6b6b] transition-colors hover:bg-neutral-100 hover:text-[#202020] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-[#800000]"
+      >
+        {copied ? (
+          <svg className="h-3.5 w-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        ) : (
+          <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+          </svg>
+        )}
+      </button>
+      {copied && (
+        <span
+          role="status"
+          className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-1.5 py-0.5 text-[11px] font-medium text-white shadow"
+        >
+          Copied!
+        </span>
+      )}
+    </div>
+  );
 }
 
