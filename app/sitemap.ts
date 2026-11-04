@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/about", priority: 0.8 },
     { path: "/contact", priority: 0.8 },
     { path: "/work", priority: 0.7 },
+    { path: "/privacy", priority: 0.3 },
   ];
   return pages.map(({ path, priority }) => ({
     url: `${siteConfig.url}${path === "/" ? "" : path}`,

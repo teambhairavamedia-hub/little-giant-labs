@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { Analytics } from "@/components/layout/Analytics";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import { I18nProvider } from "@/lib/i18n/context";
 import type { ReactNode } from "react";
 
@@ -18,6 +19,7 @@ export function PublicChrome({ children }: { children: ReactNode }) {
       <Footer />
       <WhatsAppButton />
       <Analytics />
+      <CookieConsent />
     </I18nProvider>
   );
 }

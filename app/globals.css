@@ -445,6 +445,20 @@ html.lenis, html.lenis body {
 /* Enquiry form dropdowns: the browser's own arrows replaced by one gold chevron */
 .lgl-select { -webkit-appearance:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23C5A059' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .25rem center; background-size:12px 8px; }
 
+/* Privacy Policy: readable long-form text */
+.privacy-policy > p, .privacy-policy li { color:var(--lgl-soft); font-size:1rem; line-height:1.8; }
+.privacy-policy > p { margin-top:1rem; }
+.privacy-policy h2 { margin-top:2.5rem; color:var(--lgl-fg); font-size:1.3rem; line-height:1.3; letter-spacing:-.02em; }
+.privacy-policy ul { margin-top:1rem; padding-left:1.25rem; list-style:disc; }
+.privacy-policy li + li { margin-top:.4rem; }
+.privacy-policy li::marker { color:var(--lgl-gold); }
+.privacy-policy a { color:var(--lgl-gold); text-decoration:underline; text-underline-offset:4px; }
+.privacy-policy code { font-size:.9em; }
+
+/* Cookie banner: bottom left, clear of the WhatsApp button on the right; full width on phones */
+.cookie-consent { position:fixed; z-index:45; left:max(1rem,env(safe-area-inset-left)); bottom:max(1rem,env(safe-area-inset-bottom)); width:min(26rem,calc(100% - 6.5rem)); padding:1.25rem 1.35rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 35%,transparent); border-radius:1.1rem; background:var(--lgl-bg); box-shadow:0 18px 40px rgba(0,0,0,.28); }
+@media (max-width:640px) { .cookie-consent { right:max(1rem,env(safe-area-inset-right)); width:auto; bottom:calc(max(1rem,env(safe-area-inset-bottom)) + 72px); } }
+
 /* Floating WhatsApp chat: the official logo, bottom right */
 .wa-chat { position:fixed; z-index:40; right:max(1rem,env(safe-area-inset-right)); bottom:max(1rem,env(safe-area-inset-bottom)); display:block; width:60px; height:60px; transition:transform .2s ease; }
 .wa-chat:hover { transform:scale(1.07); }

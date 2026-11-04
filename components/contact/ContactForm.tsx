@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
@@ -388,6 +389,14 @@ export function ContactForm() {
       {error && (
         <p className="mt-8 mb-5 border-l-4 border-[#C5A059] bg-[#C5A059]/10 p-4 text-sm leading-relaxed text-lgl-fg" role="alert">
           {error}
+        </p>
+      )}
+
+      {step === LAST_STEP && (
+        // English only for now
+        <p className="mt-5 text-xs leading-relaxed text-lgl-soft">
+          By submitting, you agree that we may use these details to reply to your enquiry, as described in our{" "}
+          <Link href="/privacy" className="text-lgl-gold underline underline-offset-4">Privacy Policy</Link>.
         </p>
       )}
 

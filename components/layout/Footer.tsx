@@ -8,6 +8,7 @@ import { Section } from "@/components/ui/Section";
 import { ClockIcon, InstagramIcon, LinkedInIcon, MailIcon, PinIcon, XIcon } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
+import { openConsentSettings } from "@/lib/consent";
 
 export function Footer() {
   const { dict, locale } = useI18n();
@@ -206,6 +207,13 @@ export function Footer() {
         <div className="relative pt-8 border-t border-lgl-fg/5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between z-10">
           <p className="footer-legal">
             © {new Date().getFullYear()} {dict.footer.copyright}
+            {/* English only for now */}
+            <span className="mx-2" aria-hidden="true">·</span>
+            <Link href="/privacy" className="underline-offset-4 hover:text-lgl-fg hover:underline">Privacy Policy</Link>
+            <span className="mx-2" aria-hidden="true">·</span>
+            <button type="button" onClick={openConsentSettings} className="cursor-pointer uppercase underline-offset-4 hover:text-lgl-fg hover:underline [letter-spacing:inherit]">
+              Cookie settings
+            </button>
           </p>
           <p className="footer-legal">
             {dict.footer.slogan}
