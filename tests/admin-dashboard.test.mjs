@@ -105,3 +105,35 @@ test("phone numbers are linked only when they are valid E.164 numbers", () => {
     assert.equal(normalizeContactPhone(invalid), null, String(invalid));
   }
 });
+
+test("bulk status update endpoint enforces origin, authentication, and strict validation", async () => {
+  const route = await read("../app/api/admin/applications/route.ts");
+  assert.match(route, /export async function PATCH/);
+  assert.match(route, /hasSameOrigin\(request\)/);
+  assert.match(route, /Request origin could not be verified\.", 403/);
+  assert.match(route, /if \(!\(await getAdminSession\(\)\)\) return fail\("Authentication is required\.", 401\)/);
+  assert.match(route, /ALLOWED_STATUSES = \["pending_review", "qualified", "rejected"\]/);
+  assert.match(route, /A valid status is required \('pending_review', 'qualified', or 'rejected'\)\./);
+  assert.match(route, /UUID_REGEX = \/\^\[0-9a-f\]\{8\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{4\}-\[0-9a-f\]\{12\}\$\/i/);
+  assert.match(route, /A non-empty list of up to 100 application IDs is required\./);
+  assert.match(route, /\.update\(\{ qualification_status: status \}\)/);
+  assert.match(route, /\.in\("id", validIds\)/);
+  assert.match(route, /Application status could not be updated\./);
+});
+
+test("dashboard supports individual selection, select-all, bulk status updates, and confirmation", async () => {
+  const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  assert.match(dashboard, /aria-label="Select all applications on this page"/);
+  assert.match(dashboard, /aria-label=\{`Select \$\{application\.legal_name\}`\}/);
+  assert.match(dashboard, /toggleSelectAll/);
+  assert.match(dashboard, /toggleSelect\(application\.id\)/);
+  assert.match(dashboard, /Clear selection/);
+  assert.match(dashboard, /aria-label="Bulk actions"/);
+  assert.match(dashboard, /Change status to…/);
+  assert.match(dashboard, /<option value="pending_review">Pending review<\/option>/);
+  assert.match(dashboard, /<option value="qualified">Qualified<\/option>/);
+  assert.match(dashboard, /<option value="rejected">Rejected<\/option>/);
+  assert.match(dashboard, /Confirm status change/);
+  assert.match(dashboard, /method: "PATCH"/);
+  assert.match(dashboard, /status: targetStatus/);
+});
