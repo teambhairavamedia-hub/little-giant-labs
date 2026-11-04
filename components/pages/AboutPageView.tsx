@@ -23,8 +23,12 @@ const stageIcons = [SparkIcon, ChartIcon, LayersIcon];
 const storyIcons = ["idea", "bridge", "foundation", "mentor", "experience", "puzzle", "announce", "ecosystem"].map(
   (name) => `/media/about/${name}.png`,
 );
-/* The belief statement ("Our belief is simple: …") is highlighted */
+/* Paragraph indexes (after the opening line), in the order the timeline shows them: the founding statement ("That
+   thought sparked the creation of Little Giant Labs…") comes after the founders paragraph; it and the belief
+   statement ("Our belief is simple: …") are highlighted */
+const storyFoundationIndex = 2;
 const storyQuoteIndex = 6;
+const storyTimelineOrder = [0, 1, 3, storyFoundationIndex, 4, 5, storyQuoteIndex, 7];
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -130,6 +134,38 @@ export function AboutPageView() {
           transition: { duration: 0.7, delay, ease: easeOut },
         };
 
+  /* The "Our story" timeline: the paragraphs in storyTimelineOrder beside their illustrations in one column, joined
+     by a gold line, each illustration level with the middle of its paragraph. */
+  const storyTimeline = (paragraphs: string[]) => (
+    <ol className="about-story mt-10 text-base leading-[1.85] text-lgl-fg/75 md:mt-12 md:text-lg">
+      {storyTimelineOrder.map((index, position) => {
+        const paragraph = paragraphs[index];
+        const icon = storyIcons[index];
+        const pivot = index === storyFoundationIndex;
+        const textClass = pivot
+          ? "about-story-text about-story-pivot-text"
+          : index === storyQuoteIndex
+            ? "about-story-text about-story-quote"
+            : "about-story-text";
+        return (
+          <motion.li
+            key={paragraph}
+            {...reveal(0.05 + position * 0.05)}
+            className={`about-story-step group${pivot ? " about-story-step--pivot" : ""}`}
+          >
+            <span className="about-story-marker" aria-hidden="true">
+              <span className={`about-story-icon${icon.includes("bridge") ? " about-story-icon--wide" : ""}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element -- small static icon, already sized */}
+                <img src={icon} alt="" width={40} height={40} loading="lazy" decoding="async" />
+              </span>
+            </span>
+            <p className={textClass}>{paragraph}</p>
+          </motion.li>
+        );
+      })}
+    </ol>
+  );
+
   return (
     <main className="[&_:is(h1,h2,h3)]:[overflow-wrap:break-word]">
       {/* ── Hero: centred statement over a faded growth illustration ── */}
@@ -173,8 +209,8 @@ export function AboutPageView() {
       {/* ── Our story ────────────────────────────────────────────── */}
       <Section
         theme="light"
-        className="border-b border-lgl-fg/10 py-12 md:py-18"
-        style={{ background: "var(--lgl-section)", color: "var(--lgl-fg)" }}
+        className="py-12 md:py-18"
+        style={{ background: "var(--lgl-bg)", color: "var(--lgl-fg)" }}
       >
         <Container>
           <div className="mx-auto max-w-4xl">
@@ -183,26 +219,7 @@ export function AboutPageView() {
               <SectionHeading eyebrow={story.eyebrow} title={accentTitle(story.paragraphs[0])} />
             </motion.div>
             {locale === "en" ? (
-              /* English: a timeline. Every paragraph sits beside its illustration in one column, joined by a gold line;
-                 the belief statement is highlighted. */
-              <ol className="about-story mt-10 text-base leading-[1.85] text-lgl-fg/75 md:mt-12 md:text-lg">
-                {story.paragraphs.slice(1).map((paragraph, index) => {
-                  const icon = storyIcons[index];
-                  return (
-                    <motion.li key={paragraph} {...reveal(0.05 + index * 0.05)} className="about-story-step group">
-                      <span className="about-story-marker" aria-hidden="true">
-                        {icon && (
-                          <span className={`about-story-icon${icon.includes("bridge") ? " about-story-icon--wide" : ""}`}>
-                            {/* eslint-disable-next-line @next/next/no-img-element -- small static icon, already sized */}
-                            <img src={icon} alt="" width={40} height={40} loading="lazy" decoding="async" />
-                          </span>
-                        )}
-                      </span>
-                      <p className={index === storyQuoteIndex ? "about-story-text about-story-quote" : "about-story-text"}>{paragraph}</p>
-                    </motion.li>
-                  );
-                })}
-              </ol>
+              storyTimeline(story.paragraphs.slice(1))
             ) : (
               <div className="mt-8 space-y-6 text-base leading-[1.85] text-lgl-fg/75 md:text-lg">
                 {story.paragraphs.slice(1).map((paragraph, index) => (
