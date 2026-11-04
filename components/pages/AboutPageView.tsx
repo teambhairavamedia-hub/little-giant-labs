@@ -18,6 +18,14 @@ import { getLocalizedPath } from "@/lib/i18n/config";
 
 const stageIcons = [SparkIcon, ChartIcon, LayersIcon];
 
+/* Illustrations beside the English "Our story" paragraphs, in order: the idea, bridging the gap, the foundation, the
+   founders as mentors, their experience, the combined disciplines, the belief statement (announced) and the ecosystem */
+const storyIcons = ["idea", "bridge", "foundation", "mentor", "experience", "puzzle", "announce", "ecosystem"].map(
+  (name) => `/media/about/${name}.png`,
+);
+/* The belief statement ("Our belief is simple: …") is highlighted */
+const storyQuoteIndex = 6;
+
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 /* Shared pill-button styles (gold primary matches the header CTA) */
@@ -173,15 +181,37 @@ export function AboutPageView() {
             <motion.div {...reveal()}>
               {/* Opening line in the site's two-tone heading style: first sentence white, second in the sage accent */}
               <SectionHeading eyebrow={story.eyebrow} title={accentTitle(story.paragraphs[0])} />
-              <span aria-hidden="true" className="mt-8 block h-px w-16 bg-lgl-gold" />
             </motion.div>
-            <div className="mt-8 space-y-6 text-base leading-[1.85] text-lgl-fg/75 md:text-lg">
-              {story.paragraphs.slice(1).map((paragraph, index) => (
-                <motion.p key={paragraph} {...reveal(0.1 + index * 0.08)}>
-                  {paragraph}
-                </motion.p>
-              ))}
-            </div>
+            {locale === "en" ? (
+              /* English: a timeline. Every paragraph sits beside its illustration in one column, joined by a gold line;
+                 the belief statement is highlighted. */
+              <ol className="about-story mt-10 text-base leading-[1.85] text-lgl-fg/75 md:mt-12 md:text-lg">
+                {story.paragraphs.slice(1).map((paragraph, index) => {
+                  const icon = storyIcons[index];
+                  return (
+                    <motion.li key={paragraph} {...reveal(0.05 + index * 0.05)} className="about-story-step group">
+                      <span className="about-story-marker" aria-hidden="true">
+                        {icon && (
+                          <span className={`about-story-icon${icon.includes("bridge") ? " about-story-icon--wide" : ""}`}>
+                            {/* eslint-disable-next-line @next/next/no-img-element -- small static icon, already sized */}
+                            <img src={icon} alt="" width={40} height={40} loading="lazy" decoding="async" />
+                          </span>
+                        )}
+                      </span>
+                      <p className={index === storyQuoteIndex ? "about-story-text about-story-quote" : "about-story-text"}>{paragraph}</p>
+                    </motion.li>
+                  );
+                })}
+              </ol>
+            ) : (
+              <div className="mt-8 space-y-6 text-base leading-[1.85] text-lgl-fg/75 md:text-lg">
+                {story.paragraphs.slice(1).map((paragraph, index) => (
+                  <motion.p key={paragraph} {...reveal(0.1 + index * 0.08)}>
+                    {paragraph}
+                  </motion.p>
+                ))}
+              </div>
+            )}
           </div>
         </Container>
       </Section>
