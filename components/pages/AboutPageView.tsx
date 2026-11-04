@@ -171,13 +171,9 @@ export function AboutPageView() {
         <Container>
           <div className="mx-auto max-w-4xl">
             <motion.div {...reveal()}>
-              <SectionHeading eyebrow={story.eyebrow} />
-              <p
-                className="mt-6 text-[clamp(1.35rem,2.4vw,1.9rem)] font-semibold leading-[1.45] tracking-[-0.025em] text-lgl-fg"
-                style={headingFont}
-              >
-                {story.paragraphs[0]}
-              </p>
+              {/* Opening line in the site's two-tone heading style: first sentence white, second in the sage accent */}
+              <SectionHeading eyebrow={story.eyebrow} title={accentTitle(story.paragraphs[0])} />
+              <span aria-hidden="true" className="mt-8 block h-px w-16 bg-lgl-gold" />
             </motion.div>
             <div className="mt-8 space-y-6 text-base leading-[1.85] text-lgl-fg/75 md:text-lg">
               {story.paragraphs.slice(1).map((paragraph, index) => (

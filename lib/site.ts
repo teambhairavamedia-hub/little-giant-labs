@@ -4,7 +4,7 @@ export const siteConfig = {
   url: "https://www.littlegiantlabs.in",
   tagline: "Turn Attention Into Revenue.",
   description:
-    "A modern media and marketing company dedicated to building powerful brand presence through innovative content, digital marketing, and AI-powered solutions.",
+    "Little Giant Labs is a brand strategy, creative and digital marketing agency in Pune, India, helping businesses clarify their value and grow.",
   email: "Hello@Littlegiantlabs.in",
   // WhatsApp click-to-chat: `number` is the full international number without "+" or spaces, as wa.me expects
   whatsapp: {

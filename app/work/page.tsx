@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getDictionary } from "@/lib/i18n/dictionaries";
+import { socialMetadata } from "@/lib/seo";
 import { WorkPageView } from "@/components/pages/WorkPageView";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -7,6 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: dict.seo.work.title,
     description: dict.seo.work.description,
+    ...socialMetadata(`${dict.seo.work.title} | Little Giant Labs`, dict.seo.work.description, "/work"),
     alternates: {
       canonical: "/work",
       languages: {

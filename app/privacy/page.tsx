@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
+import { socialMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+
+const description = "How Little Giant Labs collects, uses and protects personal information shared through this website.";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How Little Giant Labs collects, uses and protects personal information shared through this website.",
+  description,
   alternates: { canonical: "/privacy" },
+  ...socialMetadata(`Privacy Policy | ${siteConfig.name}`, description, "/privacy"),
 };
 
 const LAST_UPDATED = "4 November 2026";
