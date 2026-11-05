@@ -35,8 +35,11 @@ export type DashboardMetricsData = {
 
 export type DashboardData = {
   applications: Application[];
+  /** Follows the search: `total` is the number of matching applications */
   pagination: PaginationInfo;
   metrics: DashboardMetricsData;
+  /** The search the list was filtered by ("" for none) */
+  search?: string;
 };
 
 /* Enquiry fields (contact form v2) plus legacy partnership-application answers kept on older rows */

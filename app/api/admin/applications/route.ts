@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/admin-session";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { hasSameOrigin } from "@/lib/admin-request";
+import { ADMIN_SEARCH_MAX_LENGTH, adminSearchFilter, normalizeAdminSearch } from "@/lib/admin-search";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -34,6 +35,9 @@ export async function GET(request: NextRequest) {
   if (page === null || pageSize === null || pageSize > PAGE_SIZE_MAX) {
     return fail(`Page must be a positive integer and pageSize must be between 1 and ${PAGE_SIZE_MAX}.`, 400);
   }
+  // Optional search by company or brand name, email or contact name
+  const search = normalizeAdminSearch(request.nextUrl.searchParams.get("q"));
+  if (search === null) return fail(`Search must be ${ADMIN_SEARCH_MAX_LENGTH} characters or fewer.`, 400);
 
   try {
     const supabase = createSupabaseServerClient();
@@ -42,9 +46,11 @@ export async function GET(request: NextRequest) {
     const from = (page - 1) * pageSize;
     if (!Number.isSafeInteger(from)) return fail("The requested page is out of range.", 400);
 
+    // The list (and its pagination) follows the search; the metrics always cover every application
+    const listQuery = supabase.from("growth_applications")
+      .select("id, legal_name, contact_name, help_with, qualification_status, submitted_at, decision_maker_email, contact_phone, lead_source", { count: "exact" });
     const [applicationsResult, totalResult, recentResult, qualifiedRecentResult, qualifiedResult, rejectedResult] = await Promise.all([
-      supabase.from("growth_applications")
-        .select("id, legal_name, contact_name, help_with, qualification_status, submitted_at, decision_maker_email, contact_phone, lead_source")
+      (search ? listQuery.or(adminSearchFilter(search)) : listQuery)
         .order("submitted_at", { ascending: false }).order("id", { ascending: false })
         .range(from, from + pageSize - 1),
       supabase.from("growth_applications").select("id", { count: "exact", head: true }),
@@ -59,7 +65,8 @@ export async function GET(request: NextRequest) {
     }
 
     const total = totalResult.count ?? 0;
-    const totalPages = Math.ceil(total / pageSize);
+    const matching = search ? applicationsResult.count ?? 0 : total;
+    const totalPages = Math.ceil(matching / pageSize);
     if (page > Math.max(totalPages, 1)) return fail("The requested page is out of range.", 416);
     const qualified = qualifiedResult.count ?? 0;
     const rejected = rejectedResult.count ?? 0;
@@ -67,7 +74,8 @@ export async function GET(request: NextRequest) {
     if (pendingReviewResult.error) return fail("Application data is temporarily unavailable.", 500);
     return NextResponse.json({
       applications: applicationsResult.data ?? [],
-      pagination: { page, pageSize, total, totalPages },
+      pagination: { page, pageSize, total: matching, totalPages },
+      search,
       metrics: {
         totalApplications: total,
         newApplicationsLast7Days: recentResult.count ?? 0,
