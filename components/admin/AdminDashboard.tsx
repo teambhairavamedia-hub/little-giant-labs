@@ -4,43 +4,19 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { normalizeContactEmail, normalizeContactPhone, normalizeLinkedInProfileUrl } from "@/lib/admin-contact-links";
 import { LEAD_SOURCE_KEYS, describeLeadSource, normalizeLeadSource } from "@/lib/lead-source";
-
-type Application = {
-  id: string; legal_name: string; contact_name: string | null; help_with: string | null;
-  qualification_status: "qualified" | "rejected" | "pending_review"; submitted_at: string; decision_maker_email: string;
-  contact_phone: string | null;
-  lead_source: unknown;
-};
-type DashboardData = {
-  applications: Application[];
-  pagination: { page: number; pageSize: number; total: number; totalPages: number };
-  metrics: {
-    totalApplications: number; newApplicationsLast7Days: number; qualifiedApplicationsLast7Days: number;
-    qualification: { qualified: number; rejected: number; pendingReview: number }; window: { startsAt: string; endsAt: string };
-  };
-};
-/* Enquiry fields (contact form v2) plus legacy partnership-application answers kept on older rows */
-type ApplicationDetail = Application & {
-  contact_role: string | null; project_details: string | null; company_size: string | null; industry_vertical: string | null;
-  budget_range: string | null; timeline: string | null;
-  ttm_revenue: string | null; monthly_ad_spend: string | null; growth_bottleneck: string | null;
-  partnership_readiness: string | null; decision_maker_linkedin: string | null; rejection_reasons: unknown;
-};
-
-const rejectionLabels: Record<string, string> = {
-  ttm_revenue_below_1m: "Trailing twelve-month revenue below $1 million",
-  monthly_ad_spend_below_10k: "Monthly paid acquisition spend below $10,000",
-  cheap_execution_vendor: "Seeking a low-cost, hands-off execution vendor",
-};
-
-const statusLabels: Record<"pending_review" | "qualified" | "rejected", string> = {
-  pending_review: "Pending review",
-  qualified: "Qualified",
-  rejected: "Rejected",
-};
-
-const numberFormat = new Intl.NumberFormat("en-US");
-const dateFormat = new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Kolkata" });
+import { CopyableTableLink } from "@/components/admin-dashboard/CopyableTableLink";
+import { DashboardMetrics } from "@/components/admin-dashboard/DashboardMetrics";
+import { DashboardSkeleton } from "@/components/admin-dashboard/DashboardSkeleton";
+import { QualificationBreakdown } from "@/components/admin-dashboard/QualificationBreakdown";
+import {
+  dateFormat,
+  numberFormat,
+  rejectionLabels,
+  statusLabels,
+  type Application,
+  type ApplicationDetail,
+  type DashboardData,
+} from "@/components/admin-dashboard/types";
 
 export function AdminDashboard() {
   const router = useRouter();
@@ -189,14 +165,6 @@ export function AdminDashboard() {
     }
   };
 
-  const qualified = data?.metrics.qualification.qualified ?? 0;
-  const rejected = data?.metrics.qualification.rejected ?? 0;
-  const pendingReview = data?.metrics.qualification.pendingReview ?? 0;
-  const breakdownTotal = qualified + rejected + pendingReview;
-  const qualifiedPercent = breakdownTotal ? Math.round(qualified / breakdownTotal * 100) : 0;
-  const rejectedPercent = breakdownTotal ? Math.round(rejected / breakdownTotal * 100) : 0;
-  const pendingReviewPercent = breakdownTotal ? 100 - qualifiedPercent - rejectedPercent : 0;
-
   const openDetail = (application: Application, button: HTMLButtonElement) => {
     openerRef.current = button;
     setSelected(application);
@@ -211,19 +179,7 @@ export function AdminDashboard() {
       <p>{error}</p><button onClick={() => void load(page)} className="mt-3 font-semibold underline underline-offset-4">Retry</button>
     </div>}
     {loading && !data ? (
-      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
-        <div className="min-w-0 lg:col-span-2">
-          <div className="h-[560px] animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
-        </div>
-        <div className="flex flex-col gap-6 lg:col-span-1">
-          <div className="h-72 animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
-          <div className="flex flex-col gap-4">
-            <div className="h-28 animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
-            <div className="h-28 animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
-            <div className="h-28 animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
-          </div>
-        </div>
-      </div>
+      <DashboardSkeleton />
     ) : data && (
       <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
         <div className="min-w-0 lg:col-span-2">
@@ -356,22 +312,8 @@ export function AdminDashboard() {
       </section>
     </div>
     <div className="flex flex-col gap-6 lg:col-span-1">
-      <section aria-labelledby="qualification-heading" className="rounded-2xl border border-[#e8e8e6] bg-white p-6 sm:p-8 lg:p-6">
-        <div><p className="label-eyebrow text-[#800000]">All time</p><h2 id="qualification-heading" className="mt-3 text-2xl font-semibold">Qualification breakdown</h2></div>
-        {breakdownTotal === 0 ? <p className="mt-7 text-sm text-[#6b6b6b]">No applications have been received.</p> : <div className="mt-7 flex flex-col items-center gap-8 sm:flex-row lg:flex-col lg:gap-6">
-          <div role="img" aria-label={`Application status: ${qualified} qualified (${qualifiedPercent}%), ${rejected} rejected (${rejectedPercent}%), ${pendingReview} pending review (${pendingReviewPercent}%)`} className="h-40 w-40 shrink-0 rounded-full" style={{ background: `conic-gradient(#15803d 0% ${qualifiedPercent}%, #b91c1c ${qualifiedPercent}% ${qualifiedPercent + rejectedPercent}%, #0284c7 ${qualifiedPercent + rejectedPercent}% 100%)` }} />
-          <ul className="grid w-full gap-4 sm:grid-cols-3 lg:grid-cols-1 lg:gap-3">
-            <Breakdown label="Qualified" count={qualified} percent={qualifiedPercent} color="#15803d" labelClass="text-green-800" />
-            <Breakdown label="Rejected" count={rejected} percent={rejectedPercent} color="#b91c1c" labelClass="text-red-800" />
-            <Breakdown label="Pending review" count={pendingReview} percent={pendingReviewPercent} color="#0284c7" labelClass="text-sky-800" />
-          </ul>
-        </div>}
-      </section>
-      <section aria-label="Application metrics" className="flex flex-col gap-4">
-        <Metric label="Total applications" value={data.metrics.totalApplications} />
-        <Metric label="New applications · last 7 days" value={data.metrics.newApplicationsLast7Days} />
-        <Metric label="Qualified · last 7 days" value={data.metrics.qualifiedApplicationsLast7Days} />
-      </section>
+      <QualificationBreakdown qualification={data.metrics.qualification} />
+      <DashboardMetrics metrics={data.metrics} />
     </div>
   </div>
 )}
@@ -746,106 +688,5 @@ function ApplicationDetailPanel({
 
 function DetailField({ label, value }: { label: string; value: string }) {
   return <div className="py-4"><dt className="text-xs font-semibold uppercase tracking-wide text-[#6b6b6b]">{label}</dt><dd className="mt-2 whitespace-pre-wrap break-words text-sm leading-relaxed text-[#202020]">{value}</dd></div>;
-}
-
-function Metric({ label, value }: { label: string; value: number }) {
-  return <article className="rounded-2xl border border-[#e8e8e6] bg-white p-6"><p className="text-sm text-[#6b6b6b]">{label}</p><p className="mt-3 text-4xl font-semibold tabular-nums">{numberFormat.format(value)}</p></article>;
-}
-
-function Breakdown({ label, count, percent, color, labelClass }: { label: string; count: number; percent: number; color: string; labelClass: string }) {
-  return <li className="flex items-center gap-3"><span className="h-3 w-3 rounded-full" style={{ backgroundColor: color }} /><span className={`text-sm font-medium ${labelClass}`}>{label}</span><span className="ml-auto text-sm font-semibold tabular-nums">{numberFormat.format(count)} <span className="font-normal text-[#6b6b6b]">({percent}%)</span></span></li>;
-}
-
-function CopyableTableLink({
-  href,
-  text,
-  ariaLabel,
-  title,
-  className,
-  target,
-  rel,
-}: {
-  href: string;
-  text: string;
-  ariaLabel: string;
-  title?: string;
-  className: string;
-  target?: string;
-  rel?: string;
-}) {
-  const [copied, setCopied] = useState(false);
-  const timerRef = useRef<number | null>(null);
-
-  const copyUrl = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(href);
-    } catch {
-      const textarea = document.createElement("textarea");
-      textarea.value = href;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-    }
-    setCopied(true);
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(() => setCopied(false), 2000);
-  }, [href]);
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
-    };
-  }, []);
-
-  return (
-    <div className="relative inline-flex max-w-full items-center gap-1.5">
-      <a
-        href={href}
-        target={target}
-        rel={rel}
-        title={title ?? href}
-        aria-label={ariaLabel}
-        onClick={(e) => {
-          e.preventDefault();
-          void copyUrl();
-        }}
-        className={className}
-      >
-        {text}
-      </a>
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          void copyUrl();
-        }}
-        aria-label={copied ? "Copied URL to clipboard" : `Copy link for ${text}`}
-        title={copied ? "Copied!" : "Copy link"}
-        className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded p-1 text-[#6b6b6b] transition-colors hover:bg-neutral-100 hover:text-[#202020] focus-visible:rounded focus-visible:outline-2 focus-visible:outline-[#800000]"
-      >
-        {copied ? (
-          <svg className="h-3.5 w-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        ) : (
-          <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-            <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-          </svg>
-        )}
-      </button>
-      {copied && (
-        <span
-          role="status"
-          className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-neutral-900 px-1.5 py-0.5 text-[11px] font-medium text-white shadow"
-        >
-          Copied!
-        </span>
-      )}
-    </div>
-  );
 }
 

@@ -62,26 +62,29 @@ test("dashboard offers a keyboard accessible detail panel and renders every stor
 test("dashboard uses persisted qualification outcomes and server returned metrics", async () => {
   const route = await read("../app/api/admin/applications/route.ts");
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const breakdown = await read("../components/admin-dashboard/QualificationBreakdown.tsx");
   assert.match(route, /eq\("qualification_status", "qualified"\)/);
   assert.match(route, /eq\("qualification_status", "rejected"\)/);
   assert.match(route, /eq\("qualification_status", "pending_review"\)/);
   assert.match(route, /SEVEN_DAYS_MS = 7 \* 24 \* 60 \* 60 \* 1000/);
   assert.match(dashboard, /No applications have been received\./);
-  assert.match(dashboard, /qualifiedPercent = breakdownTotal \? Math\.round/);
+  assert.match(breakdown, /qualifiedPercent = breakdownTotal \? Math\.round/);
   assert.match(dashboard, /router\.replace\("\/admin\/login"\)/);
 });
 
 test("qualification chart colors match status labels and the table keeps contact links safe", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
-  assert.match(dashboard, /conic-gradient\(#15803d 0% \$\{qualifiedPercent\}%, #b91c1c/);
-  assert.match(dashboard, /label="Qualified"[^\n]*color="#15803d" labelClass="text-green-800"/);
-  assert.match(dashboard, /label="Rejected"[^\n]*color="#b91c1c" labelClass="text-red-800"/);
-  assert.match(dashboard, /label="Pending review"[^\n]*color="#0284c7" labelClass="text-sky-800"/);
+  const breakdown = await read("../components/admin-dashboard/QualificationBreakdown.tsx");
+  const types = await read("../components/admin-dashboard/types.ts");
+  assert.match(breakdown, /conic-gradient\(#15803d 0% \$\{qualifiedPercent\}%, #b91c1c/);
+  assert.match(breakdown, /label="Qualified"[^\n]*color="#15803d" labelClass="text-green-800"/);
+  assert.match(breakdown, /label="Rejected"[^\n]*color="#b91c1c" labelClass="text-red-800"/);
+  assert.match(breakdown, /label="Pending review"[^\n]*color="#0284c7" labelClass="text-sky-800"/);
   assert.match(dashboard, /target="_blank" rel="noopener noreferrer"/);
   assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
   assert.match(dashboard, /min-w-\[1320px\]/);
   assert.match(dashboard, /overflow-x-auto/);
-  assert.match(dashboard, /timeZone: "Asia\/Kolkata"/);
+  assert.match(types, /timeZone: "Asia\/Kolkata"/);
   assert.match(dashboard, /Submitted \(IST\)/);
 });
 
@@ -164,11 +167,12 @@ test("drawer supports individual status management with confirmation and 'Don't 
 
 test("table hyperlinks copy complete URL on click and provide a standalone copy button with feedback", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const copyableLink = await read("../components/admin-dashboard/CopyableTableLink.tsx");
   assert.match(dashboard, /CopyableTableLink/);
-  assert.match(dashboard, /navigator\.clipboard\.writeText\(href\)/);
-  assert.match(dashboard, /e\.preventDefault\(\)/);
-  assert.match(dashboard, /e\.stopPropagation\(\)/);
-  assert.match(dashboard, /Copied!/);
+  assert.match(copyableLink, /navigator\.clipboard\.writeText\(href\)/);
+  assert.match(copyableLink, /e\.preventDefault\(\)/);
+  assert.match(copyableLink, /e\.stopPropagation\(\)/);
+  assert.match(copyableLink, /Copied!/);
   assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
   assert.match(dashboard, /https:\/\/wa\.me\/\$\{phone\.slice\(1\)\}/);
 });
