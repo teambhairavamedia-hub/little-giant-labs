@@ -1,4 +1,4 @@
-import { numberFormat } from "./types";
+import { numberFormat } from "./constants";
 
 interface MetricProps {
   label: string;

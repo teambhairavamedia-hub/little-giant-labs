@@ -1,4 +1,5 @@
-import { numberFormat, type QualificationCounts } from "./types";
+import { numberFormat } from "./constants";
+import type { QualificationCounts } from "./types";
 
 interface BreakdownProps {
   label: string;

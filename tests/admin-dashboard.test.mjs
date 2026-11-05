@@ -45,18 +45,20 @@ test("application detail endpoint protects and scopes a read to a validated appl
 
 test("dashboard offers a keyboard accessible detail panel and renders every stored answer safely", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
-  for (const label of ["Name", "Work email", "Company or brand name", "What they need help with", "About the project", "Your role", "Desired timeline"]) assert.ok(dashboard.includes(`label="${label}"`) || dashboard.includes(`>${label}</dt>`), label);
-  assert.doesNotMatch(dashboard, /label="Company size"|label="Industry"|label="Budget range"/);
-  for (const label of ["Earlier company size", "Earlier application industry", "Earlier budget range"]) assert.ok(dashboard.includes(label));
-  for (const label of ["Earlier application answers", "Trailing twelve-month revenue", "Monthly paid acquisition spend", "Strategic bottleneck", "Expectations regarding the engagement", "Decision-maker LinkedIn profile"]) assert.ok(dashboard.includes(label), label);
-  assert.match(dashboard, /hasLegacyAnswers &&/);
-  assert.match(dashboard, /role="dialog" aria-modal="true"/);
-  assert.match(dashboard, /event\.key === "Escape"/);
-  assert.match(dashboard, /rejectionLabels\[code\] \?\?/);
+  const detailPanel = await read("../components/admin-dashboard/ApplicationDetailPanel.tsx");
+  assert.match(dashboard, /<ApplicationDetailPanel/);
+  for (const label of ["Name", "Work email", "Company or brand name", "What they need help with", "About the project", "Your role", "Desired timeline"]) assert.ok(detailPanel.includes(`label="${label}"`) || detailPanel.includes(`>${label}</dt>`), label);
+  assert.doesNotMatch(detailPanel, /label="Company size"|label="Industry"|label="Budget range"/);
+  for (const label of ["Earlier company size", "Earlier application industry", "Earlier budget range"]) assert.ok(detailPanel.includes(label));
+  for (const label of ["Earlier application answers", "Trailing twelve-month revenue", "Monthly paid acquisition spend", "Strategic bottleneck", "Expectations regarding the engagement", "Decision-maker LinkedIn profile"]) assert.ok(detailPanel.includes(label), label);
+  assert.match(detailPanel, /hasLegacyAnswers &&/);
+  assert.match(detailPanel, /role="dialog" aria-modal="true"/);
+  assert.match(detailPanel, /event\.key === "Escape"/);
+  assert.match(detailPanel, /rejectionLabels\[code\] \?\?/);
   assert.match(dashboard, /window\.requestAnimationFrame\(\(\) => openerRef\.current\?\.focus\(\)\)/);
-  assert.match(dashboard, /if \(event\.target === event\.currentTarget\) onClose\(\)/);
-  assert.match(dashboard, /target="_blank" rel="noopener noreferrer">\{linkedin\}/);
-  assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
+  assert.match(detailPanel, /if \(event\.target === event\.currentTarget\) onClose\(\)/);
+  assert.match(detailPanel, /target="_blank" rel="noopener noreferrer">\{linkedin\}/);
+  assert.match(detailPanel, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
 });
 
 test("dashboard uses persisted qualification outcomes and server returned metrics", async () => {
@@ -75,7 +77,7 @@ test("dashboard uses persisted qualification outcomes and server returned metric
 test("qualification chart colors match status labels and the table keeps contact links safe", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
   const breakdown = await read("../components/admin-dashboard/QualificationBreakdown.tsx");
-  const types = await read("../components/admin-dashboard/types.ts");
+  const constants = await read("../components/admin-dashboard/constants.ts");
   assert.match(breakdown, /conic-gradient\(#15803d 0% \$\{qualifiedPercent\}%, #b91c1c/);
   assert.match(breakdown, /label="Qualified"[^\n]*color="#15803d" labelClass="text-green-800"/);
   assert.match(breakdown, /label="Rejected"[^\n]*color="#b91c1c" labelClass="text-red-800"/);
@@ -84,7 +86,7 @@ test("qualification chart colors match status labels and the table keeps contact
   assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
   assert.match(dashboard, /min-w-\[1320px\]/);
   assert.match(dashboard, /overflow-x-auto/);
-  assert.match(types, /timeZone: "Asia\/Kolkata"/);
+  assert.match(constants, /timeZone: "Asia\/Kolkata"/);
   assert.match(dashboard, /Submitted \(IST\)/);
 });
 
@@ -126,6 +128,7 @@ test("bulk status update endpoint enforces origin, authentication, and strict va
 
 test("dashboard supports individual selection, select-all, bulk status updates, and confirmation", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const bulkModal = await read("../components/admin-dashboard/BulkStatusModal.tsx");
   const globalsCss = await read("../app/globals.css");
   assert.match(dashboard, /aria-label="Select all applications on this page"/);
   assert.match(dashboard, /aria-label=\{`Select \$\{application\.legal_name\}`\}/);
@@ -137,7 +140,8 @@ test("dashboard supports individual selection, select-all, bulk status updates, 
   assert.match(dashboard, /<option value="pending_review">Pending review<\/option>/);
   assert.match(dashboard, /<option value="qualified">Qualified<\/option>/);
   assert.match(dashboard, /<option value="rejected">Rejected<\/option>/);
-  assert.match(dashboard, /Confirm status change/);
+  assert.match(dashboard, /<BulkStatusModal/);
+  assert.match(bulkModal, /Confirm status change/);
   assert.match(dashboard, /method: "PATCH"/);
   assert.match(dashboard, /status: targetStatus/);
   // Checkbox styling: white bg with black border when unchecked, blue bg with white checkmark when checked
@@ -151,15 +155,17 @@ test("dashboard supports individual selection, select-all, bulk status updates, 
 
 test("drawer supports individual status management with confirmation and 'Don't ask again' persistence", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const detailPanel = await read("../components/admin-dashboard/ApplicationDetailPanel.tsx");
+  const bulkModal = await read("../components/admin-dashboard/BulkStatusModal.tsx");
   // Interactive status dropdown in detail drawer
-  assert.match(dashboard, /id="detail-status-select"/);
-  assert.match(dashboard, /handleStatusSelect\(e\.target\.value/);
-  assert.match(dashboard, /executeStatusUpdate/);
+  assert.match(detailPanel, /id="detail-status-select"/);
+  assert.match(detailPanel, /handleStatusSelect\(e\.target\.value/);
+  assert.match(detailPanel, /executeStatusUpdate/);
   // Confirmation modal in detail drawer includes company name and from/to statuses
-  assert.match(dashboard, /confirm-individual-status-title/);
-  assert.match(dashboard, /Are you sure you want to change the status of/);
-  assert.match(dashboard, /id="dont-ask-again-individual"/);
-  assert.match(dashboard, /id="bulk-dont-ask-again"/);
+  assert.match(detailPanel, /confirm-individual-status-title/);
+  assert.match(detailPanel, /Are you sure you want to change the status of/);
+  assert.match(detailPanel, /id="dont-ask-again-individual"/);
+  assert.match(bulkModal, /id="bulk-dont-ask-again"/);
   // Persistence via localStorage and toggle setting
   assert.match(dashboard, /lgl-admin-skip-status-confirm/);
   assert.match(dashboard, /Status confirmations:/);
