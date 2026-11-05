@@ -64,30 +64,38 @@ test("dashboard offers a keyboard accessible detail panel and renders every stor
 test("dashboard uses persisted qualification outcomes and server returned metrics", async () => {
   const route = await read("../app/api/admin/applications/route.ts");
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const applicationsTable = await read("../components/admin-dashboard/ApplicationsTable.tsx");
   const breakdown = await read("../components/admin-dashboard/QualificationBreakdown.tsx");
   assert.match(route, /eq\("qualification_status", "qualified"\)/);
   assert.match(route, /eq\("qualification_status", "rejected"\)/);
   assert.match(route, /eq\("qualification_status", "pending_review"\)/);
   assert.match(route, /SEVEN_DAYS_MS = 7 \* 24 \* 60 \* 60 \* 1000/);
-  assert.match(dashboard, /No applications have been received\./);
+  assert.match(dashboard, /<ApplicationsTable/);
+  assert.match(dashboard, /grid grid-cols-1 items-start gap-8 lg:grid-cols-3/);
+  assert.match(dashboard, /min-w-0 lg:col-span-2/);
+  assert.match(dashboard, /<QualificationBreakdown/);
+  assert.match(dashboard, /<DashboardMetrics/);
+  assert.match(applicationsTable, /No applications have been received\./);
   assert.match(breakdown, /qualifiedPercent = breakdownTotal \? Math\.round/);
   assert.match(dashboard, /router\.replace\("\/admin\/login"\)/);
 });
 
 test("qualification chart colors match status labels and the table keeps contact links safe", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const applicationsTable = await read("../components/admin-dashboard/ApplicationsTable.tsx");
   const breakdown = await read("../components/admin-dashboard/QualificationBreakdown.tsx");
   const constants = await read("../components/admin-dashboard/constants.ts");
+  assert.match(dashboard, /<ApplicationsTable/);
   assert.match(breakdown, /conic-gradient\(#15803d 0% \$\{qualifiedPercent\}%, #b91c1c/);
   assert.match(breakdown, /label="Qualified"[^\n]*color="#15803d" labelClass="text-green-800"/);
   assert.match(breakdown, /label="Rejected"[^\n]*color="#b91c1c" labelClass="text-red-800"/);
   assert.match(breakdown, /label="Pending review"[^\n]*color="#0284c7" labelClass="text-sky-800"/);
-  assert.match(dashboard, /target="_blank" rel="noopener noreferrer"/);
-  assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
-  assert.match(dashboard, /min-w-\[1320px\]/);
-  assert.match(dashboard, /overflow-x-auto/);
+  assert.match(applicationsTable, /target="_blank" rel="noopener noreferrer"/);
+  assert.match(applicationsTable, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
+  assert.match(applicationsTable, /min-w-\[1320px\]/);
+  assert.match(applicationsTable, /overflow-x-auto/);
   assert.match(constants, /timeZone: "Asia\/Kolkata"/);
-  assert.match(dashboard, /Submitted \(IST\)/);
+  assert.match(applicationsTable, /Submitted \(IST\)/);
 });
 
 test("contact values accept valid inputs and reject malformed or unsafe values", () => {
@@ -128,25 +136,29 @@ test("bulk status update endpoint enforces origin, authentication, and strict va
 
 test("dashboard supports individual selection, select-all, bulk status updates, and confirmation", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const applicationsTable = await read("../components/admin-dashboard/ApplicationsTable.tsx");
   const bulkModal = await read("../components/admin-dashboard/BulkStatusModal.tsx");
   const globalsCss = await read("../app/globals.css");
-  assert.match(dashboard, /aria-label="Select all applications on this page"/);
-  assert.match(dashboard, /aria-label=\{`Select \$\{application\.legal_name\}`\}/);
+  assert.match(dashboard, /<ApplicationsTable/);
+  assert.match(dashboard, /selectedIds/);
   assert.match(dashboard, /toggleSelectAll/);
-  assert.match(dashboard, /toggleSelect\(application\.id\)/);
-  assert.match(dashboard, /Clear selection/);
-  assert.match(dashboard, /aria-label="Bulk actions"/);
-  assert.match(dashboard, /Change status to…/);
-  assert.match(dashboard, /<option value="pending_review">Pending review<\/option>/);
-  assert.match(dashboard, /<option value="qualified">Qualified<\/option>/);
-  assert.match(dashboard, /<option value="rejected">Rejected<\/option>/);
+  assert.match(dashboard, /toggleSelect/);
+  assert.match(dashboard, /clearSelection/);
+  assert.match(applicationsTable, /aria-label="Select all applications on this page"/);
+  assert.match(applicationsTable, /aria-label=\{`Select \$\{application\.legal_name\}`\}/);
+  assert.match(applicationsTable, /Clear selection/);
+  assert.match(applicationsTable, /aria-label="Bulk actions"/);
+  assert.match(applicationsTable, /Change status to…/);
+  assert.match(applicationsTable, /<option value="pending_review">Pending review<\/option>/);
+  assert.match(applicationsTable, /<option value="qualified">Qualified<\/option>/);
+  assert.match(applicationsTable, /<option value="rejected">Rejected<\/option>/);
   assert.match(dashboard, /<BulkStatusModal/);
   assert.match(bulkModal, /Confirm status change/);
   assert.match(dashboard, /method: "PATCH"/);
   assert.match(dashboard, /status: targetStatus/);
   // Checkbox styling: white bg with black border when unchecked, blue bg with white checkmark when checked
-  assert.match(dashboard, /admin-checkbox[^\n]*border-black[^\n]*bg-white/);
-  assert.match(dashboard, /checked:bg-blue-600/);
+  assert.match(applicationsTable, /admin-checkbox[^\n]*border-black[^\n]*bg-white/);
+  assert.match(applicationsTable, /checked:bg-blue-600/);
   assert.match(globalsCss, /\.admin-checkbox\s*\{[^}]*border:\s*1px solid #000000;/);
   assert.match(globalsCss, /\.admin-checkbox\s*\{[^}]*background-color:\s*#ffffff;/);
   assert.match(globalsCss, /\.admin-checkbox:checked\s*\{[^}]*background-color:\s*#2563eb;/);
@@ -155,6 +167,7 @@ test("dashboard supports individual selection, select-all, bulk status updates, 
 
 test("drawer supports individual status management with confirmation and 'Don't ask again' persistence", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const applicationsTable = await read("../components/admin-dashboard/ApplicationsTable.tsx");
   const detailPanel = await read("../components/admin-dashboard/ApplicationDetailPanel.tsx");
   const bulkModal = await read("../components/admin-dashboard/BulkStatusModal.tsx");
   // Interactive status dropdown in detail drawer
@@ -168,17 +181,19 @@ test("drawer supports individual status management with confirmation and 'Don't 
   assert.match(bulkModal, /id="bulk-dont-ask-again"/);
   // Persistence via localStorage and toggle setting
   assert.match(dashboard, /lgl-admin-skip-status-confirm/);
-  assert.match(dashboard, /Status confirmations:/);
+  assert.match(applicationsTable, /Status confirmations:/);
 });
 
 test("table hyperlinks copy complete URL on click and provide a standalone copy button with feedback", async () => {
   const dashboard = await read("../components/admin/AdminDashboard.tsx");
+  const applicationsTable = await read("../components/admin-dashboard/ApplicationsTable.tsx");
   const copyableLink = await read("../components/admin-dashboard/CopyableTableLink.tsx");
-  assert.match(dashboard, /CopyableTableLink/);
+  assert.match(dashboard, /<ApplicationsTable/);
+  assert.match(applicationsTable, /CopyableTableLink/);
   assert.match(copyableLink, /navigator\.clipboard\.writeText\(href\)/);
   assert.match(copyableLink, /e\.preventDefault\(\)/);
   assert.match(copyableLink, /e\.stopPropagation\(\)/);
   assert.match(copyableLink, /Copied!/);
-  assert.match(dashboard, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
-  assert.match(dashboard, /https:\/\/wa\.me\/\$\{phone\.slice\(1\)\}/);
+  assert.match(applicationsTable, /mailto:\$\{email\.split\("@"\)\.map\(encodeURIComponent\)\.join\("@"\)\}/);
+  assert.match(applicationsTable, /https:\/\/wa\.me\/\$\{phone\.slice\(1\)\}/);
 });
