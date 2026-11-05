@@ -210,24 +210,24 @@ export function AdminDashboard() {
     {error && <div className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-800" role="alert">
       <p>{error}</p><button onClick={() => void load(page)} className="mt-3 font-semibold underline underline-offset-4">Retry</button>
     </div>}
-    {loading && !data ? <div className="grid gap-4 md:grid-cols-3"><div className="h-32 animate-pulse rounded-2xl bg-white" /><div className="h-32 animate-pulse rounded-2xl bg-white" /><div className="h-32 animate-pulse rounded-2xl bg-white" /></div> : data && <>
-      <section aria-label="Application metrics" className="grid gap-4 md:grid-cols-3">
-        <Metric label="Total applications" value={data.metrics.totalApplications} />
-        <Metric label="New applications · last 7 days" value={data.metrics.newApplicationsLast7Days} />
-        <Metric label="Qualified · last 7 days" value={data.metrics.qualifiedApplicationsLast7Days} />
-      </section>
-      <section aria-labelledby="qualification-heading" className="rounded-2xl border border-[#e8e8e6] bg-white p-6 sm:p-8">
-        <div><p className="label-eyebrow text-[#800000]">All time</p><h2 id="qualification-heading" className="mt-3 text-2xl font-semibold">Qualification breakdown</h2></div>
-        {breakdownTotal === 0 ? <p className="mt-7 text-sm text-[#6b6b6b]">No applications have been received.</p> : <div className="mt-7 flex flex-col items-center gap-8 sm:flex-row">
-          <div role="img" aria-label={`Application status: ${qualified} qualified (${qualifiedPercent}%), ${rejected} rejected (${rejectedPercent}%), ${pendingReview} pending review (${pendingReviewPercent}%)`} className="h-40 w-40 shrink-0 rounded-full" style={{ background: `conic-gradient(#15803d 0% ${qualifiedPercent}%, #b91c1c ${qualifiedPercent}% ${qualifiedPercent + rejectedPercent}%, #0284c7 ${qualifiedPercent + rejectedPercent}% 100%)` }} />
-          <ul className="grid w-full gap-4 sm:grid-cols-3">
-            <Breakdown label="Qualified" count={qualified} percent={qualifiedPercent} color="#15803d" labelClass="text-green-800" />
-            <Breakdown label="Rejected" count={rejected} percent={rejectedPercent} color="#b91c1c" labelClass="text-red-800" />
-            <Breakdown label="Pending review" count={pendingReview} percent={pendingReviewPercent} color="#0284c7" labelClass="text-sky-800" />
-          </ul>
-        </div>}
-      </section>
-      <section aria-labelledby="applications-heading" className="overflow-hidden rounded-2xl border border-[#e8e8e6] bg-white">
+    {loading && !data ? (
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
+        <div className="min-w-0 lg:col-span-2">
+          <div className="h-[560px] animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
+        </div>
+        <div className="flex flex-col gap-6 lg:col-span-1">
+          <div className="h-72 animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
+          <div className="flex flex-col gap-4">
+            <div className="h-28 animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
+            <div className="h-28 animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
+            <div className="h-28 animate-pulse rounded-2xl border border-[#e8e8e6] bg-white" />
+          </div>
+        </div>
+      </div>
+    ) : data && (
+      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
+        <div className="min-w-0 lg:col-span-2">
+          <section aria-labelledby="applications-heading" className="overflow-hidden rounded-2xl border border-[#e8e8e6] bg-white">
         <div className="flex flex-col gap-2 border-b border-[#e8e8e6] px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-7">
           <div><p className="label-eyebrow text-[#800000]">Submissions</p><h2 id="applications-heading" className="mt-3 text-2xl font-semibold">Applications</h2></div>
           <div className="flex flex-wrap items-center gap-4">
@@ -354,7 +354,27 @@ export function AdminDashboard() {
           </div>
         </>}
       </section>
-    </>}
+    </div>
+    <div className="flex flex-col gap-6 lg:col-span-1">
+      <section aria-labelledby="qualification-heading" className="rounded-2xl border border-[#e8e8e6] bg-white p-6 sm:p-8 lg:p-6">
+        <div><p className="label-eyebrow text-[#800000]">All time</p><h2 id="qualification-heading" className="mt-3 text-2xl font-semibold">Qualification breakdown</h2></div>
+        {breakdownTotal === 0 ? <p className="mt-7 text-sm text-[#6b6b6b]">No applications have been received.</p> : <div className="mt-7 flex flex-col items-center gap-8 sm:flex-row lg:flex-col lg:gap-6">
+          <div role="img" aria-label={`Application status: ${qualified} qualified (${qualifiedPercent}%), ${rejected} rejected (${rejectedPercent}%), ${pendingReview} pending review (${pendingReviewPercent}%)`} className="h-40 w-40 shrink-0 rounded-full" style={{ background: `conic-gradient(#15803d 0% ${qualifiedPercent}%, #b91c1c ${qualifiedPercent}% ${qualifiedPercent + rejectedPercent}%, #0284c7 ${qualifiedPercent + rejectedPercent}% 100%)` }} />
+          <ul className="grid w-full gap-4 sm:grid-cols-3 lg:grid-cols-1 lg:gap-3">
+            <Breakdown label="Qualified" count={qualified} percent={qualifiedPercent} color="#15803d" labelClass="text-green-800" />
+            <Breakdown label="Rejected" count={rejected} percent={rejectedPercent} color="#b91c1c" labelClass="text-red-800" />
+            <Breakdown label="Pending review" count={pendingReview} percent={pendingReviewPercent} color="#0284c7" labelClass="text-sky-800" />
+          </ul>
+        </div>}
+      </section>
+      <section aria-label="Application metrics" className="flex flex-col gap-4">
+        <Metric label="Total applications" value={data.metrics.totalApplications} />
+        <Metric label="New applications · last 7 days" value={data.metrics.newApplicationsLast7Days} />
+        <Metric label="Qualified · last 7 days" value={data.metrics.qualifiedApplicationsLast7Days} />
+      </section>
+    </div>
+  </div>
+)}
     {showConfirmModal && targetStatus && (
       <div
         className="fixed inset-0 z-[100] flex items-center justify-center bg-black/45 p-4"
