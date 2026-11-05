@@ -50,23 +50,48 @@ export function AdminDashboard() {
     } catch { /* ignore */ }
   }, []);
 
+  // Search by company or brand name, email or contact name. `search` is what the box shows; `searchRef` is what the
+  // list is filtered by, so paging and refreshes keep the current search.
+  const [search, setSearch] = useState("");
+  const searchRef = useRef("");
+  const requestRef = useRef(0);
+
   const load = useCallback(async (requestedPage: number) => {
+    const request = ++requestRef.current;
     setLoading(true); setError("");
     try {
-      const response = await fetch(`/api/admin/applications?page=${requestedPage}&pageSize=25`, { cache: "no-store" });
+      const query = new URLSearchParams({ page: String(requestedPage), pageSize: "25" });
+      if (searchRef.current) query.set("q", searchRef.current);
+      const response = await fetch(`/api/admin/applications?${query}`, { cache: "no-store" });
+      if (request !== requestRef.current) return; // a newer search or page was requested meanwhile
       if (response.status === 401) { router.replace("/admin/login"); router.refresh(); return; }
       if (!response.ok) throw new Error("Application data could not be loaded. Please try again.");
       const result = await response.json() as DashboardData;
+      if (request !== requestRef.current) return;
       setData(result); setPage(requestedPage);
     } catch (cause) {
+      if (request !== requestRef.current) return;
       setError(cause instanceof Error ? cause.message : "Application data could not be loaded. Please try again.");
-    } finally { setLoading(false); }
+    } finally {
+      if (request === requestRef.current) setLoading(false);
+    }
   }, [router]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => { void load(1); }, 0);
     return () => window.clearTimeout(timer);
   }, [load]);
+
+  // Searches a moment after typing stops, from the first page
+  useEffect(() => {
+    const text = search.trim();
+    if (text === searchRef.current) return;
+    const timer = window.setTimeout(() => {
+      searchRef.current = text;
+      void load(1);
+    }, 300);
+    return () => window.clearTimeout(timer);
+  }, [search, load]);
 
   const toggleSelectAll = () => {
     const displayedApplications = data?.applications ?? [];
@@ -185,6 +210,9 @@ export function AdminDashboard() {
             updating={updating}
             onSelectApplication={openDetail}
             onPageChange={(newPage) => void load(newPage)}
+            search={search}
+            activeSearch={data.search ?? ""}
+            onSearchChange={setSearch}
           />
         </div>
     <div className="flex flex-col gap-6 lg:col-span-1">

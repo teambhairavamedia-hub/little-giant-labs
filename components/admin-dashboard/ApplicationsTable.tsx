@@ -26,6 +26,11 @@ export interface ApplicationsTableProps {
   updating: boolean;
   onSelectApplication: (application: Application, button: HTMLButtonElement) => void;
   onPageChange: (newPage: number) => void;
+  /** Text in the search box */
+  search: string;
+  /** The search the shown list is filtered by ("" for none) */
+  activeSearch: string;
+  onSearchChange: (search: string) => void;
 }
 
 export function ApplicationsTable({
@@ -47,6 +52,9 @@ export function ApplicationsTable({
   updating,
   onSelectApplication,
   onPageChange,
+  search,
+  activeSearch,
+  onSearchChange,
 }: ApplicationsTableProps) {
   const selectAllRef = useRef<HTMLInputElement | null>(null);
 
@@ -76,8 +84,42 @@ export function ApplicationsTable({
           >
             Status confirmations: <span className="font-medium text-[#202020]">{skipConfirm ? "Off" : "On"}</span>
           </button>
-          <p className="text-sm text-[#6b6b6b]">{numberFormat.format(pagination.total)} total</p>
+          <p className="text-sm text-[#6b6b6b]" aria-live="polite">
+            {numberFormat.format(pagination.total)} {activeSearch ? "matching" : "total"}
+          </p>
         </div>
+      </div>
+      {/* Search by company or brand name, email or contact name, across all applications */}
+      <div className="border-b border-[#e8e8e6] bg-[#fbf7f5] px-5 py-4 sm:px-7" role="search">
+        <label htmlFor="applications-search" className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-[#800000]">
+          Search applications
+        </label>
+        <div className="relative max-w-xl">
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="pointer-events-none absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-[#800000]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-4-4" /></svg>
+          <input
+            id="applications-search"
+            type="search"
+            value={search}
+            onChange={(event) => onSearchChange(event.target.value)}
+            onKeyDown={(event) => { if (event.key === "Escape" && search) { event.preventDefault(); onSearchChange(""); } }}
+            placeholder="Search by company, email or contact name"
+            maxLength={100}
+            autoComplete="off"
+            spellCheck={false}
+            className="h-11 w-full rounded-lg border-2 border-[#800000]/35 bg-white pl-11 pr-10 text-[0.9375rem] text-[#202020] shadow-sm placeholder:text-[#7a7a7a] hover:border-[#800000]/60 focus-visible:border-[#800000] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#800000]/15 [&::-webkit-search-cancel-button]:hidden"
+          />
+          {search && (
+            <button
+              type="button"
+              onClick={() => onSearchChange("")}
+              aria-label="Clear search"
+              className="absolute right-2.5 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full text-[#6b6b6b] hover:bg-[#800000]/10 hover:text-[#800000] focus-visible:outline-2 focus-visible:outline-[#800000]"
+            >
+              <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="m6 6 12 12M18 6 6 18" /></svg>
+            </button>
+          )}
+        </div>
+        <p className="mt-2 text-xs text-[#6b6b6b]">Searches every application by company or brand name, email or contact name.</p>
       </div>
       {actionFeedback && (
         <div
@@ -138,7 +180,13 @@ export function ApplicationsTable({
         </div>
       )}
       {pagination.total === 0 ? (
-        <p className="px-6 py-10 text-center text-sm text-[#6b6b6b]">No applications have been received.</p>
+        activeSearch ? (
+          <p className="px-6 py-10 text-center text-sm text-[#6b6b6b]">
+            No applications match &ldquo;{activeSearch}&rdquo;. Try part of a company name, email or contact name.
+          </p>
+        ) : (
+          <p className="px-6 py-10 text-center text-sm text-[#6b6b6b]">No applications have been received.</p>
+        )
       ) : (
         <>
           {loading && <p className="px-6 py-2 text-xs text-[#6b6b6b]" role="status">Loading applications…</p>}
