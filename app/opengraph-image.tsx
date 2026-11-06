@@ -19,18 +19,19 @@ export default async function OpenGraphImage() {
           height: "100%",
           display: "flex",
           alignItems: "center",
-          gap: 64,
-          padding: "0 80px",
+          gap: 44,
+          padding: "0 56px",
           background: "#0B1B2B",
           color: "#F8F6F0",
         }}
       >
+        {/* Large, so the logo stays clear in the small previews chat apps show (the file is 1200×766) */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logoSrc} width={470} height={300} alt="" />
+        <img src={logoSrc} width={620} height={396} alt="" />
         <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-          <div style={{ width: 64, height: 4, background: "#C5A059", marginBottom: 28 }} />
-          <div style={{ fontSize: 54, fontWeight: 700, lineHeight: 1.1 }}>{siteConfig.tagline}</div>
-          <div style={{ marginTop: 24, fontSize: 28, fontWeight: 700, lineHeight: 1.4, color: "rgba(248,246,240,.9)" }}>
+          <div style={{ width: 56, height: 4, background: "#C5A059", marginBottom: 24 }} />
+          <div style={{ fontSize: 46, fontWeight: 700, lineHeight: 1.12 }}>{siteConfig.tagline}</div>
+          <div style={{ marginTop: 20, fontSize: 25, fontWeight: 700, lineHeight: 1.4, color: "rgba(248,246,240,.9)" }}>
             A strategic brand, creative, and digital growth studio.
           </div>
         </div>
