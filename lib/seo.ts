@@ -13,11 +13,15 @@ export function socialMetadata(title: string, description: string, path: string)
       siteName: siteConfig.name,
       locale: "en_IN",
       type: "website",
-      images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: siteConfig.name }],
+      images: [{ url: `/opengraph-image?v=${SHARE_IMAGE_VERSION}`, width: 1200, height: 630, alt: siteConfig.name }],
     },
-    twitter: { card: "summary_large_image", title, description, images: ["/twitter-image"] },
+    twitter: { card: "summary_large_image", title, description, images: [`/twitter-image?v=${SHARE_IMAGE_VERSION}`] },
   };
 }
+
+/* Change this whenever app/opengraph-image.tsx changes: chat apps cache preview images by address, so a new
+   address makes them fetch the new image. */
+const SHARE_IMAGE_VERSION = "2026-11-06";
 
 /* Structured data describing the business, for Google's knowledge panel and local results. */
 export function organizationJsonLd() {
