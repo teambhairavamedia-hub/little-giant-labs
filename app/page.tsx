@@ -4,6 +4,11 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { jsonLdScript, organizationJsonLd, socialMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
+// What a shared link to the homepage shows
+const shareTitle = "Little Giant Labs — a strategic brand, creative, and digital growth studio";
+const shareDescription =
+  "Little Giant Labs is a strategic brand, creative, and digital growth studio that helps businesses bring clarity to what they offer, communicate why it matters, and connect meaningfully with the people who value it.";
+
 export async function generateMetadata(): Promise<Metadata> {
   const dict = getDictionary("en");
   return {
@@ -11,7 +16,9 @@ export async function generateMetadata(): Promise<Metadata> {
       absolute: dict.seo.home.title,
     },
     description: dict.seo.home.description,
-    ...socialMetadata(dict.seo.home.title, dict.seo.home.description, "/"),
+    // Link previews (WhatsApp, LinkedIn, X) show the title in bold above the description. Google results keep the
+    // keyword title and description above.
+    ...socialMetadata(shareTitle, shareDescription, "/"),
     alternates: {
       canonical: "/",
       languages: {
