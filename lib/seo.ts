@@ -45,7 +45,7 @@ export function organizationJsonLd() {
       addressCountry: "IN",
     },
     areaServed: "IN",
-    sameAs: [siteConfig.social.instagram],
+    sameAs: [siteConfig.social.instagram, siteConfig.social.linkedin, siteConfig.social.twitter],
   };
 }
 

@@ -23,8 +23,8 @@ export const siteConfig = {
   },
   social: {
     instagram: "https://www.instagram.com/littlegiantlabs/",
-    linkedin: "https://www.linkedin.com/company/bhairava-mediaa",
-    twitter: "https://x.com/bhairava_media",
+    linkedin: "https://www.linkedin.com/in/littlegiantlabs/",
+    twitter: "https://x.com/LittleGiantLabs",
   },
   nav: [
     { label: "Home", href: "/" },
