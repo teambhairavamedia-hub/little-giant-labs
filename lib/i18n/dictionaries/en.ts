@@ -684,7 +684,7 @@ export const en: TranslationDictionary = {
     home: {
       title: "Little Giant Labs | Brand Strategy, Creative Growth Studio",
       description:
-        "Little Giant Labs is a growth studio. We help businesses figure out what makes them special, show the world why it matters, and give people a reason to choose them.",
+        "Little Giant Labs is a Pune-based brand strategy, creative growth studio where we help businesses figure out what makes them special, show the world why it matters, and give people a reason to choose them.",
     },
     about: {
       title: "About Our Pune Marketing Agency",
