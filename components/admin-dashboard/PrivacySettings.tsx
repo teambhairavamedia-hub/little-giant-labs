@@ -12,8 +12,8 @@ const PRESETS = [
   { label: "1 year", days: 365 },
 ];
 
-/* Site-wide data and privacy settings (table global_settings): how long enquiries are kept, and data-breach
-   notifications, which are coming soon. */
+/* Site-wide data and privacy settings (table global_settings): how long enquiries are kept, plus data-breach
+   notifications and enquiry email verification, which are coming soon. */
 export function PrivacySettings() {
   const [settings, setSettings] = useState<GlobalSettings | null>(null);
   const [days, setDays] = useState("");
@@ -151,6 +151,21 @@ export function PrivacySettings() {
             <label className="mt-3 inline-flex cursor-not-allowed items-center gap-2 text-sm text-[#9a9a9a]">
               <input type="checkbox" disabled checked={settings.breachNotificationEnabled} readOnly className="h-4 w-4" />
               Send breach notifications
+            </label>
+          </div>
+
+          {/* Not stored yet: confirmation emails are not sent, so this stays off until that is built */}
+          <div className="mt-6 border-t border-[#eeeeec] pt-5">
+            <div className="flex items-center gap-2">
+              <p className="text-sm font-semibold text-[#202020]">Email verification</p>
+              <span className="rounded-full bg-[#f3f3f1] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#6b6b6b]">Coming soon</span>
+            </div>
+            <p className="mt-1 text-xs leading-relaxed text-[#6b6b6b]">
+              Email each new enquirer a link to confirm their email address, and show which enquiries are confirmed.
+            </p>
+            <label className="mt-3 inline-flex cursor-not-allowed items-center gap-2 text-sm text-[#9a9a9a]">
+              <input type="checkbox" disabled checked={false} readOnly className="h-4 w-4" />
+              Ask enquirers to confirm their email
             </label>
           </div>
         </>
