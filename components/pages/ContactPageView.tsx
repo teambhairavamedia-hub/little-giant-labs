@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Container } from "@/components/layout/Container";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { ClockIcon, CompassIcon, DocumentIcon, HandshakeIcon, PenToolIcon, SearchIcon, TrendIcon } from "@/components/ui/Icons";
@@ -8,6 +9,7 @@ import { accentTitle } from "@/components/ui/accentTitle";
 import { useI18n } from "@/lib/i18n/context";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { CALENDLY_BASE_URL } from "@/lib/calendly";
+import { siteConfig } from "@/lib/site";
 
 /* "What happens next": tell us → we review → we connect, as a connected vertical timeline. */
 function NextSteps({ label, steps }: { label: string; steps: readonly string[] }) {
@@ -120,7 +122,28 @@ export function ContactPageView() {
                   <span aria-hidden="true">→</span>
                 </a>
               </div>
-              <div className="mt-10 border-t border-lgl-line/30 pt-5 text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-soft">
+              {/* Direct email, including for privacy requests and complaints (India's DPDP Act asks for a contact).
+                  English only for now. */}
+              <div className="mt-10 space-y-4 text-sm leading-relaxed">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-gold">Email us</p>
+                  <a className="mt-1 inline-block text-lgl-fg underline decoration-lgl-gold/40 underline-offset-4 hover:decoration-lgl-gold" href={`mailto:${siteConfig.email}`}>
+                    {siteConfig.email}
+                  </a>
+                </div>
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-gold">Privacy questions or complaints</p>
+                  <p className="mt-1 text-lgl-soft">
+                    Email{" "}
+                    <a className="text-lgl-fg underline decoration-lgl-gold/40 underline-offset-4 hover:decoration-lgl-gold" href={`mailto:${siteConfig.email}?subject=${encodeURIComponent("Privacy request or complaint")}`}>
+                      {siteConfig.email}
+                    </a>{" "}
+                    with the subject &ldquo;Privacy request or complaint&rdquo;. See our{" "}
+                    <Link href="/privacy" className="text-lgl-fg underline decoration-lgl-gold/40 underline-offset-4 hover:decoration-lgl-gold">Privacy Policy</Link>.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-8 border-t border-lgl-line/30 pt-5 text-[11px] font-semibold uppercase tracking-[.22em] text-lgl-soft">
                 {dict.contact.sidebar.tagline}
               </div>
               {/* The office address lives in the footer only */}
