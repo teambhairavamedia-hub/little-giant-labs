@@ -18,8 +18,12 @@ const preloadedFonts = [
 export const metadata: Metadata = {
   // Makes canonical and alternate links absolute (https://www.littlegiantlabs.in/…)
   metadataBase: new URL(siteConfig.url),
-  // Google Search Console "HTML tag" verification; the token comes from Search Console via an env var
-  verification: { google: process.env.GOOGLE_SITE_VERIFICATION || undefined },
+  // "HTML tag" site verification for Google Search Console and Bing Webmaster Tools; each token comes from that
+  // tool via an env var, and the tag is left out while the variable is unset
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
+  },
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,

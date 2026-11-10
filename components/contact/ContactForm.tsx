@@ -9,6 +9,11 @@ import { EMAIL_ELIGIBILITY_MESSAGES, isEmailFormatValid, type EmailEligibilityOu
 import { APPLICATION_LIMITS, applicationOptions } from "@/lib/application-options";
 import { readLeadSource } from "@/lib/lead-source";
 import { trackEnquiryEvent, trackEvent } from "@/lib/analytics";
+import { TURNSTILE_TOKEN_HEADER, turnstileSiteKey } from "@/lib/turnstile";
+import { TurnstileWidget } from "@/components/contact/TurnstileWidget";
+
+// "Are you a robot?" check on the last step; off until the Turnstile keys are configured
+const TURNSTILE_SITE_KEY = turnstileSiteKey();
 
 type Enquiry = {
   contactName: string;
@@ -55,6 +60,8 @@ export function ContactForm() {
     outcome: EmailEligibilityOutcome | "idle" | "checking" | "invalid" | "unavailable";
   }>({ email: "", outcome: "idle" });
   const submittingRef = useRef(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
   const idempotencyKeyRef = useRef<string | null>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const startedRef = useRef(false);
@@ -153,6 +160,11 @@ export function ContactForm() {
       return;
     }
     if (!stepValid() || submittingRef.current) return;
+    if (TURNSTILE_SITE_KEY && !captchaToken) {
+      // English only for now
+      setError("Please complete the \"I am human\" check above the Submit button.");
+      return;
+    }
     submittingRef.current = true;
     trackStart();
     const idempotencyKey = idempotencyKeyRef.current ?? `application-submission:${Array.from(crypto.getRandomValues(new Uint8Array(32)), (byte) => byte.toString(16).padStart(2, "0")).join("")}`;
@@ -166,7 +178,11 @@ export function ContactForm() {
     try {
       const response = await fetch("/api/applications", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": idempotencyKey },
+        headers: {
+          "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKey,
+          ...(captchaToken ? { [TURNSTILE_TOKEN_HEADER]: captchaToken } : {}),
+        },
         // Optional answers are sent blank when skipped; the server stores them as NULL.
         body: JSON.stringify({
           contact_name: values.contactName,
@@ -205,6 +221,8 @@ export function ContactForm() {
     } finally {
       submittingRef.current = false;
       setBusy(false);
+      // A Turnstile token works once: get a fresh one in case the visitor needs to submit again
+      if (TURNSTILE_SITE_KEY && outcome !== "success") setCaptchaReset((count) => count + 1);
     }
   }
 
@@ -393,6 +411,12 @@ export function ContactForm() {
         <p className="mt-8 mb-5 border-l-4 border-[#C5A059] bg-[#C5A059]/10 p-4 text-sm leading-relaxed text-lgl-fg" role="alert">
           {error}
         </p>
+      )}
+
+      {step === LAST_STEP && TURNSTILE_SITE_KEY && (
+        <div className="mt-5">
+          <TurnstileWidget siteKey={TURNSTILE_SITE_KEY} onToken={setCaptchaToken} resetKey={captchaReset} />
+        </div>
       )}
 
       {step === LAST_STEP && (

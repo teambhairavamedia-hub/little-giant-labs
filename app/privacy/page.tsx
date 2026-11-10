@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   ...socialMetadata(`Privacy Policy | ${siteConfig.name}`, description, "/privacy"),
 };
 
-const LAST_UPDATED = "4 November 2026";
+const LAST_UPDATED = "10 November 2026";
 
 /* Describes what this website actually collects (enquiry form, lead source, analytics with consent) and the services
    it uses. English only. Keep it in step with the code when data collection changes. */
@@ -81,14 +81,16 @@ export default function PrivacyPage() {
             <li><strong>Supabase</strong>, which stores enquiries in a secure database;</li>
             <li><strong>Resend</strong>, which sends us an email when an enquiry arrives;</li>
             <li><strong>Google Analytics</strong> and, if enabled, <strong>Meta</strong>, for analytics with your consent;</li>
+            <li><strong>Cloudflare Turnstile</strong>, which checks that an enquiry is sent by a person, not an automated program;</li>
             <li><strong>Calendly</strong>, if you book a call, and <strong>WhatsApp</strong>, if you message us.</li>
           </ul>
           <p>These providers may process information outside India under their own privacy and security terms.</p>
 
           <h2>6. How long we keep information</h2>
           <p>
-            We keep enquiries for as long as needed to respond and to manage any resulting work, and delete them when
-            they are no longer needed or when you ask us to, unless we must keep them by law.
+            We keep enquiries only for as long as needed to respond and to manage any resulting work. We set a retention
+            period for enquiries, after which they are deleted automatically, and we delete an enquiry sooner if you ask
+            us to, unless we must keep it by law.
           </p>
 
           <h2>7. Your choices and rights</h2>
@@ -104,8 +106,21 @@ export default function PrivacyPage() {
             connections and restricted access to stored enquiries. No method of transmission or storage is completely
             secure.
           </p>
+          <p>
+            If a personal data breach affects your information, we will inform you and the Data Protection Board of
+            India as required by the Digital Personal Data Protection Act, 2023, and tell you what happened and what
+            we are doing about it.
+          </p>
 
-          <h2>9. Contact us</h2>
+          <h2>9. Questions and complaints</h2>
+          <p>
+            For any privacy question, request or complaint, email{" "}
+            <a href={`mailto:${email}?subject=${encodeURIComponent("Privacy request or complaint")}`}>{email}</a> with
+            the subject &ldquo;Privacy request or complaint&rdquo;. We will reply as soon as we can. If you are not
+            satisfied with our response, you may complain to the Data Protection Board of India.
+          </p>
+
+          <h2>10. Contact us</h2>
           <p>
             {siteConfig.name}
             <br />
@@ -114,7 +129,7 @@ export default function PrivacyPage() {
             <a href={`mailto:${email}`}>{email}</a>
           </p>
 
-          <h2>10. Changes to this policy</h2>
+          <h2>11. Changes to this policy</h2>
           <p>We may update this policy from time to time. The date at the top shows when it last changed.</p>
 
           <p className="mt-10">

@@ -682,9 +682,9 @@ export const en: TranslationDictionary = {
         "Brand strategy, creative content, digital marketing, employer branding and technology services from Little Giant Labs, a marketing agency in Pune, India.",
     },
     home: {
-      title: "Little Giant Labs | Branding & Digital Marketing Agency, Pune",
+      title: "Little Giant Labs | Brand Strategy, Creative Growth Studio",
       description:
-        "Little Giant Labs is a Pune-based brand strategy, creative and digital marketing agency helping businesses clarify their value and turn attention into revenue.",
+        "Little Giant Labs is a growth studio. We help businesses figure out what makes them special, show the world why it matters, and give people a reason to choose them.",
     },
     about: {
       title: "About Our Pune Marketing Agency",
