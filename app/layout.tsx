@@ -22,7 +22,8 @@ export const metadata: Metadata = {
   // tool via an env var, and the tag is left out while the variable is unset
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
-    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
+    // Bing's code is public (it is in the page source); BING_SITE_VERIFICATION can override it
+    other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION || "45BD22A54F335C8B1B6E8108E4781C7F" },
   },
   title: {
     default: siteConfig.name,
