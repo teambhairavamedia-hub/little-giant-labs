@@ -52,7 +52,7 @@ function ContactHeroVisual() {
     <figure className="contact-visual" aria-hidden="true">
       <Image
         src="/media/contact/contact-dart.png"
-        alt=""
+        alt="Dart hitting the centre of a target"
         width={1433}
         height={1259}
         priority
