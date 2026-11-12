@@ -78,7 +78,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 
       <div className="min-w-0 flex-1">
         <header className="border-b border-[#e8e8e6] bg-white">
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-4 sm:px-8">
+          <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-3 px-5 py-4 sm:px-8 lg:px-12">
             <div className="flex items-center gap-3">
               <button
                 type="button"
@@ -95,7 +95,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <AdminSignOut />
           </div>
         </header>
-        <main className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">{children}</main>
+        <main className="mx-auto max-w-[1600px] px-5 py-10 sm:px-8 sm:py-14 lg:px-12">{children}</main>
       </div>
     </div>
   );

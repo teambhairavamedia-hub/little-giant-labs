@@ -189,8 +189,13 @@ export function AdminDashboard() {
     {loading && !data ? (
       <DashboardSkeleton />
     ) : data && (
-      <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-3">
-        <div className="min-w-0 lg:col-span-2">
+      <div className="flex flex-col gap-8">
+        {/* Summary cards on top, in the same order as before; the applications table gets the full width below */}
+        <div className="grid grid-cols-1 items-stretch gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+          <QualificationBreakdown qualification={data.metrics.qualification} />
+          <DashboardMetrics metrics={data.metrics} layout="row" />
+        </div>
+        <div className="min-w-0">
           <ApplicationsTable
             applications={data.applications}
             pagination={data.pagination}
@@ -215,10 +220,6 @@ export function AdminDashboard() {
             onSearchChange={setSearch}
           />
         </div>
-    <div className="flex flex-col gap-6 lg:col-span-1">
-      <QualificationBreakdown qualification={data.metrics.qualification} />
-      <DashboardMetrics metrics={data.metrics} />
-    </div>
   </div>
 )}
     {showConfirmModal && targetStatus && (
