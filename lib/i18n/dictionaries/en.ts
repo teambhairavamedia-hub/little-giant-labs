@@ -687,12 +687,13 @@ export const en: TranslationDictionary = {
         "Little Giant Labs is a Pune-based brand strategy, creative growth studio where we help businesses figure out what makes them special, show the world why it matters, and give people a reason to choose them.",
     },
     about: {
-      title: "About Our Pune Marketing Agency",
+      // Already contains the brand, so app/about/page.tsx uses it as an absolute title
+      title: "About Little Giant Labs",
       description:
         "Learn how Little Giant Labs connects business thinking, brand strategy, creative storytelling and digital execution to help businesses communicate their value.",
     },
     contact: {
-      title: "Contact Our Marketing Team in Pune",
+      title: "Contact Us",
       description:
         "Contact Little Giant Labs to discuss brand strategy, creative or digital marketing for your business. Send an enquiry, book a call or message us on WhatsApp.",
     },

@@ -6,9 +6,10 @@ import { socialMetadata } from "@/lib/seo";
 export async function generateMetadata(): Promise<Metadata> {
   const dict = getDictionary("en");
   return {
-    title: dict.seo.about.title,
+    // "About Little Giant Labs" already names the brand, so the layout must not append "| Little Giant Labs"
+    title: { absolute: dict.seo.about.title },
     description: dict.seo.about.description,
-    ...socialMetadata(`${dict.seo.about.title} | Little Giant Labs`, dict.seo.about.description, "/about"),
+    ...socialMetadata(dict.seo.about.title, dict.seo.about.description, "/about"),
     alternates: {
       canonical: "/about",
       languages: {

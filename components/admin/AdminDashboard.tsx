@@ -8,7 +8,6 @@ import { BulkStatusModal } from "@/components/admin-dashboard/BulkStatusModal";
 import { DashboardMetrics } from "@/components/admin-dashboard/DashboardMetrics";
 import { DashboardSkeleton } from "@/components/admin-dashboard/DashboardSkeleton";
 import { QualificationBreakdown } from "@/components/admin-dashboard/QualificationBreakdown";
-import { PrivacySettings } from "@/components/admin-dashboard/PrivacySettings";
 import { statusLabels } from "@/components/admin-dashboard/constants";
 import type {
   Application,
@@ -219,7 +218,6 @@ export function AdminDashboard() {
     <div className="flex flex-col gap-6 lg:col-span-1">
       <QualificationBreakdown qualification={data.metrics.qualification} />
       <DashboardMetrics metrics={data.metrics} />
-      <PrivacySettings />
     </div>
   </div>
 )}
