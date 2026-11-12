@@ -7,7 +7,8 @@ import { siteConfig } from "@/lib/site";
 // What a shared link to the homepage shows
 const shareTitle = "Little Giant Labs — a strategic brand, creative, and digital growth studio";
 const shareDescription =
-  "Little Giant Labs is a strategic brand, creative, and digital growth studio that helps businesses bring clarity to what they offer, communicate why it matters, and connect meaningfully with the people who value it.";
+  // Kept near 150 characters so link previews and search engines show it in full
+  "Little Giant Labs is a strategic brand, creative and digital growth studio in Pune, helping businesses show what they offer and why it matters.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const dict = getDictionary("en");

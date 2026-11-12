@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getDictionary } from "@/lib/i18n/dictionaries";
-import { socialMetadata } from "@/lib/seo";
+import { jsonLdScript, socialMetadata, webPageJsonLd } from "@/lib/seo";
 import { WorkPageView } from "@/components/pages/WorkPageView";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,5 +24,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function WorkPage() {
-  return <WorkPageView dict={getDictionary("en")} />;
+  const dict = getDictionary("en");
+  const structuredData = webPageJsonLd("CollectionPage", "/work", `${dict.seo.work.title} | Little Giant Labs`, dict.seo.work.description);
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(structuredData) }} />
+      <WorkPageView dict={dict} />
+    </>
+  );
 }

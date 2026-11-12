@@ -1,0 +1,50 @@
+name: Submit URLs to IndexNow
+
+# Runs when Vercel reports a deployment to GitHub. The job continues only for a successful Production deployment,
+# so Bing (and other IndexNow search engines) hear about the live pages straight after each release.
+on:
+  deployment_status:
+
+permissions: {}
+
+jobs:
+  submit:
+    name: Submit sitemap URLs
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production'
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://www.littlegiantlabs.in
+      # Public by design: the same key is served at $SITE_URL/<key>.txt (public/<key>.txt), which is how IndexNow
+      # checks that submissions come from the site owner. Change both together.
+      INDEXNOW_KEY: 93d8ecfff5e54f299b092e9d23dd7e5f
+    steps:
+      - name: Read the live sitemap and submit its URLs
+        run: |
+          set -euo pipefail
+          host="${SITE_URL#https://}"
+
+          # The key file must be live, or IndexNow rejects the submission
+          curl -fsS --retry 3 --retry-delay 10 "$SITE_URL/$INDEXNOW_KEY.txt" -o /dev/null
+
+          # Every <loc> in the sitemap, as a JSON array
+          urls=$(curl -fsS --retry 3 --retry-delay 10 "$SITE_URL/sitemap.xml" \
+            | grep -o '<loc>[^<]*</loc>' | sed -e 's#<loc>##' -e 's#</loc>##' \
+            | jq -R . | jq -sc .)
+          count=$(echo "$urls" | jq length)
+          if [ "$count" -eq 0 ]; then
+            echo "::error::No URLs found in $SITE_URL/sitemap.xml"
+            exit 1
+          fi
+
+          body=$(jq -nc --arg host "$host" --arg key "$INDEXNOW_KEY" --arg loc "$SITE_URL/$INDEXNOW_KEY.txt" \
+            --argjson urls "$urls" '{host: $host, key: $key, keyLocation: $loc, urlList: $urls}')
+
+          # 200 = received, 202 = received and the key is still being checked; anything else is a failure
+          status=$(curl -sS -o response.txt -w '%{http_code}' --retry 3 --retry-delay 10 \
+            -H 'Content-Type: application/json; charset=utf-8' -d "$body" https://api.indexnow.org/indexnow)
+          echo "IndexNow responded $status for $count URLs"
+          if [ "$status" != "200" ] && [ "$status" != "202" ]; then
+            cat response.txt
+            echo "::error::IndexNow submission failed with HTTP $status"
+            exit 1
+          fi
