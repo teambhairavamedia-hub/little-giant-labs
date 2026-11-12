@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { AboutPageView } from "@/components/pages/AboutPageView";
 import { getDictionary } from "@/lib/i18n/dictionaries";
-import { socialMetadata } from "@/lib/seo";
+import { jsonLdScript, pageJsonLd, socialMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const dict = getDictionary("en");
@@ -25,5 +25,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function AboutPage() {
-  return <AboutPageView />;
+  const dict = getDictionary("en");
+  const structuredData = pageJsonLd("AboutPage", "/about", dict.seo.about.title, dict.seo.about.description);
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(structuredData) }} />
+      <AboutPageView />
+    </>
+  );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ContactPageView } from "@/components/pages/ContactPageView";
 import { getDictionary } from "@/lib/i18n/dictionaries";
-import { socialMetadata } from "@/lib/seo";
+import { jsonLdScript, pageJsonLd, socialMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const dict = getDictionary("en");
@@ -24,5 +24,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function ContactPage() {
-  return <ContactPageView />;
+  const dict = getDictionary("en");
+  const structuredData = pageJsonLd("ContactPage", "/contact", `${dict.seo.contact.title} | Little Giant Labs`, dict.seo.contact.description);
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(structuredData) }} />
+      <ContactPageView />
+    </>
+  );
 }

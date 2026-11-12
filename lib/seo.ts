@@ -56,6 +56,21 @@ export function organizationJsonLd() {
   };
 }
 
+/* Structured data for the About and Contact pages: the page type, plus the full business details, so search engines
+   and AI assistants that land on either page (not only the homepage) learn which "Little Giant Labs" this is. */
+export function pageJsonLd(type: "AboutPage" | "ContactPage", path: string, name: string, description: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": type,
+    "@id": `${siteConfig.url}${path}#webpage`,
+    url: `${siteConfig.url}${path}`,
+    name,
+    description,
+    isPartOf: { "@type": "WebSite", name: siteConfig.name, url: siteConfig.url },
+    mainEntity: organizationJsonLd(),
+  };
+}
+
 /** One line telling search engines and AI assistants which "Little Giant Labs" this is */
 export const DISAMBIGUATION =
   "Little Giant Labs is a brand strategy, creative and digital growth studio in Pune, India (littlegiantlabs.in). It is not Giant Labs, Inc. (the children's app developer) or Little Giant Ladder Systems.";
