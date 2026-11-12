@@ -24,7 +24,7 @@ export const en: TranslationDictionary = {
       titlePart2: "",
       tagline: "Strategy that shapes it. Creativity that brings it to life. Digital that moves it forward.",
       intro:
-        "We help startups, growing businesses and established enterprises turn their value into clear positioning, compelling communication and meaningful audience connections.",
+        "We help businesses figure out what makes them special, show the world why it matters, and give people a reason to choose them.",
       discussProject: "Discuss Your Business Challenge",
       exploreWork: "Explore Our Work",
       growthSystem: "The growth system",
@@ -688,7 +688,7 @@ export const en: TranslationDictionary = {
     },
     about: {
       // Already contains the brand, so app/about/page.tsx uses it as an absolute title
-      title: "About Little Giant Labs",
+      title: "About - Little Giant Labs",
       description:
         "Learn how Little Giant Labs connects business thinking, brand strategy, creative storytelling and digital execution to help businesses communicate their value.",
     },

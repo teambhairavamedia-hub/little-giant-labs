@@ -71,8 +71,9 @@ test("dashboard uses persisted qualification outcomes and server returned metric
   assert.match(route, /eq\("qualification_status", "pending_review"\)/);
   assert.match(route, /SEVEN_DAYS_MS = 7 \* 24 \* 60 \* 60 \* 1000/);
   assert.match(dashboard, /<ApplicationsTable/);
-  assert.match(dashboard, /grid grid-cols-1 items-start gap-8 lg:grid-cols-3/);
-  assert.match(dashboard, /min-w-0 lg:col-span-2/);
+  // Summary cards sit above the full-width applications table, breakdown first
+  assert.ok(dashboard.indexOf("<QualificationBreakdown") < dashboard.indexOf("<DashboardMetrics"));
+  assert.ok(dashboard.indexOf("<DashboardMetrics") < dashboard.indexOf("<ApplicationsTable"));
   assert.match(dashboard, /<QualificationBreakdown/);
   assert.match(dashboard, /<DashboardMetrics/);
   assert.match(applicationsTable, /No applications have been received\./);
