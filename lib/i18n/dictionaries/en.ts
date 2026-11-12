@@ -684,7 +684,8 @@ export const en: TranslationDictionary = {
     home: {
       title: "Little Giant Labs | Brand Strategy, Creative Growth Studio",
       description:
-        "Little Giant Labs is a Pune-based brand strategy, creative growth studio where we help businesses figure out what makes them special, show the world why it matters, and give people a reason to choose them.",
+        // Kept within 150–160 characters so search engines show it in full
+        "Little Giant Labs is a Pune-based brand strategy, creative growth studio. We help businesses show what makes them special and why people should choose them.",
     },
     about: {
       // Already contains the brand, so app/about/page.tsx uses it as an absolute title

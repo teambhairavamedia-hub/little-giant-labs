@@ -14,7 +14,7 @@ export function WhatsAppButton() {
       aria-label={`Chat with us on WhatsApp (${display})`}
       title={`Chat with us on WhatsApp: ${display}`}
     >
-      <Image src="/media/whatsapp-logo.png" alt="" width={192} height={192} sizes="60px" className="h-full w-full" />
+      <Image src="/media/whatsapp-logo.png" alt="WhatsApp" width={192} height={192} sizes="60px" className="h-full w-full" />
     </a>
   );
 }
