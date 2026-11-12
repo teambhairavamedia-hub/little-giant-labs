@@ -4,7 +4,9 @@ export const siteConfig = {
   url: "https://www.littlegiantlabs.in",
   tagline: "Turn Attention Into Revenue.",
   description:
-    "Little Giant Labs is a brand strategy, creative and digital marketing agency in Pune, India, helping businesses clarify their value and grow.",
+    "Little Giant Labs is a Pune-based brand strategy, creative growth studio where we help businesses figure out what makes them special, show the world why it matters, and give people a reason to choose them.",
+  // Founders as named on the About page; used in structured data and /llms.txt
+  founders: ["Samir", "Rajesh"],
   email: "Hello@Littlegiantlabs.in",
   // WhatsApp click-to-chat: `number` is the full international number without "+" or spaces, as wa.me expects
   whatsapp: {
@@ -25,6 +27,7 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/littlegiantlabs/",
     linkedin: "https://www.linkedin.com/in/littlegiantlabs/",
     twitter: "https://x.com/LittleGiantLabs",
+    youtube: "https://www.youtube.com/@littlegiantlabs",
   },
   nav: [
     { label: "Home", href: "/" },

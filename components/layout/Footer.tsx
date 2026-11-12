@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { siteConfig } from "@/lib/site";
 import { Section } from "@/components/ui/Section";
-import { ClockIcon, InstagramIcon, LinkedInIcon, MailIcon, PinIcon, XIcon } from "@/components/ui/Icons";
+import { ClockIcon, InstagramIcon, LinkedInIcon, MailIcon, PinIcon, XIcon, YouTubeIcon } from "@/components/ui/Icons";
 import { useI18n } from "@/lib/i18n/context";
 import { getLocalizedPath } from "@/lib/i18n/config";
 import { openConsentSettings } from "@/lib/consent";
@@ -166,6 +166,16 @@ export function Footer() {
             >
               <XIcon size={15} className="text-lgl-gold/80" />
               X
+            </a>
+            <a
+              href={siteConfig.social.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-8 items-center gap-2.5 text-[0.875rem] font-medium text-lgl-fg/75 transition-colors hover:text-lgl-fg"
+              style={{ fontFamily: "var(--font-dm-sans), sans-serif" }}
+            >
+              <YouTubeIcon size={15} className="text-lgl-gold/80" />
+              YouTube
             </a>
           </div>
 

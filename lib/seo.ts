@@ -30,10 +30,16 @@ export function organizationJsonLd() {
     "@type": "ProfessionalService",
     "@id": `${siteConfig.url}/#organization`,
     name: siteConfig.name,
+    // Other ways people write the name, and a line that separates this studio from similarly named companies,
+    // so search engines and AI assistants match "Little Giant Labs" searches to this business
+    alternateName: ["LittleGiantLabs", "Little Giant Labs Pune", "LGL"],
+    disambiguatingDescription: DISAMBIGUATION,
     url: siteConfig.url,
     logo: `${siteConfig.url}/lgl-mark-512.png`,
     image: `${siteConfig.url}/opengraph-image`,
     description: siteConfig.description,
+    founder: siteConfig.founders.map((name) => ({ "@type": "Person", name })),
+    knowsAbout: ["Brand strategy", "Brand positioning", "Creative content", "Digital marketing", "Employer branding", "Product marketing"],
     email: siteConfig.email,
     telephone: `+${siteConfig.whatsapp.number}`,
     address: {
@@ -45,9 +51,14 @@ export function organizationJsonLd() {
       addressCountry: "IN",
     },
     areaServed: "IN",
-    sameAs: [siteConfig.social.instagram, siteConfig.social.linkedin, siteConfig.social.twitter],
+    // Official profiles: lets Google link them to this business (and show them for brand searches)
+    sameAs: Object.values(siteConfig.social),
   };
 }
+
+/** One line telling search engines and AI assistants which "Little Giant Labs" this is */
+export const DISAMBIGUATION =
+  "Little Giant Labs is a brand strategy, creative and digital growth studio in Pune, India (littlegiantlabs.in). It is not Giant Labs, Inc. (the children's app developer) or Little Giant Ladder Systems.";
 
 /** Serialises JSON-LD for a <script> tag, escaping "<" so the content can't close the tag early. */
 export function jsonLdScript(data: object): string {

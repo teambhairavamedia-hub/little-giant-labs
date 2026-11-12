@@ -688,7 +688,7 @@ export const en: TranslationDictionary = {
     },
     about: {
       // Already contains the brand, so app/about/page.tsx uses it as an absolute title
-      title: "About Little Giant Labs",
+      title: "About - Little Giant Labs",
       description:
         "Learn how Little Giant Labs connects business thinking, brand strategy, creative storytelling and digital execution to help businesses communicate their value.",
     },
