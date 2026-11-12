@@ -71,6 +71,53 @@ export function pageJsonLd(type: "AboutPage" | "ContactPage", path: string, name
   };
 }
 
+/* Structured data for the other public pages (Services, Our work, Privacy): the page type, which site and business it
+   belongs to, and its breadcrumb trail. `extra` adds page-specific fields such as a list of services. */
+export function webPageJsonLd(
+  type: "CollectionPage" | "WebPage",
+  path: string,
+  name: string,
+  description: string,
+  extra: Record<string, unknown> = {},
+) {
+  const url = `${siteConfig.url}${path}`;
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": type,
+      "@id": `${url}#webpage`,
+      url,
+      name,
+      description,
+      inLanguage: "en-IN",
+      isPartOf: { "@type": "WebSite", name: siteConfig.name, url: siteConfig.url },
+      publisher: { "@type": "ProfessionalService", "@id": `${siteConfig.url}/#organization`, name: siteConfig.name, url: siteConfig.url },
+      ...extra,
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: siteConfig.url },
+        { "@type": "ListItem", position: 2, name, item: url },
+      ],
+    },
+  ];
+}
+
+/* When each public page's content last changed (YYYY-MM-DD), for sitemap.xml's <lastmod> and the Privacy Policy's
+   "Last updated" line. Update a page's date when its visible content changes, not on every deploy, so search engines
+   can trust it. Service detail pages share the "/services/*" date. */
+export const pageLastModified = {
+  "/": "2026-11-12",
+  "/services": "2026-11-04",
+  "/services/*": "2026-11-04",
+  "/about": "2026-11-12",
+  "/contact": "2026-11-12",
+  "/work": "2026-11-04",
+  "/privacy": "2026-11-10",
+} as const;
+
 /** One line telling search engines and AI assistants which "Little Giant Labs" this is */
 export const DISAMBIGUATION =
   "Little Giant Labs is a brand strategy, creative and digital growth studio in Pune, India (littlegiantlabs.in). It is not Giant Labs, Inc. (the children's app developer) or Little Giant Ladder Systems.";

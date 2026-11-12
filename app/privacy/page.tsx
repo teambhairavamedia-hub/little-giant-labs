@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/layout/Container";
-import { socialMetadata } from "@/lib/seo";
+import { jsonLdScript, pageLastModified, socialMetadata, webPageJsonLd } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 const description = "How Little Giant Labs collects, uses and protects personal information shared through this website.";
@@ -13,7 +13,17 @@ export const metadata: Metadata = {
   ...socialMetadata(`Privacy Policy | ${siteConfig.name}`, description, "/privacy"),
 };
 
-const LAST_UPDATED = "10 November 2026";
+// From the same date as sitemap.xml (lib/seo.ts), shown as e.g. "10 November 2026"
+const LAST_UPDATED = new Date(`${pageLastModified["/privacy"]}T00:00:00Z`).toLocaleDateString("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+
+const structuredData = webPageJsonLd("WebPage", "/privacy", `Privacy Policy | ${siteConfig.name}`, description, {
+  dateModified: pageLastModified["/privacy"],
+});
 
 /* Describes what this website actually collects (enquiry form, lead source, analytics with consent) and the services
    it uses. English only. Keep it in step with the code when data collection changes. */
@@ -21,6 +31,7 @@ export default function PrivacyPage() {
   const email = siteConfig.email;
   return (
     <main className="min-h-screen bg-lgl-bg pb-16 pt-28 text-lgl-fg md:pb-24 md:pt-36">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(structuredData) }} />
       <Container>
         <article className="privacy-policy mx-auto max-w-3xl">
           <p className="home-eyebrow">Legal</p>
