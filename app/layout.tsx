@@ -5,7 +5,6 @@ import { siteConfig } from "@/lib/site";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { themeInitScript } from "@/lib/theme";
 import { consentInitScript } from "@/lib/consent";
-import "./fonts.css";
 import "./globals.css";
 
 // Fonts are self-hosted (app/fonts.css). These are the faces every page needs straight away. Noto Sans Devanagari is

@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Self-hosted @font-face rules, bundled into this stylesheet so the page waits for one CSS file instead of two */
+@import "./fonts.css";
 
 /* ─────────────────────────────────────────────────────────────────────────────
    NOOMO-INSPIRED DESIGN SYSTEM
