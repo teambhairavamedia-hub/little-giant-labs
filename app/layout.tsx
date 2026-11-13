@@ -8,12 +8,12 @@ import { consentInitScript } from "@/lib/consent";
 import "./fonts.css";
 import "./globals.css";
 
-// Fonts are self-hosted (app/fonts.css). These are the faces every page needs straight away.
+// Fonts are self-hosted (app/fonts.css). These are the faces every page needs straight away. Noto Sans Devanagari is
+// not preloaded: only the Hindi and Marathi pages use it (globals.css, :lang(hi|mr)), and the browser still fetches it
+// there through @font-face; preloading it cost every English page about 143 KB before the first paint.
 const preloadedFonts = [
   "/fonts/dm-sans-latin.woff2",
   "/fonts/manrope-latin.woff2",
-  "/fonts/noto-sans-devanagari-devanagari.woff2",
-  "/fonts/noto-sans-devanagari-latin.woff2",
 ];
 
 export const metadata: Metadata = {
