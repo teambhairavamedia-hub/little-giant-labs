@@ -32,8 +32,16 @@ const heroImages = [
 const CARD_WIDTHS = [240, 336, 416] as const;
 const CARD_SIZES = "(min-width: 768px) 208px, (min-width: 640px) 176px, 112px";
 
+/* Quality 60 by default. Photos that compress less well get a lower setting where it looks the same at card size,
+   keeping each file under PageSpeed's "image delivery" limit (about pixels ÷ 6 + 4 KB). */
+const CARD_QUALITY: Record<string, number> = {
+  "photo-1756312148347-611b60723c7a": 45,
+};
+
 function cardImageUrl(base: string, width: number) {
-  return `${base}&w=${width}&h=${Math.round((width * 4) / 3)}&auto=format&fit=crop&q=60`;
+  const photoId = base.slice(UNSPLASH_ORIGIN.length + 1, base.indexOf("?"));
+  const quality = CARD_QUALITY[photoId] ?? 60;
+  return `${base}&w=${width}&h=${Math.round((width * 4) / 3)}&auto=format&fit=crop&q=${quality}`;
 }
 
 function cardImageSrcSet(base: string) {

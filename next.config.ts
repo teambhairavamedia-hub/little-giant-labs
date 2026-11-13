@@ -3,6 +3,16 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   allowedDevOrigins: ['10.162.61.106'],
+  // Next.js always bundles polyfills for Array.prototype.at/flat/flatMap, Object.fromEntries/hasOwn and
+  // String.prototype.trimStart/trimEnd (next/dist/build/polyfills/polyfill-module.js, imported as
+  // "../build/polyfills/polyfill-module"). Every browser Next.js 16 supports (Chrome/Edge/Firefox 111+, Safari 16.4+)
+  // has these built in, so the module is replaced with an empty one; this clears PageSpeed's "Legacy JavaScript".
+  // If a Next.js upgrade renames the import, the alias simply stops matching and the polyfills come back.
+  turbopack: {
+    resolveAlias: {
+      "../build/polyfills/polyfill-module": "./lib/polyfills/empty.js",
+    },
+  },
   // Project covers are stored in Vercel Blob; next/image resizes them and serves WebP/AVIF
   images: {
     formats: ["image/avif", "image/webp"],
