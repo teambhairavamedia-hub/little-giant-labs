@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { preconnect } from "react-dom";
 import {
   dispatchIntroComplete,
   markIntroPlayed,
@@ -14,15 +15,31 @@ import {
   subscribeColorTheme,
 } from "@/lib/theme";
 
+const UNSPLASH_ORIGIN = "https://images.unsplash.com";
+
 const heroImages = [
-  "https://images.unsplash.com/photo-1756312148347-611b60723c7a?w=480&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzN3x8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1757865579201-693dd2080c73?w=480&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw2MXx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1756786605218-28f7dd95a493?w=480&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMzh8fHxlbnwwfHx8fHw%3D",
-  "https://images.unsplash.com/photo-1757519740947-eef07a74c4ab?w=480&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNDh8fHxlbnwwfHx8fHw%3D",
-  "https://images.unsplash.com/photo-1757263005786-43d955f07fb1?w=480&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNzB8fHxlbnwwfHx8fHw%3D",
-  "https://images.unsplash.com/photo-1757207445614-d1e12b8f753e?w=480&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxODZ8fHxlbnwwfHx8fHw%3D",
-  "https://images.unsplash.com/photo-1757269746970-dc477517268f?w=480&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMjN8fHxlbnwwfHx8fHw%3D",
+  `${UNSPLASH_ORIGIN}/photo-1756312148347-611b60723c7a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzN3x8fGVufDB8fHx8fA%3D%3D`,
+  `${UNSPLASH_ORIGIN}/photo-1757865579201-693dd2080c73?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw2MXx8fGVufDB8fHx8fA%3D%3D`,
+  `${UNSPLASH_ORIGIN}/photo-1756786605218-28f7dd95a493?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMzh8fHxlbnwwfHx8fHw%3D`,
+  `${UNSPLASH_ORIGIN}/photo-1757519740947-eef07a74c4ab?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNDh8fHxlbnwwfHx8fHw%3D`,
+  `${UNSPLASH_ORIGIN}/photo-1757263005786-43d955f07fb1?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxNzB8fHxlbnwwfHx8fHw%3D`,
+  `${UNSPLASH_ORIGIN}/photo-1757207445614-d1e12b8f753e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxODZ8fHxlbnwwfHx8fHw%3D`,
+  `${UNSPLASH_ORIGIN}/photo-1757269746970-dc477517268f?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMjN8fHxlbnwwfHx8fHw%3D`,
 ];
+
+/* The cards are 3:4 and 112px wide on phones, 176px from 640px and 208px from 768px. Unsplash crops each photo to
+   3:4 at the requested width, and `auto=format` sends AVIF or WebP when the browser supports them; the browser picks
+   the smallest width that stays sharp on its screen. */
+const CARD_WIDTHS = [240, 336, 416] as const;
+const CARD_SIZES = "(min-width: 768px) 208px, (min-width: 640px) 176px, 112px";
+
+function cardImageUrl(base: string, width: number) {
+  return `${base}&w=${width}&h=${Math.round((width * 4) / 3)}&auto=format&fit=crop&q=60`;
+}
+
+function cardImageSrcSet(base: string) {
+  return CARD_WIDTHS.map((width) => `${cardImageUrl(base, width)} ${width}w`).join(", ");
+}
 
 const imagesConfig = [
   {
@@ -89,6 +106,8 @@ function getMultiplier(width: number) {
 }
 
 export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProps) {
+  // Open the connection to Unsplash while the intro starts, so the first card's photo arrives sooner
+  preconnect(UNSPLASH_ORIGIN);
   const colorTheme = useSyncExternalStore(
     subscribeColorTheme,
     getColorTheme,
@@ -271,10 +290,15 @@ export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProp
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={img.url}
+                  src={cardImageUrl(img.url, CARD_WIDTHS[CARD_WIDTHS.length - 1])}
+                  srcSet={cardImageSrcSet(img.url)}
+                  sizes={CARD_SIZES}
+                  width={208}
+                  height={277}
                   alt={img.alt}
                   className="pointer-events-none h-full w-full select-none object-cover"
                   loading="eager"
+                  decoding="async"
                 />
               </motion.div>
             );
