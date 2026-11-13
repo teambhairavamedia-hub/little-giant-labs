@@ -3,8 +3,9 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
-import { gsap, ScrollTrigger, registerGsap } from "@/hooks/useGsap";
 
+/* Eased smooth scrolling (Lenis) for the whole site. Lenis runs its own animation frame loop (`autoRaf`): no page
+   uses GSAP ScrollTrigger, so GSAP is not loaded just to drive it (that saved about 57 KB of JavaScript per page). */
 export function SmoothScroll({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
@@ -17,14 +18,10 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       window.history.scrollRestoration = "manual";
     }
 
-    registerGsap();
-    ScrollTrigger.clearScrollMemory();
-
     const onPageHide = () => {
       if ("scrollRestoration" in window.history) {
         window.history.scrollRestoration = "manual";
       }
-      ScrollTrigger.clearScrollMemory();
     };
     window.addEventListener("pagehide", onPageHide);
     window.addEventListener("beforeunload", onPageHide);
@@ -40,9 +37,6 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       };
     }
 
-    // Prevent GSAP from compensating lag spikes (e.g. tab switching)
-    gsap.ticker.lagSmoothing(0);
-
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -53,21 +47,9 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       touchMultiplier: 1.2,
       // Smoothly scroll in-page links such as "Explore Our Work" → #our-work
       anchors: true,
+      autoRaf: true,
     });
     lenisRef.current = lenis;
-
-    // Keep ScrollTrigger in sync with Lenis virtual scroll position
-    lenis.on("scroll", ScrollTrigger.update);
-
-    // Drive Lenis via GSAP's RAF — prevents double-RAF and ensures single animation loop
-    const tick = (time: number) => {
-      lenis.raf(time * 1000);
-    };
-    gsap.ticker.add(tick);
-
-    // Refresh ScrollTrigger on resize
-    const handleRefresh = () => ScrollTrigger.refresh();
-    window.addEventListener("resize", handleRefresh);
 
     // Handle initial scroll state on load / refresh:
     // If a specific section target is in the URL hash, scroll to it; otherwise load from the top.
@@ -85,13 +67,10 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     }
 
     return () => {
-      gsap.ticker.remove(tick);
       lenis.destroy();
       lenisRef.current = null;
-      window.removeEventListener("resize", handleRefresh);
       window.removeEventListener("pagehide", onPageHide);
       window.removeEventListener("beforeunload", onPageHide);
-      ScrollTrigger.clearScrollMemory();
     };
   }, []);
 
@@ -104,7 +83,6 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
       if (lenisRef.current) {
         lenisRef.current.scrollTo(0, { immediate: true });
       }
-      ScrollTrigger.refresh();
     };
 
     const hash = window.location.hash;
