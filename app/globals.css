@@ -40,7 +40,7 @@
   --lgl-nav-border: rgba(255, 255, 255, 0.08);
   --lgl-nav-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
   --lgl-nav-fg: #ffffff;
-  --lgl-nav-muted: rgba(255, 255, 255, 0.45);
+  --lgl-nav-muted: rgba(255, 255, 255, 0.55); /* 6:1 on the navy background (WCAG AA needs 4.5:1) */
   --lgl-nav-active: rgba(255, 255, 255, 0.08);
   --lgl-nav-chip: rgba(255, 255, 255, 0.07);
   --lgl-nav-menu: rgba(10, 10, 10, 0.92);
@@ -69,7 +69,7 @@
   --lgl-nav-border: rgba(11, 27, 43, 0.08);
   --lgl-nav-shadow: 0 10px 30px rgba(11, 27, 43, 0.08);
   --lgl-nav-fg: #0B1B2B;
-  --lgl-nav-muted: rgba(11, 27, 43, 0.60);
+  --lgl-nav-muted: rgba(11, 27, 43, 0.70); /* 6.2:1 on the cream background (WCAG AA needs 4.5:1) */
   --lgl-nav-active: rgba(11, 27, 43, 0.07);
   --lgl-nav-chip: rgba(11, 27, 43, 0.05);
   --lgl-nav-menu: rgba(255, 255, 255, 0.95);
@@ -457,6 +457,8 @@ html.lenis, html.lenis body {
 
 /* Cookie banner: bottom left, clear of the WhatsApp button on the right; full width on phones */
 .cookie-consent { position:fixed; z-index:45; left:max(1rem,env(safe-area-inset-left)); bottom:max(1rem,env(safe-area-inset-bottom)); width:min(26rem,calc(100% - 6.5rem)); padding:1.25rem 1.35rem; border:1px solid color-mix(in srgb,var(--lgl-gold) 35%,transparent); border-radius:1.1rem; background:var(--lgl-bg); box-shadow:0 18px 40px rgba(0,0,0,.28); }
+/* Server-rendered banner, hidden before the first paint for visitors who already chose (see consentInitScript) */
+html[data-consent="chosen"] .cookie-consent[data-prerendered] { display:none; }
 @media (max-width:640px) { .cookie-consent { right:max(1rem,env(safe-area-inset-right)); width:auto; bottom:calc(max(1rem,env(safe-area-inset-bottom)) + 72px); } }
 
 /* Floating WhatsApp chat: the official logo, bottom right */

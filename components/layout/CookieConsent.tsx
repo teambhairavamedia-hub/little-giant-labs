@@ -8,13 +8,16 @@ import { getConsent, setConsent, subscribeConsent, subscribeConsentOpen } from "
 /* Cookie banner shown until the visitor chooses; reopened from the footer's "Cookie settings". Only shown when an
    analytics tool is configured, since without one the site sets no analytics cookies. English only for now. */
 export function CookieConsent() {
-  const choice = useSyncExternalStore(subscribeConsent, getConsent, () => "rejected" as const);
+  // The server can't read the stored choice, so the banner is part of the server HTML ("pending") and paints with the
+  // page instead of waiting for scripts; consentInitScript hides it before the first paint if the visitor already chose.
+  const choice = useSyncExternalStore(subscribeConsent, getConsent, () => "pending" as const);
   const [reopened, setReopened] = useState(false);
   const hasTools = Boolean(gaMeasurementId() || metaPixelId());
 
   useEffect(() => subscribeConsentOpen(() => setReopened(true)), []);
 
-  if (!hasTools || (choice && !reopened)) return null;
+  const pending = choice === "pending";
+  if (!hasTools || (choice && !pending && !reopened)) return null;
 
   const decide = (value: "accepted" | "rejected") => {
     setConsent(value);
@@ -22,7 +25,13 @@ export function CookieConsent() {
   };
 
   return (
-    <div role="dialog" aria-modal="false" aria-labelledby="cookie-consent-title" className="cookie-consent">
+    <div
+      role="dialog"
+      aria-modal="false"
+      aria-labelledby="cookie-consent-title"
+      className="cookie-consent"
+      data-prerendered={pending ? "" : undefined}
+    >
       <p id="cookie-consent-title" className="font-display text-lg text-lgl-fg">Cookies on this website</p>
       <p className="mt-2 text-sm leading-relaxed text-lgl-soft">
         We would like to use analytics cookies to understand how visitors use our website and which campaigns bring
