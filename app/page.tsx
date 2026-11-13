@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { preconnect } from "react-dom";
 import { HomeExperience } from "@/components/experience/HomeExperience";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { jsonLdScript, organizationJsonLd, socialMetadata } from "@/lib/seo";
@@ -47,6 +48,9 @@ const structuredData = [
 ];
 
 export default function Home() {
+  // The first-visit intro (LandingCascade) shows Unsplash photos; connecting from the server HTML lets the browser set
+  // up the connection while scripts load, instead of only once the intro starts
+  preconnect("https://images.unsplash.com");
   return (
     <main>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdScript(structuredData) }} />

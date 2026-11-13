@@ -11,6 +11,10 @@ export function parseConsent(value: string | null | undefined): ConsentChoice | 
   return value === "accepted" || value === "rejected" ? value : null;
 }
 
+/* Runs in <head> before the first paint (like the theme script): marks <html> when the visitor has already chosen, so
+   the cookie banner that is part of the server HTML stays hidden for them instead of flashing until scripts load. */
+export const consentInitScript = `(function(){try{var c=localStorage.getItem("${CONSENT_STORAGE_KEY}");if(c==="accepted"||c==="rejected")document.documentElement.dataset.consent="chosen"}catch(e){}})()`;
+
 /** Browser only. The stored choice, or null if the visitor hasn't chosen yet (or storage is unavailable). */
 export function getConsent(): ConsentChoice | null {
   if (typeof window === "undefined") return null;

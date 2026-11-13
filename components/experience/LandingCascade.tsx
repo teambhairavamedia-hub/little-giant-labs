@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { preconnect } from "react-dom";
 import {
   dispatchIntroComplete,
   markIntroPlayed,
@@ -106,8 +105,6 @@ function getMultiplier(width: number) {
 }
 
 export function LandingCascade({ onComplete, onRevealStart }: LandingCascadeProps) {
-  // Open the connection to Unsplash while the intro starts, so the first card's photo arrives sooner
-  preconnect(UNSPLASH_ORIGIN);
   const colorTheme = useSyncExternalStore(
     subscribeColorTheme,
     getColorTheme,

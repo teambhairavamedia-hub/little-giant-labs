@@ -4,6 +4,7 @@ import { PublicChrome } from "@/components/layout/PublicChrome";
 import { siteConfig } from "@/lib/site";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { themeInitScript } from "@/lib/theme";
+import { consentInitScript } from "@/lib/consent";
 import "./fonts.css";
 import "./globals.css";
 
@@ -65,6 +66,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: consentInitScript }} />
       </head>
       <body className="antialiased">
         <SmoothScroll>
